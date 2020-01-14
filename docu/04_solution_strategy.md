@@ -2,14 +2,13 @@
 
 ## Internal API
 
-- Login
-- Status? Keepalive
+- Login (jwt)
+- Token verlängerung (jwt)
 - Vertragsübersicht
   - Name
   - Metadaten
 - Vertrag PDF
-- Schadensmeldung Create
-- Schadensmeldung Edit
-- Schadensmeldung Upload Image
-- Schadensmeldung Commit
-- Schadensmeldung (Status) Übersicht
+- Schadensmeldung Create (inklusive bilder)
+- Schadensmeldungen (Status) Übersicht
+- Schadensmeldung Übersicht
+- Schadensmeldung Bild X
