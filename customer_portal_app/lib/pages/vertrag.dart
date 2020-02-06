@@ -1,5 +1,6 @@
-import 'package:customer_portal_app/melden.dart';
+
 import 'package:customer_portal_app/model/types.dart';
+import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class VertragPage extends StatelessWidget {

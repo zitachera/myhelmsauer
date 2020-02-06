@@ -1,17 +1,17 @@
 import 'package:customer_portal_app/model/types.dart';
 import 'package:flutter/material.dart';
 
-class MeldungPage extends StatelessWidget {
-  MeldungPage({Key key, this.meldung, this.vertrag}) : super(key: key);
+class VorfallPage extends StatelessWidget {
+  VorfallPage({Key key, this.vorfall, this.vertrag}) : super(key: key);
 
-  final Meldung meldung;
+  final Vorfall vorfall;
   final Vertrag vertrag;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(meldung.titel),
+        title: Text(vorfall.titel),
         bottom: PreferredSize(
             child: Container(
               color: Colors.red,
@@ -30,11 +30,11 @@ class MeldungPage extends StatelessWidget {
               ),
               _InfoLine(
                 caption: "Datum",
-                value: meldung.zeitpunkt.toString('dd.MM.yyyy'),
+                value: vorfall.zeitpunkt.toString('dd.MM.yyyy'),
               ),
               _InfoLine(
                 caption: "Uhrzeit",
-                value: meldung.zeitpunkt.toString('HH:mm'),
+                value: vorfall.zeitpunkt.toString('HH:mm'),
               ),
               Text(
                 "Beschreibung",
@@ -43,7 +43,7 @@ class MeldungPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  meldung.description,
+                  vorfall.description,
                   textScaleFactor: 1.3,
                 ),
               ),
