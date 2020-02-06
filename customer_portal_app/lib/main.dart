@@ -1,8 +1,11 @@
-import 'package:customer_portal_app/melden.dart';
+import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/vertrag.dart';
 import 'package:flutter/material.dart';
+import 'package:time_machine/time_machine.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -63,174 +66,155 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 200.0,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  //centerTitle: true,
-                  title: Text(" Helmsauer ",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        backgroundColor: Colors.blue,
-                      )),
-                  background: Image.asset(
-                    "assets/images/tower-background.jpg",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                bottom: PreferredSize(
-                    child: Container(
-                      color: Colors.red,
-                      height: 2.0,
-                    ),
-                    preferredSize: Size.fromHeight(2.0)),
-              ),
-            ];
-          },
-          body: Column(
-            children: <Widget>[
-              Text(
-                "Meine Meldungen",
-                textScaleFactor: 2,
-              ),
-              FlatButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VertragPage()),
-                  ),
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "20.01.2020",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Fall XY",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Wird Gesendet",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              FlatButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VertragPage()),
-                  ),
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "28.01.2020",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Fall XY",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "In Bearbeitung",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              FlatButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VertragPage()),
-                  ),
-                },
-                child: Text("5 Abgeschlossene Meldungen"),
-              ),
-              Text(
-                "Meine Verträge",
-                textScaleFactor: 2,
-              ),
-              FlatButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VertragPage()),
-                  ),
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "Wichtiger Vertrag A",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "Allianz",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              FlatButton(
-                onPressed: () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VertragPage()),
-                  ),
-                },
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        "Zusätzlicher Vertrag B",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        "HUK",
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MeldenPage()),
+        body: NestedScrollView(
+      headerSliverBuilder: _appBar,
+      body: Column(
+        children: <Widget>[
+          Text(
+            "Meine Meldungen",
+            textScaleFactor: 2,
           ),
-        },
-        tooltip: 'Increment Counter',
-        child: const Icon(Icons.add_to_photos),
+          _buildMeldung(
+            context,
+            Meldung(
+              zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
+              titel: "Fall X",
+              status: BearbeitungsStatus.wirdGesendet,
+            ),
+          ),
+          _buildMeldung(
+            context,
+            Meldung(
+              zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
+              titel: "Fall Y",
+              status: BearbeitungsStatus.inBearbeitung,
+            ),
+          ),
+          FlatButton(
+            onPressed: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VertragPage()),
+              ),
+            },
+            child: Text("5 Abgeschlossene Meldungen"),
+          ),
+          Text(
+            "Meine Verträge",
+            textScaleFactor: 2,
+          ),
+          _buildVertrag(
+            context,
+            Vertrag(
+              name: "Vertrag A",
+              beginn: LocalDate(2009, 11, 3),
+              versicherer: "AXA",
+            ),
+          ),
+          _buildVertrag(
+            context,
+            Vertrag(
+              name: "Vertrag B",
+              beginn: LocalDate(2011, 09, 7),
+              versicherer: "HDI",
+            ),
+          ),
+        ],
+      ),
+    ));
+  }
+
+  FlatButton _buildVertrag(BuildContext context, Vertrag vertrag) {
+    return FlatButton(
+      onPressed: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VertragPage(vertrag: vertrag)),
+        ),
+      },
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              vertrag.name,
+              textScaleFactor: 1.3,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              vertrag.versicherer,
+              textScaleFactor: 1.3,
+            ),
+          ),
+        ],
       ),
     );
   }
+
+  FlatButton _buildMeldung(BuildContext context, Meldung meldung) {
+    return FlatButton(
+      onPressed: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => VertragPage()),
+        ),
+      },
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              meldung.zeitpunkt.toString('dd.MM.yyyy HH:mm'),
+              textScaleFactor: 1.3,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              meldung.titel,
+              textScaleFactor: 1.3,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              _stati[meldung.status] ?? "undefined",
+              textScaleFactor: 1.3,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static const _stati = const {
+    BearbeitungsStatus.unvollstaendig: "Entwurf",
+    BearbeitungsStatus.wirdGesendet: "Wird Gesendet",
+    BearbeitungsStatus.inBearbeitung: "In Bearbeitung",
+  };
+
+  List<Widget> _appBar(context, innerBoxIsScrolled) => <Widget>[
+        SliverAppBar(
+          expandedHeight: 200.0,
+          floating: false,
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            //centerTitle: true,
+            title: Text(" Helmsauer ",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
+                  backgroundColor: Colors.blue,
+                )),
+            background: Image.asset(
+              "images/tower-background.jpg",
+              fit: BoxFit.cover,
+            ),
+          ),
+          bottom: PreferredSize(
+              child: Container(
+                color: Colors.red,
+                height: 2.0,
+              ),
+              preferredSize: Size.fromHeight(2.0)),
+        ),
+      ];
 }
