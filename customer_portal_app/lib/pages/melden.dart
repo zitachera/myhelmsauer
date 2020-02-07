@@ -32,7 +32,9 @@ class _MeldenState extends State<MeldenPage> {
   String description;
   String ort;
   Position gps;
-  List<String> fotos;
+  List<Uint8List> deatailAufnahmen = <Uint8List>[];
+  List<Uint8List> gesamtAufnahmen = <Uint8List>[];
+  List<Uint8List> fahrzeugscheinAufnahmen = <Uint8List>[];
   BearbeitungsStatus status;
 
   DateTime datum;
@@ -43,12 +45,13 @@ class _MeldenState extends State<MeldenPage> {
     super.initState();
     rootBundle.load('images/crash 1.png').then((data) {
       setState(() {
-        foto = data.buffer.asUint8List();
+        var foto = data.buffer.asUint8List();
+        deatailAufnahmen = <Uint8List>[foto];
+        gesamtAufnahmen = <Uint8List>[foto,foto,foto];
+        fahrzeugscheinAufnahmen = <Uint8List>[foto];
       });
     });
   }
-
-  Uint8List foto;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -138,11 +141,19 @@ class _MeldenState extends State<MeldenPage> {
               ),
             ),
             PhotoCollectionRow(
-              images: <Uint8List>[foto],
-              imageAdder: Placeholder(
-                fallbackHeight: 150,
-              ),
+              images: deatailAufnahmen,
+              labelAdd: "Weitere Detailansicht hinzufügen",
               max: 3,
+            ),
+            PhotoCollectionRow(
+              images: gesamtAufnahmen,
+              labelAdd: "Weitere Detailansicht hinzufügen",
+              max: 3,
+            ),
+            PhotoCollectionRow(
+              images: fahrzeugscheinAufnahmen,
+              labelAdd: "Weitere Detailansicht hinzufügen",
+              max: 2,
             ),
           ],
         ),
@@ -194,7 +205,7 @@ class _MultiLine extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              caption+ ":",
+              caption + ":",
               textScaleFactor: 1.3,
             ),
           ),
