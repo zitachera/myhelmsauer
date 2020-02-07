@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'dart:typed_data';
 
-// experimental file um ein image collector widget zu bauen
 
-// widget... (string[] pictures, Image add, int max, string caption, string captionAdd)
-
-class FotoAdderRow extends StatelessWidget {
-  FotoAdderRow({Key key, this.images, this.max, this.imageAdder})
+class PhotoCollectionRow extends StatelessWidget {
+  PhotoCollectionRow({Key key, this.images, this.max, this.imageAdder})
       : super(key: key);
 
-  final List<String> images;
+  final List<Uint8List> images;
   final int max;
   final Widget imageAdder;
   @override
@@ -22,37 +18,54 @@ class FotoAdderRow extends StatelessWidget {
 
   List<Widget> get _cells {
     var cells = <Widget>[];
-    for (var b64 in images) {
-      cells.add(Expanded(child: _imageView(b64)));
+    for (var image in images) {
+      cells.add(
+        _Box(
+          child: Image.memory(
+            image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
     }
     if (images.length < max) {
-      cells.add(Expanded(child: imageAdder));
+      cells.add(_Box(child: imageAdder));
     }
     return cells;
   }
+}
 
-  Widget _imageView(String b64) {
-    //return _imageFromBase64String(b64);
-    return Image.asset(
-      "images/tower-background.jpg",
-      fit: BoxFit.cover,
-      height: 150,
+class _Box extends StatelessWidget {
+  const _Box({
+    Key key,
+    @required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+  static const borderRadius = 12.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Container(
+          child: ClipRRect(
+            child: child,
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          height: 150,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(borderRadius),
+            border: Border.all(
+              color: Color(0x55000000), // oder helmsauer accent red?
+              //color: Colors.red,
+              width: 1,
+            ),
+          ),
+        ),
+      ),
     );
   }
-}
-
-Image _imageFromBase64String(String base64String) {
-  return Image.memory(
-    base64Decode(base64String),
-    width: 150,
-    height: 150,
-  );
-}
-
-Uint8List _dataFromBase64String(String base64String) {
-  return base64Decode(base64String);
-}
-
-String _base64String(Uint8List data) {
-  return base64Encode(data);
 }

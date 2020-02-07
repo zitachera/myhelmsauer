@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
-  HsSingleChildScrollScaffold({Key key, this.title, this.body})
+  HsSingleChildScrollScaffold({Key key, this.title, this.body, this.actions})
       : super(key: key);
 
   final String title;
   final Widget body;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          // style: TextStyle(
+          //   fontFamily: 'Chub Gothic',
+          //   fontSize: 26,
+          // ),
+        ),
+        actions: actions,
         bottom: PreferredSize(
             child: Container(
               color: Colors.red,
@@ -58,6 +66,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     style: TextStyle(
                       //color: Colors.white,
                       fontSize: 25.0,
+                      fontFamily: 'Chub Gothic',
                       //backgroundColor: Colors.blue,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
@@ -70,6 +79,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,
+                      fontFamily: 'Chub Gothic',
                       //backgroundColor: Colors.blue,
                     ),
                   ),
