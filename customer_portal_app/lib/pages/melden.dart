@@ -32,7 +32,7 @@ class _MeldenState extends State<MeldenPage> {
   String description;
   String ort;
   Position gps;
-  List<Uint8List> deatailAufnahmen = <Uint8List>[];
+  List<Uint8List> detailAufnahmen = <Uint8List>[];
   List<Uint8List> gesamtAufnahmen = <Uint8List>[];
   List<Uint8List> fahrzeugscheinAufnahmen = <Uint8List>[];
   BearbeitungsStatus status;
@@ -46,7 +46,7 @@ class _MeldenState extends State<MeldenPage> {
     rootBundle.load('images/crash 1.png').then((data) {
       setState(() {
         var foto = data.buffer.asUint8List();
-        deatailAufnahmen = <Uint8List>[foto];
+        detailAufnahmen = <Uint8List>[foto];
         gesamtAufnahmen = <Uint8List>[foto,foto,foto];
         fahrzeugscheinAufnahmen = <Uint8List>[foto];
       });
@@ -141,18 +141,20 @@ class _MeldenState extends State<MeldenPage> {
               ),
             ),
             PhotoCollectionRow(
-              images: deatailAufnahmen,
-              labelAdd: "Weitere Detailansicht hinzufügen",
+              images: detailAufnahmen,
+              labelAdd: "Detailansicht hinzufügen",
+              onDelete: (i) => setState(()=> detailAufnahmen.removeAt(i)),
+              onAdd: (image) => setState(()=>  detailAufnahmen.add(image)),
               max: 3,
             ),
             PhotoCollectionRow(
               images: gesamtAufnahmen,
-              labelAdd: "Weitere Detailansicht hinzufügen",
+              labelAdd: "Gesamtansicht hinzufügen",
               max: 3,
             ),
             PhotoCollectionRow(
               images: fahrzeugscheinAufnahmen,
-              labelAdd: "Weitere Detailansicht hinzufügen",
+              labelAdd: "Fahrzeugscheinaufnahme hinzufügen",
               max: 2,
             ),
           ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 
+import 'package:image_picker/image_picker.dart';
+
 class PhotoCollectionRow extends StatelessWidget {
   PhotoCollectionRow(
       {Key key,
@@ -112,16 +114,76 @@ class _AddButton extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => Stack(
-            children: <Widget>[
-              // camera
-              // gallery
-              // info
-              FlatButton(
-                onPressed: () => onAdd(null), // TODO use actual image
-                child: Icon(Icons.delete),
-              )
-            ],
+          builder: (context) => Dialog(
+            // vielleicht gleich eine eigene page?
+            //Das macht die kommunikation zu melden deutlich komplizierter :-/
+            //Könnte aber helfen das omniöse closed mainactivity problem lösen
+
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                // TODO wrap Column in singlechildscroll?
+                children: <Widget>[
+                  Text(
+                    label,
+                    textScaleFactor: 2,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  Expanded(
+                    child: Text(
+                      "<some info> Lorem ipsum  diam nonumy eirmod tempor invidbergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                      textScaleFactor: 1.3,
+                      maxLines: null,
+                    ),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: FlatButton(
+                          // camera
+                          onPressed: () => pickImage(ImageSource.camera),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.photo_camera),
+                                Text(
+                                  "Foto mit Kamera aufnehmen",
+                                  textAlign: TextAlign.center,
+                                  textScaleFactor: 1.3,
+                                  maxLines: null,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: FlatButton(
+                          // gallery
+                          onPressed: () => pickImage(ImageSource.gallery),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: <Widget>[
+                                Icon(Icons.photo_library),
+                                Text(
+                                  "Foto aus Galerie auswählen",
+                                  textAlign: TextAlign.center,
+                                  textScaleFactor: 1.3,
+                                  maxLines: null,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       },
@@ -146,6 +208,20 @@ class _AddButton extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future pickImage(ImageSource source) async {
+    print("pickImage");
+    var image = await ImagePicker.pickImage(
+      source: source,
+      imageQuality: 90,
+    );
+    if (image == null) {
+      return; // canceld
+    }
+    var bytes = image.readAsBytesSync();
+
+    onAdd(bytes);
   }
 }
 
