@@ -1,21 +1,12 @@
-
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class VertragPage extends StatelessWidget {
-  VertragPage({Key key, this.vertrag, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  VertragPage({
+    Key key,
+    @required this.vertrag,
+  }) : super(key: key);
 
   final Vertrag vertrag;
 
@@ -46,7 +37,7 @@ class VertragPage extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(15),
               child: Text(
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                vertrag.description,
                 textScaleFactor: 1.3,
               ),
             ),
@@ -57,7 +48,9 @@ class VertragPage extends StatelessWidget {
         onPressed: () => {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MeldenPage()),
+            MaterialPageRoute(builder: (context) => MeldenPage(
+              vertrag: vertrag,
+            )),
           ),
         },
         tooltip: 'Vorfall Melden',
@@ -88,14 +81,14 @@ class _InfoLine extends StatelessWidget {
               caption + ":",
               textScaleFactor: 1.3,
             ),
-            flex: 1,
+            flex: 2,
           ),
           Expanded(
             child: Text(
               value,
               textScaleFactor: 1.3,
             ),
-            flex: 2,
+            flex: 3,
           ),
         ],
       ),

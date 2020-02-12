@@ -4,17 +4,23 @@ import 'dart:typed_data';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/images.dart';
+import 'package:customer_portal_app/pages/vorfall.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:time_machine/time_machine.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({Key key}) : super(key: key);
+  MeldenPage({Key key, @required this.vertrag}) : super(key: key);
+
+  final Vertrag vertrag;
 
   @override
-  _MeldenState createState() =>
-      _MeldenState(datum: DateTime.now(), zeit: TimeOfDay.now());
+  _MeldenState createState() => _MeldenState(
+        vertrag: vertrag,
+        datum: DateTime.now(),
+        zeit: TimeOfDay.now(),
+      );
 
   // set zeitpunkt(LocalDateTime ldt) {
   //   datum = DateTime(ldt.year, ldt.monthOfYear, ldt.dayOfMonth);
@@ -23,7 +29,9 @@ class MeldenPage extends StatefulWidget {
 }
 
 class _MeldenState extends State<MeldenPage> {
-  _MeldenState({this.datum, this.zeit});
+  _MeldenState({this.vertrag, this.datum, this.zeit});
+
+  final Vertrag vertrag;
 
   String titel;
   LocalDateTime get zeitpunkt => LocalDateTime(
@@ -40,6 +48,18 @@ class _MeldenState extends State<MeldenPage> {
   DateTime datum;
   TimeOfDay zeit;
 
+  Vorfall get vorfall => Vorfall(
+        titel: titel,
+        description: description,
+        ort: ort,
+        gps: gps,
+        detailAufnahmen: _base64Strings(detailAufnahmen),
+        gesamtAufnahmen: _base64Strings(gesamtAufnahmen),
+        fahrzeugscheinAufnahmen: _base64Strings(fahrzeugscheinAufnahmen),
+        status: status,
+        zeitpunkt: zeitpunkt,
+      );
+
   @override
   void initState() {
     super.initState();
@@ -47,10 +67,13 @@ class _MeldenState extends State<MeldenPage> {
       setState(() {
         var foto = data.buffer.asUint8List();
         detailAufnahmen = <Uint8List>[foto];
-        gesamtAufnahmen = <Uint8List>[foto,foto,foto];
+        gesamtAufnahmen = <Uint8List>[foto, foto, foto];
         fahrzeugscheinAufnahmen = <Uint8List>[foto];
       });
     });
+    Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((position) => gps = position);
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -64,8 +87,16 @@ class _MeldenState extends State<MeldenPage> {
           builder: (context) => FlatButton.icon(
             onPressed: () {
               if (_formKey.currentState.validate()) {
-                Scaffold.of(context)
-                    .showSnackBar(SnackBar(content: Text('Processing Data')));
+                Navigator.of(context)
+                  ..popUntil((route) => route.isFirst)
+                  ..push(
+                    MaterialPageRoute(
+                      builder: (context) => VorfallPage(
+                        vorfall: vorfall,
+                        vertrag: vertrag,
+                      ),
+                    ),
+                  );
               }
             },
             icon: const Icon(
@@ -88,7 +119,7 @@ class _MeldenState extends State<MeldenPage> {
             _Line(
               caption: "Vetrag",
               child: Text(
-                "Vertrag XY",
+                vertrag.name,
                 textScaleFactor: 1.3,
               ),
             ),
@@ -97,6 +128,12 @@ class _MeldenState extends State<MeldenPage> {
               child: TextFormField(
                 initialValue: titel,
                 onChanged: (s) => titel = s,
+                maxLength: 30,
+                maxLengthEnforced: true,
+                validator: (s) {
+                  if (s.isNotEmpty) return null;
+                  return "Bitte geben Sie dem Vorfall einen Titel!";
+                },
               ),
             ),
             _Line(
@@ -121,40 +158,49 @@ class _MeldenState extends State<MeldenPage> {
             ),
             _Line(
               caption: 'Ort',
-              child: FlatButton(
-                child: Text(
-                  "Coronastr 12, Nürnberg",
-                  textScaleFactor: 1.3,
-                ),
-                onPressed: () => null,
+              child: TextFormField(
+                initialValue: ort,
+                onChanged: (s) => ort = s,
+                validator: (s) {
+                  if (s.isNotEmpty) return null;
+                  return "Bitte geben Sie den Ort des Vorfalls an!";
+                },
               ),
             ),
             _MultiLine(
               caption: 'Beschreibung',
-              child: TextField(
-                controller: TextEditingController(
-                  text:
-                      "Lorem ipsum  diam nonumy eirmod tempor invidbergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-                ),
+              child: TextFormField(
+                initialValue: description,
+                onChanged: (s) => description = s,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                validator: (s) {
+                  if (s.isNotEmpty) return null;
+                  return "Bitte beschreiben Sie den Vorfall!";
+                },
               ),
             ),
-            PhotoCollectionRow(
+            PhotoCollectionField(
               images: detailAufnahmen,
               labelAdd: "Detailansicht hinzufügen",
-              onDelete: (i) => setState(()=> detailAufnahmen.removeAt(i)),
-              onAdd: (image) => setState(()=>  detailAufnahmen.add(image)),
+              onDelete: (i) => setState(() => detailAufnahmen.removeAt(i)),
+              onAdd: (image) => setState(() => detailAufnahmen.add(image)),
               max: 3,
             ),
-            PhotoCollectionRow(
+            PhotoCollectionField(
               images: gesamtAufnahmen,
               labelAdd: "Gesamtansicht hinzufügen",
+              onDelete: (i) => setState(() => gesamtAufnahmen.removeAt(i)),
+              onAdd: (image) => setState(() => gesamtAufnahmen.add(image)),
               max: 3,
             ),
-            PhotoCollectionRow(
+            PhotoCollectionField(
               images: fahrzeugscheinAufnahmen,
               labelAdd: "Fahrzeugscheinaufnahme hinzufügen",
+              onDelete: (i) =>
+                  setState(() => fahrzeugscheinAufnahmen.removeAt(i)),
+              onAdd: (image) =>
+                  setState(() => fahrzeugscheinAufnahmen.add(image)),
               max: 2,
             ),
           ],
@@ -201,7 +247,7 @@ class _MultiLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       child: Column(
         children: <Widget>[
           Align(
@@ -231,8 +277,10 @@ class _Line extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(8),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Expanded(
             child: Text(
@@ -251,10 +299,8 @@ class _Line extends StatelessWidget {
   }
 }
 
-Uint8List _dataFromBase64String(String base64String) {
-  return base64Decode(base64String);
-}
+List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
+    base64String.map(base64Decode).toList();
 
-String _base64String(Uint8List data) {
-  return base64Encode(data);
-}
+List<String> _base64Strings(List<Uint8List> data) =>
+    data.map(base64Encode).toList();

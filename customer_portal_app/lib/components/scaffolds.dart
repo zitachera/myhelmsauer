@@ -27,9 +27,9 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
             ),
             preferredSize: Size.fromHeight(2.0)),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(10),
           child: body,
         ),
       ),

@@ -23,7 +23,7 @@ class Vorfall {
   final String description;
   final String ort;
   final Position gps;
-  final List<String> deatailAufnahmen;
+  final List<String> detailAufnahmen;
   final List<String> gesamtAufnahmen;
   final List<String> fahrzeugscheinAufnahmen;
   final BearbeitungsStatus status;
@@ -36,9 +36,9 @@ class Vorfall {
     this.description,
     this.ort,
     this.gps,
-    this.deatailAufnahmen,
-    this.gesamtAufnahmen,
-    this.fahrzeugscheinAufnahmen,
+    this.detailAufnahmen = const <String>[],
+    this.gesamtAufnahmen = const <String>[],
+    this.fahrzeugscheinAufnahmen = const <String>[],
     this.status,
   });
 }

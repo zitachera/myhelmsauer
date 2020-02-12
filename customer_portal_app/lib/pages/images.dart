@@ -3,16 +3,45 @@ import 'dart:typed_data';
 
 import 'package:image_picker/image_picker.dart';
 
-class PhotoCollectionRow extends StatelessWidget {
-  PhotoCollectionRow(
-      {Key key,
-      this.images,
-      this.max,
-      this.label,
-      this.labelAdd,
-      this.onDelete,
-      this.onAdd})
-      : super(key: key);
+class PhotoCollection extends StatelessWidget {
+  PhotoCollection({
+    Key key,
+    @required this.images,
+    this.label,
+  }) : super(key: key);
+
+  final List<Uint8List> images;
+  final String label;
+
+
+  @override
+  Widget build(BuildContext context) {
+    var cells = <Widget>[];
+    for (var i = 0; i < images.length; i++) {
+      var image = images[i];
+      cells.add(
+        _ImageBox(onDelete: null, index: i, image: image),
+      );
+    }
+    return Container(
+      height: 150,
+      child: Row(
+        children: cells,
+      ),
+    );
+  }
+}
+
+class PhotoCollectionField extends StatelessWidget {
+  PhotoCollectionField({
+    Key key,
+    @required this.images,
+    @required this.max,
+    this.label,
+    @required this.labelAdd,
+    @required this.onDelete,
+    @required this.onAdd,
+  }) : super(key: key);
 
   final List<Uint8List> images;
   final int max;

@@ -1,6 +1,7 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
+import 'package:customer_portal_app/pages/vorfall.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 
@@ -12,6 +13,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Vorfall> vorfaelle = <Vorfall>[
+    Vorfall(
+      vertragsID: 1,
+      zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
+      titel: "Fall X",
+      status: BearbeitungsStatus.wirdGesendet,
+    ),
+    Vorfall(
+      vertragsID: 2,
+      zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
+      titel: "Fall Y",
+      status: BearbeitungsStatus.inBearbeitung,
+    ),
+    Vorfall(
+      vertragsID: 1,
+      zeitpunkt: LocalDateTime(219, 01, 20, 9, 50, 10),
+      titel: "Fall Z",
+      status: BearbeitungsStatus.abgeschlossen,
+    ),
+    Vorfall(
+      vertragsID: 2,
+      zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
+      titel: "Fall W",
+      status: BearbeitungsStatus.abgeschlossen,
+    ),
+  ];
+  List<Vertrag> vertraege = <Vertrag>[
+    Vertrag(
+      id: 1, // TODO uuids?
+      name: "Vertrag A",
+      beginn: LocalDate(2009, 11, 3),
+      versicherer: "AXA",
+      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    ),
+    Vertrag(
+      id: 2,
+      name: "Vertrag B",
+      beginn: LocalDate(2011, 09, 7),
+      versicherer: "HDI",
+      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    ),
+  ];
+
+  Vertrag vertragZuVorfall(Vorfall vorfall) => vertraege.firstWhere(
+        (v) => v.id == vorfall.vertragsID,
+      );
+
+  bool isHidden(Vorfall v) => v.status == BearbeitungsStatus.abgeschlossen;
+
+  Iterable<Vorfall> get visibleVorfaelle =>
+      vorfaelle.where((v) => !isHidden(v));
+  Iterable<Vorfall> get hiddenVorfaelle => vorfaelle.where(isHidden);
+
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
@@ -22,49 +76,26 @@ class _HomePageState extends State<HomePage> {
             "Meine Vorfälle",
             textScaleFactor: 2,
           ),
-          _buildVorfall(
-            context,
-            Vorfall(
-              zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
-              titel: "Fall X",
-              status: BearbeitungsStatus.wirdGesendet,
+          ...visibleVorfaelle.map(
+            (vorfall) => _buildVorfall(
+              context,
+              vorfall,
             ),
           ),
-          _buildVorfall(
-            context,
-            Vorfall(
-              zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
-              titel: "Fall Y",
-              status: BearbeitungsStatus.inBearbeitung,
+          if (hiddenVorfaelle.isNotEmpty)
+            FlatButton(
+              onPressed: () {},
+              child: Text(hiddenVorfaelle.length.toString() +
+                  " Abgeschlossene Vorfälle"),
             ),
-          ),
-          FlatButton(
-            onPressed: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => VertragPage()),
-              ),
-            },
-            child: Text("5 Abgeschlossene Vorfälle"),
-          ),
           Text(
             "Meine Verträge",
             textScaleFactor: 2,
           ),
-          _buildVertrag(
-            context,
-            Vertrag(
-              name: "Vertrag A",
-              beginn: LocalDate(2009, 11, 3),
-              versicherer: "AXA",
-            ),
-          ),
-          _buildVertrag(
-            context,
-            Vertrag(
-              name: "Vertrag B",
-              beginn: LocalDate(2011, 09, 7),
-              versicherer: "HDI",
+          ...vertraege.map(
+            (vertrag) => _buildVertrag(
+              context,
+              vertrag,
             ),
           ),
         ],
@@ -105,7 +136,10 @@ class _HomePageState extends State<HomePage> {
       onPressed: () => {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VertragPage()),
+          MaterialPageRoute(builder: (context) => VorfallPage(
+            vorfall: vorfall,
+            vertrag: vertragZuVorfall(vorfall),
+          )),
         ),
       },
       child: Row(
