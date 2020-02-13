@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +13,8 @@ class VertragPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Vertragsinfo'),
-        bottom: PreferredSize(
-            child: Container(
-              color: Colors.red,
-              height: 2.0,
-            ),
-            preferredSize: Size.fromHeight(2.0)),
-      ),
+    return HsSingleChildScrollScaffold(
+      title: 'Vertragsinfo',
       body: Padding(
         padding: EdgeInsets.all(10),
         child: Column(

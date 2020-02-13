@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:time_machine/time_machine.dart';
+import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
   MeldenPage({Key key, @required this.vertrag}) : super(key: key);
@@ -49,7 +50,9 @@ class _MeldenState extends State<MeldenPage> {
   TimeOfDay zeit;
 
   Vorfall get vorfall => Vorfall(
+        id: Uuid().v1(),
         titel: titel,
+        vertragsID: vertrag.id,
         description: description,
         ort: ort,
         gps: gps,
@@ -63,14 +66,6 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    rootBundle.load('images/crash 1.png').then((data) {
-      setState(() {
-        var foto = data.buffer.asUint8List();
-        detailAufnahmen = <Uint8List>[foto];
-        gesamtAufnahmen = <Uint8List>[foto, foto, foto];
-        fahrzeugscheinAufnahmen = <Uint8List>[foto];
-      });
-    });
     Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((position) => gps = position);
@@ -86,18 +81,26 @@ class _MeldenState extends State<MeldenPage> {
         Builder(
           builder: (context) => FlatButton.icon(
             onPressed: () {
-              if (_formKey.currentState.validate()) {
-                Navigator.of(context)
-                  ..popUntil((route) => route.isFirst)
-                  ..push(
-                    MaterialPageRoute(
-                      builder: (context) => VorfallPage(
-                        vorfall: vorfall,
-                        vertrag: vertrag,
-                      ),
-                    ),
-                  );
+              if (!_formKey.currentState.validate() ||
+                  detailAufnahmen.length < 1 ||
+                  gesamtAufnahmen.length < 1 ||
+                  fahrzeugscheinAufnahmen.length < 1) {
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text(
+                      'Bitte füllen Sie alle Felder aus und tragen mindestens ein Bild pro Kategorie ein.'),
+                ));
+                return;
               }
+              Navigator.of(context)
+                ..popUntil((route) => route.isFirst)
+                ..push(
+                  MaterialPageRoute(
+                    builder: (context) => VorfallPage(
+                      vorfall: vorfall,
+                      vertrag: vertrag,
+                    ),
+                  ),
+                );
             },
             icon: const Icon(
               Icons.send,
@@ -183,13 +186,19 @@ class _MeldenState extends State<MeldenPage> {
             PhotoCollectionField(
               images: detailAufnahmen,
               labelAdd: "Detailansicht hinzufügen",
+              label: 'Detailansicht',
               onDelete: (i) => setState(() => detailAufnahmen.removeAt(i)),
               onAdd: (image) => setState(() => detailAufnahmen.add(image)),
+              infoAdd: Text(
+                "hier können infos und text zur bildkategorie stehen.",
+                maxLines: null,
+              ),
               max: 3,
             ),
             PhotoCollectionField(
               images: gesamtAufnahmen,
               labelAdd: "Gesamtansicht hinzufügen",
+              label: 'Gesamtansicht',
               onDelete: (i) => setState(() => gesamtAufnahmen.removeAt(i)),
               onAdd: (image) => setState(() => gesamtAufnahmen.add(image)),
               max: 3,
@@ -197,6 +206,7 @@ class _MeldenState extends State<MeldenPage> {
             PhotoCollectionField(
               images: fahrzeugscheinAufnahmen,
               labelAdd: "Fahrzeugscheinaufnahme hinzufügen",
+              label: 'Fahrzeugscheinaufnahme',
               onDelete: (i) =>
                   setState(() => fahrzeugscheinAufnahmen.removeAt(i)),
               onAdd: (image) =>

@@ -1,12 +1,19 @@
+import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
-  HsSingleChildScrollScaffold({Key key, this.title, this.body, this.actions})
+  HsSingleChildScrollScaffold(
+      {Key key, this.title, this.body, this.actions, this.floatingActionButton})
       : super(key: key);
 
   final String title;
   final Widget body;
   final List<Widget> actions;
+
+  /// A button displayed floating above [body], in the bottom right corner.
+  ///
+  /// Typically a [FloatingActionButton].
+  final Widget floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +29,10 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
         actions: actions,
         bottom: PreferredSize(
             child: Container(
-              color: Colors.red,
-              height: 2.0,
+              color: hemlsauerRed,
+              height: 2.5,
             ),
-            preferredSize: Size.fromHeight(2.0)),
+            preferredSize: Size.fromHeight(2.5)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -33,6 +40,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
           child: body,
         ),
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }
@@ -53,25 +61,18 @@ class HsNestedScrollScaffold extends StatelessWidget {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              //centerTitle: true,
-              // TODO container for background
               title:
-                  // Padding(
-                  //     padding: EdgeInsets.symmetric(horizontal: 10),
-                  //     child:
                   Stack(
                 children: <Widget>[
                   Text(
                     title,
                     style: TextStyle(
-                      //color: Colors.white,
                       fontSize: 25.0,
                       fontFamily: 'Chub Gothic',
-                      //backgroundColor: Colors.blue,
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 6
-                        ..color = Colors.blue,
+                        ..color = hemlsauerBlue,
                     ),
                   ),
                   Text(
@@ -80,7 +81,6 @@ class HsNestedScrollScaffold extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 25.0,
                       fontFamily: 'Chub Gothic',
-                      //backgroundColor: Colors.blue,
                     ),
                   ),
                 ],
@@ -93,10 +93,10 @@ class HsNestedScrollScaffold extends StatelessWidget {
             ),
             bottom: PreferredSize(
               child: Container(
-                color: Colors.red,
-                height: 2.0,
+                color: hemlsauerRed,
+                height: 2.5,
               ),
-              preferredSize: Size.fromHeight(2.0),
+              preferredSize: Size.fromHeight(2.5),
             ),
           ),
         ],

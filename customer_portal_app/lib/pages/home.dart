@@ -4,6 +4,7 @@ import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:customer_portal_app/pages/vorfall.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,44 +16,57 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Vorfall> vorfaelle = <Vorfall>[
     Vorfall(
-      vertragsID: 1,
+      id: Uuid().v1(),
+      vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
+      ort: "Coronastr 3",
+      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall X",
       status: BearbeitungsStatus.wirdGesendet,
     ),
     Vorfall(
-      vertragsID: 2,
+      id: Uuid().v1(),
+      vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
+      ort: "Coronastr 3",
       titel: "Fall Y",
       status: BearbeitungsStatus.inBearbeitung,
     ),
     Vorfall(
-      vertragsID: 1,
+      id: Uuid().v1(),
+      vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(219, 01, 20, 9, 50, 10),
+      ort: "Coronastr 3",
+      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall Z",
       status: BearbeitungsStatus.abgeschlossen,
     ),
     Vorfall(
-      vertragsID: 2,
+      id: Uuid().v1(),
+      vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
+      ort: "Coronastr 3",
+      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall W",
       status: BearbeitungsStatus.abgeschlossen,
     ),
   ];
   List<Vertrag> vertraege = <Vertrag>[
     Vertrag(
-      id: 1, // TODO uuids?
+      id: '<uuid-1>',
       name: "Vertrag A",
       beginn: LocalDate(2009, 11, 3),
       versicherer: "AXA",
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      description:
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     ),
     Vertrag(
-      id: 2,
+      id: '<uuid-2>',
       name: "Vertrag B",
       beginn: LocalDate(2011, 09, 7),
       versicherer: "HDI",
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      description:
+          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
     ),
   ];
 
@@ -136,10 +150,11 @@ class _HomePageState extends State<HomePage> {
       onPressed: () => {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => VorfallPage(
-            vorfall: vorfall,
-            vertrag: vertragZuVorfall(vorfall),
-          )),
+          MaterialPageRoute(
+              builder: (context) => VorfallPage(
+                    vorfall: vorfall,
+                    vertrag: vertragZuVorfall(vorfall),
+                  )),
         ),
       },
       child: Row(
