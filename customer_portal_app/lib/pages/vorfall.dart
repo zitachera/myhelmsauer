@@ -43,15 +43,15 @@ class VorfallPage extends StatelessWidget {
             value: vorfall.description,
           ),
           PhotoCollection(
-            images: _dataFromBase64Strings(vorfall.detailAufnahmen),
+            images: vorfall.detailAufnahmen,
             label: "Detailansicht",
           ),
           PhotoCollection(
-            images: _dataFromBase64Strings(vorfall.gesamtAufnahmen),
+            images: vorfall.gesamtAufnahmen,
             label: "Gesamtansicht",
           ),
           PhotoCollection(
-            images: _dataFromBase64Strings(vorfall.fahrzeugscheinAufnahmen),
+            images: vorfall.fahrzeugscheinAufnahmen,
             label: "Fahrzeugscheinaufnahme",
           ),
         ],

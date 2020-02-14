@@ -21,10 +21,6 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           title,
-          // style: TextStyle(
-          //   fontFamily: 'Chub Gothic',
-          //   fontSize: 26,
-          // ),
         ),
         actions: actions,
         bottom: PreferredSize(
@@ -61,8 +57,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title:
-                  Stack(
+              title: Stack(
                 children: <Widget>[
                   Text(
                     title,
@@ -71,7 +66,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                       fontFamily: 'Chub Gothic',
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
-                        ..strokeWidth = 6
+                        ..strokeWidth = 5
                         ..color = hemlsauerBlue,
                     ),
                   ),
@@ -100,9 +95,15 @@ class HsNestedScrollScaffold extends StatelessWidget {
             ),
           ),
         ],
-        body: Padding(
-          padding: EdgeInsets.all(10),
-          child: body,
+        body: RefreshIndicator(
+          onRefresh: () => Future.delayed(Duration(seconds: 5)),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: body,
+            ),
+          ),
         ),
       ),
     );

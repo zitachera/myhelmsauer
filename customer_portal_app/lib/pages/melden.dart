@@ -1,13 +1,15 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:customer_portal_app/pages/vorfall.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:time_machine/time_machine.dart';
 import 'package:uuid/uuid.dart';
 
@@ -34,12 +36,12 @@ class _MeldenState extends State<MeldenPage> {
 
   final Vertrag vertrag;
 
-  String titel;
+  String titel = "";
   LocalDateTime get zeitpunkt => LocalDateTime(
       datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
 
-  String description;
-  String ort;
+  String description = "";
+  String ort = "";
   Position gps;
   List<Uint8List> detailAufnahmen = <Uint8List>[];
   List<Uint8List> gesamtAufnahmen = <Uint8List>[];
@@ -56,9 +58,9 @@ class _MeldenState extends State<MeldenPage> {
         description: description,
         ort: ort,
         gps: gps,
-        detailAufnahmen: _base64Strings(detailAufnahmen),
-        gesamtAufnahmen: _base64Strings(gesamtAufnahmen),
-        fahrzeugscheinAufnahmen: _base64Strings(fahrzeugscheinAufnahmen),
+        detailAufnahmen: detailAufnahmen,
+        gesamtAufnahmen: gesamtAufnahmen,
+        fahrzeugscheinAufnahmen: fahrzeugscheinAufnahmen,
         status: status,
         zeitpunkt: zeitpunkt,
       );
@@ -80,7 +82,7 @@ class _MeldenState extends State<MeldenPage> {
       actions: <Widget>[
         Builder(
           builder: (context) => FlatButton.icon(
-            onPressed: () {
+            onPressed: () async {
               if (!_formKey.currentState.validate() ||
                   detailAufnahmen.length < 1 ||
                   gesamtAufnahmen.length < 1 ||
@@ -91,7 +93,32 @@ class _MeldenState extends State<MeldenPage> {
                 ));
                 return;
               }
-              Navigator.of(context)
+              setState(() => status = BearbeitungsStatus.wirdGesendet);
+              var nav = Navigator.of(context);
+
+              var pr = new ProgressDialog(context);
+              pr.style(
+                  message: 'Sende Vorfallsmeldung...',
+                  borderRadius: 10.0,
+                  backgroundColor: Colors.white,
+                  progressWidget: SpinKitCircle(color: hemlsauerBlue),
+                  elevation: 10.0,
+                  insetAnimCurve: Curves.easeInOut,
+                  messageTextStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 19.0,
+                      fontWeight: FontWeight.w600));
+
+              await pr.show();
+
+              // print(jsonEncode(vertrag.toJson()));
+              // print(jsonEncode(vorfall.toJson()));
+
+              await Future.delayed(Duration(seconds: 10));
+              status = BearbeitungsStatus.inBearbeitung;
+
+              await pr.hide();
+              nav
                 ..popUntil((route) => route.isFirst)
                 ..push(
                   MaterialPageRoute(
@@ -308,9 +335,3 @@ class _Line extends StatelessWidget {
     );
   }
 }
-
-List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
-    base64String.map(base64Decode).toList();
-
-List<String> _base64Strings(List<Uint8List> data) =>
-    data.map(base64Encode).toList();
