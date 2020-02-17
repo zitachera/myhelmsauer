@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     Vorfall(
       id: Uuid().v1(),
       vertragsID: '<uuid-1>',
-      zeitpunkt: LocalDateTime(219, 01, 20, 9, 50, 10),
+      zeitpunkt: LocalDateTime(2019, 01, 20, 9, 50, 10),
       ort: "Coronastr 3",
       description:
           "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
@@ -78,7 +78,10 @@ class _HomePageState extends State<HomePage> {
         (v) => v.id == vorfall.vertragsID,
       );
 
-  bool isHidden(Vorfall v) => v.status == BearbeitungsStatus.abgeschlossen;
+  bool isHidden(Vorfall v) =>
+      hideAbgeschlossen && v.status == BearbeitungsStatus.abgeschlossen;
+
+  bool hideAbgeschlossen = true;
 
   Iterable<Vorfall> get visibleVorfaelle =>
       vorfaelle.where((v) => !isHidden(v));
@@ -90,10 +93,11 @@ class _HomePageState extends State<HomePage> {
       title: 'Hemlsauer',
       body: Column(
         children: <Widget>[
-          Text(
-            "Meine Vorfälle",
-            textScaleFactor: 2,
-          ),
+          if (visibleVorfaelle.isNotEmpty)
+            Text(
+              "Meine Vorfälle",
+              textScaleFactor: 2,
+            ),
           ...visibleVorfaelle.map(
             (vorfall) => _buildVorfall(
               context,
@@ -102,9 +106,17 @@ class _HomePageState extends State<HomePage> {
           ),
           if (hiddenVorfaelle.isNotEmpty)
             FlatButton(
-              onPressed: () {},
-              child: Text(hiddenVorfaelle.length.toString() +
-                  " Abgeschlossene Vorfälle"),
+              onPressed: () {
+                setState(() => hideAbgeschlossen = false);
+              },
+              child: Text("${hiddenVorfaelle.length} Abgeschlossene Vorfälle"),
+            ),
+          if (!hideAbgeschlossen)
+            FlatButton(
+              onPressed: () {
+                setState(() => hideAbgeschlossen = true);
+              },
+              child: Text("Abgeschlossene Vorfälle ausblenden"),
             ),
           Text(
             "Meine Verträge",
@@ -176,7 +188,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: BearbeitungsStatusBadge(vorfall.status),
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: BearbeitungsStatusBadge(vorfall.status)),
           ),
         ],
       ),

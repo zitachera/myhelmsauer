@@ -26,7 +26,10 @@ class VorfallPage extends StatelessWidget {
           ),
           _Line(
             caption: 'Status',
-            child: BearbeitungsStatusBadge(vorfall.status),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: BearbeitungsStatusBadge(vorfall.status),
+            ),
           ),
           _Line.text(
             caption: 'Datum',

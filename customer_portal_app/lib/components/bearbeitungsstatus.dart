@@ -9,36 +9,32 @@ class BearbeitungsStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          color: const <BearbeitungsStatus, Color>{
-                BearbeitungsStatus.inBearbeitung:
-                    Color.fromARGB(255, 200, 200, 0),
-                BearbeitungsStatus.abgeschlossen:
-                    Color.fromARGB(255, 0, 200, 0),
-              }[status] ??
-              Colors.black54,
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.all(Radius.circular(11)),
+        color: const <BearbeitungsStatus, Color>{
+              BearbeitungsStatus.inBearbeitung:
+                  Color.fromARGB(255, 200, 200, 0),
+              BearbeitungsStatus.abgeschlossen: Color.fromARGB(255, 0, 200, 0),
+            }[status] ??
+            Colors.black54,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 6,
+          vertical: 1.5,
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 6,
-            vertical: 1.5,
-          ),
-          child: Text(
-            const <BearbeitungsStatus, String>{
-                  BearbeitungsStatus.unvollstaendig: "Entwurf",
-                  BearbeitungsStatus.wirdGesendet: "Wird Gesendet",
-                  BearbeitungsStatus.inBearbeitung: "In Bearbeitung",
-                  BearbeitungsStatus.abgeschlossen: "Abgeschlossen",
-                }[status] ??
-                "Unbekannter Status",
-            textScaleFactor: 1.1,
-            style: TextStyle(color: Colors.white),
-          ),
+        child: Text(
+          const <BearbeitungsStatus, String>{
+                BearbeitungsStatus.unvollstaendig: "Entwurf",
+                BearbeitungsStatus.wirdGesendet: "Wird Gesendet",
+                BearbeitungsStatus.inBearbeitung: "In Bearbeitung",
+                BearbeitungsStatus.abgeschlossen: "Abgeschlossen",
+              }[status] ??
+              "Unbekannter Status",
+          textScaleFactor: 1,
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
