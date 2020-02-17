@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoCollection extends StatelessWidget {
@@ -324,19 +324,19 @@ class _AddImageAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: FlatButton(
-        onPressed: () {
-          ImagePicker.pickImage(
+        onPressed: () async {
+          Navigator.of(context).pop();
+
+          var image = await ImagePicker.pickImage(
             source: source,
             imageQuality: 90,
-          ).then((image) {
-            if (image == null) {
-              return; // canceld
-            }
-            var bytes = image.readAsBytesSync();
+          );
+          if (image == null) {
+            return; // canceld
+          }
+          var bytes = image.readAsBytesSync();
 
-            onAdd(bytes);
-          });
-          Navigator.of(context).pop();
+          onAdd(bytes);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
