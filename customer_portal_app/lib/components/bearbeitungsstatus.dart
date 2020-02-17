@@ -14,14 +14,20 @@ class BearbeitungsStatusBadge extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          border: Border.all(
-            color: Colors.black,
-            width: 2,
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          color: const <BearbeitungsStatus, Color>{
+                BearbeitungsStatus.inBearbeitung:
+                    Color.fromARGB(255, 200, 200, 0),
+                BearbeitungsStatus.abgeschlossen:
+                    Color.fromARGB(255, 0, 200, 0),
+              }[status] ??
+              Colors.black54,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(1.5),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 6,
+            vertical: 1.5,
+          ),
           child: Text(
             const <BearbeitungsStatus, String>{
                   BearbeitungsStatus.unvollstaendig: "Entwurf",
@@ -31,6 +37,7 @@ class BearbeitungsStatusBadge extends StatelessWidget {
                 }[status] ??
                 "Unbekannter Status",
             textScaleFactor: 1.1,
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ),
