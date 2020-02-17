@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/bearbeitungsstatus.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
@@ -20,7 +21,8 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
       ort: "Coronastr 3",
-      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
+      description:
+          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall X",
       status: BearbeitungsStatus.wirdGesendet,
     ),
@@ -37,7 +39,8 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(219, 01, 20, 9, 50, 10),
       ort: "Coronastr 3",
-      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
+      description:
+          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall Z",
       status: BearbeitungsStatus.abgeschlossen,
     ),
@@ -46,7 +49,8 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
       ort: "Coronastr 3",
-      description: "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
+      description:
+          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
       titel: "Fall W",
       status: BearbeitungsStatus.abgeschlossen,
     ),
@@ -172,19 +176,10 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: Text(
-              _stati[vorfall.status] ?? "undefined",
-              textScaleFactor: 1.3,
-            ),
+            child: BearbeitungsStatusBadge(vorfall.status),
           ),
         ],
       ),
     );
   }
-
-  static const _stati = const {
-    BearbeitungsStatus.unvollstaendig: "Entwurf",
-    BearbeitungsStatus.wirdGesendet: "Wird Gesendet",
-    BearbeitungsStatus.inBearbeitung: "In Bearbeitung",
-  };
 }

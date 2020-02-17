@@ -1,6 +1,4 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
+import 'package:customer_portal_app/components/bearbeitungsstatus.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/images.dart';
@@ -22,19 +20,23 @@ class VorfallPage extends StatelessWidget {
       title: vorfall.titel,
       body: Column(
         children: <Widget>[
-          _Line(
+          _Line.text(
             caption: 'Vertrag',
             value: vertrag.name,
           ),
           _Line(
+            caption: 'Status',
+            child: BearbeitungsStatusBadge(vorfall.status),
+          ),
+          _Line.text(
             caption: 'Datum',
             value: vorfall.zeitpunkt.toString('dd.MM.yyyy'),
           ),
-          _Line(
+          _Line.text(
             caption: 'Uhrzeit',
             value: vorfall.zeitpunkt.toString('HH:mm'),
           ),
-          _Line(
+          _Line.text(
             caption: 'Ort',
             value: vorfall.ort,
           ),
@@ -96,11 +98,21 @@ class _Line extends StatelessWidget {
   const _Line({
     Key key,
     this.caption,
-    this.value,
+    this.child,
   }) : super(key: key);
 
+  _Line.text({
+    Key key,
+    this.caption,
+    String value,
+  })  : child = Text(
+          value,
+          textScaleFactor: 1.3,
+        ),
+        super(key: key);
+
   final String caption;
-  final String value;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +130,7 @@ class _Line extends StatelessWidget {
             flex: 1,
           ),
           Expanded(
-            child: Text(
-              value,
-              textScaleFactor: 1.3,
-            ),
+            child: child,
             flex: 2,
           ),
         ],
@@ -129,6 +138,3 @@ class _Line extends StatelessWidget {
     );
   }
 }
-
-List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
-    base64String.map(base64Decode).toList();

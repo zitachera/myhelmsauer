@@ -84,7 +84,11 @@ class PhotoCollectionField extends StatelessWidget {
       );
     }
     if (images.length < max) {
-      cells.add(_AddButton(onAdd: onAdd, label: labelAdd));
+      cells.add(_AddButton(
+        onAdd: onAdd,
+        label: labelAdd,
+        info: infoAdd,
+      ));
     }
     return Container(
       height: 150,
