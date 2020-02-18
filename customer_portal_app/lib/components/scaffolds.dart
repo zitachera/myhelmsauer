@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
   HsSingleChildScrollScaffold(
@@ -23,12 +24,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
           title,
         ),
         actions: actions,
-        bottom: PreferredSize(
-            child: Container(
-              color: hemlsauerRed,
-              height: 2.5,
-            ),
-            preferredSize: Size.fromHeight(2.5)),
+        bottom: _appBarBottom,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -40,6 +36,13 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
     );
   }
 }
+
+PreferredSize get _appBarBottom => PreferredSize(
+    child: Container(
+      color: hemlsauerRed,
+      height: 2.5,
+    ),
+    preferredSize: Size.fromHeight(2.5));
 
 class HsNestedScrollScaffold extends StatelessWidget {
   HsNestedScrollScaffold({Key key, this.title, this.body}) : super(key: key);
@@ -86,13 +89,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            bottom: PreferredSize(
-              child: Container(
-                color: hemlsauerRed,
-                height: 2.5,
-              ),
-              preferredSize: Size.fromHeight(2.5),
-            ),
+            bottom: _appBarBottom,
           ),
         ],
         body: RefreshIndicator(
@@ -108,4 +105,19 @@ class HsNestedScrollScaffold extends StatelessWidget {
       ),
     );
   }
+}
+
+class HsPDFViewerScaffold extends StatelessWidget {
+  final String pdfPath;
+  final String titel;
+
+  HsPDFViewerScaffold({this.pdfPath, this.titel});
+
+  @override
+  Widget build(BuildContext context) => PDFViewerScaffold(
+      appBar: AppBar(
+        title: Text(titel),
+        bottom: _appBarBottom,
+      ),
+      path: pdfPath);
 }

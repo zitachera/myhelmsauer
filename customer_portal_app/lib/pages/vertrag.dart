@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class VertragPage extends StatelessWidget {
   VertragPage({
@@ -34,22 +39,54 @@ class VertragPage extends StatelessWidget {
                 textScaleFactor: 1.3,
               ),
             ),
+            FlatButton(
+              onPressed: () async {
+                var path = await prepareTestPdf();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HsPDFViewerScaffold(
+                      pdfPath: path,
+                      titel: vertrag.name,
+                    ),
+                  ),
+                );
+              },
+              child: Text(
+                "Vertragdetails Ansehen",
+                textScaleFactor: 1.3,
+              ),
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text('Vorfall Melden'),
+        icon: const Icon(Icons.add_to_photos),
         onPressed: () => {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MeldenPage(
-              vertrag: vertrag,
-            )),
+            MaterialPageRoute(
+              builder: (context) => MeldenPage(
+                vertrag: vertrag,
+              ),
+            ),
           ),
         },
-        tooltip: 'Vorfall Melden',
-        child: const Icon(Icons.add_to_photos),
       ),
     );
+  }
+
+  Future<String> prepareTestPdf() async {
+    final ByteData bytes = await rootBundle.load("contract.pdf");
+    final Uint8List list = bytes.buffer.asUint8List();
+
+    final tempDir = await getTemporaryDirectory();
+    final tempDocumentPath = '${tempDir.path}/contract.pdf';
+
+    final file = await File(tempDocumentPath).create(recursive: true);
+    file.writeAsBytesSync(list);
+    return tempDocumentPath;
   }
 }
 
