@@ -4,7 +4,7 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/images.dart';
-import 'package:customer_portal_app/pages/vorfall.dart';
+import 'package:customer_portal_app/pages/vorgang.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -51,7 +51,7 @@ class _MeldenState extends State<MeldenPage> {
   DateTime datum;
   TimeOfDay zeit;
 
-  Vorfall get vorfall => Vorfall(
+  Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
         titel: titel,
         vertragsID: vertrag.id,
@@ -78,7 +78,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
-      title: 'Vorfall Melden',
+      title: 'Vorgang Melden',
       actions: <Widget>[
         Builder(
           builder: (context) => FlatButton.icon(
@@ -98,7 +98,7 @@ class _MeldenState extends State<MeldenPage> {
 
               var pr = new ProgressDialog(context);
               pr.style(
-                  message: 'Sende Vorfallsmeldung...',
+                  message: 'Sende Vorgangsmeldung...',
                   borderRadius: 10.0,
                   backgroundColor: Colors.white,
                   progressWidget: SpinKitCircle(color: hemlsauerBlue),
@@ -112,7 +112,7 @@ class _MeldenState extends State<MeldenPage> {
               await pr.show();
 
               // print(jsonEncode(vertrag.toJson()));
-              // print(jsonEncode(vorfall.toJson()));
+              // print(jsonEncode(vorgang.toJson()));
 
               await Future.delayed(Duration(seconds: 10));
               status = BearbeitungsStatus.inBearbeitung;
@@ -122,8 +122,8 @@ class _MeldenState extends State<MeldenPage> {
                 ..popUntil((route) => route.isFirst)
                 ..push(
                   MaterialPageRoute(
-                    builder: (context) => VorfallPage(
-                      vorfall: vorfall,
+                    builder: (context) => VorgangPage(
+                      vorgang: vorgang,
                       vertrag: vertrag,
                     ),
                   ),
@@ -162,7 +162,7 @@ class _MeldenState extends State<MeldenPage> {
                 maxLengthEnforced: true,
                 validator: (s) {
                   if (s.isNotEmpty) return null;
-                  return "Bitte geben Sie dem Vorfall einen Titel!";
+                  return "Bitte geben Sie dem Vorgang einen Titel!";
                 },
               ),
             ),
@@ -193,7 +193,7 @@ class _MeldenState extends State<MeldenPage> {
                 onChanged: (s) => ort = s,
                 validator: (s) {
                   if (s.isNotEmpty) return null;
-                  return "Bitte geben Sie den Ort des Vorfalls an!";
+                  return "Bitte geben Sie den Ort des Vorgangs an!";
                 },
               ),
             ),
@@ -206,7 +206,7 @@ class _MeldenState extends State<MeldenPage> {
                 maxLines: null,
                 validator: (s) {
                   if (s.isNotEmpty) return null;
-                  return "Bitte beschreiben Sie den Vorfall!";
+                  return "Bitte beschreiben Sie den Vorgang!";
                 },
               ),
             ),

@@ -41,7 +41,7 @@ class Vertrag {
 
 @JsonSerializable()
 @dataClass
-class Vorfall {
+class Vorgang {
   final String id;
   final String titel;
   final String vertragsID;
@@ -54,7 +54,7 @@ class Vorfall {
   final List<Uint8List> fahrzeugscheinAufnahmen;
   final BearbeitungsStatus status;
 
-  Vorfall({
+  Vorgang({
     @required this.id,
     this.titel,
     @required this.vertragsID,
@@ -68,7 +68,7 @@ class Vorfall {
     this.status,
   });
 
-  Vorfall.fromJson(Map<String, dynamic> json)
+  Vorgang.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         titel = json['titel'],
         vertragsID = json['vertragsID'],

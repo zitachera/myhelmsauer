@@ -2,7 +2,7 @@ import 'package:customer_portal_app/components/bearbeitungsstatus.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
-import 'package:customer_portal_app/pages/vorfall.dart';
+import 'package:customer_portal_app/pages/vorgang.dart';
 import 'package:flutter/material.dart';
 import 'package:time_machine/time_machine.dart';
 import 'package:uuid/uuid.dart';
@@ -15,8 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Vorfall> vorfaelle = <Vorfall>[
-    Vorfall(
+  List<Vorgang> vorgaengen = <Vorgang>[
+    Vorgang(
       id: Uuid().v1(),
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       titel: "Fall X",
       status: BearbeitungsStatus.wirdGesendet,
     ),
-    Vorfall(
+    Vorgang(
       id: Uuid().v1(),
       vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       titel: "Fall Y",
       status: BearbeitungsStatus.inBearbeitung,
     ),
-    Vorfall(
+    Vorgang(
       id: Uuid().v1(),
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2019, 01, 20, 9, 50, 10),
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       titel: "Fall Z",
       status: BearbeitungsStatus.abgeschlossen,
     ),
-    Vorfall(
+    Vorgang(
       id: Uuid().v1(),
       vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
@@ -74,50 +74,25 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  Vertrag vertragZuVorfall(Vorfall vorfall) => vertraege.firstWhere(
-        (v) => v.id == vorfall.vertragsID,
+  Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
+        (v) => v.id == vorgang.vertragsID,
       );
 
-  bool isHidden(Vorfall v) =>
+  bool isHidden(Vorgang v) =>
       hideAbgeschlossen && v.status == BearbeitungsStatus.abgeschlossen;
 
   bool hideAbgeschlossen = true;
 
-  Iterable<Vorfall> get visibleVorfaelle =>
-      vorfaelle.where((v) => !isHidden(v));
-  Iterable<Vorfall> get hiddenVorfaelle => vorfaelle.where(isHidden);
+  Iterable<Vorgang> get visibleVorgaengen =>
+      vorgaengen.where((v) => !isHidden(v));
+  Iterable<Vorgang> get hiddenVorgaengen => vorgaengen.where(isHidden);
 
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
-      title: 'Hemlsauer',
+      title: 'Hemlsauer-Gruppe',
       body: Column(
         children: <Widget>[
-          if (visibleVorfaelle.isNotEmpty)
-            Text(
-              "Meine Vorfälle",
-              textScaleFactor: 2,
-            ),
-          ...visibleVorfaelle.map(
-            (vorfall) => _buildVorfall(
-              context,
-              vorfall,
-            ),
-          ),
-          if (hiddenVorfaelle.isNotEmpty)
-            FlatButton(
-              onPressed: () {
-                setState(() => hideAbgeschlossen = false);
-              },
-              child: Text("${hiddenVorfaelle.length} Abgeschlossene Vorfälle"),
-            ),
-          if (!hideAbgeschlossen)
-            FlatButton(
-              onPressed: () {
-                setState(() => hideAbgeschlossen = true);
-              },
-              child: Text("Abgeschlossene Vorfälle ausblenden"),
-            ),
           Text(
             "Meine Verträge",
             textScaleFactor: 2,
@@ -128,6 +103,31 @@ class _HomePageState extends State<HomePage> {
               vertrag,
             ),
           ),
+          if (visibleVorgaengen.isNotEmpty)
+            Text(
+              "Meine Vorgänge",
+              textScaleFactor: 2,
+            ),
+          ...visibleVorgaengen.map(
+            (vorgang) => _buildVorgang(
+              context,
+              vorgang,
+            ),
+          ),
+          if (hiddenVorgaengen.isNotEmpty)
+            FlatButton(
+              onPressed: () {
+                setState(() => hideAbgeschlossen = false);
+              },
+              child: Text("${hiddenVorgaengen.length} Abgeschlossene Vorgänge"),
+            ),
+          if (!hideAbgeschlossen)
+            FlatButton(
+              onPressed: () {
+                setState(() => hideAbgeschlossen = true);
+              },
+              child: Text("Abgeschlossene Vorgänge ausblenden"),
+            ),
         ],
       ),
     );
@@ -161,15 +161,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  FlatButton _buildVorfall(BuildContext context, Vorfall vorfall) {
+  FlatButton _buildVorgang(BuildContext context, Vorgang vorgang) {
     return FlatButton(
       onPressed: () => {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => VorfallPage(
-                    vorfall: vorfall,
-                    vertrag: vertragZuVorfall(vorfall),
+              builder: (context) => VorgangPage(
+                    vorgang: vorgang,
+                    vertrag: vertragZuVorgang(vorgang),
                   )),
         ),
       },
@@ -177,20 +177,20 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Expanded(
             child: Text(
-              vorfall.zeitpunkt.toString('dd.MM.yyyy HH:mm'),
+              vorgang.zeitpunkt.toString('dd.MM.yyyy HH:mm'),
               textScaleFactor: 1.3,
             ),
           ),
           Expanded(
             child: Text(
-              vorfall.titel,
+              vorgang.titel,
               textScaleFactor: 1.3,
             ),
           ),
           Expanded(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: BearbeitungsStatusBadge(vorfall.status)),
+                child: BearbeitungsStatusBadge(vorgang.status)),
           ),
         ],
       ),

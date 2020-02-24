@@ -4,20 +4,20 @@ import 'package:customer_portal_app/model/types.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 
-class VorfallPage extends StatelessWidget {
-  VorfallPage({
+class VorgangPage extends StatelessWidget {
+  VorgangPage({
     Key key,
-    @required this.vorfall,
+    @required this.vorgang,
     @required this.vertrag,
   }) : super(key: key);
 
-  final Vorfall vorfall;
+  final Vorgang vorgang;
   final Vertrag vertrag;
 
   @override
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
-      title: vorfall.titel,
+      title: vorgang.titel,
       body: Column(
         children: <Widget>[
           _Line.text(
@@ -28,35 +28,35 @@ class VorfallPage extends StatelessWidget {
             caption: 'Status',
             child: Align(
               alignment: Alignment.centerLeft,
-              child: BearbeitungsStatusBadge(vorfall.status),
+              child: BearbeitungsStatusBadge(vorgang.status),
             ),
           ),
           _Line.text(
             caption: 'Datum',
-            value: vorfall.zeitpunkt.toString('dd.MM.yyyy'),
+            value: vorgang.zeitpunkt.toString('dd.MM.yyyy'),
           ),
           _Line.text(
             caption: 'Uhrzeit',
-            value: vorfall.zeitpunkt.toString('HH:mm'),
+            value: vorgang.zeitpunkt.toString('HH:mm'),
           ),
           _Line.text(
             caption: 'Ort',
-            value: vorfall.ort,
+            value: vorgang.ort,
           ),
           _MultiLine(
             caption: 'Beschreibung',
-            value: vorfall.description,
+            value: vorgang.description,
           ),
           PhotoCollection(
-            images: vorfall.detailAufnahmen,
+            images: vorgang.detailAufnahmen,
             label: "Detailansicht",
           ),
           PhotoCollection(
-            images: vorfall.gesamtAufnahmen,
+            images: vorgang.gesamtAufnahmen,
             label: "Gesamtansicht",
           ),
           PhotoCollection(
-            images: vorfall.fahrzeugscheinAufnahmen,
+            images: vorgang.fahrzeugscheinAufnahmen,
             label: "Fahrzeugscheinaufnahme",
           ),
         ],
