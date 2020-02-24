@@ -25,19 +25,37 @@ class VertragPage extends StatelessWidget {
         child: Column(
           children: <Widget>[
             _InfoLine(
-              caption: "Vertrag",
-              value: vertrag.name,
+              caption: "Sparte",
+              value: vertrag.sparte,
             ),
             _InfoLine(
-              caption: "Vertragsbeginn",
-              value: vertrag.beginn.toString('dd.MM.yyyy'),
+              caption: "Gesellschaft",
+              value: vertrag.gesellschaft,
             ),
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: Text(
-                vertrag.description,
-                textScaleFactor: 1.3,
-              ),
+            _InfoLine(
+              caption: "Vertragsnummer",
+              value: vertrag.vertragsnummer,
+            ),
+            _InfoLine(
+              caption: "Ablauf",
+              value: vertrag.ablauf.toString('dd.MM.yyyy'),
+            ),
+            _InfoLine(
+              caption: "Status",
+              value: const {
+                    VertragStatus.aktiv: "aktiv",
+                    VertragStatus.antrag: "antrag",
+                    VertragStatus.storno: "storno",
+                  }[vertrag.status] ??
+                  "Unbekannter Vertragsstatus",
+            ),
+            _InfoLine(
+              caption: "Beitrag",
+              value: vertrag.beitrag,
+            ),
+            _InfoLine(
+              caption: "Risiko",
+              value: vertrag.risiko,
             ),
             FlatButton(
               onPressed: () async {
@@ -47,7 +65,8 @@ class VertragPage extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => HsPDFViewerScaffold(
                       pdfPath: path,
-                      titel: vertrag.name,
+                      titel:
+                          "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
                     ),
                   ),
                 );

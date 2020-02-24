@@ -10,34 +10,59 @@ import 'package:time_machine/time_machine.dart';
 @dataClass
 class Vertrag {
   final String id;
-  final String name;
-  final String versicherer;
-  final LocalDate beginn;
-  final String description;
+
+  final String sparte;
+  final String gesellschaft;
+  final String vertragsnummer;
+  final LocalDate ablauf;
+  final VertragStatus status;
+  final String beitrag;
+  final String risiko;
 
   Vertrag({
     @required this.id,
-    this.name,
-    this.versicherer,
-    this.beginn,
-    this.description,
+    this.sparte,
+    this.gesellschaft,
+    this.vertragsnummer,
+    this.ablauf,
+    this.status,
+    this.beitrag,
+    this.risiko,
   });
 
   Vertrag.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        name = json['name'],
-        versicherer = json['versicherer'],
-        beginn = LocalDate.dateTime(DateTime.parse(json['beginn'])),
-        description = json['description'];
+        sparte = json['sparte'],
+        gesellschaft = json['gesellschaft'],
+        vertragsnummer = json['vertragsnummer'],
+        ablauf = LocalDate.dateTime(DateTime.parse(json['ablauf'])),
+        status = _jsonToVertragStatus(json['status']),
+        beitrag = json['beitrag'],
+        risiko = json['risiko'];
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'name': name,
-        'versicherer': versicherer,
-        'beginn': beginn.toDateTimeUnspecified().toIso8601String(),
-        'description': description,
+        'sparte': sparte,
+        'gesellschaft': gesellschaft,
+        'vertragsnummer': vertragsnummer,
+        'ablauf': ablauf.toDateTimeUnspecified().toIso8601String(),
+        'status': _vertragStatusToJson(status),
+        'beitrag': beitrag,
+        'risiko': risiko,
       };
 }
+
+enum VertragStatus {
+  aktiv,
+  antrag,
+  storno,
+}
+
+String _vertragStatusToJson(VertragStatus status) =>
+    status.toString().split('.')[1];
+
+VertragStatus _jsonToVertragStatus(String status) =>
+    VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status);
 
 @JsonSerializable()
 @dataClass

@@ -21,8 +21,16 @@ class VorgangPage extends StatelessWidget {
       body: Column(
         children: <Widget>[
           _Line.text(
-            caption: 'Vertrag',
-            value: vertrag.name,
+            caption: "Sparte",
+            value: vertrag.sparte,
+          ),
+          _Line.text(
+            caption: "Gesellschaft",
+            value: vertrag.gesellschaft,
+          ),
+          _Line.text(
+            caption: "Vertragsnummer",
+            value: vertrag.vertragsnummer,
           ),
           _Line(
             caption: 'Status',

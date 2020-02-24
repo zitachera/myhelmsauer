@@ -146,12 +146,17 @@ class _MeldenState extends State<MeldenPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            _Line(
-              caption: "Vetrag",
-              child: Text(
-                vertrag.name,
-                textScaleFactor: 1.3,
-              ),
+            _Line.text(
+              caption: "Sparte",
+              value: vertrag.sparte,
+            ),
+            _Line.text(
+              caption: "Gesellschaft",
+              value: vertrag.gesellschaft,
+            ),
+            _Line.text(
+              caption: "Vertragsnummer",
+              value: vertrag.vertragsnummer,
             ),
             _Line(
               caption: 'Titel',
@@ -307,6 +312,16 @@ class _Line extends StatelessWidget {
     this.caption,
     this.child,
   }) : super(key: key);
+
+  _Line.text({
+    Key key,
+    this.caption,
+    String value,
+  })  : child = Text(
+          value,
+          textScaleFactor: 1.3,
+        ),
+        super(key: key);
 
   final String caption;
   final Widget child;

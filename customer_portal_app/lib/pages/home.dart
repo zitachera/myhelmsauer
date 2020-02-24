@@ -58,19 +58,23 @@ class _HomePageState extends State<HomePage> {
   List<Vertrag> vertraege = <Vertrag>[
     Vertrag(
       id: '<uuid-1>',
-      name: "Vertrag A",
-      beginn: LocalDate(2009, 11, 3),
-      versicherer: "AXA",
-      description:
-          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      sparte: 'Kfz-Versicherung',
+      gesellschaft: 'AXA',
+      vertragsnummer: '123',
+      ablauf: LocalDate(2029, 11, 3),
+      status: VertragStatus.aktiv,
+      beitrag: '20,00 €',
+      risiko: '??',
     ),
     Vertrag(
       id: '<uuid-2>',
-      name: "Vertrag B",
-      beginn: LocalDate(2011, 09, 7),
-      versicherer: "HDI",
-      description:
-          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+      sparte: 'Kfz-Versicherung',
+      gesellschaft: 'HDI',
+      vertragsnummer: '456',
+      ablauf: LocalDate(2029, 11, 3),
+      status: VertragStatus.aktiv,
+      beitrag: '55,00 €',
+      risiko: '??',
     ),
   ];
 
@@ -146,13 +150,19 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Expanded(
             child: Text(
-              vertrag.name,
+              vertrag.sparte,
               textScaleFactor: 1.3,
             ),
           ),
           Expanded(
             child: Text(
-              vertrag.versicherer,
+              vertrag.gesellschaft,
+              textScaleFactor: 1.3,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              vertrag.vertragsnummer,
               textScaleFactor: 1.3,
             ),
           ),
