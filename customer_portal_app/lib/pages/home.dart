@@ -21,9 +21,9 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
       ort: "Coronastr 3",
-      description:
+      schadenhergang:
           "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Fall X",
+      titel: "Vorgang X",
       status: BearbeitungsStatus.wirdGesendet,
     ),
     Vorgang(
@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
       ort: "Coronastr 3",
-      titel: "Fall Y",
+      schadenhergang:
+          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
+      titel: "Vorgang Y",
       status: BearbeitungsStatus.inBearbeitung,
     ),
     Vorgang(
@@ -39,9 +41,9 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-1>',
       zeitpunkt: LocalDateTime(2019, 01, 20, 9, 50, 10),
       ort: "Coronastr 3",
-      description:
+      schadenhergang:
           "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Fall Z",
+      titel: "Vorgang Z",
       status: BearbeitungsStatus.abgeschlossen,
     ),
     Vorgang(
@@ -49,9 +51,9 @@ class _HomePageState extends State<HomePage> {
       vertragsID: '<uuid-2>',
       zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
       ort: "Coronastr 3",
-      description:
+      schadenhergang:
           "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Fall W",
+      titel: "Vorgang W",
       status: BearbeitungsStatus.abgeschlossen,
     ),
   ];

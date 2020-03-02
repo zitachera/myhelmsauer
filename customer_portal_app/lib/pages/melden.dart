@@ -40,7 +40,7 @@ class _MeldenState extends State<MeldenPage> {
   LocalDateTime get zeitpunkt => LocalDateTime(
       datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
 
-  String description = "";
+  String schadenhergang = "";
   String ort = "";
   Position gps;
   List<Uint8List> detailAufnahmen = <Uint8List>[];
@@ -55,7 +55,7 @@ class _MeldenState extends State<MeldenPage> {
         id: Uuid().v1(),
         titel: titel,
         vertragsID: vertrag.id,
-        description: description,
+        schadenhergang: schadenhergang,
         ort: ort,
         gps: gps,
         detailAufnahmen: detailAufnahmen,
@@ -78,7 +78,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
-      title: 'Vorgang Melden',
+      title: 'Schadenmeldung',
       actions: <Widget>[
         Builder(
           builder: (context) => FlatButton.icon(
@@ -87,10 +87,12 @@ class _MeldenState extends State<MeldenPage> {
                   detailAufnahmen.length < 1 ||
                   gesamtAufnahmen.length < 1 ||
                   fahrzeugscheinAufnahmen.length < 1) {
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                      'Bitte füllen Sie alle Felder aus und tragen mindestens ein Bild pro Kategorie ein.'),
-                ));
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                        'Bitte füllen Sie alle Felder aus und tragen mindestens ein Bild pro Kategorie ein.'),
+                  ),
+                );
                 return;
               }
               setState(() => status = BearbeitungsStatus.wirdGesendet);
@@ -98,16 +100,18 @@ class _MeldenState extends State<MeldenPage> {
 
               var pr = new ProgressDialog(context);
               pr.style(
-                  message: 'Sende Vorgangsmeldung...',
-                  borderRadius: 10.0,
-                  backgroundColor: Colors.white,
-                  progressWidget: SpinKitCircle(color: hemlsauerBlue),
-                  elevation: 10.0,
-                  insetAnimCurve: Curves.easeInOut,
-                  messageTextStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.w600));
+                message: 'Sende Schadenmeldung...',
+                borderRadius: 10.0,
+                backgroundColor: Colors.white,
+                progressWidget: SpinKitCircle(color: hemlsauerBlue),
+                elevation: 10.0,
+                insetAnimCurve: Curves.easeInOut,
+                messageTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 19.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
 
               await pr.show();
 
@@ -192,7 +196,7 @@ class _MeldenState extends State<MeldenPage> {
               ),
             ),
             _Line(
-              caption: 'Ort',
+              caption: 'Schadenort',
               child: TextFormField(
                 initialValue: ort,
                 onChanged: (s) => ort = s,
@@ -203,10 +207,10 @@ class _MeldenState extends State<MeldenPage> {
               ),
             ),
             _MultiLine(
-              caption: 'Beschreibung',
+              caption: 'Schadenhergang',
               child: TextFormField(
-                initialValue: description,
-                onChanged: (s) => description = s,
+                initialValue: schadenhergang,
+                onChanged: (s) => schadenhergang = s,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 validator: (s) {
@@ -217,8 +221,8 @@ class _MeldenState extends State<MeldenPage> {
             ),
             PhotoCollectionField(
               images: detailAufnahmen,
-              labelAdd: "Detailansicht hinzufügen",
-              label: 'Detailansicht',
+              labelAdd: "Detail\u{00AD}ansicht hinzufügen",
+              label: 'Detail\u{00AD}ansicht',
               onDelete: (i) => setState(() => detailAufnahmen.removeAt(i)),
               onAdd: (image) => setState(() => detailAufnahmen.add(image)),
               infoAdd: Text(
@@ -229,20 +233,28 @@ class _MeldenState extends State<MeldenPage> {
             ),
             PhotoCollectionField(
               images: gesamtAufnahmen,
-              labelAdd: "Gesamtansicht hinzufügen",
-              label: 'Gesamtansicht',
+              labelAdd: "Gesamt\u{00AD}ansicht hinzufügen",
+              label: 'Gesamt\u{00AD}ansicht',
               onDelete: (i) => setState(() => gesamtAufnahmen.removeAt(i)),
               onAdd: (image) => setState(() => gesamtAufnahmen.add(image)),
+              infoAdd: Text(
+                "hier können infos und text zur bildkategorie stehen.",
+                maxLines: null,
+              ),
               max: 3,
             ),
             PhotoCollectionField(
               images: fahrzeugscheinAufnahmen,
-              labelAdd: "Fahrzeugscheinaufnahme hinzufügen",
-              label: 'Fahrzeugscheinaufnahme',
+              labelAdd: "Fahrzeugschein\u{00AD}aufnahme hinzufügen",
+              label: 'Fahrzeugschein\u{00AD}aufnahme',
               onDelete: (i) =>
                   setState(() => fahrzeugscheinAufnahmen.removeAt(i)),
               onAdd: (image) =>
                   setState(() => fahrzeugscheinAufnahmen.add(image)),
+              infoAdd: Text(
+                "hier können infos und text zur bildkategorie stehen.",
+                maxLines: null,
+              ),
               max: 2,
             ),
           ],

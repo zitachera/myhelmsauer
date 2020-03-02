@@ -71,7 +71,7 @@ class Vorgang {
   final String titel;
   final String vertragsID;
   final LocalDateTime zeitpunkt;
-  final String description;
+  final String schadenhergang;
   final String ort;
   final Position gps;
   final List<Uint8List> detailAufnahmen;
@@ -84,7 +84,7 @@ class Vorgang {
     this.titel,
     @required this.vertragsID,
     this.zeitpunkt,
-    this.description,
+    this.schadenhergang,
     this.ort,
     this.gps,
     this.detailAufnahmen = const <Uint8List>[],
@@ -98,7 +98,7 @@ class Vorgang {
         titel = json['titel'],
         vertragsID = json['vertragsID'],
         zeitpunkt = LocalDateTime.dateTime(DateTime.parse(json['zeitpunkt'])),
-        description = json['description'],
+        schadenhergang = json['schadenhergang'],
         ort = json['ort'],
         gps = Position(
           latitude: json['latitude'],
@@ -115,7 +115,7 @@ class Vorgang {
         'titel': titel,
         'vertragsID': vertragsID,
         'zeitpunkt': zeitpunkt.toDateTimeLocal().toIso8601String(),
-        'description': description,
+        'schadenhergang': schadenhergang,
         'ort': ort,
         'latitude': gps.latitude,
         'longitude': gps.longitude,

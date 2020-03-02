@@ -80,7 +80,7 @@ class VertragPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text('Vorgang Melden'),
+        label: Text('Schadenmeldung'),
         icon: const Icon(Icons.add_to_photos),
         onPressed: () => {
           Navigator.push(

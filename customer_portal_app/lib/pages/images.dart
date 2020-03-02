@@ -267,15 +267,15 @@ class _AddButton extends StatelessWidget {
                     children: <Widget>[
                       _AddImageAction(
                         onAdd: onAdd,
-                        source: ImageSource.camera,
-                        icon: const Icon(Icons.camera),
-                        caption: "Foto mit Kamera aufnehmen",
-                      ),
-                      _AddImageAction(
-                        onAdd: onAdd,
                         source: ImageSource.gallery,
                         icon: const Icon(Icons.photo_library),
                         caption: "Foto aus Galerie auswählen",
+                      ),
+                      _AddImageAction(
+                        onAdd: onAdd,
+                        source: ImageSource.camera,
+                        icon: const Icon(Icons.camera),
+                        caption: "Foto mit Kamera aufnehmen",
                       ),
                     ],
                   ),
@@ -412,9 +412,10 @@ class _ButtonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Box(
-      child: SizedBox.expand(
-        child: GestureDetector(
-          onTap: onPressed,
+      child: GestureDetector(
+        onTap: onPressed,
+        behavior: HitTestBehavior.opaque,
+        child: SizedBox.expand(
           child: child,
         ),
       ),

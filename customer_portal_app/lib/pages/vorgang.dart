@@ -52,8 +52,8 @@ class VorgangPage extends StatelessWidget {
             value: vorgang.ort,
           ),
           _MultiLine(
-            caption: 'Beschreibung',
-            value: vorgang.description,
+            caption: 'Schadenhergang',
+            value: vorgang.schadenhergang,
           ),
           PhotoCollection(
             images: vorgang.detailAufnahmen,
