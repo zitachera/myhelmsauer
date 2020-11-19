@@ -103,7 +103,7 @@ class _MeldenState extends State<MeldenPage> {
                 message: 'Sende Schadenmeldung...',
                 borderRadius: 10.0,
                 backgroundColor: Colors.white,
-                progressWidget: SpinKitCircle(color: hemlsauerBlue),
+                progressWidget: SpinKitCircle(color: helmsauerBlue),
                 elevation: 10.0,
                 insetAnimCurve: Curves.easeInOut,
                 messageTextStyle: TextStyle(

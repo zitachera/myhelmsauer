@@ -39,7 +39,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
 
 PreferredSize get _appBarBottom => PreferredSize(
     child: Container(
-      color: hemlsauerRed,
+      color: helmsauerRed,
       height: 2.5,
     ),
     preferredSize: Size.fromHeight(2.5));
@@ -66,11 +66,11 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 25.0,
-                      fontFamily: 'Chub Gothic',
+                      //fontFamily: 'Chub Gothic',
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 5
-                        ..color = hemlsauerBlue,
+                        ..color = helmsauerBlue,
                     ),
                   ),
                   Text(
@@ -78,7 +78,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,
-                      fontFamily: 'Chub Gothic',
+                      //fontFamily: 'Chub Gothic',
                     ),
                   ),
                 ],

@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
-      title: 'Hemlsauer-Gruppe',
+      title: 'Helmsauer-Gruppe',
       body: Column(
         children: <Widget>[
           Text(

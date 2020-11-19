@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Helmsauer Versicherungen Portal',
       theme: ThemeData(
-        primarySwatch: _createMaterialColor(hemlsauerBlue),
-        secondaryHeaderColor: _createMaterialColor(hemlsauerRed),
-        bottomAppBarColor: _createMaterialColor(hemlsauerBlue),
+        primarySwatch: _createMaterialColor(helmsauerBlue),
+        secondaryHeaderColor: _createMaterialColor(helmsauerRed),
+        bottomAppBarColor: _createMaterialColor(helmsauerBlue),
       ),
       home: HomePage(),
     );
