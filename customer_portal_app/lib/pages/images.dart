@@ -331,14 +331,14 @@ class _AddImageAction extends StatelessWidget {
         onPressed: () async {
           Navigator.of(context).pop();
 
-          var image = await ImagePicker.pickImage(
+          var image = await ImagePicker().getImage(
             source: source,
             imageQuality: 90,
           );
           if (image == null) {
             return; // canceld
           }
-          var bytes = image.readAsBytesSync();
+          var bytes = await image.readAsBytes();
 
           onAdd(bytes);
         },

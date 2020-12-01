@@ -68,8 +68,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((position) => gps = position);
   }
 
