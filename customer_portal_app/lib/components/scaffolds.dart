@@ -4,12 +4,18 @@ import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
   HsSingleChildScrollScaffold(
-      {Key key, this.title, this.body, this.actions, this.floatingActionButton})
+      {Key key,
+      this.title,
+      this.body,
+      this.actions,
+      this.floatingActionButton,
+      this.bottomNavigationBar})
       : super(key: key);
 
   final String title;
   final Widget body;
   final List<Widget> actions;
+  final Widget bottomNavigationBar;
 
   /// A button displayed floating above [body], in the bottom right corner.
   ///
@@ -33,6 +39,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
         ),
       ),
       floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
@@ -45,10 +52,13 @@ PreferredSize get _appBarBottom => PreferredSize(
     preferredSize: Size.fromHeight(2.5));
 
 class HsNestedScrollScaffold extends StatelessWidget {
-  HsNestedScrollScaffold({Key key, this.title, this.body}) : super(key: key);
+  HsNestedScrollScaffold(
+      {Key key, this.title, this.body, this.bottomNavigationBar})
+      : super(key: key);
 
   final String title;
   final Widget body;
+  final Widget bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +113,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

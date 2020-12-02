@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:dataclass/dataclass.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:time_machine/time_machine.dart';
 
 @dataClass
