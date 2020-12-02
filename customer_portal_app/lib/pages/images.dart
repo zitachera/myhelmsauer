@@ -246,10 +246,6 @@ class _AddButton extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => Dialog(
-            // vielleicht gleich eine eigene page?
-            //Das macht die kommunikation zu melden deutlich komplizierter :-/
-            //Könnte aber helfen das omniöse closed mainactivity problem lösen
-
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

@@ -1,6 +1,6 @@
-import 'package:customer_portal_app/components/bearbeitungsstatus.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/types.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 
@@ -31,13 +31,6 @@ class VorgangPage extends StatelessWidget {
           _Line.text(
             caption: "Vertragsnummer",
             value: vertrag.vertragsnummer,
-          ),
-          _Line(
-            caption: 'Status',
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: BearbeitungsStatusBadge(vorgang.status),
-            ),
           ),
           _Line.text(
             caption: 'Datum',

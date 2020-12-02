@@ -1,6 +1,6 @@
-import 'package:customer_portal_app/components/bearbeitungsstatus.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/types.dart';
+import 'package:customer_portal_app/model/vorgang.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:customer_portal_app/pages/vorgang.dart';
 import 'package:flutter/material.dart';
@@ -15,48 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Vorgang> vorgaengen = <Vorgang>[
-    Vorgang(
-      id: Uuid().v1(),
-      vertragsID: '<uuid-1>',
-      zeitpunkt: LocalDateTime(2020, 01, 20, 9, 50, 10),
-      ort: "Coronastr 3",
-      schadenhergang:
-          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Vorgang X",
-      status: BearbeitungsStatus.wirdGesendet,
-    ),
-    Vorgang(
-      id: Uuid().v1(),
-      vertragsID: '<uuid-2>',
-      zeitpunkt: LocalDateTime(2020, 01, 28, 17, 15, 10),
-      ort: "Coronastr 3",
-      schadenhergang:
-          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Vorgang Y",
-      status: BearbeitungsStatus.inBearbeitung,
-    ),
-    Vorgang(
-      id: Uuid().v1(),
-      vertragsID: '<uuid-1>',
-      zeitpunkt: LocalDateTime(2019, 01, 20, 9, 50, 10),
-      ort: "Coronastr 3",
-      schadenhergang:
-          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Vorgang Z",
-      status: BearbeitungsStatus.abgeschlossen,
-    ),
-    Vorgang(
-      id: Uuid().v1(),
-      vertragsID: '<uuid-2>',
-      zeitpunkt: LocalDateTime(2018, 01, 28, 17, 15, 10),
-      ort: "Coronastr 3",
-      schadenhergang:
-          "Sökldfj skfj piosjwf iojs siojsfe sepj säpioj äpsoei sfjuio fsen ueo sehf oisefn.",
-      titel: "Vorgang W",
-      status: BearbeitungsStatus.abgeschlossen,
-    ),
-  ];
   List<Vertrag> vertraege = <Vertrag>[
     Vertrag(
       id: '<uuid-1>',
@@ -84,15 +42,6 @@ class _HomePageState extends State<HomePage> {
         (v) => v.id == vorgang.vertragsID,
       );
 
-  bool isHidden(Vorgang v) =>
-      hideAbgeschlossen && v.status == BearbeitungsStatus.abgeschlossen;
-
-  bool hideAbgeschlossen = true;
-
-  Iterable<Vorgang> get visibleVorgaengen =>
-      vorgaengen.where((v) => !isHidden(v));
-  Iterable<Vorgang> get hiddenVorgaengen => vorgaengen.where(isHidden);
-
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
@@ -109,31 +58,6 @@ class _HomePageState extends State<HomePage> {
               vertrag,
             ),
           ),
-          if (visibleVorgaengen.isNotEmpty)
-            Text(
-              "Meine Vorgänge",
-              textScaleFactor: 2,
-            ),
-          ...visibleVorgaengen.map(
-            (vorgang) => _buildVorgang(
-              context,
-              vorgang,
-            ),
-          ),
-          if (hiddenVorgaengen.isNotEmpty)
-            FlatButton(
-              onPressed: () {
-                setState(() => hideAbgeschlossen = false);
-              },
-              child: Text("${hiddenVorgaengen.length} Abgeschlossene Vorgänge"),
-            ),
-          if (!hideAbgeschlossen)
-            FlatButton(
-              onPressed: () {
-                setState(() => hideAbgeschlossen = true);
-              },
-              child: Text("Abgeschlossene Vorgänge ausblenden"),
-            ),
         ],
       ),
     );
@@ -167,42 +91,6 @@ class _HomePageState extends State<HomePage> {
               vertrag.vertragsnummer,
               textScaleFactor: 1.3,
             ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  FlatButton _buildVorgang(BuildContext context, Vorgang vorgang) {
-    return FlatButton(
-      onPressed: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => VorgangPage(
-                    vorgang: vorgang,
-                    vertrag: vertragZuVorgang(vorgang),
-                  )),
-        ),
-      },
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              vorgang.zeitpunkt.toString('dd.MM.yyyy HH:mm'),
-              textScaleFactor: 1.3,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              vorgang.titel,
-              textScaleFactor: 1.3,
-            ),
-          ),
-          Expanded(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: BearbeitungsStatusBadge(vorgang.status)),
           ),
         ],
       ),

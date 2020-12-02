@@ -2,7 +2,8 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/types.dart';
+import 'package:customer_portal_app/model/vorgang.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:customer_portal_app/pages/vorgang.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,6 @@ class _MeldenState extends State<MeldenPage> {
   List<Uint8List> detailAufnahmen = <Uint8List>[];
   List<Uint8List> gesamtAufnahmen = <Uint8List>[];
   List<Uint8List> fahrzeugscheinAufnahmen = <Uint8List>[];
-  BearbeitungsStatus status;
 
   DateTime datum;
   TimeOfDay zeit;
@@ -61,7 +61,6 @@ class _MeldenState extends State<MeldenPage> {
         detailAufnahmen: detailAufnahmen,
         gesamtAufnahmen: gesamtAufnahmen,
         fahrzeugscheinAufnahmen: fahrzeugscheinAufnahmen,
-        status: status,
         zeitpunkt: zeitpunkt,
       );
 
@@ -94,7 +93,6 @@ class _MeldenState extends State<MeldenPage> {
                 );
                 return;
               }
-              setState(() => status = BearbeitungsStatus.wirdGesendet);
               var nav = Navigator.of(context);
 
               var pr = new ProgressDialog(context);
@@ -118,7 +116,6 @@ class _MeldenState extends State<MeldenPage> {
               // print(jsonEncode(vorgang.toJson()));
 
               await Future.delayed(Duration(seconds: 10));
-              status = BearbeitungsStatus.inBearbeitung;
 
               await pr.hide();
               nav

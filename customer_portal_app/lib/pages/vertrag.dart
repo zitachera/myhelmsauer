@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/types.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
