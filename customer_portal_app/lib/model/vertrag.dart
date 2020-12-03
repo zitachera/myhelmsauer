@@ -1,6 +1,5 @@
 import 'package:dataclass/dataclass.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:time_machine/time_machine.dart';
 
 @dataClass
 class Vertrag {
@@ -9,7 +8,7 @@ class Vertrag {
   final String sparte;
   final String gesellschaft;
   final String vertragsnummer;
-  final LocalDate ablauf;
+  final DateTime ablauf;
   final VertragStatus status;
   final String beitrag;
   final String risiko;
@@ -30,7 +29,7 @@ class Vertrag {
         sparte = json['sparte'],
         gesellschaft = json['gesellschaft'],
         vertragsnummer = json['vertragsnummer'],
-        ablauf = LocalDate.dateTime(DateTime.parse(json['ablauf'])),
+        ablauf = DateTime.parse(json['ablauf']),
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
         risiko = json['risiko'];
@@ -40,7 +39,7 @@ class Vertrag {
         'sparte': sparte,
         'gesellschaft': gesellschaft,
         'vertragsnummer': vertragsnummer,
-        'ablauf': ablauf.toDateTimeUnspecified().toIso8601String(),
+        'ablauf': ablauf.toIso8601String(),
         'status': _vertragStatusToJson(status),
         'beitrag': beitrag,
         'risiko': risiko,

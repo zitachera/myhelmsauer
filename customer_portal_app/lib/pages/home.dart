@@ -3,7 +3,6 @@ import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
-import 'package:time_machine/time_machine.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -19,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       sparte: 'Kfz-Versicherung',
       gesellschaft: 'AXA',
       vertragsnummer: '123',
-      ablauf: LocalDate(2029, 11, 3),
+      ablauf: DateTime(2029, 11, 3),
       status: VertragStatus.aktiv,
       beitrag: '20,00 €',
       risiko: '??',
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       sparte: 'Kfz-Versicherung',
       gesellschaft: 'HDI',
       vertragsnummer: '456',
-      ablauf: LocalDate(2029, 11, 3),
+      ablauf: DateTime(2029, 11, 3),
       status: VertragStatus.aktiv,
       beitrag: '55,00 €',
       risiko: 'N XM 333',

@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
@@ -34,11 +35,11 @@ class VorgangPage extends StatelessWidget {
           ),
           _Line.text(
             caption: 'Datum',
-            value: vorgang.zeitpunkt.toString('dd.MM.yyyy'),
+            value: dateFormat.format(vorgang.zeitpunkt),
           ),
           _Line.text(
             caption: 'Uhrzeit',
-            value: vorgang.zeitpunkt.toString('HH:mm'),
+            value: timeFormat.format(vorgang.zeitpunkt),
           ),
           _Line.text(
             caption: 'Ort',

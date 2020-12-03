@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:time_machine/time_machine.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
@@ -26,7 +25,7 @@ class MeldenPage extends StatefulWidget {
         zeit: TimeOfDay.now(),
       );
 
-  // set zeitpunkt(LocalDateTime ldt) {
+  // set zeitpunkt(DateTime ldt) {
   //   datum = DateTime(ldt.year, ldt.monthOfYear, ldt.dayOfMonth);
   //   zeit = TimeOfDay(hour: ldt.hourOfDay, minute: ldt.minuteOfHour);
   // }
@@ -38,8 +37,8 @@ class _MeldenState extends State<MeldenPage> {
   final Vertrag vertrag;
 
   String titel = "";
-  LocalDateTime get zeitpunkt => LocalDateTime(
-      datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
+  DateTime get zeitpunkt =>
+      DateTime(datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
 
   String schadenhergang = "";
   String ort = "";
@@ -72,7 +71,6 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
@@ -175,7 +173,7 @@ class _MeldenState extends State<MeldenPage> {
               caption: 'Datum',
               child: FlatButton(
                 child: Text(
-                  zeitpunkt.toString('dd.MM.yyyy'),
+                  dateFormat.format(zeitpunkt),
                   textScaleFactor: 1.3,
                 ),
                 onPressed: () => _selectDate(context),
@@ -185,7 +183,7 @@ class _MeldenState extends State<MeldenPage> {
               caption: 'Uhrzeit',
               child: FlatButton(
                 child: Text(
-                  zeitpunkt.toString('HH:mm'),
+                  timeFormat.format(zeitpunkt),
                   textScaleFactor: 1.3,
                 ),
                 onPressed: () => _selectTime(context),

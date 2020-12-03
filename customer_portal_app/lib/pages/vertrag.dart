@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/melden.dart';
@@ -38,7 +39,7 @@ class VertragPage extends StatelessWidget {
             ),
             _InfoLine(
               caption: "Ablauf",
-              value: vertrag.ablauf.toString('dd.MM.yyyy'),
+              value: dateFormat.format(vertrag.ablauf),
             ),
             _InfoLine(
               caption: "Status",

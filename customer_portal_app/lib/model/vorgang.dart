@@ -5,7 +5,6 @@ import 'package:dataclass/dataclass.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:time_machine/time_machine.dart';
 
 @JsonSerializable()
 @dataClass
@@ -13,7 +12,7 @@ class Vorgang {
   final String id;
   final String titel;
   final String vertragsID;
-  final LocalDateTime zeitpunkt;
+  final DateTime zeitpunkt;
   final String schadenhergang;
   final String ort;
   final Position gps;
@@ -38,7 +37,7 @@ class Vorgang {
       : id = json['id'],
         titel = json['titel'],
         vertragsID = json['vertragsID'],
-        zeitpunkt = LocalDateTime.dateTime(DateTime.parse(json['zeitpunkt'])),
+        zeitpunkt = DateTime.parse(json['zeitpunkt']),
         schadenhergang = json['schadenhergang'],
         ort = json['ort'],
         gps = Position(
@@ -54,7 +53,7 @@ class Vorgang {
         'id': id,
         'titel': titel,
         'vertragsID': vertragsID,
-        'zeitpunkt': zeitpunkt.toDateTimeLocal().toIso8601String(),
+        'zeitpunkt': zeitpunkt.toIso8601String(),
         'schadenhergang': schadenhergang,
         'ort': ort,
         'latitude': gps.latitude,
