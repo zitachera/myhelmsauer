@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
             label: 'Kontakt',
           ),
         ],
+        showUnselectedLabels: true,
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         unselectedItemColor: Colors.grey,

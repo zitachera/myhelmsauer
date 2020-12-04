@@ -10,7 +10,17 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Column(
+      children: [
+        Text("some news"),
+        Placeholder(
+          fallbackHeight: 150,
+        ),
+        Text("some other news"),
+        Placeholder(
+          fallbackHeight: 150,
+        ),
+      ],
+    );
   }
 }

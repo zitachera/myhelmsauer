@@ -76,7 +76,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     title,
                     style: TextStyle(
                       fontSize: 25.0,
-                      //fontFamily: 'Chub Gothic',
+                      fontFamily: 'Chub Gothic',
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 5
@@ -88,7 +88,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,
-                      //fontFamily: 'Chub Gothic',
+                      fontFamily: 'Chub Gothic',
                     ),
                   ),
                 ],
