@@ -196,8 +196,8 @@ class _MeldenState extends State<MeldenPage> {
             ),
             PhotoCollectionField(
               images: _unfallAufnahmen,
-              labelAdd: "Fahrzeugschein\u{00AD}aufnahme hinzufügen",
-              label: 'Fahrzeugschein\u{00AD}aufnahme',
+              labelAdd: "Unfall\u{00AD}aufnahme hinzufügen",
+              label: 'Unfall\u{00AD}aufnahme',
               onDelete: (i) => setState(() => _unfallAufnahmen.removeAt(i)),
               onAdd: (image) => setState(() => _unfallAufnahmen.add(image)),
               infoAdd: Text(
@@ -292,8 +292,7 @@ class _MeldenState extends State<MeldenPage> {
 
                 await pr.hide();
 
-                // TODO bestätigungspopup
-                showDialog(
+                await showDialog(
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
@@ -389,15 +388,15 @@ class _Line extends StatelessWidget {
     this.child,
   }) : super(key: key);
 
-  _Line.text({
-    Key key,
-    this.caption,
-    String value,
-  })  : child = Text(
-          value,
-          textScaleFactor: 1.3,
-        ),
-        super(key: key);
+  // _Line.text({
+  //   Key key,
+  //   this.caption,
+  //   String value,
+  // })  : child = Text(
+  //         value,
+  //         textScaleFactor: 1.3,
+  //       ),
+  //       super(key: key);
 
   final String caption;
   final Widget child;
