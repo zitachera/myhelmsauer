@@ -1,9 +1,8 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
 import 'package:customer_portal_app/pages/vertraege.dart';
-import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           _content = MeldenVertragwahlPage();
           break;
         case 3:
-        // TODO Kontakt
+          _content = ContactPage();
       }
     });
   }
@@ -68,40 +67,6 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.amber[800],
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  FlatButton _buildVertrag(BuildContext context, Vertrag vertrag) {
-    return FlatButton(
-      onPressed: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => VertragPage(vertrag: vertrag)),
-        ),
-      },
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              vertrag.sparte,
-              textScaleFactor: 1.3,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              vertrag.gesellschaft,
-              textScaleFactor: 1.3,
-            ),
-          ),
-          Expanded(
-            child: Text(
-              vertrag.vertragsnummer,
-              textScaleFactor: 1.3,
-            ),
-          ),
-        ],
       ),
     );
   }
