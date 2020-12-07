@@ -43,9 +43,13 @@ class _MeldenState extends State<MeldenPage> {
   String schadenhergang = "";
   String ort = "";
   Position gps;
-  List<Uint8List> detailAufnahmen = <Uint8List>[];
-  List<Uint8List> gesamtAufnahmen = <Uint8List>[];
-  List<Uint8List> fahrzeugscheinAufnahmen = <Uint8List>[];
+  List<Uint8List> _ausweisFrontAufnahmen = <Uint8List>[];
+  List<Uint8List> _ausweisBackAufnahmen = <Uint8List>[];
+  List<Uint8List> _fuehrerscheinFrontAufnahmen = <Uint8List>[];
+  List<Uint8List> _fuehrerscheinBackAufnahmen = <Uint8List>[];
+  List<Uint8List> _grueneKarteAufnahmen = <Uint8List>[];
+  List<Uint8List> _kennzeichenAufnahmen = <Uint8List>[];
+  List<Uint8List> _unfallAufnahmen = <Uint8List>[];
 
   DateTime datum;
   TimeOfDay zeit;
@@ -57,9 +61,6 @@ class _MeldenState extends State<MeldenPage> {
         schadenhergang: schadenhergang,
         ort: ort,
         gps: gps,
-        detailAufnahmen: detailAufnahmen,
-        gesamtAufnahmen: gesamtAufnahmen,
-        fahrzeugscheinAufnahmen: fahrzeugscheinAufnahmen,
         zeitpunkt: zeitpunkt,
       );
 
@@ -75,99 +76,135 @@ class _MeldenState extends State<MeldenPage> {
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
       title: 'Schadenmeldung',
-      actions: <Widget>[
-        Builder(
-          builder: (context) => FlatButton.icon(
-            onPressed: () async {
-              if (!_formKey.currentState.validate() ||
-                  detailAufnahmen.length < 1 ||
-                  gesamtAufnahmen.length < 1 ||
-                  fahrzeugscheinAufnahmen.length < 1) {
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                        'Bitte füllen Sie alle Felder aus und tragen mindestens ein Bild pro Kategorie ein.'),
-                  ),
-                );
-                return;
-              }
-              var nav = Navigator.of(context);
-
-              var pr = new ProgressDialog(context);
-              pr.style(
-                message: 'Sende Schadenmeldung...',
-                borderRadius: 10.0,
-                backgroundColor: Colors.white,
-                progressWidget: SpinKitCircle(color: helmsauerBlue),
-                elevation: 10.0,
-                insetAnimCurve: Curves.easeInOut,
-                messageTextStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 19.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              );
-
-              await pr.show();
-
-              // print(jsonEncode(vertrag.toJson()));
-              // print(jsonEncode(vorgang.toJson()));
-
-              await Future.delayed(Duration(seconds: 10));
-
-              await pr.hide();
-              nav
-                ..popUntil((route) => route.isFirst)
-                ..push(
-                  MaterialPageRoute(
-                    builder: (context) => VorgangPage(
-                      vorgang: vorgang,
-                      vertrag: vertrag,
-                    ),
-                  ),
-                );
-            },
-            icon: const Icon(
-              Icons.send,
-              color: Colors.white,
-            ),
-            label: Text(
-              'Einreichen',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
       body: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
-            _Line.text(
-              caption: "Sparte",
-              value: vertrag.sparte,
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _ausweisFrontAufnahmen,
+                    labelAdd: "Ausweis\u{00AD}vorderseite hinzufügen",
+                    label: 'Ausweis\u{00AD}vorderseite',
+                    onDelete: (i) =>
+                        setState(() => _ausweisFrontAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _ausweisFrontAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 1,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _ausweisBackAufnahmen,
+                    labelAdd: "Ausweis\u{00AD}rückseite hinzufügen",
+                    label: 'Ausweis\u{00AD}rückseite',
+                    onDelete: (i) =>
+                        setState(() => _ausweisBackAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _ausweisBackAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 1,
+                  ),
+                ),
+              ],
             ),
-            _Line.text(
-              caption: "Gesellschaft",
-              value: vertrag.gesellschaft,
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _fuehrerscheinFrontAufnahmen,
+                    labelAdd: "Führerschein\u{00AD}vorderseite hinzufügen",
+                    label: 'Führerschein\u{00AD}vorderseite',
+                    onDelete: (i) => setState(
+                        () => _fuehrerscheinFrontAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _fuehrerscheinFrontAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 1,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _fuehrerscheinBackAufnahmen,
+                    labelAdd: "Führerschein\u{00AD}rückseite hinzufügen",
+                    label: 'Führerschein\u{00AD}rückseite',
+                    onDelete: (i) =>
+                        setState(() => _fuehrerscheinBackAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _fuehrerscheinBackAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 1,
+                  ),
+                ),
+              ],
             ),
-            _Line.text(
-              caption: "Vertragsnummer",
-              value: vertrag.vertragsnummer,
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _grueneKarteAufnahmen,
+                    labelAdd: "Grüne Karte hinzufügen",
+                    label: 'Grüne Karte',
+                    onDelete: (i) =>
+                        setState(() => _grueneKarteAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _grueneKarteAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 3,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: PhotoCollectionField(
+                    images: _kennzeichenAufnahmen,
+                    labelAdd: "Gesamt\u{00AD}ansicht hinzufügen",
+                    label: 'Gesamt\u{00AD}ansicht',
+                    onDelete: (i) =>
+                        setState(() => _kennzeichenAufnahmen.removeAt(i)),
+                    onAdd: (image) =>
+                        setState(() => _kennzeichenAufnahmen.add(image)),
+                    infoAdd: Text(
+                      "hier können infos und text zur bildkategorie stehen.",
+                      maxLines: null,
+                    ),
+                    max: 3,
+                  ),
+                ),
+              ],
             ),
-            _Line(
-              caption: 'Titel',
-              child: TextFormField(
-                initialValue: titel,
-                onChanged: (s) => titel = s,
-                maxLength: 30,
-                maxLengthEnforced: true,
-                validator: (s) {
-                  if (s.isNotEmpty) return null;
-                  return "Bitte geben Sie dem Vorgang einen Titel!";
-                },
+            PhotoCollectionField(
+              images: _unfallAufnahmen,
+              labelAdd: "Fahrzeugschein\u{00AD}aufnahme hinzufügen",
+              label: 'Fahrzeugschein\u{00AD}aufnahme',
+              onDelete: (i) => setState(() => _unfallAufnahmen.removeAt(i)),
+              onAdd: (image) => setState(() => _unfallAufnahmen.add(image)),
+              infoAdd: Text(
+                "hier können infos und text zur bildkategorie stehen.",
+                maxLines: null,
               ),
+              max: 2,
             ),
             _Line(
               caption: 'Datum',
@@ -189,8 +226,8 @@ class _MeldenState extends State<MeldenPage> {
                 onPressed: () => _selectTime(context),
               ),
             ),
-            _Line(
-              caption: 'Schadenort',
+            _MultiLine(
+              caption: 'Standort',
               child: TextFormField(
                 initialValue: ort,
                 onChanged: (s) => ort = s,
@@ -207,49 +244,82 @@ class _MeldenState extends State<MeldenPage> {
                 onChanged: (s) => schadenhergang = s,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
-                validator: (s) {
-                  if (s.isNotEmpty) return null;
-                  return "Bitte beschreiben Sie den Vorgang!";
-                },
               ),
             ),
-            PhotoCollectionField(
-              images: detailAufnahmen,
-              labelAdd: "Detail\u{00AD}ansicht hinzufügen",
-              label: 'Detail\u{00AD}ansicht',
-              onDelete: (i) => setState(() => detailAufnahmen.removeAt(i)),
-              onAdd: (image) => setState(() => detailAufnahmen.add(image)),
-              infoAdd: Text(
-                "hier können infos und text zur bildkategorie stehen.",
-                maxLines: null,
+            ElevatedButton.icon(
+              onPressed: () async {
+                if (!_formKey.currentState.validate()) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Bitte geben Sie alle nötigen Daten an.'),
+                    ),
+                  );
+                  return;
+                }
+                // if (!_formKey.currentState.validate() ||
+                //     _unfallAufnahmen.length < 1) {
+                //   Scaffold.of(context).showSnackBar(
+                //     SnackBar(
+                //       content: Text(
+                //           'Bitte füllen Sie alle Felder aus und tragen mindestens ein Bild pro Kategorie ein.'),
+                //     ),
+                //   );
+                //   return;
+                // }
+                var nav = Navigator.of(context);
+
+                var pr = new ProgressDialog(context);
+                pr.style(
+                  message: 'Sende Schadenmeldung...',
+                  borderRadius: 10.0,
+                  backgroundColor: Colors.white,
+                  progressWidget: SpinKitCircle(color: helmsauerBlue),
+                  elevation: 10.0,
+                  insetAnimCurve: Curves.easeInOut,
+                  messageTextStyle: TextStyle(
+                    color: Colors.black,
+                    fontSize: 19.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                );
+
+                await pr.show();
+
+                // print(jsonEncode(vertrag.toJson()));
+                // print(jsonEncode(vorgang.toJson()));
+
+                await Future.delayed(Duration(seconds: 10));
+
+                await pr.hide();
+
+                // TODO bestätigungspopup
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Schadenmeldung eingegangen'),
+                      actions: [
+                        FlatButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text("OK"),
+                        )
+                      ],
+                    );
+                  },
+                );
+
+                nav.popUntil((route) => route.isFirst);
+              },
+              icon: const Icon(
+                Icons.send,
+                color: Colors.white,
               ),
-              max: 3,
-            ),
-            PhotoCollectionField(
-              images: gesamtAufnahmen,
-              labelAdd: "Gesamt\u{00AD}ansicht hinzufügen",
-              label: 'Gesamt\u{00AD}ansicht',
-              onDelete: (i) => setState(() => gesamtAufnahmen.removeAt(i)),
-              onAdd: (image) => setState(() => gesamtAufnahmen.add(image)),
-              infoAdd: Text(
-                "hier können infos und text zur bildkategorie stehen.",
-                maxLines: null,
+              label: Text(
+                'Einreichen',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
               ),
-              max: 3,
-            ),
-            PhotoCollectionField(
-              images: fahrzeugscheinAufnahmen,
-              labelAdd: "Fahrzeugschein\u{00AD}aufnahme hinzufügen",
-              label: 'Fahrzeugschein\u{00AD}aufnahme',
-              onDelete: (i) =>
-                  setState(() => fahrzeugscheinAufnahmen.removeAt(i)),
-              onAdd: (image) =>
-                  setState(() => fahrzeugscheinAufnahmen.add(image)),
-              infoAdd: Text(
-                "hier können infos und text zur bildkategorie stehen.",
-                maxLines: null,
-              ),
-              max: 2,
             ),
           ],
         ),
