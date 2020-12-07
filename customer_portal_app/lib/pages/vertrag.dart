@@ -30,68 +30,43 @@ class VertragPage extends StatelessWidget {
               value: vertrag.sparte,
             ),
             _InfoLine(
-              caption: "Gesellschaft",
-              value: vertrag.gesellschaft,
+              caption: "VSNR",
+              value: vertrag.vertragsnummer,
             ),
             _InfoLine(
-              caption: "Vertragsnummer",
-              value: vertrag.vertragsnummer,
+              caption: "Gesellschaft",
+              value: vertrag.gesellschaft,
             ),
             _InfoLine(
               caption: "Ablauf",
               value: dateFormat.format(vertrag.ablauf),
             ),
             _InfoLine(
-              caption: "Status",
-              value: const {
-                    VertragStatus.aktiv: "aktiv",
-                    VertragStatus.antrag: "antrag",
-                    VertragStatus.storno: "storno",
-                  }[vertrag.status] ??
-                  "Unbekannter Vertragsstatus",
-            ),
-            _InfoLine(
               caption: "Beitrag",
               value: vertrag.beitrag,
             ),
             _InfoLine(
-              caption: "Risiko",
+              caption: "versichertes Risiko",
               value: vertrag.risiko,
             ),
-            FlatButton(
-              onPressed: () async {
-                var path = await prepareTestPdf();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HsPDFViewerScaffold(
-                      pdfPath: path,
-                      titel:
-                          "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
-                    ),
-                  ),
-                );
-              },
-              child: Text(
-                "Vertragdetails Ansehen",
-                textScaleFactor: 1.3,
-              ),
-            )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text('Schadenmeldung'),
-        icon: const Icon(Icons.add_to_photos),
-        onPressed: () => {
+        label: Text('Police'),
+        icon: const Icon(Icons.text_snippet),
+        onPressed: () async {
+          var path = await prepareTestPdf();
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MeldenPage(
-                vertrag: vertrag,
+              builder: (context) => HsPDFViewerScaffold(
+                pdfPath: path,
+                titel:
+                    "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
               ),
             ),
-          ),
+          );
         },
       ),
     );
@@ -122,8 +97,12 @@ class _InfoLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
+    return Container(
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: Colors.black12,
+      ),
       child: Row(
         children: <Widget>[
           Expanded(

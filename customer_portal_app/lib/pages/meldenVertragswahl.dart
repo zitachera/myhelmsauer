@@ -1,16 +1,16 @@
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
-import 'package:customer_portal_app/pages/vertrag.dart';
+import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
-class VertraegePage extends StatefulWidget {
-  VertraegePage({Key key}) : super(key: key);
+class MeldenVertragwahlPage extends StatefulWidget {
+  MeldenVertragwahlPage({Key key}) : super(key: key);
 
   @override
-  _VertraegePageState createState() => _VertraegePageState();
+  _MeldenVertragwahlPageState createState() => _MeldenVertragwahlPageState();
 }
 
-class _VertraegePageState extends State<VertraegePage> {
+class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
   List<Vertrag> vertraege = <Vertrag>[
     Vertrag(
       id: '<uuid-1>',
@@ -43,8 +43,12 @@ class _VertraegePageState extends State<VertraegePage> {
     return Column(
       children: <Widget>[
         Text(
-          "Vertragübersicht (" + vertraege.length.toString() + ")",
+          "Schadenmeldung",
           textScaleFactor: 2,
+        ),
+        Text(
+          "Wählen sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
+          textScaleFactor: 1.3,
         ),
         ...vertraege.map(
           (vertrag) => _buildVertrag(
@@ -70,7 +74,7 @@ class _VertraegePageState extends State<VertraegePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => VertragPage(vertrag: vertrag)),
+                builder: (context) => MeldenPage(vertrag: vertrag)),
           ),
         },
         child: Row(

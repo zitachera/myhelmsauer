@@ -1,6 +1,8 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
+import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   Widget _content = NewsPage();
   int _selectedIndex = 0;
 
@@ -25,6 +24,14 @@ class _HomePageState extends State<HomePage> {
         case 0:
           _content = NewsPage();
           break;
+        case 1:
+          _content = VertraegePage();
+          break;
+        case 2:
+          _content = MeldenVertragwahlPage();
+          break;
+        case 3:
+        // TODO Kontakt
       }
     });
   }
