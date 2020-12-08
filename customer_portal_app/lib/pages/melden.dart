@@ -2,10 +2,9 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
-import 'package:customer_portal_app/pages/vorgang.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -179,8 +178,8 @@ class _MeldenState extends State<MeldenPage> {
                   flex: 1,
                   child: PhotoCollectionField(
                     images: _kennzeichenAufnahmen,
-                    labelAdd: "Gesamt\u{00AD}ansicht hinzufügen",
-                    label: 'Gesamt\u{00AD}ansicht',
+                    labelAdd: "Gegnerisches Kennzeichen hinzufügen",
+                    label: 'Gegnerisches Kennzeichen',
                     onDelete: (i) =>
                         setState(() => _kennzeichenAufnahmen.removeAt(i)),
                     onAdd: (image) =>

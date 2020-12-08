@@ -46,9 +46,12 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           "Schadenmeldung",
           textScaleFactor: 2,
         ),
-        Text(
-          "Wählen sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
-          textScaleFactor: 1.3,
+        Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 14),
+          child: Text(
+            "Wählen sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
+            textScaleFactor: 1.3,
+          ),
         ),
         ...vertraege.map(
           (vertrag) => _buildVertrag(
@@ -70,6 +73,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
       ),
       margin: EdgeInsets.all(3),
       child: FlatButton(
+        padding: EdgeInsets.all(3),
         onPressed: () => {
           Navigator.push(
             context,

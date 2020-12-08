@@ -42,9 +42,12 @@ class _VertraegePageState extends State<VertraegePage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(
-          "Vertragübersicht (" + vertraege.length.toString() + ")",
-          textScaleFactor: 2,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: Text(
+            "Vertragsübersicht (${vertraege.length})",
+            textScaleFactor: 2,
+          ),
         ),
         ...vertraege.map(
           (vertrag) => _buildVertrag(

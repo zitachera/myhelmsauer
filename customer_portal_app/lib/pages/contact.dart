@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
@@ -8,13 +9,19 @@ class ContactPage extends StatelessWidget {
 
   static const String _phone = "123456789";
   static const String _mail = "info@helmsauer-gruppe.de";
-  static const String _web = "helmsauer-gruppe.de";
+  static const String _web = "www.helmsauer-gruppe.de";
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: Text(
+            "Kontakt",
+            textScaleFactor: 2,
+          ),
+        ),
         _Button.url(
           caption: "Telefon",
           value: _phone,
@@ -51,6 +58,10 @@ class _Button extends StatelessWidget {
   })  : child = Text(
           value,
           textScaleFactor: 1.3,
+          style: TextStyle(
+            decoration: TextDecoration.underline,
+            color: helmsauerBlue,
+          ),
         ),
         onPressed = (() => UrlLauncher.launch(url)),
         super(key: key);

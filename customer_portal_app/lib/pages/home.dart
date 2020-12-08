@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Helmsauer',
       body: _content,
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -48,14 +49,14 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.text_snippet),
-            label: 'Verträge',
+            label: 'Vertrag',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.warning,
               color: Colors.red,
             ),
-            label: 'Schadenmeldung',
+            label: 'Schaden',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contact_page),
