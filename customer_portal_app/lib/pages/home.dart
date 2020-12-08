@@ -13,7 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Widget _content = NewsPage();
+  Widget _content = NewsPage(
+    key: UniqueKey(),
+  );
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -21,16 +23,24 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
       switch (index) {
         case 0:
-          _content = NewsPage();
+          _content = NewsPage(
+            key: UniqueKey(),
+          );
           break;
         case 1:
-          _content = VertraegePage();
+          _content = VertraegePage(
+            key: UniqueKey(),
+          );
           break;
         case 2:
-          _content = MeldenVertragwahlPage();
+          _content = MeldenVertragwahlPage(
+            key: UniqueKey(),
+          );
           break;
         case 3:
-          _content = ContactPage();
+          _content = ContactPage(
+            key: UniqueKey(),
+          );
       }
     });
   }

@@ -64,6 +64,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        key: ValueKey(body.key),
         headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
           SliverAppBar(
             expandedHeight: 200.0,
