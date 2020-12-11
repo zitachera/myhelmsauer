@@ -7,7 +7,7 @@ class ContactPage extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  static const String _phone = "123456789";
+  static const String _phone = "0911/9292-03";
   static const String _mail = "info@helmsauer-gruppe.de";
   static const String _web = "www.helmsauer-gruppe.de";
 

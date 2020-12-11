@@ -82,7 +82,7 @@ class VertragPage extends StatelessWidget {
   }
 
   Future<String> prepareTestPdf() async {
-    final ByteData bytes = await rootBundle.load("contract.pdf");
+    final ByteData bytes = await rootBundle.load("images/KFZ.pdf");
     final Uint8List list = bytes.buffer.asUint8List();
 
     final tempDir = await getTemporaryDirectory();

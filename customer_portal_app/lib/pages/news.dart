@@ -12,13 +12,41 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("some news"),
-        Placeholder(
-          fallbackHeight: 150,
+        Row(
+          children: [
+            Expanded(
+              child: Image.asset(
+                "images/Siegel1.jpg",
+                fit: BoxFit.fitWidth,
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Image.asset(
+                "images/Siegel2.jpg",
+                fit: BoxFit.fitWidth,
+              ),
+              flex: 1,
+            ),
+          ],
         ),
-        Text("some other news"),
-        Placeholder(
-          fallbackHeight: 150,
+        Row(
+          children: [
+            Expanded(
+              child: Image.asset(
+                "images/Siegel4.png",
+                fit: BoxFit.fitWidth,
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Image.asset(
+                "images/Siegel3.png",
+                fit: BoxFit.fitWidth,
+              ),
+              flex: 1,
+            ),
+          ],
         ),
       ],
     );

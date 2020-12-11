@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         ],
         showUnselectedLabels: true,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: helmsauerBlue,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

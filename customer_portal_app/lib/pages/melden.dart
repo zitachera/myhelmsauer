@@ -203,7 +203,7 @@ class _MeldenState extends State<MeldenPage> {
                 "hier können infos und text zur bildkategorie stehen.",
                 maxLines: null,
               ),
-              max: 2,
+              max: 3,
             ),
             _Line(
               caption: 'Datum',
@@ -287,7 +287,7 @@ class _MeldenState extends State<MeldenPage> {
                 // print(jsonEncode(vertrag.toJson()));
                 // print(jsonEncode(vorgang.toJson()));
 
-                await Future.delayed(Duration(seconds: 10));
+                await Future.delayed(Duration(seconds: 3));
 
                 await pr.hide();
 
@@ -295,11 +295,16 @@ class _MeldenState extends State<MeldenPage> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Schadenmeldung eingegangen'),
+                      title: Text(
+                        'Ihre Schadenmeldung ist eingegangen.',
+                        textScaleFactor: 1.3,
+                      ),
+                      content: Text(
+                          'Wir werden uns in den kommenden Tagen mit Ihnen in Verbindung setzen.'),
                       actions: [
                         FlatButton(
                           onPressed: () => Navigator.of(context).pop(),
-                          child: Text("OK"),
+                          child: Text("Abschließen"),
                         )
                       ],
                     );
