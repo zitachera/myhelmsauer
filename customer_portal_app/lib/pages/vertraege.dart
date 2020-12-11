@@ -14,23 +14,23 @@ class _VertraegePageState extends State<VertraegePage> {
   List<Vertrag> vertraege = <Vertrag>[
     Vertrag(
       id: '<uuid-1>',
-      sparte: 'Kfz-Versicherung',
+      sparte: 'KfZ-Versicherung',
       gesellschaft: 'AXA',
-      vertragsnummer: '123',
-      ablauf: DateTime(2029, 11, 3),
+      vertragsnummer: '40333844647',
+      ablauf: DateTime(2021, 11, 3),
       status: VertragStatus.aktiv,
-      beitrag: '20,00 €',
-      risiko: 'N XM 334',
+      beitrag: '750,00 €',
+      risiko: 'N HK 334',
     ),
     Vertrag(
       id: '<uuid-2>',
-      sparte: 'Kfz-Versicherung',
-      gesellschaft: 'HDI',
-      vertragsnummer: '456',
-      ablauf: DateTime(2029, 11, 3),
+      sparte: 'KfZ-Versicherung',
+      gesellschaft: 'AXA',
+      vertragsnummer: '40333846284',
+      ablauf: DateTime(2021, 11, 3),
       status: VertragStatus.aktiv,
-      beitrag: '55,00 €',
-      risiko: 'N XM 333',
+      beitrag: '750,00 €',
+      risiko: 'N HK 333',
     ),
   ];
 
@@ -87,7 +87,7 @@ class _VertraegePageState extends State<VertraegePage> {
                     textScaleFactor: 1.3,
                   ),
                   Text(
-                    "Gesellschaft",
+                    vertrag.gesellschaft,
                     textScaleFactor: 1.3,
                   ),
                 ],

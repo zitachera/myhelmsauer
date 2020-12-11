@@ -15,38 +15,33 @@ class _NewsPageState extends State<NewsPage> {
         Row(
           children: [
             Expanded(
-              child: Image.asset(
-                "images/Siegel1.jpg",
-                fit: BoxFit.fitWidth,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  "images/Siegel1.jpg",
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               flex: 1,
             ),
             Expanded(
-              child: Image.asset(
-                "images/Siegel2.jpg",
-                fit: BoxFit.fitWidth,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  "images/Siegel2.jpg",
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               flex: 1,
             ),
           ],
         ),
-        Row(
-          children: [
-            Expanded(
-              child: Image.asset(
-                "images/Siegel4.png",
-                fit: BoxFit.fitWidth,
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: Image.asset(
-                "images/Siegel3.png",
-                fit: BoxFit.fitWidth,
-              ),
-              flex: 1,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Image.asset(
+            "images/Flyer.png",
+            fit: BoxFit.fitWidth,
+          ),
         ),
       ],
     );
