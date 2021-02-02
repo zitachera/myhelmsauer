@@ -299,8 +299,7 @@ class _MeldenState extends State<MeldenPage> {
                         'Ihre Schadenmeldung ist eingegangen.',
                         textScaleFactor: 1.3,
                       ),
-                      content: Text(
-                          'Wir werden uns in den kommenden Tagen mit Ihnen in Verbindung setzen.'),
+                      content: Text('Wir melden uns kurzfristig bei Ihnen.'),
                       actions: [
                         FlatButton(
                           onPressed: () => Navigator.of(context).pop(),
