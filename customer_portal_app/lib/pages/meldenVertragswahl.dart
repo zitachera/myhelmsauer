@@ -21,6 +21,37 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
       status: VertragStatus.aktiv,
       beitrag: '750,00 €',
       risiko: 'N HK 334',
+      aufnahmeKategorien: <VertragAufnahmeKategorie>[
+        VertragAufnahmeKategorie(
+          id: 'ausweisVorderseite',
+          label: 'Ausweis\u{00AD}vorderseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'ausweisRückseite',
+          label: 'Ausweis\u{00AD}rückseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'führerscheinVorderseite',
+          label: 'Führerschein\u{00AD}vorderseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'führerscheinrückseite',
+          label: 'Führerschein\u{00AD}rückseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'grüne karte',
+          label: 'Grüne Karte',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'gegnerischesKennzeichen',
+          label: 'Gegnerisches Kennzeichen',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'unfall',
+          label: 'Unfall\u{00AD}aufnahme',
+          max: 3,
+        ),
+      ],
     ),
     Vertrag(
       id: '<uuid-2>',
@@ -31,6 +62,37 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
       status: VertragStatus.aktiv,
       beitrag: '750,00 €',
       risiko: 'N HK 333',
+      aufnahmeKategorien: <VertragAufnahmeKategorie>[
+        VertragAufnahmeKategorie(
+          id: 'ausweisVorderseite',
+          label: 'Ausweis\u{00AD}vorderseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'ausweisRückseite',
+          label: 'Ausweis\u{00AD}rückseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'führerscheinVorderseite',
+          label: 'Führerschein\u{00AD}vorderseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'führerscheinrückseite',
+          label: 'Führerschein\u{00AD}rückseite',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'grüneKarte',
+          label: 'Grüne Karte',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'gegnerischesKennzeichen',
+          label: 'Gegnerisches Kennzeichen',
+        ),
+        VertragAufnahmeKategorie(
+          id: 'unfall',
+          label: 'Unfall\u{00AD}aufnahme',
+          max: 3,
+        ),
+      ],
     ),
   ];
 
@@ -53,12 +115,15 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
             textScaleFactor: 1.3,
           ),
         ),
-        ...vertraege.map(
-          (vertrag) => _buildVertrag(
-            context,
-            vertrag,
-          ),
-        ),
+        ...vertraege
+            .where((v) =>
+                v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
+            .map(
+              (vertrag) => _buildVertrag(
+                context,
+                vertrag,
+              ),
+            ),
       ],
     );
   }

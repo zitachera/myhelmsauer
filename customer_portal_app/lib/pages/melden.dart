@@ -42,13 +42,7 @@ class _MeldenState extends State<MeldenPage> {
   String schadenhergang = "";
   String ort = "";
   Position gps;
-  List<Uint8List> _ausweisFrontAufnahmen = <Uint8List>[];
-  List<Uint8List> _ausweisBackAufnahmen = <Uint8List>[];
-  List<Uint8List> _fuehrerscheinFrontAufnahmen = <Uint8List>[];
-  List<Uint8List> _fuehrerscheinBackAufnahmen = <Uint8List>[];
-  List<Uint8List> _grueneKarteAufnahmen = <Uint8List>[];
-  List<Uint8List> _kennzeichenAufnahmen = <Uint8List>[];
-  List<Uint8List> _unfallAufnahmen = <Uint8List>[];
+  Map<String, List<Uint8List>> _aufnahmen = Map();
 
   DateTime datum;
   TimeOfDay zeit;
@@ -70,6 +64,53 @@ class _MeldenState extends State<MeldenPage> {
         .then((position) => gps = position);
   }
 
+  List<Widget> _aufnahmeFields() {
+    List<Widget> cols = List();
+    Row row;
+
+    vertrag.aufnahmeKategorien.forEach((kat) {
+      if (kat.max == 1) {
+        if (row == null) {
+          row = Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: _aufnahmeField(kat),
+              ),
+            ],
+          );
+          cols.add(row);
+          return;
+        }
+        row.children.add(Expanded(
+          flex: 1,
+          child: _aufnahmeField(kat),
+        ));
+        row = null;
+        return;
+      }
+      row = null;
+      cols.add(_aufnahmeField(kat));
+    });
+    return cols;
+  }
+
+  PhotoCollectionField _aufnahmeField(VertragAufnahmeKategorie kategorie) {
+    if (_aufnahmen[kategorie.id] == null) {
+      _aufnahmen[kategorie.id] = <Uint8List>[];
+    }
+    return PhotoCollectionField(
+      images: _aufnahmen[kategorie.id],
+      labelAdd: "${kategorie.label} hinzufügen",
+      label: kategorie.label,
+      onDelete: (i) => setState(() => _aufnahmen[kategorie.id].removeAt(i)),
+      onAdd: (image) => setState(() => _aufnahmen[kategorie.id].add(image)),
+      infoAdd:
+          kategorie.beschreibung != "" ? Text(kategorie.beschreibung) : null,
+      max: kategorie.max,
+    );
+  }
+
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -79,132 +120,7 @@ class _MeldenState extends State<MeldenPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _ausweisFrontAufnahmen,
-                    labelAdd: "Ausweis\u{00AD}vorderseite hinzufügen",
-                    label: 'Ausweis\u{00AD}vorderseite',
-                    onDelete: (i) =>
-                        setState(() => _ausweisFrontAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _ausweisFrontAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 1,
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _ausweisBackAufnahmen,
-                    labelAdd: "Ausweis\u{00AD}rückseite hinzufügen",
-                    label: 'Ausweis\u{00AD}rückseite',
-                    onDelete: (i) =>
-                        setState(() => _ausweisBackAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _ausweisBackAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 1,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _fuehrerscheinFrontAufnahmen,
-                    labelAdd: "Führerschein\u{00AD}vorderseite hinzufügen",
-                    label: 'Führerschein\u{00AD}vorderseite',
-                    onDelete: (i) => setState(
-                        () => _fuehrerscheinFrontAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _fuehrerscheinFrontAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 1,
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _fuehrerscheinBackAufnahmen,
-                    labelAdd: "Führerschein\u{00AD}rückseite hinzufügen",
-                    label: 'Führerschein\u{00AD}rückseite',
-                    onDelete: (i) =>
-                        setState(() => _fuehrerscheinBackAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _fuehrerscheinBackAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 1,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _grueneKarteAufnahmen,
-                    labelAdd: "Grüne Karte hinzufügen",
-                    label: 'Grüne Karte',
-                    onDelete: (i) =>
-                        setState(() => _grueneKarteAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _grueneKarteAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 3,
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: PhotoCollectionField(
-                    images: _kennzeichenAufnahmen,
-                    labelAdd: "Gegnerisches Kennzeichen hinzufügen",
-                    label: 'Gegnerisches Kennzeichen',
-                    onDelete: (i) =>
-                        setState(() => _kennzeichenAufnahmen.removeAt(i)),
-                    onAdd: (image) =>
-                        setState(() => _kennzeichenAufnahmen.add(image)),
-                    infoAdd: Text(
-                      "hier können infos und text zur bildkategorie stehen.",
-                      maxLines: null,
-                    ),
-                    max: 3,
-                  ),
-                ),
-              ],
-            ),
-            PhotoCollectionField(
-              images: _unfallAufnahmen,
-              labelAdd: "Unfall\u{00AD}aufnahme hinzufügen",
-              label: 'Unfall\u{00AD}aufnahme',
-              onDelete: (i) => setState(() => _unfallAufnahmen.removeAt(i)),
-              onAdd: (image) => setState(() => _unfallAufnahmen.add(image)),
-              infoAdd: Text(
-                "hier können infos und text zur bildkategorie stehen.",
-                maxLines: null,
-              ),
-              max: 3,
-            ),
+            ..._aufnahmeFields(),
             _Line(
               caption: 'Datum',
               child: FlatButton(
@@ -390,16 +306,6 @@ class _Line extends StatelessWidget {
     this.caption,
     this.child,
   }) : super(key: key);
-
-  // _Line.text({
-  //   Key key,
-  //   this.caption,
-  //   String value,
-  // })  : child = Text(
-  //         value,
-  //         textScaleFactor: 1.3,
-  //       ),
-  //       super(key: key);
 
   final String caption;
   final Widget child;

@@ -18,4 +18,4 @@ Endkundenportal
 | Developer                     | Udo Röhlich     | Udo.Roehlich@helmsauer-gruppe.de    | /              |
 | Developer                     | Jan Erik Keller | Jan-Erik.Keller@helmsauer-gruppe.de | /              |
 | Ansprechpartner Anforderungen | Marc Dennerlein | Marc.Dennerlein@helmsauer-gruppe.de |                |
-| Portal Developer              | Tom Leithner    | tom@leiter.cc / +43.699.11218552    |                |
+| Portal Developer              | Tom Leithner    | tom@leiter.cc / +4369911218552      |                |

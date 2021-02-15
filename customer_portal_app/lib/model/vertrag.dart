@@ -12,6 +12,7 @@ class Vertrag {
   final VertragStatus status;
   final String beitrag;
   final String risiko;
+  final List<VertragAufnahmeKategorie> aufnahmeKategorien;
 
   Vertrag({
     @required this.id,
@@ -22,6 +23,7 @@ class Vertrag {
     this.status,
     this.beitrag,
     this.risiko,
+    this.aufnahmeKategorien,
   });
 
   Vertrag.fromJson(Map<String, dynamic> json)
@@ -32,7 +34,10 @@ class Vertrag {
         ablauf = DateTime.parse(json['ablauf']),
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
-        risiko = json['risiko'];
+        risiko = json['risiko'],
+        aufnahmeKategorien =
+            (json['aufnahmeKategorien'] as List<Map<String, dynamic>>)
+                .map((e) => VertragAufnahmeKategorie.fromJson(json));
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -43,6 +48,8 @@ class Vertrag {
         'status': _vertragStatusToJson(status),
         'beitrag': beitrag,
         'risiko': risiko,
+        'aufnahmeKategorien':
+            aufnahmeKategorien.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -50,6 +57,37 @@ enum VertragStatus {
   aktiv,
   antrag,
   storno,
+}
+
+class VertragAufnahmeKategorie {
+  final String id;
+  final String label;
+  final String beschreibung;
+  final int max;
+  final int min;
+
+  VertragAufnahmeKategorie({
+    @required this.id,
+    @required this.label,
+    this.beschreibung = "",
+    this.max = 1,
+    this.min = 0,
+  });
+
+  VertragAufnahmeKategorie.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        label = json['label'],
+        beschreibung = json['beschreibung'],
+        max = json['max'],
+        min = json['min'];
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'label': label,
+        'beschreibung': beschreibung,
+        'max': max,
+        'min': min,
+      };
 }
 
 String _vertragStatusToJson(VertragStatus status) =>

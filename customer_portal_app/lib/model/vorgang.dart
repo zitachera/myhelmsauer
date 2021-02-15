@@ -16,9 +16,7 @@ class Vorgang {
   final String schadenhergang;
   final String ort;
   final Position gps;
-  final List<Uint8List> detailAufnahmen;
-  final List<Uint8List> gesamtAufnahmen;
-  final List<Uint8List> fahrzeugscheinAufnahmen;
+  final Map<String, List<Uint8List>> aufnahmen;
 
   Vorgang({
     @required this.id,
@@ -28,9 +26,7 @@ class Vorgang {
     this.schadenhergang,
     this.ort,
     this.gps,
-    this.detailAufnahmen = const <Uint8List>[],
-    this.gesamtAufnahmen = const <Uint8List>[],
-    this.fahrzeugscheinAufnahmen = const <Uint8List>[],
+    this.aufnahmen,
   });
 
   Vorgang.fromJson(Map<String, dynamic> json)
@@ -44,10 +40,8 @@ class Vorgang {
           latitude: json['latitude'],
           longitude: json['longitude'],
         ),
-        detailAufnahmen = _dataFromBase64Strings(json['detailAufnahmen']),
-        gesamtAufnahmen = _dataFromBase64Strings(json['gesamtAufnahmen']),
-        fahrzeugscheinAufnahmen =
-            _dataFromBase64Strings(json['fahrzeugscheinAufnahmen']);
+        aufnahmen = (json['aufnahmen'] as Map<String, List<String>>)
+            .map((key, value) => MapEntry(key, _dataFromBase64Strings(value)));
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -58,9 +52,8 @@ class Vorgang {
         'ort': ort,
         'latitude': gps.latitude,
         'longitude': gps.longitude,
-        'detailAufnahmen': _base64Strings(detailAufnahmen),
-        'gesamtAufnahmen': _base64Strings(gesamtAufnahmen),
-        'fahrzeugscheinAufnahmen': _base64Strings(fahrzeugscheinAufnahmen),
+        'aufnahmen':
+            aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
       };
 }
 
