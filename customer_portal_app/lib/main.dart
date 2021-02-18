@@ -1,5 +1,5 @@
-import 'package:customer_portal_app/pages/home.dart';
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         secondaryHeaderColor: _createMaterialColor(helmsauerRed),
         bottomAppBarColor: _createMaterialColor(helmsauerBlue),
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }

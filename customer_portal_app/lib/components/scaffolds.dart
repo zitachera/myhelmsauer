@@ -52,9 +52,13 @@ PreferredSize get _appBarBottom => PreferredSize(
     preferredSize: Size.fromHeight(2.5));
 
 class HsNestedScrollScaffold extends StatelessWidget {
-  HsNestedScrollScaffold(
-      {Key key, this.title, this.body, this.bottomNavigationBar})
-      : super(key: key);
+  HsNestedScrollScaffold({
+    Key key,
+    this.title,
+    this.body,
+    this.bottomNavigationBar,
+    this.onRefresh,
+  }) : super(key: key);
 
   final String title;
   final Widget body;
@@ -62,6 +66,19 @@ class HsNestedScrollScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget scrollView = SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: body,
+      ),
+    );
+    if (onRefresh != null) {
+      scrollView = RefreshIndicator(
+        onRefresh: () => Future.delayed(Duration(seconds: 5)),
+        child: scrollView,
+      );
+    }
     return Scaffold(
       body: NestedScrollView(
         key: ValueKey(body.key),
@@ -93,7 +110,6 @@ class HsNestedScrollScaffold extends StatelessWidget {
                     ),
                   ),
                 ],
-                // )
               ),
               background: Image.asset(
                 "images/tower-background.jpg",
@@ -103,20 +119,13 @@ class HsNestedScrollScaffold extends StatelessWidget {
             bottom: _appBarBottom,
           ),
         ],
-        body: RefreshIndicator(
-          onRefresh: () => Future.delayed(Duration(seconds: 5)),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: body,
-            ),
-          ),
-        ),
+        body: scrollView,
       ),
       bottomNavigationBar: bottomNavigationBar,
     );
   }
+
+  final Future<void> onRefresh;
 }
 
 class HsPDFViewerScaffold extends StatelessWidget {

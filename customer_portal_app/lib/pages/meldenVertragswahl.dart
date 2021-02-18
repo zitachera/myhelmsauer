@@ -4,97 +4,18 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage({Key key}) : super(key: key);
+  MeldenVertragwahlPage({Key key, @required this.vertraege}) : super(key: key);
+
+  final List<Vertrag> vertraege;
 
   @override
-  _MeldenVertragwahlPageState createState() => _MeldenVertragwahlPageState();
+  _MeldenVertragwahlPageState createState() =>
+      _MeldenVertragwahlPageState(vertraege);
 }
 
 class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
-  List<Vertrag> vertraege = <Vertrag>[
-    Vertrag(
-      id: '<uuid-1>',
-      sparte: 'KfZ-Versicherung',
-      gesellschaft: 'AXA',
-      vertragsnummer: '40333844647',
-      ablauf: DateTime(2021, 11, 3),
-      status: VertragStatus.aktiv,
-      beitrag: '750,00 €',
-      risiko: 'N HK 334',
-      aufnahmeKategorien: <VertragAufnahmeKategorie>[
-        VertragAufnahmeKategorie(
-          id: 'ausweisVorderseite',
-          label: 'Ausweis\u{00AD}vorderseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'ausweisRückseite',
-          label: 'Ausweis\u{00AD}rückseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'führerscheinVorderseite',
-          label: 'Führerschein\u{00AD}vorderseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'führerscheinrückseite',
-          label: 'Führerschein\u{00AD}rückseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'grüne karte',
-          label: 'Grüne Karte',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'gegnerischesKennzeichen',
-          label: 'Gegnerisches Kennzeichen',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'unfall',
-          label: 'Unfall\u{00AD}aufnahme',
-          max: 3,
-        ),
-      ],
-    ),
-    Vertrag(
-      id: '<uuid-2>',
-      sparte: 'KfZ-Versicherung',
-      gesellschaft: 'AXA',
-      vertragsnummer: '40333846284',
-      ablauf: DateTime(2021, 11, 3),
-      status: VertragStatus.aktiv,
-      beitrag: '750,00 €',
-      risiko: 'N HK 333',
-      aufnahmeKategorien: <VertragAufnahmeKategorie>[
-        VertragAufnahmeKategorie(
-          id: 'ausweisVorderseite',
-          label: 'Ausweis\u{00AD}vorderseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'ausweisRückseite',
-          label: 'Ausweis\u{00AD}rückseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'führerscheinVorderseite',
-          label: 'Führerschein\u{00AD}vorderseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'führerscheinrückseite',
-          label: 'Führerschein\u{00AD}rückseite',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'grüneKarte',
-          label: 'Grüne Karte',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'gegnerischesKennzeichen',
-          label: 'Gegnerisches Kennzeichen',
-        ),
-        VertragAufnahmeKategorie(
-          id: 'unfall',
-          label: 'Unfall\u{00AD}aufnahme',
-          max: 3,
-        ),
-      ],
-    ),
-  ];
+  _MeldenVertragwahlPageState(this.vertraege);
+  final List<Vertrag> vertraege;
 
   Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
         (v) => v.id == vorgang.vertragsID,

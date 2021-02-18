@@ -23,11 +23,6 @@ class MeldenPage extends StatefulWidget {
         datum: DateTime.now(),
         zeit: TimeOfDay.now(),
       );
-
-  // set zeitpunkt(DateTime ldt) {
-  //   datum = DateTime(ldt.year, ldt.monthOfYear, ldt.dayOfMonth);
-  //   zeit = TimeOfDay(hour: ldt.hourOfDay, minute: ldt.minuteOfHour);
-  // }
 }
 
 class _MeldenState extends State<MeldenPage> {
@@ -55,6 +50,7 @@ class _MeldenState extends State<MeldenPage> {
         ort: ort,
         gps: gps,
         zeitpunkt: zeitpunkt,
+        aufnahmen: _aufnahmen,
       );
 
   @override
