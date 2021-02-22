@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
@@ -7,13 +8,19 @@ import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage(this.portal, {Key key}) : super(key: key);
+
+  final Portal portal;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(this.portal);
 }
 
 class _HomePageState extends State<HomePage> {
+  _HomePageState(this.portal);
+
+  final Portal portal;
+
   Widget _content = NewsPage(
     key: UniqueKey(),
   );
@@ -35,6 +42,7 @@ class _HomePageState extends State<HomePage> {
           break;
         case 2:
           _content = MeldenVertragwahlPage(
+            vertraege: portal.vertraege,
             key: UniqueKey(),
           );
           break;

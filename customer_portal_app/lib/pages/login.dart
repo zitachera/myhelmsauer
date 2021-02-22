@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => HomePage(),
+                    builder: (context) => HomePage(portal),
                   ),
                 ),
               );
