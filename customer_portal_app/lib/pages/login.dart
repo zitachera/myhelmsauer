@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
@@ -25,7 +26,11 @@ class _LoginPageState extends State<LoginPage> {
             if (snapshot.hasError) {
               return Column(
                 children: [
-                  Text("${snapshot.error}"),
+                  SizedBox(height: 5.0),
+                  Text(
+                    "${snapshot.error}",
+                    style: TextStyle(color: helmsauerRed),
+                  ),
                   _LoginForm(
                     onLogin: (l) => setState(() {
                       loader = l;
@@ -36,21 +41,20 @@ class _LoginPageState extends State<LoginPage> {
               );
             }
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             }
 
             final portal = snapshot.data;
 
             if (portal.loggedIn) {
-              // das darf wohl nicht im Widget.build() passieren!
-              Navigator.of(context)
-                ..pop()
-                ..push(
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) => Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => HomePage(),
                   ),
-                );
-              return CircularProgressIndicator();
+                ),
+              );
+              return Center(child: CircularProgressIndicator());
             }
 
             return _LoginForm(
@@ -153,7 +157,7 @@ class _LoginFormState extends State<_LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 45.0),
+          SizedBox(height: 30.0),
           gruppeField,
           SizedBox(height: 25.0),
           userField,
