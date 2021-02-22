@@ -54,7 +54,7 @@ PreferredSize get _appBarBottom => PreferredSize(
 class HsNestedScrollScaffold extends StatelessWidget {
   HsNestedScrollScaffold({
     Key key,
-    this.title,
+    @required this.title,
     this.body,
     this.bottomNavigationBar,
     this.onRefresh,

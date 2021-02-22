@@ -14,13 +14,29 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class Portal {
+  static Future<Portal> restore() async {
+    final portal = Portal();
+
+    await portal._readToken();
+
+    if (portal._token == null || portal._token.isEmpty) {
+      return portal;
+    }
+
+    await portal.reload();
+    portal.loggedIn = true;
+
+    return portal;
+  }
+
   static const String _tokenKey = 'token';
   final _storage = FlutterSecureStorage();
+  String _token;
 
-  Uri _uri(String resource) => Uri.http("HK0270:9999", 'api/v1/' + resource);
+  Uri _uri(String resource) => Uri.http("HK0270:8080", 'api/v1/' + resource);
 
   Future<void> login(String user, String password, String gruppe) async {
-    loegedIn = false;
+    loggedIn = false;
     final response = await http.post(
       _uri('login'),
       headers: <String, String>{
@@ -35,19 +51,23 @@ class Portal {
     if (response.statusCode != 200) {
       throw ('Failed to log in: ' + response.body);
     }
-    await _storage.write(
-        key: _tokenKey, value: jsonDecode(response.body)["token"]);
+    _token = jsonDecode(response.body)["token"];
+    await _storage.write(key: _tokenKey, value: _token);
+    loggedIn = true;
+  }
+
+  Future<void> _readToken() async {
+    _token = await _storage.read(key: _tokenKey);
   }
 
   Future<void> reload() async {
-    var token = await _storage.read(key: _tokenKey);
-    if (token.isEmpty) {
+    if (_token.isEmpty) {
       throw ("no access token available");
     }
     // load verträge, kontakte und news ...
     final response = await http.get(
       _uri('vertraege'),
-      headers: {HttpHeaders.authorizationHeader: token},
+      headers: {HttpHeaders.authorizationHeader: _token},
     );
     if (response.statusCode != 200) {
       throw ('Failed to get vertraege: ' + response.body);
@@ -55,7 +75,7 @@ class Portal {
     // TODO parse and store verträge
   }
 
-  bool loegedIn;
+  bool loggedIn = false;
 
   List<Vertrag> get vertraege => <Vertrag>[
         Vertrag(
