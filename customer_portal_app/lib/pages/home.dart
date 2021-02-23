@@ -54,11 +54,17 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future _reload() async {
+    await portal.reload();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
       title: 'Helmsauer',
       body: _content,
+      onRefresh: _reload(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

@@ -49,7 +49,7 @@ class Portal {
       }),
     );
     if (response.statusCode != 200) {
-      throw ('Failed to log in: ' + response.body);
+      throw ('Login fehlgeschlagen.');
     }
     _token = jsonDecode(response.body)["token"];
     await _storage.write(key: _tokenKey, value: _token);

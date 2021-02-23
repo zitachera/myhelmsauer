@@ -14,6 +14,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   Future<Portal> loader = Portal.restore();
+  Key loaderKey = UniqueKey();
+
+  _LoginForm get _form => _LoginForm(
+        onLogin: (l) => setState(() {
+          loader = l;
+          loaderKey = UniqueKey();
+        }),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,8 @@ class _LoginPageState extends State<LoginPage> {
       title: "Helmsauer",
       body: SingleChildScrollView(
         child: FutureBuilder<Portal>(
-          future: Portal.restore(),
+          key: loaderKey,
+          future: loader,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Column(
@@ -31,12 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                     "${snapshot.error}",
                     style: TextStyle(color: helmsauerRed),
                   ),
-                  _LoginForm(
-                    onLogin: (l) => setState(() {
-                      loader = l;
-                      return null;
-                    }),
-                  ),
+                  _form,
                 ],
               );
             }
@@ -57,12 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               return Center(child: CircularProgressIndicator());
             }
 
-            return _LoginForm(
-              onLogin: (l) => setState(() {
-                loader = l;
-                return null;
-              }),
-            );
+            return _form;
           },
         ),
       ),
@@ -95,34 +94,38 @@ class _LoginFormState extends State<_LoginForm> {
 
   DropdownMenuItem<String> _gruppeItem(String id, String name) =>
       DropdownMenuItem(
-        child: Text(name),
+        child: Text(
+          name,
+          overflow: TextOverflow.ellipsis,
+        ),
         value: id,
       );
 
   @override
   Widget build(BuildContext context) {
     final gruppeField = DropdownButton(
+      isExpanded: true,
       items: <DropdownMenuItem>[
-        _gruppeItem("hk", "Helmsauer und Kollegen"),
-        _gruppeItem("jade", "Jade"),
-        _gruppeItem("sue", "Helmsauer und Kollegen"),
-        _gruppeItem("bbg", "Helmsauer und Kollegen"),
-        _gruppeItem("detmer", "Helmsauer und Kollegen"),
-        _gruppeItem("hp", "Helmsauer und Kollegen"),
-        _gruppeItem("luebcke", "Lübcke"),
+        _gruppeItem("hk", "Helmsauer Assekuranzmakler"),
+        _gruppeItem("jade", "Jade Assekuranzmakler"),
+        _gruppeItem("sue", "Schmidt & Erdsiek Assekuranzmakler"),
+        _gruppeItem("bbg", "von Berenberg-Gossler Assekuranzmakler"),
+        _gruppeItem("detmer", "Ärzte Wirtschaftszentrum Köln"),
+        _gruppeItem("hp", "Helmsauer und Preuß"),
+        _gruppeItem("luebcke", "Lübcke Assekuranzmakler"),
       ],
       value: gruppe,
-      onChanged: (s) => gruppe = s,
+      onChanged: (s) => setState(() => gruppe = s),
     );
 
     final userField = TextField(
       onChanged: (value) => user = value,
       style: style,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "User",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: "User",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
     );
 
     final passwordField = TextField(
@@ -130,10 +133,10 @@ class _LoginFormState extends State<_LoginForm> {
       obscureText: true,
       style: style,
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Passwort",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: "Passwort",
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
     );
 
     final loginButon = Material(
@@ -144,10 +147,12 @@ class _LoginFormState extends State<_LoginForm> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () => onLogin(_login()),
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+        child: Text(
+          "Login",
+          textAlign: TextAlign.center,
+          style:
+              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
     );
 
