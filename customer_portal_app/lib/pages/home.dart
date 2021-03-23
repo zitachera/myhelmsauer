@@ -21,37 +21,34 @@ class _HomePageState extends State<HomePage> {
 
   final Portal portal;
 
-  Widget _content = NewsPage(
-    key: UniqueKey(),
-  );
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      switch (index) {
-        case 0:
-          _content = NewsPage(
-            key: UniqueKey(),
-          );
-          break;
-        case 1:
-          _content = VertraegePage(
-            key: UniqueKey(),
-          );
-          break;
-        case 2:
-          _content = MeldenVertragwahlPage(
-            vertraege: portal.vertraege,
-            key: UniqueKey(),
-          );
-          break;
-        case 3:
-          _content = ContactPage(
-            key: UniqueKey(),
-          );
-      }
-    });
+    setState(() => _selectedIndex = index);
+  }
+
+  Widget get _content {
+    switch (_selectedIndex) {
+      case 0:
+        return NewsPage(
+          key: UniqueKey(),
+        );
+      case 1:
+        return VertraegePage(
+          portal.vertraege,
+          key: UniqueKey(),
+        );
+      case 2:
+        return MeldenVertragwahlPage(
+          portal.vertraege,
+          key: UniqueKey(),
+        );
+      case 3:
+        return ContactPage(
+          key: UniqueKey(),
+        );
+    }
+    throw ("unknown tab index");
   }
 
   Future _reload() async {
@@ -64,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     return HsNestedScrollScaffold(
       title: 'Helmsauer',
       body: _content,
-      onRefresh: _reload(),
+      onRefresh: _reload,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

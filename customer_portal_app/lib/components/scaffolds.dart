@@ -75,7 +75,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
     if (onRefresh != null) {
       scrollView = RefreshIndicator(
-        onRefresh: () => Future.delayed(Duration(seconds: 5)),
+        onRefresh: onRefresh,
         child: scrollView,
       );
     }
@@ -125,7 +125,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
   }
 
-  final Future<void> onRefresh;
+  final Future<void> Function() onRefresh;
 }
 
 class HsPDFViewerScaffold extends StatelessWidget {

@@ -35,9 +35,9 @@ class Vertrag {
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
         risiko = json['risiko'],
-        aufnahmeKategorien =
-            (json['aufnahmeKategorien'] as List<Map<String, dynamic>>)
-                .map((e) => VertragAufnahmeKategorie.fromJson(json));
+        aufnahmeKategorien = (json['aufnahmeKategorien'] as List)
+            .map((e) => VertragAufnahmeKategorie.fromJson(e))
+            .toList();
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -77,7 +77,7 @@ class VertragAufnahmeKategorie {
   VertragAufnahmeKategorie.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         label = json['label'],
-        beschreibung = json['beschreibung'],
+        beschreibung = json['beschreibung'] ?? "",
         max = json['max'],
         min = json['min'];
 

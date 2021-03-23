@@ -4,35 +4,17 @@ import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatefulWidget {
-  VertraegePage({Key key}) : super(key: key);
+  VertraegePage(this.vertraege, {Key key}) : super(key: key);
+
+  final List<Vertrag> vertraege;
 
   @override
-  _VertraegePageState createState() => _VertraegePageState();
+  _VertraegePageState createState() => _VertraegePageState(this.vertraege);
 }
 
 class _VertraegePageState extends State<VertraegePage> {
-  List<Vertrag> vertraege = <Vertrag>[
-    Vertrag(
-      id: '<uuid-1>',
-      sparte: 'KfZ-Versicherung',
-      gesellschaft: 'AXA',
-      vertragsnummer: '40333844647',
-      ablauf: DateTime(2021, 11, 3),
-      status: VertragStatus.aktiv,
-      beitrag: '750,00 €',
-      risiko: 'N HK 334',
-    ),
-    Vertrag(
-      id: '<uuid-2>',
-      sparte: 'KfZ-Versicherung',
-      gesellschaft: 'AXA',
-      vertragsnummer: '40333846284',
-      ablauf: DateTime(2021, 11, 3),
-      status: VertragStatus.aktiv,
-      beitrag: '750,00 €',
-      risiko: 'N HK 333',
-    ),
-  ];
+  _VertraegePageState(this.vertraege);
+  final List<Vertrag> vertraege;
 
   Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
         (v) => v.id == vorgang.vertragsID,
@@ -65,9 +47,10 @@ class _VertraegePageState extends State<VertraegePage> {
         borderRadius: BorderRadius.all(
           Radius.circular(3),
         ),
-        color: Colors.black12,
+        color: Color.fromRGBO(0, 0, 0, 245),
       ),
       margin: EdgeInsets.all(3),
+      padding: EdgeInsets.all(3),
       child: FlatButton(
         onPressed: () => {
           Navigator.push(
@@ -76,30 +59,27 @@ class _VertraegePageState extends State<VertraegePage> {
                 builder: (context) => VertragPage(vertrag: vertrag)),
           ),
         },
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    vertrag.sparte,
-                    textScaleFactor: 1.3,
-                  ),
-                  Text(
-                    vertrag.gesellschaft,
-                    textScaleFactor: 1.3,
-                  ),
-                ],
-              ),
+            Text(
+              vertrag.sparte,
+              textScaleFactor: 1.3,
             ),
-            Expanded(
-              child: Text(
+            SizedBox(height: 4),
+            Text(
+              vertrag.gesellschaft,
+              textScaleFactor: 1.1,
+            ),
+            SizedBox(height: 4),
+            if (vertrag.risiko != "")
+              Text(
                 vertrag.risiko,
-                textScaleFactor: 1.3,
-                textAlign: TextAlign.center,
+                textScaleFactor: 1.2,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ],
         ),
       ),

@@ -109,7 +109,7 @@ class _InfoLine extends StatelessWidget {
       padding: EdgeInsets.all(5),
       margin: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Colors.black12,
+        color: Color.fromRGBO(0, 0, 0, 250),
       ),
       child: Row(
         children: <Widget>[

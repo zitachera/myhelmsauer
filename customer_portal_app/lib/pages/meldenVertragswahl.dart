@@ -4,7 +4,7 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage({Key key, @required this.vertraege}) : super(key: key);
+  MeldenVertragwahlPage(this.vertraege, {Key key}) : super(key: key);
 
   final List<Vertrag> vertraege;
 
@@ -55,11 +55,11 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
         borderRadius: BorderRadius.all(
           Radius.circular(3),
         ),
-        color: Colors.black12,
+        color: Color.fromRGBO(0, 0, 0, 245),
       ),
       margin: EdgeInsets.all(3),
+      padding: EdgeInsets.all(3),
       child: FlatButton(
-        padding: EdgeInsets.all(3),
         onPressed: () => {
           Navigator.push(
             context,
@@ -67,30 +67,27 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
                 builder: (context) => MeldenPage(vertrag: vertrag)),
           ),
         },
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text(
-                    vertrag.sparte,
-                    textScaleFactor: 1.3,
-                  ),
-                  Text(
-                    vertrag.gesellschaft,
-                    textScaleFactor: 1.3,
-                  ),
-                ],
-              ),
+            Text(
+              vertrag.sparte,
+              textScaleFactor: 1.3,
             ),
-            Expanded(
-              child: Text(
+            SizedBox(height: 4),
+            Text(
+              vertrag.gesellschaft,
+              textScaleFactor: 1.1,
+            ),
+            SizedBox(height: 4),
+            if (vertrag.risiko != "")
+              Text(
                 vertrag.risiko,
-                textScaleFactor: 1.3,
-                textAlign: TextAlign.center,
+                textScaleFactor: 1.2,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
           ],
         ),
       ),
