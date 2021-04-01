@@ -1,4 +1,4 @@
-module gitlab.helmsauer2000.local/PaedGroup/customerserver
+module gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server
 
 go 1.15
 

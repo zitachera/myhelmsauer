@@ -1,10 +1,11 @@
 #!/bin/bash
- echo Update Schadenmelder
+env GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build
+
  
- if [[ -f ./schadenmelder ]] ;
+ if [[ -f ./server ]] ;
  then
-   scp ./schadenmelder  mailprox-jump-redmine:.
+   scp ./server  mailprox-jump-redmine:schadenmelder
    ssh mailprox-jump-redmine 'sudo /home/jan/adm/update_schadenmelder'
  else
-   echo no new schadenmelder found in current dir
+   echo no new server found in current dir
  fi

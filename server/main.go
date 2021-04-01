@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/api"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api"
 )
 
 func main() {

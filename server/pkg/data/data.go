@@ -6,7 +6,7 @@ import (
 
 	// import sqlite driver
 	_ "github.com/mattn/go-sqlite3"
-	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/proclient"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
 
 var db *sql.DB

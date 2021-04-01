@@ -7,9 +7,9 @@ import (
 
 	"github.com/google/uuid"
 
-	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/data"
-	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/mail"
-	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/proclient"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
 
 // add a super basic api
