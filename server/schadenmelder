@@ -1,0 +1,12 @@
+#!/bin/bash
+
+        echo Neustart Version  __VER:20210401_10:30:46 1617265846__ $(date +'%Y%m%d_%H:%M:%S' )  >> /opt/schadenmelder/schadenmelder.log
+
+        echo "**********************************"  >> /opt/schadenmelder/schadenmelder.log
+
+while [[ true ]];
+do
+
+        date +'%Y%m%d_%H:%M:%S' >> /opt/schadenmelder/schadenmelder.log
+        sleep 10
+done

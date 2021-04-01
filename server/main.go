@@ -1,0 +1,15 @@
+package main
+
+import (
+	"log"
+	"net/http"
+
+	"gitlab.helmsauer2000.local/PaedGroup/customerserver/pkg/api"
+)
+
+func main() {
+	http.HandleFunc("/api/v1/login", api.Login)
+	http.HandleFunc("/api/v1/vertraege", api.Vertraege)
+	http.HandleFunc("/api/v1/melden", api.Melden)
+	log.Fatal(http.ListenAndServe(":8080", nil))
+}
