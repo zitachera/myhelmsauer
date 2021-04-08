@@ -17,13 +17,13 @@ import (
 func Melden(w http.ResponseWriter, r *http.Request) {
 	c, err := data.LoadCredentials(r.Header.Get("authorization"))
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	var m meldung
 	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -32,7 +32,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Schadenhergang: m.Schadenhergang,
 		Aufnahmen:      m.Aufnahmen,
 	}); err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -40,13 +40,13 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 func Vertraege(w http.ResponseWriter, r *http.Request) {
 	c, err := data.LoadCredentials(r.Header.Get("authorization"))
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	vs, err := c.GetVertraege()
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -67,7 +67,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(vertraege); err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -75,7 +75,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	var l requestLogin
 	if err := json.NewDecoder(r.Body).Decode(&l); err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -87,11 +87,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	msg, ok, err := client.Login()
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	if !ok {
-		http.Error(w, msg, 403)
+		http.Error(w, msg, http.StatusForbidden)
 		return
 	}
 
@@ -102,7 +102,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(map[string]interface{}{
 		"token": token,
 	}); err != nil {
-		http.Error(w, err.Error(), 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
