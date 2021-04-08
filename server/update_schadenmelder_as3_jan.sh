@@ -1,5 +1,5 @@
 #!/bin/bash
-env GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build
+wsl go build
 
  
  if [[ -f ./server ]] ;
