@@ -33,7 +33,10 @@ class Portal {
   final _storage = FlutterSecureStorage();
   String _token;
 
-  Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource);
+  // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
+
+  Uri _uri(String resource) =>
+      Uri.https("schadenmeldung.helmsauer-gruppe.de", 'api/v1/' + resource);
 
   Future<void> login(String user, String password, String gruppe) async {
     loggedIn = false;
