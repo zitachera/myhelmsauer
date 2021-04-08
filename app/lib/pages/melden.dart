@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
@@ -13,22 +14,28 @@ import 'package:progress_dialog/progress_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({Key key, @required this.vertrag}) : super(key: key);
+  MeldenPage({Key key, @required this.vertrag, @required this.portal})
+      : super(key: key);
 
   final Vertrag vertrag;
+
+  final Portal portal;
 
   @override
   _MeldenState createState() => _MeldenState(
         vertrag: vertrag,
+        portal: portal,
         datum: DateTime.now(),
         zeit: TimeOfDay.now(),
       );
 }
 
 class _MeldenState extends State<MeldenPage> {
-  _MeldenState({this.vertrag, this.datum, this.zeit});
+  _MeldenState({this.vertrag, this.portal, this.datum, this.zeit});
 
   final Vertrag vertrag;
+
+  final Portal portal;
 
   String titel = "";
   DateTime get zeitpunkt =>
@@ -196,11 +203,7 @@ class _MeldenState extends State<MeldenPage> {
 
                 await pr.show();
 
-                // print(jsonEncode(vertrag.toJson()));
-                // print(jsonEncode(vorgang.toJson()));
-
-                await Future.delayed(
-                    Duration(seconds: 3)); // TODO actually send the report!
+                await portal.sendMeldung(vorgang);
 
                 await pr.hide();
 

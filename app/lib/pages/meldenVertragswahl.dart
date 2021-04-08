@@ -1,21 +1,24 @@
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.vertraege, {Key key}) : super(key: key);
+  MeldenVertragwahlPage(this.portal, {Key key}) : super(key: key);
 
-  final List<Vertrag> vertraege;
+  final Portal portal;
 
   @override
   _MeldenVertragwahlPageState createState() =>
-      _MeldenVertragwahlPageState(vertraege);
+      _MeldenVertragwahlPageState(portal.vertraege, portal);
 }
 
 class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
-  _MeldenVertragwahlPageState(this.vertraege);
+  _MeldenVertragwahlPageState(this.vertraege, this.portal);
   final List<Vertrag> vertraege;
+
+  final Portal portal;
 
   Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
         (v) => v.id == vorgang.vertragsID,
@@ -64,7 +67,10 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MeldenPage(vertrag: vertrag)),
+                builder: (context) => MeldenPage(
+                      vertrag: vertrag,
+                      portal: portal,
+                    )),
           ),
         },
         child: Column(

@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         );
       case 2:
         return MeldenVertragwahlPage(
-          portal.vertraege,
+          portal,
           key: UniqueKey(),
         );
       case 3:

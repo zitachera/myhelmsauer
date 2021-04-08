@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -78,6 +79,11 @@ class Portal {
     vertraege = (jsonDecode(response.body) as List)
         .map((e) => Vertrag.fromJson(e))
         .toList();
+  }
+
+  Future<void> sendMeldung(Vorgang meldung) async {
+    await Future.delayed(Duration(seconds: 3));
+    // TODO actually send the report!
   }
 
   bool loggedIn = false;
