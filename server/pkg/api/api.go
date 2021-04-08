@@ -30,6 +30,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 	if err := mail.Send(mail.Meldung{
 		User:           c.User,
 		Schadenhergang: m.Schadenhergang,
+		Aufnahmen:      m.Aufnahmen,
 	}); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -107,15 +108,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 type meldung struct {
-	ID             string             `json:"id"`
-	Titel          string             `json:"titel"`
-	VertragsID     string             `json:"vertragsID"`
-	Zeitpunkt      string             `json:"zeitpunkt"`
-	Schadenhergang string             `json:"schadenhergang"`
-	Ort            string             `json:"ort"`
-	Latitude       string             `json:"latitude"`
-	Longitude      string             `json:"longitude"`
-	Aufnahmen      map[string][]uint8 `json:"aufnahmen"`
+	ID             string               `json:"id"`
+	Titel          string               `json:"titel"`
+	VertragsID     string               `json:"vertragsID"`
+	Zeitpunkt      string               `json:"zeitpunkt"`
+	Schadenhergang string               `json:"schadenhergang"`
+	Ort            string               `json:"ort"`
+	Latitude       string               `json:"latitude"`
+	Longitude      string               `json:"longitude"`
+	Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
 }
 
 type vertrag struct {

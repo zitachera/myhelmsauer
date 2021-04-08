@@ -3,6 +3,7 @@ package mail
 import (
 	"bytes"
 	"crypto/tls"
+	"fmt"
 	"time"
 
 	mail "github.com/xhit/go-simple-mail/v2"
@@ -19,7 +20,7 @@ type Meldung struct {
 	Ort            string
 	Latitude       string
 	Longitude      string
-	Aufnahmen      map[string][]uint8
+	Aufnahmen      map[string][][]uint8
 }
 
 // Send sends a mail to Helmsauer.
@@ -53,7 +54,11 @@ func Send(meldung Meldung) error {
 
 	email.SetBody(mail.TextHTML, htmlBody.String())
 
-	email.AddInline("Gopher.png", "Gopher.png")
+	for cat, contents := range meldung.Aufnahmen {
+		for i, content := range contents {
+			email.AddAttachmentData(content, fmt.Sprintf("%s-%d.jpg", cat, i), "image/jpg") // TODO transfer actual mime type! or convert to fixed type!
+		}
+	}
 
 	return email.Send(smtpClient)
 }
