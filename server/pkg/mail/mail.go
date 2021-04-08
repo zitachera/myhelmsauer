@@ -3,7 +3,6 @@ package mail
 import (
 	"bytes"
 	"crypto/tls"
-	"fmt"
 	"time"
 
 	mail "github.com/xhit/go-simple-mail/v2"
@@ -20,7 +19,13 @@ type Meldung struct {
 	Ort            string
 	Latitude       string
 	Longitude      string
-	Aufnahmen      map[string][][]uint8
+	Aufnahmen      []Image
+}
+
+type Image struct {
+	Name string
+	Mime string
+	Data []uint8
 }
 
 // Send sends a mail to Helmsauer.
@@ -45,6 +50,7 @@ func Send(meldung Meldung) error {
 	email := mail.NewMSG()
 	email.SetFrom("Schadenmeldung <no-reply-schadenmeldung@helmsauer-gruppe.de>").
 		AddTo("jan-erik.keller@helmsauer-gruppe.de").
+		AddTo("udo.roehlich@helmsauer-gruppe.de").
 		SetSubject("New Go Email")
 
 	var htmlBody bytes.Buffer
@@ -54,10 +60,8 @@ func Send(meldung Meldung) error {
 
 	email.SetBody(mail.TextHTML, htmlBody.String())
 
-	for cat, contents := range meldung.Aufnahmen {
-		for i, content := range contents {
-			email.AddAttachmentData(content, fmt.Sprintf("%s-%d.jpg", cat, i), "image/jpg") // TODO transfer actual mime type! or convert to fixed type!
-		}
+	for _, img := range meldung.Aufnahmen {
+		email.AddAttachmentData(img.Data, img.Name, img.Mime)
 	}
 
 	return email.Send(smtpClient)

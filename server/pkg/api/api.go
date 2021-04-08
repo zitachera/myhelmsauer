@@ -2,7 +2,9 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"sort"
 	"strings"
 
 	"github.com/google/uuid"
@@ -11,8 +13,6 @@ import (
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
-
-// add a super basic api
 
 func Melden(w http.ResponseWriter, r *http.Request) {
 	c, err := data.LoadCredentials(r.Header.Get("authorization"))
@@ -27,10 +27,33 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	categories := make([]string, 0, len(m.Aufnahmen))
+
+	for cat := range m.Aufnahmen {
+		categories = append(categories, cat)
+	}
+
+	sort.Strings(categories)
+
+	imgs := make([]mail.Image, 0, len(categories))
+
+	for _, cat := range categories {
+		for i, data := range m.Aufnahmen[cat] {
+			mime := http.DetectContentType(data)
+			ext := "bin"
+			if strings.HasPrefix(mime, "image/") {
+				ext = strings.Split(mime, "/")[1]
+			}
+			imgs = append(imgs, mail.Image{
+				Name: fmt.Sprintf("%s-%d.%s", cat, i, ext),
+			})
+		}
+	}
+
 	if err := mail.Send(mail.Meldung{
 		User:           c.User,
 		Schadenhergang: m.Schadenhergang,
-		Aufnahmen:      m.Aufnahmen,
+		Aufnahmen:      imgs,
 	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
