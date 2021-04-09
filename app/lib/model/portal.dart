@@ -82,8 +82,14 @@ class Portal {
   }
 
   Future<void> sendMeldung(Vorgang meldung) async {
-    await Future.delayed(Duration(seconds: 3));
-    // TODO actually send the report!
+    final response = await http.post(
+      _uri('melden'),
+      headers: {HttpHeaders.authorizationHeader: _token},
+      body: jsonEncode(meldung.toJson()),
+    );
+    if (response.statusCode != 200) {
+      throw ('Meldung senden fehlgeschlagen.');
+    }
   }
 
   bool loggedIn = false;

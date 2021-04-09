@@ -202,10 +202,17 @@ class _MeldenState extends State<MeldenPage> {
                 );
 
                 await pr.show();
+                try {
+                  await portal.sendMeldung(vorgang);
 
-                await portal.sendMeldung(vorgang);
-
-                await pr.hide();
+                  await pr.hide();
+                } catch (e) {
+                  await pr.hide();
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text("Der Bericht konnte nicht gesendet werden."),
+                  ));
+                  return;
+                }
 
                 await showDialog(
                   context: context,

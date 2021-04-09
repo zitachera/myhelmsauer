@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "App",
-            "program": "customer_portal_app/lib/main.dart",
+            "program": "app/lib/main.dart",
             "request": "launch",
             "type": "dart"
         }

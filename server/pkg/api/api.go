@@ -137,8 +137,8 @@ type meldung struct {
 	Zeitpunkt      string               `json:"zeitpunkt"`
 	Schadenhergang string               `json:"schadenhergang"`
 	Ort            string               `json:"ort"`
-	Latitude       string               `json:"latitude"`
-	Longitude      string               `json:"longitude"`
+	Latitude       float64              `json:"latitude"`
+	Longitude      float64              `json:"longitude"`
 	Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
 }
 
