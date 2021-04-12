@@ -37,7 +37,6 @@ class _MeldenState extends State<MeldenPage> {
 
   final Portal portal;
 
-  String titel = "";
   DateTime get zeitpunkt =>
       DateTime(datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
 
@@ -51,7 +50,6 @@ class _MeldenState extends State<MeldenPage> {
 
   Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
-        titel: titel,
         vertragsID: vertrag.id,
         schadenhergang: schadenhergang,
         ort: ort,

@@ -45,8 +45,8 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 				ext = strings.Split(mime, "/")[1]
 			}
 			imgs = append(imgs, mail.Image{
-				Label: fmt.Sprintf("%s %d", cat, i),
-				Name:  fmt.Sprintf("%s-%d.%s", cat, i, ext),
+				Label: fmt.Sprintf("%s %d", cat, i+1),
+				Name:  fmt.Sprintf("%s-%d.%s", cat, i+1, ext),
 				Mime:  mime,
 				Data:  data,
 			})
@@ -54,9 +54,14 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := mail.Send(mail.Meldung{
-		User:           c.User,
+		Titel:          "Schadenmeldung von " + c.Gruppe + " / " + c.User,
+		Vertrag:        "Name (id) / Risiko / Versicherer",
 		Schadenhergang: m.Schadenhergang,
 		Aufnahmen:      imgs,
+		Ort:            m.Ort,
+		Latitude:       m.Latitude,
+		Longitude:      m.Longitude,
+		Zeitpunkt:      m.Zeitpunkt, // formatieren?
 	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -135,7 +140,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 type meldung struct {
 	ID             string               `json:"id"`
-	Titel          string               `json:"titel"`
 	VertragsID     string               `json:"vertragsID"`
 	Zeitpunkt      string               `json:"zeitpunkt"`
 	Schadenhergang string               `json:"schadenhergang"`

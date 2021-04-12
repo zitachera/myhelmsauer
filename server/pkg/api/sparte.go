@@ -59,3 +59,12 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 	}
 	return []vertragAufnahmeKategorie{}
 }
+
+func spartenLabel(id string, kats []vertragAufnahmeKategorie) string {
+	for _, kat := range kats {
+		if id == kat.ID {
+			return kat.Label
+		}
+	}
+	return id
+}

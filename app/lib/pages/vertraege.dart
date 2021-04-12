@@ -31,12 +31,15 @@ class _VertraegePageState extends State<VertraegePage> {
             textScaleFactor: 2,
           ),
         ),
-        ...vertraege.map(
-          (vertrag) => _buildVertrag(
-            context,
-            vertrag,
-          ),
-        ),
+        ...vertraege
+            .where((v) =>
+                v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
+            .map(
+              (vertrag) => _buildVertrag(
+                context,
+                vertrag,
+              ),
+            ),
       ],
     );
   }

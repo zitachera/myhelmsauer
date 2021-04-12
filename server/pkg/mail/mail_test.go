@@ -7,7 +7,12 @@ import (
 // no-reply-schadenmeldung@helmsauer-gruppe.de
 func TestMail(t *testing.T) {
 	Send(Meldung{
-		User:           "testuser",
-		Schadenhergang: "tada",
+		Titel:          "Schadenmeldung von GoTest",
+		Vertrag:        "Name (id) / Risiko / Versicherer",
+		Schadenhergang: "So",
+		Ort:            "Ort",
+		Latitude:       123456789,
+		Longitude:      987654321,
+		Zeitpunkt:      "theZeitpunkt",
 	})
 }

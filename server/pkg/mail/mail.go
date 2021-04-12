@@ -10,15 +10,13 @@ import (
 
 // Meldung ist eine Schadensmeldung von einem Versicherten.
 type Meldung struct {
-	User string
-
-	Titel          string // Schadensmeldung von {{.User}}
-	Vertrag        string // Name (id)
+	Titel          string
+	Vertrag        string
 	Zeitpunkt      string
 	Schadenhergang string
 	Ort            string
-	Latitude       string
-	Longitude      string
+	Latitude       float64
+	Longitude      float64
 	Aufnahmen      []Image
 }
 

@@ -122,16 +122,28 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 </head>
 <body>
 <p>
-<h1>Neue Schadensmeldung von {{.User}}</h1>
+<h1>{{.Titel}}</h1>
 </p>
 {{- range $img := .Aufnahmen}}
 <h2>{{$img.Label}}</h2>
-<img src='cid:{{$img.Name}}' />
+<img src='cid:{{$img.Name}}' width="400" />
 {{- end}}
+<h2>Zeitpunkt</h2>
+<blockquote>
+{{.Zeitpunkt}}
+</blockquote>
 <h2>Schadenhergang</h2>
 <blockquote>
 {{.Schadenhergang}}
 </blockquote>
+<h2>Ort</h2>
+<blockquote>
+{{.Ort}}
+</blockquote>
+<p>
+Latitude {{.Latitude}}<br/>
+Longitude {{.Longitude}}
+</p>
 </body>
 
 </html>`))

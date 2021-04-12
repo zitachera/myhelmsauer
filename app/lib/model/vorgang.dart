@@ -10,7 +10,6 @@ import 'package:json_annotation/json_annotation.dart';
 @dataClass
 class Vorgang {
   final String id;
-  final String titel;
   final String vertragsID;
   final DateTime zeitpunkt;
   final String schadenhergang;
@@ -20,7 +19,6 @@ class Vorgang {
 
   Vorgang({
     @required this.id,
-    this.titel,
     @required this.vertragsID,
     this.zeitpunkt,
     this.schadenhergang,
@@ -31,7 +29,6 @@ class Vorgang {
 
   Vorgang.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        titel = json['titel'],
         vertragsID = json['vertragsID'],
         zeitpunkt = DateTime.parse(json['zeitpunkt']),
         schadenhergang = json['schadenhergang'],
@@ -45,7 +42,6 @@ class Vorgang {
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'titel': titel,
         'vertragsID': vertragsID,
         'zeitpunkt': zeitpunkt.toIso8601String(),
         'schadenhergang': schadenhergang,
