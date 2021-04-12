@@ -27,6 +27,15 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	vertrag, err := c.GetVertrag(m.VertragsID)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	kats := aufnahmeKategorienForSparte(vertrag.SpartenID)
+
 	categories := make([]string, 0, len(m.Aufnahmen))
 
 	for cat := range m.Aufnahmen {
@@ -45,7 +54,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 				ext = strings.Split(mime, "/")[1]
 			}
 			imgs = append(imgs, mail.Image{
-				Label: fmt.Sprintf("%s %d", cat, i+1),
+				Label: fmt.Sprintf("%s %d", spartenLabel(cat, kats), i+1),
 				Name:  fmt.Sprintf("%s-%d.%s", cat, i+1, ext),
 				Mime:  mime,
 				Data:  data,

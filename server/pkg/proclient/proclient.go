@@ -52,3 +52,24 @@ func (c Client) GetVertraege() ([]Vertrag, error) {
 
 	return vertraege, nil
 }
+
+// GetVertrag returns a Vertrag with given id from ProClient or an error.
+func (c Client) GetVertrag(id string) (Vertrag, error) {
+	var adressen adresseResponse
+	if err := c.request("Adressen", &adressen); err != nil {
+		return Vertrag{}, err
+	}
+	for _, adresse := range adressen.Adressen {
+		var response vertraegeResponse
+		if err := c.requestByID("Vertraege", "AdressID", adresse.ID, &response); err != nil {
+			return Vertrag{}, err
+		}
+		for _, vertrag := range response.Vertraege {
+			if vertrag.ID == id {
+				return vertrag, nil
+			}
+		}
+	}
+
+	return Vertrag{}, errors.New("Vertrag " + id + " not found")
+}
