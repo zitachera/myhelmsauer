@@ -8,25 +8,130 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <style>
-.box {
-	background: linear-gradient(to bottom, blue, white);
-	border-radius: 10px;
-	margin: 20px;
-	padding: 10px;
-}
+<style>
+    html,
+    body,
+    table,
+    tbody,
+    tr,
+    td,
+    div,
+    p,
+    ul,
+    ol,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+        line-height: 0;
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: Arial;
+    }
+
+    h1 {
+        font-size: 28px;
+        line-height: 32px;
+        padding-top: 10px;
+        padding-bottom: 24px;
+    }
+
+    h2 {
+        font-size: 24px;
+        line-height: 28px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 20px;
+        line-height: 24px;
+        padding-top: 10px;
+        padding-bottom: 16px;
+    }
+
+    p {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: Georgia, Arial, sans-serif;
+    }
+
+    @media all and (max-width: 599px) {
+        .container600 {
+            width: 100%;
+        }
+    }
+    blockquote {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: Georgia, Arial, sans-serif;
+        font-style: italic;
+        padding:20px 40px 20px 20px;
+        margin:30px 0;
+        border:0px none;
+        border-left: 16px solid #7d7d7d;
+        color:inherit;
+    }
+
+    ul {
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    ol {
+        margin-left: 20px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    li {
+        font-size: 16px;
+        line-height: 20px;
+        font-family: Georgia, Arial, sans-serif;
+    }
+
+    a {
+        color:#bf2424;
+        text-decoration:none;
+    }
+    a:link, a:hover, a:visited {
+        color:#bf2424;
+        text-decoration:none;
+    }
 </style>
 </head>
 <body>
-<div class="box">
 <p>
 <h1>Neue Schadensmeldung von {{.User}}</h1>
 </p>
-<!-- alle bilder -->
+{{- range $img := .Aufnahmen}}
+<h2>{{$img.Label}}</h2>
+<img src='cid:{{$img.Name}}' />
+{{- end}}
 <h2>Schadenhergang</h2>
-<p>
+<blockquote>
 {{.Schadenhergang}}
-</p>
-</div>
+</blockquote>
 </body>
 
 </html>`))
