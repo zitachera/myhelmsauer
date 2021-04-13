@@ -57,6 +57,7 @@ class Portal {
     }
     _token = jsonDecode(response.body)["token"];
     await _storage.write(key: _tokenKey, value: _token);
+    await reload();
     loggedIn = true;
   }
 

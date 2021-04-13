@@ -46,8 +46,8 @@ class Vorgang {
         'zeitpunkt': zeitpunkt.toIso8601String(),
         'schadenhergang': schadenhergang,
         'ort': ort,
-        'latitude': gps.latitude,
-        'longitude': gps.longitude,
+        'latitude': gps?.latitude,
+        'longitude': gps?.longitude,
         'aufnahmen':
             aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
       };

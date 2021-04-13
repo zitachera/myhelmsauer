@@ -125,7 +125,7 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 <h1>{{.Titel}}</h1>
 </p>
 {{- range $img := .Aufnahmen}}
-<h2>{{$img.Label}}</h2>
+{{if $img.Label}}<h2>{{$img.Label}}</h2>{{end}}
 <img src='cid:{{$img.Name}}' width="400" />
 {{- end}}
 <h2>Zeitpunkt</h2>

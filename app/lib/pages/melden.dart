@@ -206,6 +206,27 @@ class _MeldenState extends State<MeldenPage> {
                   await pr.hide();
                 } catch (e) {
                   await pr.hide();
+
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          'Der Bericht konnte nicht gesendet werden.',
+                          textScaleFactor: 1.3,
+                        ),
+                        content:
+                            Text('Bite senden Sie die Schadenmeldung erneut.'),
+                        actions: [
+                          FlatButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text("Weiter"),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
                   Scaffold.of(context).showSnackBar(SnackBar(
                     content: Text("Der Bericht konnte nicht gesendet werden."),
                   ));

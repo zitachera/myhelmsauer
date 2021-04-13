@@ -53,12 +53,15 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 			if strings.HasPrefix(mime, "image/") {
 				ext = strings.Split(mime, "/")[1]
 			}
-			imgs = append(imgs, mail.Image{
-				Label: fmt.Sprintf("%s %d", spartenLabel(cat, kats), i+1),
-				Name:  fmt.Sprintf("%s-%d.%s", cat, i+1, ext),
-				Mime:  mime,
-				Data:  data,
-			})
+			img := mail.Image{
+				Name: fmt.Sprintf("%s-%d.%s", cat, i+1, ext),
+				Mime: mime,
+				Data: data,
+			}
+			if i == 0 {
+				img.Label = spartenLabel(cat, kats)
+			}
+			imgs = append(imgs, img)
 		}
 	}
 
