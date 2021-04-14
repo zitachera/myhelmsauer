@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"sort"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -61,6 +62,13 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 			imgs = append(imgs, img)
 		}
 	}
+	//2006-01-02T15:04:05Z0700
+	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt) // 2021-04-14T10:40:00.000
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	if err := mail.Send(mail.Meldung{
 		Titel:          "Schadenmeldung von " + c.Gruppe + " / " + c.User,
@@ -70,7 +78,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Ort:            m.Ort,
 		Latitude:       m.Latitude,
 		Longitude:      m.Longitude,
-		Zeitpunkt:      m.Zeitpunkt, // formatieren?
+		Zeitpunkt:      z.Format("02.01.2006 15:04"),
 	}); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
