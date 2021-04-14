@@ -121,28 +121,27 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 </style>
 </head>
 <body>
-<p>
 <h1>{{.Titel}}</h1>
-</p>
-{{- range $img := .Aufnahmen}}
-{{if $img.Label}}<h2>{{$img.Label}}</h2>{{end}}
-<img src='cid:{{$img.Name}}' width="400" />
-{{- end}}
 <h2>Zeitpunkt</h2>
 <blockquote>
 {{.Zeitpunkt}}
 </blockquote>
 <h2>Schadenhergang</h2>
+{{if .Schadenhergang}}
 <blockquote>
 {{.Schadenhergang}}
 </blockquote>
+{{else}}
+<p>Keine Schadensbeschreibung</p>
+{{end}}
 <h2>Ort</h2>
 <blockquote>
 {{.Ort}}
 </blockquote>
 <p>
-Latitude {{.Latitude}}<br/>
-Longitude {{.Longitude}}
+<a href="http://www.google.com/maps/place/{{.Latitude}},{{.Longitude}}">
+Geo-Link
+</a>
 </p>
 </body>
 

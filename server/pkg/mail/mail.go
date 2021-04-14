@@ -21,10 +21,9 @@ type Meldung struct {
 }
 
 type Image struct {
-	Label string
-	Name  string
-	Mime  string
-	Data  []uint8
+	Name string
+	Mime string
+	Data []uint8
 }
 
 // Send sends a mail to Helmsauer.

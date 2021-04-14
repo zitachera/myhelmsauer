@@ -54,12 +54,9 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 				ext = strings.Split(mime, "/")[1]
 			}
 			img := mail.Image{
-				Name: fmt.Sprintf("%s-%d.%s", cat, i+1, ext),
+				Name: fmt.Sprintf("%s %d.%s", spartenLabel(cat, kats), i+1, ext),
 				Mime: mime,
 				Data: data,
-			}
-			if i == 0 {
-				img.Label = spartenLabel(cat, kats)
 			}
 			imgs = append(imgs, img)
 		}
