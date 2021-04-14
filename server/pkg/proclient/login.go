@@ -1,11 +1,5 @@
 package proclient
 
-import "log"
-
-// Login
-
-// Get Verträge (via address)
-
 type login struct {
 	Status  string `xml:"Status"`
 	Message string `xml:"Message"`
@@ -23,6 +17,5 @@ func (c Client) Login() (string, bool, error) {
 	if err := c.request("Login", &login); err != nil {
 		return "", false, err
 	}
-	log.Println(login, login.Message, login.Status)
 	return login.Message, login.Status == "Success", nil
 }

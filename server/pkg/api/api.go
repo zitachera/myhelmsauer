@@ -18,20 +18,20 @@ import (
 func Melden(w http.ResponseWriter, r *http.Request) {
 	c, err := data.LoadCredentials(r.Header.Get("authorization"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		handleError(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	var m meldung
 	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	vertrag, err := c.GetVertrag(m.VertragsID)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		handleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -62,11 +62,11 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 			imgs = append(imgs, img)
 		}
 	}
-	//2006-01-02T15:04:05Z0700
-	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt) // 2021-04-14T10:40:00.000
+
+	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		handleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -80,7 +80,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Longitude:      m.Longitude,
 		Zeitpunkt:      z.Format("02.01.2006 15:04"),
 	}); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -88,13 +88,13 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 func Vertraege(w http.ResponseWriter, r *http.Request) {
 	c, err := data.LoadCredentials(r.Header.Get("authorization"))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
+		handleError(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
 	vs, err := c.GetVertraege()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -115,7 +115,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(vertraege); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
@@ -123,7 +123,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 func Login(w http.ResponseWriter, r *http.Request) {
 	var l requestLogin
 	if err := json.NewDecoder(r.Body).Decode(&l); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		handleError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -135,11 +135,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	msg, ok, err := client.Login()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	if !ok {
-		http.Error(w, msg, http.StatusForbidden)
+		handleError(w, msg, http.StatusForbidden)
 		return
 	}
 
@@ -150,9 +150,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(map[string]interface{}{
 		"token": token,
 	}); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func handleError(w http.ResponseWriter, error string, code int) {
+	fmt.Println(code, error)
+	http.Error(w, error, code)
 }
 
 type meldung struct {
