@@ -1,0 +1,757 @@
+// Übersicht über Proclientsparten
+
+
+[H&K]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN20090923105559LW5;       (000)
+SPN20091019211455JZ0;       Allgemeiner Satz
+SPN00000000000000003;       Auslandsreisekrankenversicherung
+SPN20101216134041ETY;       Ausstellungsversicherung
+SPN201012161342549OM;       Autoinhaltsversicherung
+SPN00000000000000004;       Bauleistungsversicherung
+SPN_S8V0NUZZN;              Bausparvertrag
+SPN20161122094327BVK;       Beteiligung
+SPN00000000000000002;       Betriebsschließungsversicherung
+SPN00000000000000005;       Betriebsunterbrechungsversicherung
+SPN20120706145821MJO;       bKV
+SPN_S9Y0YG5IW;              Bootskasko
+SPN20101216134235UO2;       Campingversicherung
+SPN20180118140019NCI;       Cyber Risk
+_DEPOT;                     Depot
+SPN2000051809484121h;       Dienstfahrtversicherung
+SPN201012161025155U1;       Elektronik mit BU
+SPN_S8E0Y3HFB;              Elektronik ohne BU
+SPN20020813112305HUU;       Fahrrad
+SPN20100311133042KVG;       Feuer-Industrie
+SPN20110712151151Q3X;       Finanzierung
+SPN20100302153626CLE;       Garantie und Kaution
+SPN_S8E0WMGB4;              Gebäudeversicherung
+SPN00000000000000001;       GebSach
+SPN20130201085527YIZ;       Geförderte Pflegeversicherung
+SPN20130122125807O46;       Gewerbliche Gebäudeversicherung
+SPN201301230841513ZT;       Gewerbliche Inhaltsversicherung
+SPN20130123084230XVC;       Gewerbliche Inhaltsversicherung mit BU
+SPN20120627144336CK9;       GKV-Mitgliedschaft
+SPN_S8H0VM4LR;              Glas
+SPN20130123085221MC2;       Gruppenunfallversicherung
+SPN_S8K0U8JVU;              Haft
+SPN2010121613394369R;       Haft Bauherrenhaftpflichtversicherung
+SPN20101216133924R6M;       Haft Betriebshaftpflichtversicherung
+SPN20140926091229KX7;       Haft BHV Excedent
+SPN20101216122047NF1;       Haft BHV mit PHV
+SPN201602231545415GG;       Haft BHV mit PHV_BNC
+SPN20101216122147XTC;       Haft BHV ohne PHV
+SPN20160223154818IW3;       Haft BHV ohne PHV_BNC
+SPN20110111112415Y9B;       Haft BHVBNCstat mit PHV
+SPN20110111112012QMX;       Haft BHVBNCstat ohne PHV
+SPN20110713052141RGA;       Haft D&O
+SPN20101216133819D9Q;       Haft Haus-und Grundbesitzerhaftpflichtversicherung
+SPN20110110133802YIB;       Haft Jagdhaftpflicht
+SPN201101280955486RH;       Haft Land und Forstwirtschaft
+SPN20181212085313QKF;       Haft Photovoltaikhaftpflichtversicherung
+SPN20101222145048KWI;       Haft PHV
+SPN20181212092233G45;       Haft sonstige Haftpflichtversicherungen
+SPN20101216133736GA3;       Haft Tierhalterhaftpflichtversicherung
+SPN201012161338490R1;       Haft Umweltanlagenhaftpflichtversicherung
+SPN201301230848075XQ;       Haft Umweltschadenhaftpflichtversicherung
+SPN20181212085206AWJ;       Haft Veranstaltungshaftpflichtversicherung
+SPN201812120852508QN;       Haft Vereinshaftpflichtversicherung
+SPN201102171225505E2;       Haft Vermögensschadenhaftpflicht
+SPN201708081306186F4;       Haft Vertrauensschadenversicherung
+SPN20101216133911H0B;       Haft Wassersporthaftpflicht
+SPN_S8E0WVOBK;              Hausrat
+SPN20100322095748SI7;       Investment (550)
+SPN201812201033472D7;       Jagd-und Sportwaffenversicherung
+SPN20030317170451ZDV;       KAG
+SPN20190802114129457;       Kfz-Handel-und Handwerk-Versicherung
+SPN200103211028278HX;       Kombi Gewerbe
+SPN_S9Y0OC2C0;              Kombi Privat
+SPN201204251652346CG;       Kraftfahrt-Flotte-Einzelwagnis
+SPN20120425165647LR6;       Kraftfahrt-Flotte-Rahmenvertrag
+SPNAAAAAAAAAA;              Kraftfahrtversicherung
+SPN_S8E0VQ5JM;              Krankenversicherung
+SPN20050314170311T03;       Krankenversicherung - Tier
+SPN201511270905124F0;       Krankenversicherung mit BEA
+SPN20110713065634S4B;       Kreditversicherung
+SPN20200716142856GEX;       Lagerplatzversicherung
+SPN20071213101233QXO;       Luftfahrt
+SPN_S8E0WQ973;              LV
+SPN20130123085953B99;       LV bAV AG-und AN- finanziert
+SPN201102281318489V2;       LV bAV Arbeitgeber
+SPN20110228132052XOX;       LV bAV Arbeitnehmer
+SPN20190730113944VI3;       LV bAV BU
+SPN20190522112018W27;       LV bAV LAZK
+SPN20101216101102VK4;       LV Fondsgebunde Lebensversicherung
+SPN20101223104058F7L;       LV Kapitalbildende Lebensversicherung
+SPN2010121610063231K;       LV Riesterrente
+SPN2010121610115615X;       LV Risiko-LV
+SPN20101216100838S1M;       LV Rüruprente
+SPN_SAP0UCSZG;              LV RV
+SPN_SAF1468VA;              LV SBU
+SPN201208231124234KQ;       LV-Tier
+SPN20101216102247Z1P;       Maschinenversicherung
+SPN2013012308392824I;       Mehrkostenversicherung
+SPN20091124151224D6J;       Mietverlust
+SPN20101216102410R1C;       Montageversicherung
+SPN2000061308575757O;       MSAUX
+SPN20010118101059RA9;       Musikinstrumentenversicherung
+SPN201111300837114BP;       Pflegezusatzversicherung
+SPN20181220101221HF8;       Photovoltaik
+SPN20101216102744CF8;       PIV mit Elektronik
+SPN_S8H0VPEKI;              PIV ohne Elektronik
+SPN20160120100306LRP;       PIV Umbrella
+SPN200210101108504YA;       Praxisausfallversicherung
+SPN_S8E0VA4B3;              Rechtsschutzversicherung
+SPN20010116101037AUX;       Regreßversicherung
+SPN_S8T0NN414;              Reisegepäckversicherung
+SPN20150723152526S17;       Reiserücktrittsversicherung
+SPN201909251031250EG;       Reiseversicherung
+SPN_S9J0QVR2O;              Schließfachversicherung
+SPN201012161342014JG;       Schmuck-und Pelzversicherung
+SPN20131114084443SO2;       Servicepaket _Gold_ 14
+SPN20140128102323BT6;       Servicepaket _Gold_ 14_ Mitversicherter
+SPN20140923082244IZE;       Servicepaket _Gold_ 14a
+SPN20140923082331JHA;       Servicepaket _Gold_ 14a_ Mitversicherter
+SPN20131114084508BQ0;       Servicepaket _Platin_ 14
+SPN20140128102427LSI;       Servicepaket _Platin_ 14 _Mitversicherter
+SPN20140923082422MO7;       Servicepaket _Platin_ 14a
+SPN201409230824497RU;       Servicepaket _Platin_ 14a_ Mitversicherter
+SPN20140926090442K7J;       Servicepaket _Platin_14_Firmen
+SPN20131114084340FPO;       Servicepaket _Silber_14
+SPN200601050913508W5;       Technische Versicherung
+SPN20160520112810Y5S;       Terrorversicherung
+SPN00000000000000006;       Transportversicherung
+SPN_S8K0TH7FM;              Unfall
+SPN20041019082044Y7J;       Unfallversicherung mit Prämienrückgewähr
+SPN20181220110521NLZ;       Valorenversicherung
+SPN_S8G0ZL3UZ;              Verkehrs-Service-Versicherung
+SPN20181220103554RT0;       Warentransportversicherung
+SPN20130122125650198;       Wohngebäudeversicherung
+
+[BBG]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN_115xxxxxxxxxxxxx;       Altersvorsorge
+SPN_316xxxxxxxxxxxxx;       Arzthaftpflicht
+SPN_201xxxxxxxxxxxxx;       AuslandsreiseKranken
+SPN_904xxxxxxxxxxxxx;       Ausstellung
+SPN_934xxxxxxxxxxxxx;       Autoinhalt
+SPN_910xxxxxxxxxxxxx;       Automaten
+SPN_806xxxxxxxxxxxxx;       Baugeräte/ABG
+SPN_311xxxxxxxxxxxxx;       Bauherren-Haftpflicht
+SPN_805xxxxxxxxxxxxx;       Bauleistungs
+SPN_920xxxxxxxxxxxxx;       Baustellen u.Autoinhalt
+SPN_319xxxxxxxxxxxxx;       Betreiber-Haftpflicht
+SPN_303xxxxxxxxxxxxx;       Betriebs-/Produkt-Haftpflicht
+SPN_301xxxxxxxxxxxxx;       Betriebs-Haftpflicht
+SPN_712xxxxxxxxxxxxx;       Betriebsschließung
+SPN_101xxxxxxxxxxxxx;       Biometrie
+SPN_205xxxxxxxxxxxxx;       bKV
+SPN20181127145534P7U;       bKV AG-finanziert
+SPN_310xxxxxxxxxxxxx;       Boots- Haftpflicht
+SPN_905xxxxxxxxxxxxx;       Bootskasko
+SPN_936xxxxxxxxxxxxx;       Briefmarkensammlung
+SPN_005xxxxxxxxxxxxx;       Bürgschaft
+SPN_325xxxxxxxxxxxxx;       Cyber Risk
+SPN_009xxxxxxxxxxxxx;       D&O Versicherung-Haftpflicht
+_DEPOT;                     Depot
+SPN_505xxxxxxxxxxxxx;       Dienstkasko
+SPN_703xxxxxxxxxxxxx;       EC
+SPN_706xxxxxxxxxxxxx;       EC- BU
+SPN_604xxxxxxxxxxxxx;       Einbruch/Diebstahl
+SPN_401xxxxxxxxxxxxx;       Einzel-Unfall
+SPN_803xxxxxxxxxxxxx;       Elektronik
+SPN_302xxxxxxxxxxxxx;       Excedenten-Haftpflicht
+SPN20190717100045L3P;       Fahrrad
+SPN_403xxxxxxxxxxxxx;       Familienunfall
+SPN_608xxxxxxxxxxxxx;       Feuer
+SPN_702xxxxxxxxxxxxx;       Feuer- BU
+SPN_709xxxxxxxxxxxxx;       Feuer-&EC-BU
+SPN_701xxxxxxxxxxxxx;       Feuer-Industrie
+SPN_705xxxxxxxxxxxxx;       Feuerhaftung
+SPN_925xxxxxxxxxxxxx;       Filmapparate
+SPN_922xxxxxxxxxxxxx;       Flusskasko
+SPN_109xxxxxxxxxxxxx;       Fonds
+SPN_919xxxxxxxxxxxxx;       Fotoapparate
+SPN_007xxxxxxxxxxxxx;       Garantie
+SPN_622xxxxxxxxxxxxx;       Gebäude+Glas
+SPN_613xxxxxxxxxxxxx;       Gebäude+Haus- u. Grundbesitzer-Haftpflicht
+SPN_601xxxxxxxxxxxxx;       gebünd.Sachversicherung
+SPN_602xxxxxxxxxxxxx;       gew. Gebäude
+SPN_322xxxxxxxxxxxxx;       Gewässerschaden-Haftpflicht
+SPN_607xxxxxxxxxxxxx;       Glas
+SPN_402xxxxxxxxxxxxx;       Gruppenunfall
+SPN20000803170506ALD;       Haftpflichtversicherung
+SPN_309xxxxxxxxxxxxx;       Haus u.Grundbesitzer -Haftpflicht
+SPN_603xxxxxxxxxxxxx;       Hausrat
+SPN_609xxxxxxxxxxxxx;       Hausrat u.Privathaftpflicht
+SPN_600xxxxxxxxxxxxx;       Hausrat+Glas
+SPN_308xxxxxxxxxxxxx;       Jagd-Haftpflicht
+SPN_014xxxxxxxxxxxxx;       Kaution/Kredit (KTV)
+SPN20180309095338FG4;       Kautionsversicherung
+SPN_501xxxxxxxxxxxxx;       KFZ
+SPN_935xxxxxxxxxxxxx;       Kleingarten&Lauben
+SPN_200xxxxxxxxxxxxx;       Kranken
+SPN20181127145739E49;       Krankenvollversicherung
+SPN2018112714580807A;       Krankenzusatzversicherung
+SPN_931xxxxxxxxxxxxx;       Landkasko
+SPN_704xxxxxxxxxxxxx;       Landwirtschaft
+SPN_100xxxxxxxxxxxxx;       Leben
+SPN_605xxxxxxxxxxxxx;       Leitungswasser
+SPN_312xxxxxxxxxxxxx;       Luftfahrt-Haftpflicht
+SPN_404xxxxxxxxxxxxx;       Luftfahrtunfall
+SPN20181127150027ZTU;       LV bAV AG-und AN-finanziert
+SPN20181127150102QNL;       LV bAV Arbeitgeber-finanziert
+SPN201811271501269CS;       LV bAV Arbeitnehmer-finanziert
+SPN202011130735486C2;       LV bAV Direktversicherung
+SPN20181127150150RFN;       LV fondsgebundene Lebensversicherung
+SPN20181127150218D4E;       LV kapitalbildende Lebensversicherung
+SPN_116xxxxxxxxxxxxx;       LV Metallrente
+SPN20181127150544SDG;       LV Pensionsfonds
+SPN_117xxxxxxxxxxxxx;       LV Pensionskasse
+SPN20181127150302B6U;       LV Riesterrente
+SPN20181127150319NZC;       LV Rüruprente
+SPN201811271505112BQ;       LV SBU
+SPN20210129155004SRO;       LV Sterbegeldversicherung
+SPN201811271503479VK;       LV Unterstützungskasse / U-Kasse
+SPN_802xxxxxxxxxxxxx;       Maschinen- BU
+SPN_801xxxxxxxxxxxxx;       Maschinen/AMB
+SPN_808xxxxxxxxxxxxx;       MaschkaskoABMG
+SPN_711xxxxxxxxxxxxx;       Mehrkosten
+SPN_610xxxxxxxxxxxxx;       Mietverlust
+SPN_804xxxxxxxxxxxxx;       Montage
+SPN_616xxxxxxxxxxxxx;       Multi-Risk-Police
+SPN_921xxxxxxxxxxxxx;       Musikinstrument
+SPN20181127145840P4Z;       Pflegezusatzversicherung
+SPN_809xxxxxxxxxxxxx;       Photovoltaik
+SPN_930xxxxxxxxxxxxx;       Praxisausfall
+SPN_304xxxxxxxxxxxxx;       Privat-Haftpflicht
+SPN201901291242040VH;       Privatschutz
+SPN_003xxxxxxxxxxxxx;       Rechtsschutz
+SPN_912xxxxxxxxxxxxx;       Reisegepäck
+SPN_928xxxxxxxxxxxxx;       Reiserücktritt
+SPN_120xxxxxxxxxxxxx;       Renten
+SPN_104xxxxxxxxxxxxx;       Risiko-Leben
+SPN20000803170907GQ2;       Sachversicherung
+SPN_504xxxxxxxxxxxxx;       Schutzbrief
+SPN_937xxxxxxxxxxxxx;       Seekasko
+SPN_000xxxxxxxxxxxxx;       sonstige
+SPN_013xxxxxxxxxxxxx;       Straf-RS
+SPN_606xxxxxxxxxxxxx;       Sturm
+SPN_915xxxxxxxxxxxxx;       Tiefkühlgut
+SPN_006xxxxxxxxxxxxx;       Tier
+SPN_307xxxxxxxxxxxxx;       Tierhalter-Haftpflicht
+SPN20180913151048B7X;       Transport
+SPN_939xxxxxxxxxxxxx;       Transport Sonst
+SPN_929xxxxxxxxxxxxx;       Transport-BU
+SPN_901xxxxxxxxxxxxx;       Transport-General
+SPN_924xxxxxxxxxxxxx;       TransportEinzel
+SPN_932xxxxxxxxxxxxx;       Transportkasko
+SPN_305xxxxxxxxxxxxx;       Umwelt-Haftpflicht
+SPN_315xxxxxxxxxxxxx;       Umwelt-Schaden-Haftpflicht
+SPN_405xxxxxxxxxxxxx;       Unfall mit Prämienrückgewähr
+SPN_938xxxxxxxxxxxxx;       Valoren
+SPN_314xxxxxxxxxxxxx;       Veranstalter-Haftpflicht
+SPN_321xxxxxxxxxxxxx;       Vereins-Haftpflicht
+SPN_933xxxxxxxxxxxxx;       Verkehrshaftung
+SPN_306xxxxxxxxxxxxx;       Vermögensschaden-Haftpflicht
+SPN_002xxxxxxxxxxxxx;       Vertrauensschaden-Haftpflicht
+SPN_004xxxxxxxxxxxxx;       Waldbrand
+SPN_001xxxxxxxxxxxxx;       Warenkredit
+SPN_902xxxxxxxxxxxxx;       Werkverkehr
+SPN_911xxxxxxxxxxxxx;       Wertsachen
+SPN_620xxxxxxxxxxxxx;       Wohngebäude
+SPN_623xxxxxxxxxxxxx;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
+
+
+[SuE]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN20180713201944LJW;       (000)
+SPN20180717182932UVX;       Allgemeinersatz (160)
+SPN_115xxxxxxxxxxxxx;       Altersvorsorge
+SPN_320xxxxxxxxxxxxx;       Amtshaftpflicht
+SPN_317xxxxxxxxxxxxx;       Architekten-Haftpflicht
+SPN_316xxxxxxxxxxxxx;       Arzthaftpflicht
+SPN_201xxxxxxxxxxxxx;       AuslandsreiseKranken
+SPN_904xxxxxxxxxxxxx;       Ausstellung
+SPN_934xxxxxxxxxxxxx;       Autoinhalt
+SPN_910xxxxxxxxxxxxx;       Automaten
+SPN_806xxxxxxxxxxxxx;       Baugeräte/ABG
+SPN_318xxxxxxxxxxxxx;       Baugewährleistung
+SPN_311xxxxxxxxxxxxx;       Bauherren-Haftpflicht
+SPN_805xxxxxxxxxxxxx;       Bauleistung
+SPN_920xxxxxxxxxxxxx;       Baustellen u.Autoinhalt
+SPN20190715091701BVP;       Beteiligung
+SPN_319xxxxxxxxxxxxx;       Betreiber-Haftpflicht
+SPN_303xxxxxxxxxxxxx;       Betriebs-/Produkt-Haftpflicht
+SPN_301xxxxxxxxxxxxx;       Betriebs-Haftpflicht
+SPN_712xxxxxxxxxxxxx;       Betriebsschließung
+SPN_101xxxxxxxxxxxxx;       Biometrie
+SPN_205xxxxxxxxxxxxx;       bKV
+SPN20181127120637FYO;       bKV AG-finanziert
+SPN20181127120607SJ1;       bKV AN-finanziert
+SPN_310xxxxxxxxxxxxx;       Boots- Haftpflicht
+SPN_905xxxxxxxxxxxxx;       Bootskasko
+SPN_005xxxxxxxxxxxxx;       Bürgschaft
+SPN_918xxxxxxxxxxxxx;       Camping
+SPN_615xxxxxxxxxxxxx;       Compakt-Police
+SPN_008xxxxxxxxxxxxx;       Computermissbrauch
+SPN_325xxxxxxxxxxxxx;       Cyber Risk
+SPN_009xxxxxxxxxxxxx;       D&O Versicherung-Haftpflicht
+SPN_807xxxxxxxxxxxxx;       Datenträger
+_DEPOT;                     Depot
+SPN_505xxxxxxxxxxxxx;       Dienstreisekasko
+SPN_703xxxxxxxxxxxxx;       EC
+SPN_706xxxxxxxxxxxxx;       EC- BU
+SPN_604xxxxxxxxxxxxx;       Einbruch/Diebstahl
+SPN_401xxxxxxxxxxxxx;       Einzel-Unfall
+SPN_803xxxxxxxxxxxxx;       Elektronik
+SPN_302xxxxxxxxxxxxx;       Excedenten-Haftpflicht
+SPN_621xxxxxxxxxxxxx;       Excedenten-Sach
+SPN20190717095947BUY;       Fahrrad
+SPN_403xxxxxxxxxxxxx;       Familienunfall
+SPN_608xxxxxxxxxxxxx;       Feuer
+SPN_702xxxxxxxxxxxxx;       Feuer- BU
+SPN_709xxxxxxxxxxxxx;       Feuer-& EC-BU
+SPN_713xxxxxxxxxxxxx;       Feuer-&EC
+SPN_701xxxxxxxxxxxxx;       Feuer-Industrie
+SPN_705xxxxxxxxxxxxx;       Feuerhaftung
+SPN_624xxxxxxxxxxxxx;       Feuerrohbau (VGV)
+SPN_925xxxxxxxxxxxxx;       Filmapparate
+SPN_015xxxxxxxxxxxxx;       Finanzdienstleistung
+SPN20200226144405Y93;       Firmenpolice
+SPN_313xxxxxxxxxxxxx;       Flugmodell-Haftpflicht
+SPN_922xxxxxxxxxxxxx;       Flusskasko
+SPN_109xxxxxxxxxxxxx;       Fonds
+SPN_919xxxxxxxxxxxxx;       Fotoapparate
+SPN_007xxxxxxxxxxxxx;       Garantie
+SPN_906xxxxxxxxxxxxx;       Garderoben
+SPN_622xxxxxxxxxxxxx;       Gebäude+Glas
+SPN_613xxxxxxxxxxxxx;       Gebäude+Haus- u.Grundbesitzer-Haftpflicht
+SPN201807131308300VT;       Gebäudeversicherung
+SPN_601xxxxxxxxxxxxx;       gebünd.Sachversicherung
+SPN_602xxxxxxxxxxxxx;       gew. Gebäude
+SPN_322xxxxxxxxxxxxx;       Gewässerschaden-Haftpflicht
+SPN_607xxxxxxxxxxxxx;       Glas
+SPN_710xxxxxxxxxxxxx;       Global-NK
+SPN_010xxxxxxxxxxxxx;       Global-RS
+SPN_105xxxxxxxxxxxxx;       Gruppen-Leben
+SPN_402xxxxxxxxxxxxx;       Gruppenunfall
+SPN_927xxxxxxxxxxxxx;       Güternahverkehr
+SPN20180711180527VUZ;       Haftpflichtversicherung
+SPN_907xxxxxxxxxxxxx;       Hakenlast
+SPN_502xxxxxxxxxxxxx;       Handel/Handwerk
+SPN_309xxxxxxxxxxxxx;       Haus- u.Grundbesitzer-Haftpflicht
+SPN_612xxxxxxxxxxxxx;       Haushaltgeräte
+SPN_603xxxxxxxxxxxxx;       Hausrat
+SPN_609xxxxxxxxxxxxx;       Hausrat u.Privathaftpflicht
+SPN_600xxxxxxxxxxxxx;       Hausrat+Glas
+SPN_016xxxxxxxxxxxxx;       Honorar
+SPN_506xxxxxxxxxxxxx;       Insassen-Unfall
+SPN_308xxxxxxxxxxxxx;       Jagd-Haftpflicht
+SPN_908xxxxxxxxxxxxx;       JagdSportWaffen
+SPN20180713151656730;       Kaution/Bürgschaften
+SPN_014xxxxxxxxxxxxx;       Kaution/Kredit (KTV)
+SPN20180309095338FG4;       Kautionsversicherung
+SPN_501xxxxxxxxxxxxx;       KFZ
+SPN_200xxxxxxxxxxxxx;       Kranken
+SPN20181127120810FN5;       Krankenvollversicherung
+SPN20181127120842418;       Krankenzusatzversicherung
+SPN_222xxxxxxxxxxxxx;       KV Angebot
+SPN_931xxxxxxxxxxxxx;       Landkasko
+SPN_704xxxxxxxxxxxxx;       Landwirtschaft
+SPN_100xxxxxxxxxxxxx;       Leben
+SPN_605xxxxxxxxxxxxx;       Leitungswasser
+SPN_312xxxxxxxxxxxxx;       Luftfahrt-Haftpflicht
+SPN_909xxxxxxxxxxxxx;       Luftfahrtkasko
+SPN_404xxxxxxxxxxxxx;       Luftfahrtunfall
+SPN_111xxxxxxxxxxxxx;       LV Angebot
+SPN20181127120923ZR6;       LV bAV AG-und AN-finanziert
+SPN20181127121010048;       LV bAV Arbeitgeber-finanziert
+SPN20181127121040NCC;       LV bAV Arbeitnehmer-finanziert
+SPN20201113073252EAQ;       LV bAV Direktversicherung
+SPN201811271218504ZN;       LV Dread Disease / DD
+SPN20181127121117FVW;       LV fondsgebundene Lebensversicherung
+SPN20181127121201DB4;       LV kapitalbildende Lebensversicherung
+SPN20181127121929ZE2;       LV Körperschutzpolice / KSP
+SPN_116xxxxxxxxxxxxx;       LV Metallrente
+SPN20181127142646NPE;       LV Pensionsfonds
+SPN_117xxxxxxxxxxxxx;       LV Pensionskasse
+SPN20181127121230ZY8;       LV Riesterrente
+SPN20181127121814D9C;       LV Rückdeckungsversicherung / RDV
+SPN20181127121707XPA;       LV Rüruprente
+SPN20181127122006S87;       LV SBU
+SPN20210129153939EBR;       LV Sterbegeldversicherung
+SPN20181127121728EBE;       LV Unterstützungskasse / U-Kasse
+SPN_802xxxxxxxxxxxxx;       Maschinen- BU
+SPN_801xxxxxxxxxxxxx;       Maschinen/AMB
+SPN_808xxxxxxxxxxxxx;       Maschinenkasko/ABMG
+SPN_711xxxxxxxxxxxxx;       Mehrkosten
+SPN_617xxxxxxxxxxxxx;       Meisterpolice
+SPN_610xxxxxxxxxxxxx;       Mietverlust
+SPN_503xxxxxxxxxxxxx;       Mofa/Moped
+SPN_804xxxxxxxxxxxxx;       Montage
+SPN_616xxxxxxxxxxxxx;       Multi-Risk-Police
+SPN_921xxxxxxxxxxxxx;       Musikinstrument
+SPN_913xxxxxxxxxxxxx;       Musterkollektion
+SPN20181127120348T8I;       Pflegezusatzversicherung
+SPN_809xxxxxxxxxxxxx;       Photovoltaik
+SPN_930xxxxxxxxxxxxx;       Praxisausfall
+SPN_550xxxxxxxxxxxxx;       Premium-KFZ VHV
+SPN_304xxxxxxxxxxxxx;       Privathaftpflicht
+SPN20190129123434DME;       Privatschutz
+SPN_003xxxxxxxxxxxxx;       Rechtsschutz
+SPN_912xxxxxxxxxxxxx;       Reisegepäck
+SPN_928xxxxxxxxxxxxx;       Reiserücktritt
+SPN201808231219332KF;       Reiseversicherung
+SPN_120xxxxxxxxxxxxx;       Renten
+SPN_917xxxxxxxxxxxxx;       Reparatur
+SPN_104xxxxxxxxxxxxx;       Risiko-Leben
+SPN20180713130647SQW;       Sachversichrung
+SPN_504xxxxxxxxxxxxx;       Schutzbrief
+SPN_611xxxxxxxxxxxxx;       Schwamm/Hausbock
+SPN_000xxxxxxxxxxxxx;       sonstige
+SPN_013xxxxxxxxxxxxx;       Straf-RS
+SPN_606xxxxxxxxxxxxx;       Sturm
+SPN_707xxxxxxxxxxxxx;       Super-EC
+SPN_708xxxxxxxxxxxxx;       Super-EC-BU
+SPN_926xxxxxxxxxxxxx;       Tankleckage
+SPN20180711181946BLA;       Technische Versicherung
+SPN_940xxxxxxxxxxxxx;       Terror
+SPN_915xxxxxxxxxxxxx;       Tiefkühlgut
+SPN_006xxxxxxxxxxxxx;       Tier
+SPN_307xxxxxxxxxxxxx;       Tierhalter-Haftpflicht
+SPN_939xxxxxxxxxxxxx;       Transport
+SPN_929xxxxxxxxxxxxx;       Transport-BU
+SPN_901xxxxxxxxxxxxx;       Transport-General
+SPN_924xxxxxxxxxxxxx;       TransportEinzel
+SPN_932xxxxxxxxxxxxx;       Transportkasko
+SPN_305xxxxxxxxxxxxx;       Umwelt-Haftpflicht
+SPN_315xxxxxxxxxxxxx;       Umwelt-Schaden-Haftpflicht
+SPN_405xxxxxxxxxxxxx;       Unfall mit Prämienrückgewähr
+SPN20180711181858ADO;       Unfallversicherung
+SPN_938xxxxxxxxxxxxx;       Valoren
+SPN_314xxxxxxxxxxxxx;       Veranstalter-Haftpflicht
+SPN_321xxxxxxxxxxxxx;       Vereins-Haftfpflicht
+SPN_933xxxxxxxxxxxxx;       Verkehrshaftung
+SPN_306xxxxxxxxxxxxx;       Vermögensschaden-Haftpflicht
+SPN_002xxxxxxxxxxxxx;       Vertrauensschaden-Haftpflicht
+SPN_004xxxxxxxxxxxxx;       Waldbrand
+SPN_001xxxxxxxxxxxxx;       Warenkredit
+SPN_902xxxxxxxxxxxxx;       Werkverkehr
+SPN_911xxxxxxxxxxxxx;       Wertsachen
+SPN_620xxxxxxxxxxxxx;       Wohngebäude
+SPN_623xxxxxxxxxxxxx;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
+
+[Jade]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN20180727101351F06;       (000)
+SPN_630xxxxxxxxxxxxx;       Adel-Konzept
+SPN_115_____________;       Altersvorsorge
+SPN_320_____________;       Amtshaftpflicht
+SPN_317_____________;       Architekten-Haftpflicht
+SPN_316_____________;       Arzthaftpflicht
+SPN_201_____________;       AuslandsreiseKrankenversicherung
+SPN_904_____________;       Ausstellung
+SPN_934_____________;       Autoinhalt
+SPN_318_____________;       Baugewährleistung
+SPN_311_____________;       Bauherren-Haftpflicht
+SPN_805_____________;       Bauleistung
+SPN_920_____________;       Baustellen u.Autoinhalt
+SPN20190717100221MVU;       Beteiligung
+SPN_319_____________;       Betreiber-Haftpflicht
+SPN_303_____________;       Betriebs-/Produkt-Haftpflicht
+SPN_301_____________;       Betriebs-Haftpflicht
+SPN_712_____________;       Betriebsschließung
+SPN20181127152013EK9;       Biometrie
+SPN20180924172926L1H;       bKV
+SPN20181127151100JRZ;       bKV AG-finanziert
+SPN20181127151131828;       bKV AN-finanziert
+SPN_310_____________;       Boots- HV
+SPN_905_____________;       Bootskaskovers.
+SPN_005_____________;       Bürgschaft
+SPN_615_____________;       Compakt-Police
+SPN_325_____________;       Cyber Risk
+SPN_009_____________;       D&O Versicherung
+_DEPOT;                     Depot
+SPN_505_____________;       Dienstreisekasko
+SPN_703_____________;       EC
+SPN_706_____________;       EC- BU
+SPN_604_____________;       Einbruch/Diebstahl
+SPN_401_____________;       Einzel-Unfall
+SPN_803_____________;       Elektronik
+SPN201805241418366FX;       Elektronik
+SPN_302_____________;       Excedenten-Haftpflicht
+SPN_621_____________;       Excedenten-Sach
+SPN201907171002039B9;       Fahrrad
+SPN_403_____________;       Familienunfall
+SPN_608_____________;       Feuer
+SPN2000080317110935X;       Feuer
+SPN_702_____________;       Feuer- BU
+SPN_709_____________;       Feuer-& EC-BU
+SPN_713_____________;       Feuer-&EC
+SPN_701_____________;       Feuer-Industrie
+SPN_705_____________;       Feuerhaftung
+SPN_015xxxxxxxxxxxxx;       Finanz sonstige
+SPN_015_____________;       Finanzdienstleistungen
+SPN20200226144128KOP;       Firmenpolice
+SPN_313_____________;       Flugmodell-Haftpflicht
+SPN_922_____________;       Flusskasko
+SPN_109_____________;       Fonds
+SPN_007_____________;       Garantie
+SPN_906_____________;       Garderoben
+SPN_622_____________;       Gebäude+Glas
+SPN_613_____________;       Gebäude+Haus- u.Grundbesitzer-Haftpflicht
+SPN20180524133217M3N;       Gebäudversicherung
+SPN_601_____________;       gebünd.Sachversicherung
+SPN_602_____________;       gew. Gebäude
+SPN_322_____________;       Gewässerschaden Haftpflicht
+SPN_607_____________;       Glas
+SPN_402_____________;       Gruppenunfall
+SPN20000803170506ALD;       Haftpflichtversicherung
+SPN_502_____________;       Handel/Handwerk
+SPN_309_____________;       Haus- u.Grundbesitzer-Haftpflicht
+SPN20180524124725WP3;       Hausrat
+SPN_609_____________;       Hausrat u.Privathaftpflicht
+SPN_600_____________;       Hausrat+Glas
+SPN_603_____________;       Hausratversicherung
+SPN_016_____________;       Honorar
+SPN_999xxxxxxxxxxxxx;       inBearbeitung!!
+SPN_308_____________;       Jagd-Haftpflicht
+SPN_908_____________;       JagdSportWaffen
+SPN20180731122439N3G;       Kaution/Bürgschaften
+SPN_014_____________;       Kaution/Kredit (KTV)
+SPN20180524124148OML;       KFZ
+SPN_501_____________;       KFZ-Versicherung
+SPN_200_____________;       Krankenversicherung
+SPN20181127151245SO6;       Krankenvollversicherung
+SPN20181127151308AWQ;       Krankenzusatzversicherung
+SPN_916_____________;       Kühlgeräte
+SPN_222xxxxxxxxxxxxx;       KV Angebot
+SPN_704_____________;       Landwirtschaft
+SPN_100_____________;       Leben
+SPN_605_____________;       Leitungswasser
+SPN_312_____________;       Luftfahrt-Haftpflicht
+SPN_909_____________;       Luftfahrtkasko
+SPN_404_____________;       Luftfahrtunfall
+SPN_111xxxxxxxxxxxxx;       LV Angebot
+SPN201811271516020KZ;       LV bAV AG- und AN-finanziert
+SPN20181127151628KPO;       LV bAV Arbeitgeber-finanziert
+SPN2018112715165022W;       LV bAV Arbeitnehmer-finanziert
+SPN20201113073512EN3;       LV bAV Direktversicherung
+SPN20210129155329782;       LV bAV LAZK
+SPN20181127152034URP;       LV Dread Disease
+SPN20181127151716LTU;       LV fondsgebundene Lebensversicherung
+SPN201811271517447NW;       LV Kapitalbildende Lebensversicherung
+SPN_116_____________;       LV Metallrente
+SPN201811271521409T5;       LV Pensionsfonds
+SPN_117_____________;       LV Pensionskasse
+SPN20181127151810RFF;       LV Riesterrente
+SPN20181127152159O7G;       LV Rückdeckungsversicherung / RDV
+SPN201811271518242M8;       LV Rüruprente
+SPN20181127152116QYT;       LV SBU
+SPN20181127151849LPL;       LV Unterstützungskasse / U-Kasse
+SPN_802_____________;       Maschinen- BU
+SPN_801_____________;       Maschinen/AMB
+SPN_808_____________;       Maschinenkasko/ABMG
+SPN201805241416571TJ;       Maschinenversicherung
+SPN_110_____________;       math. Gutachten
+SPN_711_____________;       Mehrkosten
+SPN_610_____________;       Mietverlust
+SPN_503_____________;       Mofa/Moped
+SPN_804_____________;       Montage
+SPN_616_____________;       Multi-Risk-Police
+SPN_921_____________;       Musikinstrument
+SPN20181127151402GIL;       Pflegezusatzversicherung
+SPN_809_____________;       Photovoltaik
+SPN_304_____________;       Privathaftpflicht
+SPN20190129123656FBU;       Privatschutz
+SPN_003_____________;       Rechtsschutz
+SPN20000808162646ZXO;       Rechtsschutz
+SPN20180524123843PRY;       Rechtsschutzversicherung
+SPN_912_____________;       Reisegepäck
+SPN_928_____________;       Reiserücktritt
+SPN20200630135533J1J;       Reiseversicherung
+SPN_120_____________;       Rentenversicherung
+SPN_104_____________;       Risiko-LV
+SPN20000803170907GQ2;       Sachversicherung
+SPN_504_____________;       Schutzbrief
+SPN_937_____________;       Seekasko
+SPN_000_____________;       sonstige
+SPN_013_____________;       Straf-RS
+SPN_606_____________;       Sturm
+SPN_926_____________;       Tankleckage
+SPN200702271251327CD;       Technische Versicherung
+SPN_940_____________;       Terror
+SPN_915_____________;       Tiefkühlgut
+SPN_006_____________;       Tier
+SPN_307_____________;       Tierhalter-Haftpflicht
+SPN201807311223305CJ;       Transport
+SPN_939_____________;       Transport Sonst
+SPN202003301142143GH;       Transport Zertifikatsgebühr
+SPN_901_____________;       Transport-General
+SPN_924_____________;       TransportEinzel
+SPN_932_____________;       Transportkasko
+SPN_305_____________;       Umwelt-Haftpflicht
+SPN_315_____________;       Umwelt-Schaden-Gewässer-Haftpflicht
+SPN_315xxxxxxxxxxxxx;       Umwelt-Schaden-Haftpflicht
+SPN_405_____________;       Unfall mit Prämienrückgewähr
+SPN20180524121255JU0;       Unfallversicherung
+SPN_938_____________;       Valoren
+SPN_314_____________;       Veranstalter-Haftpflicht
+SPN_321xxxxxxxxxxxxx;       Vereins-Haftfpflicht
+SPN_321_____________;       Vereins-Haftpflicht
+SPN_933_____________;       Verkehrshaftung
+SPN_306_____________;       Vermögensschaden-Haftpflicht
+SPN_002_____________;       Vertrauensschaden-Haftpflicht
+SPN_004_____________;       Waldbrand
+SPN_001_____________;       Warenkredit
+SPN20190514081958YVV;       Wassersportkasko
+SPN_902_____________;       Werkverkehr
+SPN_911_____________;       Wertsachen
+SPN_620_____________;       Wohngebäude
+SPN_623_____________;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
+
+[H&P]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN20080219122915JLJ;       Allgemeine KFZ-Versicherung
+SPN20080219122915JNC;       Allgemeine Rechtsschutzversicherung
+SPN20080326161134F93;       Allgemeine Sachversicherung
+SPN20080326150744E11;       Arbeitgeberfinanzierte AV
+SPN2008032615081419O;       Arbeitnehmerfinanzierte AV
+SPN20080219122915JMR;       Autoinhalt
+SPN20000803171528MZE;       Bauherrenhaftpflichtversicherung
+SPN20080219122915JM8;       Bauleistungsversicherung
+SPN20080219122915JLE;       Berufshaftpflichtversicherung
+SPN20080326141423QZR;       Betriebshaftpflichtversicherung
+SPN20180924172409SIG;       bKV
+SPN20110221104014CI0;       Boots-Kasko
+SPN20120105081415M7R;       Bündelvertrag
+SPN20180723114514Y0A;       Bürgschaft
+SPN201803211432301FB;       Cyber Risk
+_DEPOT;                     Depot
+SPN20120711083606P36;       Dienstunfähigkeitsversicherung
+SPN20080219122915JM6;       Elektronikversicherung
+SPN20110221103016JG1;       Flottenversicherung
+SPN20110221104125VP5;       Frachtführer
+SPN20080219122915JLM;       Garantie & Kaution
+SPN200803261621263D5;       Gebäudeversicherung gewerblich
+SPN20080219122915JL5;       Gruppenunfallversicherung
+SPN20080219122915JMY;       Haftpflichtversicherung
+SPN20080326142644NCS;       Haus- und Grundbesitzerhaftpflichtversicherung
+SPN2019020709322766I;       Hausratversicherung
+SPN200803261616495VN;       Hausratversicherung mit Glas
+SPN20080326160008SSU;       Industriepolice
+SPN20080326162158S4X;       Inhalts- und Betriebsunterbrechung gewerblich
+SPN20110221102623JOH;       Investment
+SPN20110221102117Z7C;       Jagdhaftpflichtversicherung
+SPN20111117104125VSV;       KapitalDepot
+SPN20080219122915JLI;       KFZ-Versicherung
+SPN20000803165339KP2;       Krankenversicherung
+SPN20110221103316E8X;       Krankenversicherung Tier
+SPN20111123081039E82;       Kredit
+SPN20000803165547B6Z;       KV Reise
+SPN20000803165500BGA;       KV Voll
+SPN20000803165532ZNY;       KV Zusatz
+SPN201102211022071UH;       Land- und Forstwirtschaftshaftpflichtversicherung
+SPN20000801170817EBS;       Leben-/Rentenversicherung
+SPN2000080117094178Q;       LV bAV Direktversicherung
+SPN20100315162008H3R;       LV Betriebliche Altersvorsorge Schicht II
+SPN20110221093349XRK;       LV Fondsgebundene
+SPN200008011710222IA;       LV Kapitalversicherung
+SPN20111116101139LBE;       LV Pensionskasse
+SPN200008011711146NK;       LV Rentenversicherung
+SPN20110221093414HIG;       LV Riesterrente
+SPN20000801171055SF2;       LV Risikoversicherung
+SPN2011022109344016W;       LV Rüruprente
+SPN20110221093638KCF;       LV Selbstständige Berufsunfähigkeit
+SPN20111117120343Q31;       LV Sterbegeldversicherung
+SPN20080219122915JMA;       Maschinen-Betriebsunterbrechungsversicherung
+SPN20080219122915JM5;       Maschinenversicherung
+SPN20080219122915JLL;       Mopeds
+SPN20170725143742PTK;       MSAUX
+SPN201808240818313RA;       Multi-Risk-Police
+SPN20110221104207RY0;       Musikinstrumente
+SPN20080326141601UKQ;       Private Haftpflichtversicherung
+SPN20080219122915JNB;       Rechtsschutzversicherung
+SPN20080219122915JN2;       Reiseversicherung
+SPN20000803170907GQ2;       Sachversicherung
+SPN20080326161155UUV;       Sachversicherung Gewerbliche/Selbstständige
+SPN200803261612106WV;       Sachversicherung Private
+SPN20190820155542ZU1;       Schwäbisch Hall
+SPN20111117104035SO3;       Solarhaftpflicht
+SPN20080219122915JM4;       Technische Versicherungen
+SPN2000080317080768L;       Tierhalterhaftpflichtversicherung
+SPN20080219122915JMP;       Transportversicherung
+SPN20080326150648711;       UH/UFW
+SPN20080326142724IH0;       Umweltschadenhaftpflichtversicherung
+SPN20080219122915JIW;       Unfallversicherung
+SPN20080219122915JMX;       Valoren-privat
+SPN20000803171606FW8;       Vermögensschadenhaftpflichtversicherung
+SPN20190207104441326;       Warenkreditversicherung
+SPN20080219122915JMQ;       Warentransportversicherung
+SPN20110221102412QLL;       Wassersporthaftpflicht
+SPN20080326161808V1N;       Wohngebäudeversicherung mit Glas
+
+[Detmer]
+// SP_ID;                   SP_SPARTENNAME // @Header
+SPN20201230160122C99;       Bauleistungsversicherung
+SPN20201230160122C9G;       Bausparvertrag
+SPN20201230181537ZLE;       Beteiligung (Immobilien)
+SPN20201230181537ZLK;       Beteiligung (Medien)
+SPN20201230181537ZLV;       Beteiligung (nicht zugeordnet)
+SPN20201230181537ZLP;       Beteiligung (Schiff)
+SPN20201230181537ZM0;       Beteiligung (sonstige)
+SPN20201230160122C9S;       Betriebsunterbrechungsversicherung
+SPN20201230181537ZM5;       Boots-Wassersportversicherung
+SPN20201230160122C9X;       Bündelversicherung
+_DEPOT;                     Depot
+SPN20201230160122CA7;       Elektronikversicherung
+SPN20201230181537ZMF;       Ertragsausfall
+SPN2000080317110935X;       Feuer
+SPN20201230160122CAC;       Finanzierung
+SPN20201230181537ZMZ;       Gebäudeversicherung (nicht zugeordnet)
+SPN20201230160122CAH;       Gebäudeversicherung (Wohngeb.)
+SPN20201230181537ZMP;       Gewerbliche Gebäudeversicherung
+SPN20070227125011H7I;       Glasversicherung
+SPN20000803170616T54;       Haft BHV ohne PHV
+SPN20000803170532V4E;       Haft PHV
+SPN20000803170506ALD;       Haftpflichtversicherung
+SPN20000803171130J20;       Hausratversicherung
+SPN200008031656319BP;       Kraftfahrtversicherung
+SPN20000803165339KP2;       Krankenversicherung
+SPN20201230181537ZNI;       Krankenversicherung Tier
+SPN20201230181537ZND;       Kreditversicherung
+SPN20000803172110Z6I;       Kunstversicherung
+SPN20201230160122CA2;       KV Dread Disease
+SPN20201230181537ZN6;       KV Krankentagegeldversicherung
+SPN20201230160122CAS;       KV Krankenvollversicherung
+SPN20201230160122CAY;       KV Krankenzusatzversicherung
+SPN20201230181537ZNT;       Lizenzen Lotsen
+SPN20201230181537ZNX;       Lizenzen OVIS
+SPN20201230181537ZO3;       Lizenzen Rabatt
+SPN20000801170817EBS;       LV
+SPN20201230181537ZNO;       LV bAV AG-und AN- finanziert
+SPN20201230160122CBT;       LV bAV Arbeitgeber
+SPN20201230181537ZMA;       LV bAV Arbeitnehmer
+SPN2000080117094178Q;       LV bAV Direktversicherung
+SPN20201230181537ZL9;       LV Beihilfeversicherung
+SPN20201230160122C9M;       LV Berufsunfähigkeitsversicherung
+SPN20201230181537ZMK;       LV Erwerbsunfähigkeitsabsicherung
+SPN20201230160122CB4;       LV Pensionskasse
+SPN20201230181537ZOK;       LV Riester-Zulagenvertrag
+SPN20201230160122CBK;       LV Riesterrente
+SPN20000801171055SF2;       LV Risikoversicherung
+SPN200008011711146NK;       LV RV
+SPN20201230181537ZL1;       LV RV Basisrente
+SPN20201230160122CBP;       LV Sterbegeldversicherung
+SPN20201230181537ZOQ;       LV Unterstützungskasse
+SPN20201230181537ZO9;       Maschinenversicherung
+SPN20201230160122CB9;       Pflegepflichtversicherung
+SPN20201230181537ZOE;       Pflegezusatzversicherung
+SPN20201230160122CAN;       PIV
+SPN20000808162646ZXO;       Rechtsschutz
+SPN20201230160122CBF;       Reiseversicherung
+SPN20201230160122CBZ;       sonstige Sach-/Schadenversicherung
+SPN20070227125200TGG;       Transportversicherung
+SPN20070227093457E85;       Unfallversicherung
+SPN20201230181537ZMU;       Wohngebäudeversicherung

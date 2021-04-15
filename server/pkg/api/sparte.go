@@ -2,9 +2,7 @@ package api
 
 func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 	switch sparte {
-	case "SPN2000061308575757O": // TODO remove temporary expample category
-		fallthrough
-	case "SPNAAAAAAAAAA":
+	case "SPN200008031656319BP", "SPNAAAAAAAAAA": // Kraftfahrtversicherung
 		return []vertragAufnahmeKategorie{
 			{
 				ID:           "ausweisVorderseite",
