@@ -1,3 +1,6 @@
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 
 class NewsPage extends StatefulWidget {
@@ -12,6 +15,40 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            OutlineButton(
+              onPressed: () async {
+                await Portal.logout();
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                  ),
+                );
+              },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Log out",
+                      style: TextStyle(
+                        color: helmsauerRed,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.logout,
+                    color: helmsauerRed,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         Row(
           children: [
             Expanded(

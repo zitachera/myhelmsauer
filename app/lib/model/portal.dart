@@ -1,11 +1,3 @@
-// global datainterface for the app?
-
-// login state
-// refresh
-// get verträge
-// melden
-// get contacts
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -30,8 +22,12 @@ class Portal {
     return portal;
   }
 
+  static Future<void> logout() async {
+    await _storage.delete(key: _tokenKey);
+  }
+
   static const String _tokenKey = 'token';
-  final _storage = FlutterSecureStorage();
+  static final _storage = FlutterSecureStorage();
   String _token;
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc

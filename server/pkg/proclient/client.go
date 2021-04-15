@@ -50,6 +50,10 @@ func (c Client) postForm(values url.Values, res interface{}) error {
 
 func (c Client) url() string {
 	switch c.Gruppe {
+	default:
+		fallthrough
+	case "hk":
+		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx"
 	case "jade":
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_jade/CustomerQuery.aspx"
 	case "sue":
@@ -62,7 +66,5 @@ func (c Client) url() string {
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_hp/CustomerQuery.aspx"
 	case "luebcke":
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_luebcke/CustomerQuery.aspx"
-	default: // "hk"
-		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx"
 	}
 }
