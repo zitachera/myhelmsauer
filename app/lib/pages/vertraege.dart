@@ -9,7 +9,11 @@ class VertraegePage extends StatefulWidget {
   final List<Vertrag> vertraege;
 
   @override
-  _VertraegePageState createState() => _VertraegePageState(this.vertraege);
+  _VertraegePageState createState() => _VertraegePageState(this
+      .vertraege
+      .where((v) =>
+          v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
+      .toList());
 }
 
 class _VertraegePageState extends State<VertraegePage> {
@@ -31,15 +35,12 @@ class _VertraegePageState extends State<VertraegePage> {
             textScaleFactor: 2,
           ),
         ),
-        ...vertraege
-            .where((v) =>
-                v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
-            .map(
-              (vertrag) => _buildVertrag(
-                context,
-                vertrag,
-              ),
-            ),
+        ...vertraege.map(
+          (vertrag) => _buildVertrag(
+            context,
+            vertrag,
+          ),
+        ),
       ],
     );
   }
