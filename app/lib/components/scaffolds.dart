@@ -68,10 +68,8 @@ class HsNestedScrollScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget scrollView = SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: body,
-      ),
+      padding: EdgeInsets.all(10),
+      child: body,
     );
     if (onRefresh != null) {
       scrollView = RefreshIndicator(

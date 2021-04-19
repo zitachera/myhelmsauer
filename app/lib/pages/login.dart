@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String lastUserName = "";
 
-  Future<Portal> _login(String user, String password, String gruppe) async {
+  Future<Portal> login(String user, String password, String gruppe) async {
     final portal = Portal();
     await portal.login(user, password, gruppe);
     return portal;
@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _LoginForm get _form => _LoginForm(
         login: (user, password, gruppe) => setState(() {
-          loader = _login(user, password, gruppe);
+          loader = login(user, password, gruppe);
           loaderKey = UniqueKey();
           lastUserName = user;
         }),
@@ -54,8 +54,9 @@ class _LoginPageState extends State<LoginPage> {
             );
           }
           if (!snapshot.hasData) {
-            return Center(
-              child: CircularProgressIndicator(),
+            return Padding(
+              padding: const EdgeInsets.only(top: 100),
+              child: Center(child: CircularProgressIndicator()),
             );
           }
 
