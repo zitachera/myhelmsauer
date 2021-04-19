@@ -16,67 +16,81 @@ class _LoginPageState extends State<LoginPage> {
   Future<Portal> loader = Portal.restore();
   Key loaderKey = UniqueKey();
 
+  String lastUserName = "";
+
+  Future<Portal> _login(String user, String password, String gruppe) async {
+    final portal = Portal();
+    await portal.login(user, password, gruppe);
+    return portal;
+  }
+
   _LoginForm get _form => _LoginForm(
-        onLogin: (l) => setState(() {
-          loader = l;
+        login: (user, password, gruppe) => setState(() {
+          loader = _login(user, password, gruppe);
           loaderKey = UniqueKey();
+          lastUserName = user;
         }),
+        lastUserName: lastUserName,
       );
 
   @override
   Widget build(BuildContext context) {
     return HsNestedScrollScaffold(
       title: "Helmsauer",
-      body: SingleChildScrollView(
-        child: FutureBuilder<Portal>(
-          key: loaderKey,
-          future: loader,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Column(
-                children: [
-                  SizedBox(height: 5.0),
-                  Text(
-                    "${snapshot.error}",
-                    style: TextStyle(color: helmsauerRed),
-                  ),
-                  _form,
-                ],
-              );
-            }
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-
-            final portal = snapshot.data;
-
-            if (portal.loggedIn) {
-              WidgetsBinding.instance.addPostFrameCallback(
-                (_) => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => HomePage(portal),
-                  ),
+      key: loaderKey,
+      body: FutureBuilder<Portal>(
+        future: loader,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Column(
+              children: [
+                SizedBox(height: 5.0),
+                Text(
+                  "${snapshot.error}",
+                  style: TextStyle(color: helmsauerRed),
                 ),
-              );
-              return Center(child: CircularProgressIndicator());
-            }
+                _form,
+              ],
+            );
+          }
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            return _form;
-          },
-        ),
+          final portal = snapshot.data;
+
+          if (portal.loggedIn) {
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => HomePage(portal),
+                ),
+              ),
+            );
+            return Center(child: CircularProgressIndicator());
+          }
+
+          return _form;
+        },
       ),
     );
   }
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({Key key, @required this.onLogin}) : super(key: key);
+  _LoginForm({Key key, @required this.login, @required this.lastUserName})
+      : super(key: key);
 
-  final ValueChanged<Future<Portal>> onLogin;
+  final _LoginFunc login;
+  final String lastUserName;
 
   @override
-  _LoginFormState createState() => _LoginFormState(onLogin);
+  _LoginFormState createState() => _LoginFormState(login, lastUserName);
 }
+
+typedef _LoginFunc = void Function(String user, String password, String gruppe);
 
 class _LoginFormState extends State<_LoginForm> {
   TextStyle style = TextStyle(
@@ -84,13 +98,13 @@ class _LoginFormState extends State<_LoginForm> {
     fontSize: 20.0,
   );
 
-  String gruppe = "hk";
   String user = "";
   String password = "";
+  String gruppe = "hk";
 
-  final ValueChanged<Future<Portal>> onLogin;
+  final _LoginFunc login;
 
-  _LoginFormState(this.onLogin);
+  _LoginFormState(this.login, this.user);
 
   DropdownMenuItem<String> _gruppeItem(String id, String name) =>
       DropdownMenuItem(
@@ -118,9 +132,10 @@ class _LoginFormState extends State<_LoginForm> {
       onChanged: (s) => setState(() => gruppe = s),
     );
 
-    final userField = TextField(
+    final userField = TextFormField(
       onChanged: (value) => user = value,
       style: style,
+      initialValue: user,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: "User",
@@ -146,7 +161,7 @@ class _LoginFormState extends State<_LoginForm> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () => onLogin(_login()),
+        onPressed: () => login(user, password, gruppe),
         child: Text(
           "Login",
           textAlign: TextAlign.center,
@@ -174,11 +189,5 @@ class _LoginFormState extends State<_LoginForm> {
         ],
       ),
     );
-  }
-
-  Future<Portal> _login() async {
-    final portal = Portal();
-    await portal.login(user, password, gruppe);
-    return portal;
   }
 }

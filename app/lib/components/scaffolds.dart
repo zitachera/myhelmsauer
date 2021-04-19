@@ -97,7 +97,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                       fontFamily: 'Chub Gothic',
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
-                        ..strokeWidth = 5
+                        ..strokeWidth = 3
                         ..color = helmsauerBlue,
                     ),
                   ),
