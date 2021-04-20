@@ -48,32 +48,32 @@ class VertragPage extends StatelessWidget {
               caption: "versichertes Risiko",
               value: vertrag.risiko,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton.icon(
-                color: helmsauerBlue,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(20.0),
-                label: Text(
-                  'Police',
-                  textScaleFactor: 1.8,
-                ),
-                icon: const Icon(Icons.text_snippet),
-                onPressed: () async {
-                  var path = await prepareTestPdf();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HsPDFViewerScaffold(
-                        pdfPath: path,
-                        titel:
-                            "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: RaisedButton.icon(
+            //     color: helmsauerBlue,
+            //     textColor: Colors.white,
+            //     padding: const EdgeInsets.all(20.0),
+            //     label: Text(
+            //       'Police',
+            //       textScaleFactor: 1.8,
+            //     ),
+            //     icon: const Icon(Icons.text_snippet),
+            //     onPressed: () async {
+            //       var path = await prepareTestPdf();
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => HsPDFViewerScaffold(
+            //             pdfPath: path,
+            //             titel:
+            //                 "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
