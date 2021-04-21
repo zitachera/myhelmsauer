@@ -49,7 +49,7 @@ func Send(meldung Meldung) error {
 	email.SetFrom("Schadenmeldung <no-reply-schadenmeldung@helmsauer-gruppe.de>").
 		AddTo("jan-erik.keller@helmsauer-gruppe.de").
 		AddTo("udo.roehlich@helmsauer-gruppe.de").
-		SetSubject("New Go Email")
+		SetSubject(meldung.Titel)
 
 	var htmlBody bytes.Buffer
 	if err := bodyTemplate.Execute(&htmlBody, meldung); err != nil {
