@@ -9,11 +9,7 @@ class VertraegePage extends StatefulWidget {
   final List<Vertrag> vertraege;
 
   @override
-  _VertraegePageState createState() => _VertraegePageState(this
-      .vertraege
-      .where((v) =>
-          v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
-      .toList());
+  _VertraegePageState createState() => _VertraegePageState(this.vertraege);
 }
 
 class _VertraegePageState extends State<VertraegePage> {
