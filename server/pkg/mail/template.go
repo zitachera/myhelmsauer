@@ -138,11 +138,13 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 <blockquote>
 {{.Ort}}
 </blockquote>
+{{if .Latitude}}
 <p>
 <a href="http://www.google.com/maps/place/{{.Latitude}},{{.Longitude}}">
 Geo-Link
 </a>
 </p>
+{{end}}
 </body>
 
 </html>`))
