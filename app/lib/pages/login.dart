@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
@@ -42,11 +44,15 @@ class _LoginPageState extends State<LoginPage> {
         future: loader,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
+            var msg = snapshot.error.toString();
+            if (snapshot.error is SocketException) {
+              msg = "Keine Verbindung zum Server!";
+            }
             return Column(
               children: [
                 SizedBox(height: 5.0),
                 Text(
-                  "${snapshot.error}",
+                  msg,
                   style: TextStyle(color: helmsauerRed),
                 ),
                 _form,
