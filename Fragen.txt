@@ -1,6 +1,0 @@
-Fragen
-- Was für ein Icon soll die App bekommen? Das Helmsauerlogo ist eingentlich ungeeignet.
-- Passt der Gesammteindruck
-- Ist das Hidden GPS ok. Google Maps Alternative wird zusätzliche Kosten bringen!
-- Fehlen Bilderkategorien, sollen welche umbenannt oder raus genommen werden?
-- Erklärtexte und -bilder für jede Bilderkategorie!
