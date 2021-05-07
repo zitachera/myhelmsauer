@@ -254,11 +254,28 @@ class _AddButton extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     label,
-                    textScaleFactor: 2,
+                    textScaleFactor: 1.6,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  if (info != null) info,
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (info != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: info,
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Text(
+                              "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf " +
+                                  "und bestätigen dieses, um es dem Bericht hinzuzufügen."),
+                        )
+                      ],
+                    ),
+                  ),
                   Row(
                     children: <Widget>[
                       _AddImageAction(

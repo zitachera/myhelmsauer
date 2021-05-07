@@ -37,8 +37,14 @@ class _MeldenState extends State<MeldenPage> {
 
   final Portal portal;
 
-  DateTime get zeitpunkt =>
-      DateTime(datum.year, datum.month, datum.day, zeit.hour, zeit.minute, 0);
+  DateTime get zeitpunkt => DateTime(
+        datum.year,
+        datum.month,
+        datum.day,
+        zeit.hour,
+        zeit.minute,
+        0,
+      );
 
   String schadenhergang = "";
   String ort = "";
