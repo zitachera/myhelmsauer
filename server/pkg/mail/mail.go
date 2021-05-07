@@ -52,6 +52,7 @@ func Send(meldung Meldung) error {
 	email.SetFrom("Schadenmeldung <no-reply-schadenmeldung@helmsauer-gruppe.de>").
 		AddTo("jan-erik.keller@helmsauer-gruppe.de").
 		AddTo("udo.roehlich@helmsauer-gruppe.de").
+		AddTo("bastian.helmsauer@helmsauer-gruppe.de").
 		SetSubject(meldung.Titel)
 
 	var htmlBody bytes.Buffer
