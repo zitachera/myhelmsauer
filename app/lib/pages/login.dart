@@ -133,7 +133,6 @@ class _LoginFormState extends State<_LoginForm> {
         _gruppeItem("bbg", "von Berenberg-Gossler Assekuranzmakler"),
         _gruppeItem("detmer", "Ärzte Wirtschaftszentrum Köln"),
         _gruppeItem("hp", "Helmsauer und Preuß"),
-        _gruppeItem("luebcke", "Lübcke Assekuranzmakler"),
       ],
       value: gruppe,
       onChanged: (s) => setState(() => gruppe = s),
