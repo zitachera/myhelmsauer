@@ -72,7 +72,7 @@ class _Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return MaterialButton(
       onPressed: onPressed,
       padding: EdgeInsets.all(10),
       child: Column(

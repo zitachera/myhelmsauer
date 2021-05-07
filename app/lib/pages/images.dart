@@ -323,7 +323,7 @@ class _AddImageAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: FlatButton(
+      child: MaterialButton(
         onPressed: () async {
           Navigator.of(context).pop();
 

@@ -23,9 +23,10 @@ class _VertraegePageState extends State<VertraegePage> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(bottom: 14),
+          padding: const EdgeInsets.only(top: 15, bottom: 14),
           child: Text(
             "Vertragsübersicht (${vertraege.length})",
             textScaleFactor: 2,
@@ -43,15 +44,13 @@ class _VertraegePageState extends State<VertraegePage> {
 
   Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(3),
+      margin: const EdgeInsets.all(3),
+      child: MaterialButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(3)),
         ),
-        color: Color.fromRGBO(0, 0, 0, 245),
-      ),
-      margin: EdgeInsets.all(3),
-      padding: EdgeInsets.all(3),
-      child: FlatButton(
+        padding: const EdgeInsets.all(5),
+        color: const Color.fromRGBO(245, 245, 245, 1),
         onPressed: () => {
           Navigator.push(
             context,
@@ -68,7 +67,7 @@ class _VertraegePageState extends State<VertraegePage> {
             ),
             SizedBox(height: 4),
             Text(
-              vertrag.gesellschaft,
+              vertrag.gesellschaft + "d",
               textScaleFactor: 1.1,
             ),
             SizedBox(height: 4),

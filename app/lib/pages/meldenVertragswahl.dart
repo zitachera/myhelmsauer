@@ -54,15 +54,13 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
 
   Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(3),
-        ),
-        color: Color.fromRGBO(0, 0, 0, 245),
-      ),
       margin: EdgeInsets.all(3),
-      padding: EdgeInsets.all(3),
-      child: FlatButton(
+      child: MaterialButton(
+        padding: EdgeInsets.all(3),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(3)),
+        ),
+        color: const Color.fromRGBO(245, 245, 245, 1),
         onPressed: () => {
           Navigator.push(
             context,

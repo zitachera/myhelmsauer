@@ -18,7 +18,7 @@ class _NewsPageState extends State<NewsPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            OutlineButton(
+            OutlinedButton(
               onPressed: () async {
                 await Portal.logout();
                 WidgetsBinding.instance.addPostFrameCallback(

@@ -66,7 +66,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   List<Widget> _aufnahmeFields() {
-    List<Widget> cols = List();
+    List<Widget> cols = [];
     Row row;
 
     vertrag.aufnahmeKategorien.forEach((kat) {
@@ -130,7 +130,7 @@ class _MeldenState extends State<MeldenPage> {
                     bottom: BorderSide(width: 1.0, color: Colors.black38),
                   ),
                 ),
-                child: FlatButton(
+                child: MaterialButton(
                   child: Text(
                     dateFormat.format(zeitpunkt),
                     textScaleFactor: 1.3,
@@ -147,7 +147,7 @@ class _MeldenState extends State<MeldenPage> {
                     bottom: BorderSide(width: 1.0, color: Colors.black38),
                   ),
                 ),
-                child: FlatButton(
+                child: MaterialButton(
                   child: Text(
                     timeFormat.format(zeitpunkt),
                     textScaleFactor: 1.3,
@@ -179,7 +179,7 @@ class _MeldenState extends State<MeldenPage> {
             ElevatedButton.icon(
               onPressed: () async {
                 if (!_formKey.currentState.validate()) {
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Bitte geben Sie alle nötigen Daten an.'),
                     ),
@@ -232,7 +232,7 @@ class _MeldenState extends State<MeldenPage> {
                         content:
                             Text('Bite senden Sie die Schadenmeldung erneut.'),
                         actions: [
-                          FlatButton(
+                          MaterialButton(
                             onPressed: () => Navigator.of(context).pop(),
                             child: Text("Weiter"),
                           )
@@ -241,7 +241,7 @@ class _MeldenState extends State<MeldenPage> {
                     },
                   );
 
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text("Der Bericht konnte nicht gesendet werden."),
                   ));
                   return;
@@ -257,7 +257,7 @@ class _MeldenState extends State<MeldenPage> {
                       ),
                       content: Text('Wir melden uns kurzfristig bei Ihnen.'),
                       actions: [
-                        FlatButton(
+                        MaterialButton(
                           onPressed: () => Navigator.of(context).pop(),
                           child: Text("Abschließen"),
                         )
