@@ -1,0 +1,43 @@
+### Verträge
+POST https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Query=Vertraege
+&Username=Demokunde
+&Password=Demo90443HK
+&AdressID=AD_201406170853335LI
+
+### Vertrag
+POST https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Query=Vertrag
+&Username=Demokunde
+&Password=Demo90443HK
+&AdressID=AD_201406170853335LI
+&VertragsID=VER20140626092811P76
+
+
+### Adressen
+POST https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Query=Adressen
+&Username=Demokunde
+&Password=Demo90443HK
+
+### Login
+POST https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Query=Login
+&Username=Demokunde
+&Password=Demo90443HK
+
+### LoginInvalid
+POST https://portalinterface.helmsauer-gruppe.de:4448/portalinterface/CustomerQuery.aspx HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+Query=Login
+&Username=Demokunde
+&Password=Demo90443HK!

@@ -1,0 +1,14 @@
+### open patient Y480151179
+POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/login HTTP/1.1
+content-type: application/json
+
+{
+    "user":"Demokunde",
+    "password":"Demo90443HK",
+    "gruppe":"hk"
+}
+
+### open patient Y480151179
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/vertraege HTTP/1.1
+content-type: application/json
+authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
