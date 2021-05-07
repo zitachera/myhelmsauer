@@ -71,14 +71,17 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := mail.Send(mail.Meldung{
-		Titel:          "Schadenmeldung von " + c.Gruppe + " / " + c.User,
-		Vertrag:        "Name (id) / Risiko / Versicherer",
-		Schadenhergang: m.Schadenhergang,
-		Aufnahmen:      imgs,
-		Ort:            m.Ort,
-		Latitude:       m.Latitude,
-		Longitude:      m.Longitude,
-		Zeitpunkt:      z.Format("02.01.2006 15:04"),
+		Titel:               "Schadenmeldung von " + c.Gruppe + " / " + c.User,
+		Versicherungsnummer: vertrag.Nr,
+		Sparte:              vertrag.SpartenName,
+		Risiko:              vertrag.Risiko,
+		Gesellschaft:        vertrag.Gesellschaft,
+		Schadenhergang:      m.Schadenhergang,
+		Aufnahmen:           imgs,
+		Ort:                 m.Ort,
+		Latitude:            m.Latitude,
+		Longitude:           m.Longitude,
+		Zeitpunkt:           z.Format("02.01.2006 15:04"),
 	}); err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return

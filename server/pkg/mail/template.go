@@ -33,8 +33,6 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
     body {
         margin: 0;
         padding: 0;
-        font-size: 0;
-        line-height: 0;
         -ms-text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%;
     }
@@ -122,6 +120,32 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 </head>
 <body>
 <h1>{{.Titel}}</h1>
+<h2>Vertragdetails</h2>
+<p>
+<table cellspacing="5" cellpadding="5" border="0">
+
+<tr> 	
+<td>ProClient Versicherungsnummer: </td>
+<td>{{.Versicherungsnummer}}</td> 
+</tr>
+
+<tr> 	
+<td>Sparte: </td>
+<td>{{.Sparte}}</td> 
+</tr>
+
+<tr> 	
+<td>Risiko: </td>
+<td>{{.Risiko}}</td> 
+</tr>
+
+<tr> 	
+<td>Gesellschaft: </td>
+<td>{{.Gesellschaft}}</td> 
+</tr>
+
+</table> 
+</p>
 <h2>Zeitpunkt</h2>
 <blockquote>
 {{.Zeitpunkt}}
