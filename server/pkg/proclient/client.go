@@ -64,7 +64,5 @@ func (c Client) url() string {
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_detmer/CustomerQuery.aspx"
 	case "hp":
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_hp/CustomerQuery.aspx"
-	case "luebcke":
-		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_luebcke/CustomerQuery.aspx"
 	}
 }

@@ -37,6 +37,18 @@ class ContactPage extends StatelessWidget {
           value: _web,
           url: 'http://$_web',
         ),
+        SizedBox(height: 150),
+        // Spacer(),
+        Row(
+          children: <Widget>[
+            Expanded(
+                child: _Link("Datenschutz",
+                    "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/")),
+            Expanded(
+                child: _Link("Impressum",
+                    "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
+          ],
+        )
       ],
     );
   }
@@ -84,6 +96,33 @@ class _Button extends StatelessWidget {
           ),
           child,
         ],
+      ),
+    );
+  }
+}
+
+class _Link extends StatelessWidget {
+  const _Link(
+    this.text,
+    this.url, {
+    Key key,
+  }) : super(key: key);
+
+  final String text;
+  final String url;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: () => UrlLauncher.launch(url),
+      padding: EdgeInsets.all(10),
+      child: Text(
+        text,
+        textScaleFactor: 1.3,
+        style: TextStyle(
+          decoration: TextDecoration.underline,
+          color: helmsauerBlue,
+        ),
       ),
     );
   }

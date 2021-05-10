@@ -125,7 +125,7 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 <table cellspacing="5" cellpadding="5" border="0">
 
 <tr> 	
-<td>ProClient Versicherungsnummer: </td>
+<td>Versicherungsnummer: </td>
 <td>{{.Versicherungsnummer}}</td> 
 </tr>
 
