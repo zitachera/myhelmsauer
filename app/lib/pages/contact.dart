@@ -38,7 +38,6 @@ class ContactPage extends StatelessWidget {
           url: 'http://$_web',
         ),
         SizedBox(height: 150),
-        // Spacer(),
         Row(
           children: <Widget>[
             Expanded(

@@ -21,6 +21,17 @@ type Meldung struct {
 	Latitude            float64
 	Longitude           float64
 	Aufnahmen           []Image
+
+	KundeAnrede  string
+	KundeTitel   string
+	KundeName    string
+	KundeName2   string
+	KundeName3   string
+	KundeStrasse string
+	KundeHausnr  string
+	KundePlz     string
+	KundeOrt     string
+	KundeLandkz  string
 }
 
 type Image struct {

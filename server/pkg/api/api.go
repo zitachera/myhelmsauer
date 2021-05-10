@@ -82,6 +82,17 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Latitude:            m.Latitude,
 		Longitude:           m.Longitude,
 		Zeitpunkt:           z.Format("02.01.2006 15:04"),
+
+		KundeAnrede:  vertrag.KundeAnrede,
+		KundeTitel:   vertrag.KundeTitel,
+		KundeName:    vertrag.KundeName,
+		KundeName2:   vertrag.KundeName2,
+		KundeName3:   vertrag.KundeName3,
+		KundeStrasse: vertrag.KundeStrasse,
+		KundeHausnr:  vertrag.KundeHausnr,
+		KundePlz:     vertrag.KundePlz,
+		KundeOrt:     vertrag.KundeOrt,
+		KundeLandkz:  vertrag.KundeLandkz,
 	}); err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return

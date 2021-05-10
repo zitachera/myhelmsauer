@@ -120,6 +120,11 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 </head>
 <body>
 <h1>{{.Titel}}</h1>
+<p>
+{{.KundeAnrede}} {{.KundeTitel}} {{.KundeName}} {{.KundeName2}} {{.KundeName3}} <br/>
+{{.KundeStrasse}} {{.KundeHausnr}} <br/>
+{{.KundePlz}} {{.KundeOrt}} {{.KundeLandkz}}
+</p>
 <h2>Vertragdetails</h2>
 <p>
 <table cellspacing="5" cellpadding="5" border="0">
