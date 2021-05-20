@@ -61,6 +61,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           borderRadius: BorderRadius.all(Radius.circular(3)),
         ),
         color: const Color.fromRGBO(245, 245, 245, 1),
+        elevation: 0,
         onPressed: () => {
           Navigator.push(
             context,
