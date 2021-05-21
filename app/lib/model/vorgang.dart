@@ -27,18 +27,18 @@ class Vorgang {
     this.aufnahmen,
   });
 
-  Vorgang.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        vertragsID = json['vertragsID'],
-        zeitpunkt = DateTime.parse(json['zeitpunkt']),
-        schadenhergang = json['schadenhergang'],
-        ort = json['ort'],
-        gps = Position(
-          latitude: json['latitude'],
-          longitude: json['longitude'],
-        ),
-        aufnahmen = (json['aufnahmen'] as Map<String, List<String>>)
-            .map((key, value) => MapEntry(key, _dataFromBase64Strings(value)));
+  // Vorgang.fromJson(Map<String, dynamic> json)
+  //     : id = json['id'],
+  //       vertragsID = json['vertragsID'],
+  //       zeitpunkt = DateTime.parse(json['zeitpunkt']),
+  //       schadenhergang = json['schadenhergang'],
+  //       ort = json['ort'],
+  //       gps = Position(
+  //         latitude: json['latitude'],
+  //         longitude: json['longitude'],
+  //       ),
+  //       aufnahmen = (json['aufnahmen'] as Map<String, List<String>>)
+  //           .map((key, value) => MapEntry(key, _dataFromBase64Strings(value)));
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -53,8 +53,8 @@ class Vorgang {
       };
 }
 
-List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
-    base64String.map(base64Decode).toList();
+// List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
+//     base64String.map(base64Decode).toList();
 
 List<String> _base64Strings(List<Uint8List> data) =>
     data.map(base64Encode).toList();
