@@ -29,14 +29,23 @@ class Portal {
   static const String _tokenKey = 'token';
   static final _storage = FlutterSecureStorage();
   String _token;
+  bool _testServer;
+  static const String _testPrefix = "-<test>-";
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
 
-  Uri _uri(String resource) =>
-      Uri.https("schadenmeldung.helmsauer-gruppe.de", 'api/v1/' + resource);
+  Uri _uri(String resource) => Uri.https(
+      _testServer
+          ? "test.schadenmeldung.helmsauer-gruppe.de"
+          : "schadenmeldung.helmsauer-gruppe.de",
+      'api/v1/' + resource);
 
   Future<void> login(String user, String password, String gruppe) async {
     loggedIn = false;
+    if (user.startsWith(_testPrefix)) {
+      _testServer = true;
+      user = user.substring(_testPrefix.length);
+    }
     final response = await http.post(
       _uri('login'),
       headers: <String, String>{
@@ -52,13 +61,24 @@ class Portal {
       throw ('Login fehlgeschlagen.');
     }
     _token = jsonDecode(response.body)["token"];
-    await _storage.write(key: _tokenKey, value: _token);
+    await _writeToken();
     await reload();
     loggedIn = true;
   }
 
   Future<void> _readToken() async {
     _token = await _storage.read(key: _tokenKey);
+
+    if (_token != null && _token.startsWith(_testPrefix)) {
+      _testServer = true;
+      _token = _token.substring(_testPrefix.length);
+    }
+  }
+
+  Future<void> _writeToken() async {
+    var token = _token;
+    if (_testServer) token = _testPrefix + token;
+    await _storage.write(key: _tokenKey, value: _token);
   }
 
   Future<void> reload() async {
