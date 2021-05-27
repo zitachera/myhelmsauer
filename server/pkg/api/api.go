@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"sort"
 	"strings"
 	"time"
@@ -115,6 +116,16 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 	vertraege := make([]vertrag, len(vs))
 
 	for i, v := range vs {
+		doks := make([]dokument, 0, len(v.Dokumente))
+		for _, d := range v.Dokumente {
+			if d.Deleted || !d.Online {
+				continue
+			}
+			doks = append(doks, dokument{
+				ID:    v.ID + "\\" + d.ID,
+				Titel: d.Titel,
+			})
+		}
 		vertraege[i] = vertrag{
 			ID:                 v.ID,
 			Status:             strings.ToLower(v.Status),
@@ -125,10 +136,51 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 			Vertragsnummer:     v.Nr,
 			Ablauf:             v.Ablauf,
 			AufnahmeKategorien: aufnahmeKategorienForSparte(v.SpartenID),
+			Dokumente:          doks,
 		}
 	}
 
 	if err := json.NewEncoder(w).Encode(vertraege); err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+const dokumentIDKey = "dokumentID"
+
+// Dokument bietet ein ProCLient Dokument direkt zum Download an.
+func Dokument(w http.ResponseWriter, r *http.Request) {
+	c, err := data.LoadCredentials(r.Header.Get("authorization"))
+	if err != nil {
+		handleError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	getter, err := url.ParseQuery(r.URL.RawQuery)
+
+	if err != nil {
+		handleError(w, "Ungültiges URL format", http.StatusBadRequest)
+		return
+	}
+
+	dokumentIDs := strings.SplitN(getter.Get(dokumentIDKey), "\\", 2)
+
+	if len(dokumentIDs) != 2 {
+		handleError(w, "Keine gültige Dokument ID angegeben", http.StatusBadRequest)
+		return
+	}
+
+	contentType, body, err := c.GetDokument(dokumentIDs[0], dokumentIDs[1])
+	if err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", contentType)
+
+	_, err = w.Write(body)
+
+	if err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -195,6 +247,12 @@ type vertrag struct {
 	Beitrag            string                     `json:"beitrag"`
 	Risiko             string                     `json:"risiko"`
 	AufnahmeKategorien []vertragAufnahmeKategorie `json:"aufnahmeKategorien"`
+	Dokumente          []dokument                 `json:"dokumente"`
+}
+
+type dokument struct {
+	ID    string `json:"id"`
+	Titel string `json:"titel"`
 }
 
 type vertragAufnahmeKategorie struct {

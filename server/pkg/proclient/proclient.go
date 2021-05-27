@@ -15,6 +15,7 @@ type Vertrag struct {
 	Gesellschaft       string `xml:"cgesname"`
 	Ablauf             string `xml:"ver_ablauf"`
 
+	AdresseID    string
 	KundeAnrede  string
 	KundeTitel   string
 	KundeName    string
@@ -25,6 +26,8 @@ type Vertrag struct {
 	KundePlz     string
 	KundeOrt     string
 	KundeLandkz  string
+
+	Dokumente []Dokument
 }
 
 type vertraegeResponse struct {
@@ -71,6 +74,11 @@ func (c Client) GetVertraege() ([]Vertrag, error) {
 		}
 		for i := range response.Vertraege {
 			refineVertragData(&response.Vertraege[i], adresse)
+			doks, err := c.getDokumente(adresse.ID, response.Vertraege[i].ID)
+			if err != nil {
+				return nil, err
+			}
+			response.Vertraege[i].Dokumente = doks
 		}
 		vertraege = append(vertraege, response.Vertraege...)
 	}
@@ -101,6 +109,7 @@ func (c Client) GetVertrag(id string) (Vertrag, error) {
 }
 
 func refineVertragData(v *Vertrag, a adresse) {
+	v.AdresseID = a.ID
 	v.KundeAnrede = a.Anrede
 	v.KundeTitel = a.Titel
 	v.KundeName = a.Name
