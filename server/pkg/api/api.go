@@ -17,11 +17,7 @@ import (
 )
 
 func Melden(w http.ResponseWriter, r *http.Request) {
-	c, err := data.LoadCredentials(r.Header.Get("authorization"))
-	if err != nil {
-		handleError(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
+	c := getClientFromRequest(r)
 
 	var m meldung
 	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
@@ -101,11 +97,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 }
 
 func Vertraege(w http.ResponseWriter, r *http.Request) {
-	c, err := data.LoadCredentials(r.Header.Get("authorization"))
-	if err != nil {
-		handleError(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
+	c := getClientFromRequest(r)
 
 	vs, err := c.GetVertraege()
 	if err != nil {
@@ -122,8 +114,8 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 				continue
 			}
 			doks = append(doks, dokument{
-				ID:    v.ID + "\\" + d.ID,
-				Titel: d.Titel,
+				Endpoint: "/adressen/" + url.PathEscape(v.AdresseID) + "/dokumente/" + url.PathEscape(d.ID),
+				Titel:    d.Titel,
 			})
 		}
 		vertraege[i] = vertrag{
@@ -146,31 +138,11 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-const dokumentIDKey = "dokumentID"
-
 // Dokument bietet ein ProCLient Dokument direkt zum Download an.
 func Dokument(w http.ResponseWriter, r *http.Request) {
-	c, err := data.LoadCredentials(r.Header.Get("authorization"))
-	if err != nil {
-		handleError(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
+	c := getClientFromRequest(r)
 
-	getter, err := url.ParseQuery(r.URL.RawQuery)
-
-	if err != nil {
-		handleError(w, "Ungültiges URL format", http.StatusBadRequest)
-		return
-	}
-
-	dokumentIDs := strings.SplitN(getter.Get(dokumentIDKey), "\\", 2)
-
-	if len(dokumentIDs) != 2 {
-		handleError(w, "Keine gültige Dokument ID angegeben", http.StatusBadRequest)
-		return
-	}
-
-	contentType, body, err := c.GetDokument(dokumentIDs[0], dokumentIDs[1])
+	contentType, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
 	if err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -251,8 +223,8 @@ type vertrag struct {
 }
 
 type dokument struct {
-	ID    string `json:"id"`
-	Titel string `json:"titel"`
+	Endpoint string `json:"endpoint"`
+	Titel    string `json:"titel"`
 }
 
 type vertragAufnahmeKategorie struct {
