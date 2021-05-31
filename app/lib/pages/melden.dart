@@ -130,36 +130,28 @@ class _MeldenState extends State<MeldenPage> {
             ..._aufnahmeFields(),
             _Line(
               caption: 'Datum',
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.black38),
-                  ),
+              child: MaterialButton(
+                shape: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black38),
                 ),
-                child: MaterialButton(
-                  child: Text(
-                    dateFormat.format(zeitpunkt),
-                    textScaleFactor: 1.3,
-                  ),
-                  onPressed: () => _selectDate(context),
+                child: Text(
+                  dateFormat.format(zeitpunkt),
+                  textScaleFactor: 1.3,
                 ),
+                onPressed: () => _selectDate(context),
               ),
             ),
             _Line(
               caption: 'Uhrzeit',
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.black38),
-                  ),
+              child: MaterialButton(
+                shape: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black38),
                 ),
-                child: MaterialButton(
-                  child: Text(
-                    timeFormat.format(zeitpunkt),
-                    textScaleFactor: 1.3,
-                  ),
-                  onPressed: () => _selectTime(context),
+                child: Text(
+                  timeFormat.format(zeitpunkt),
+                  textScaleFactor: 1.3,
                 ),
+                onPressed: () => _selectTime(context),
               ),
             ),
             _MultiLine(
