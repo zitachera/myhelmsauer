@@ -16,7 +16,7 @@ func main() {
 
 	r.Use(
 		middleware.Recoverer,
-		middleware.RealIP,
+		middleware.Logger,
 		middleware.Timeout(time.Minute),
 	)
 
