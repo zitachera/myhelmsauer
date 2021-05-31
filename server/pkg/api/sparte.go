@@ -41,8 +41,8 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			},
 			{
 				ID:           "gegnerischesKennzeichen",
-				Label:        "Gegnerisches Kennzeichen",
-				Beschreibung: "",
+				Label:        "Kennzeichen",
+				Beschreibung: "Kennzeichen des Unfallgegners",
 				Max:          1,
 				Min:          0,
 			},

@@ -29,7 +29,7 @@ class Portal {
   static const String _tokenKey = 'token';
   static final _storage = FlutterSecureStorage();
   String _token;
-  bool _testServer;
+  bool _testServer = false;
   static const String _testPrefix = "-<test>-";
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
@@ -87,7 +87,7 @@ class Portal {
     }
     // load verträge, kontakte und news ...
     final response = await http.get(
-      _uri('vertraege'),
+      _uri('verträge'),
       headers: {HttpHeaders.authorizationHeader: _token},
     );
     if (response.statusCode != 200) {
@@ -100,7 +100,7 @@ class Portal {
 
   Future<void> sendMeldung(Vorgang meldung) async {
     final response = await http.post(
-      _uri('melden'),
+      _uri('vorgänge'),
       headers: {HttpHeaders.authorizationHeader: _token},
       body: jsonEncode(meldung.toJson()),
     );
@@ -112,4 +112,9 @@ class Portal {
   bool loggedIn = false;
 
   List<Vertrag> vertraege = <Vertrag>[];
+
+  Future<http.Response> getRessource(String endpoint) => http.get(
+        _uri(endpoint),
+        headers: {HttpHeaders.authorizationHeader: _token},
+      );
 }
