@@ -13,6 +13,7 @@ class Vertrag {
   final String beitrag;
   final String risiko;
   final List<VertragAufnahmeKategorie> aufnahmeKategorien;
+  final List<VertragDokument> dokumente;
 
   Vertrag({
     @required this.id,
@@ -24,6 +25,7 @@ class Vertrag {
     this.beitrag,
     this.risiko,
     this.aufnahmeKategorien,
+    this.dokumente,
   });
 
   Vertrag.fromJson(Map<String, dynamic> json)
@@ -37,6 +39,9 @@ class Vertrag {
         risiko = json['risiko'],
         aufnahmeKategorien = (json['aufnahmeKategorien'] as List)
             .map((e) => VertragAufnahmeKategorie.fromJson(e))
+            .toList(),
+        dokumente = (json['dokumente'] as List)
+            .map((e) => VertragDokument.fromJson(e))
             .toList();
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +55,7 @@ class Vertrag {
         'risiko': risiko,
         'aufnahmeKategorien':
             aufnahmeKategorien.map((e) => e.toJson()).toList(),
+        'dokumente': dokumente.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -57,6 +63,27 @@ enum VertragStatus {
   aktiv,
   antrag,
   storno,
+}
+
+@dataClass
+class VertragDokument {
+  final String endpoint;
+
+  final String titel;
+
+  VertragDokument({
+    @required this.endpoint,
+    this.titel,
+  });
+
+  VertragDokument.fromJson(Map<String, dynamic> json)
+      : endpoint = json['endpoint'],
+        titel = json['titel'];
+
+  Map<String, dynamic> toJson() => {
+        'endpoint': endpoint,
+        'titel': titel,
+      };
 }
 
 class VertragAufnahmeKategorie {

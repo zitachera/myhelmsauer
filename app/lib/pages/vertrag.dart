@@ -1,20 +1,20 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/pages/file.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 
 class VertragPage extends StatelessWidget {
-  VertragPage({
+  VertragPage(
+    this.portal, {
     Key key,
     @required this.vertrag,
   }) : super(key: key);
 
   final Vertrag vertrag;
+
+  final Portal portal;
 
   @override
   Widget build(BuildContext context) {
@@ -48,48 +48,37 @@ class VertragPage extends StatelessWidget {
               caption: "versichertes Risiko",
               value: vertrag.risiko,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: RaisedButton.icon(
-            //     color: helmsauerBlue,
-            //     textColor: Colors.white,
-            //     padding: const EdgeInsets.all(20.0),
-            //     label: Text(
-            //       'Police',
-            //       textScaleFactor: 1.8,
-            //     ),
-            //     icon: const Icon(Icons.text_snippet),
-            //     onPressed: () async {
-            //       var path = await prepareTestPdf();
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //           builder: (context) => HsPDFViewerScaffold(
-            //             pdfPath: path,
-            //             titel:
-            //                 "${vertrag.sparte} ${vertrag.gesellschaft} ${vertrag.vertragsnummer}",
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
+            for (var dokument in vertrag.dokumente)
+              MaterialButton(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: const Icon(Icons.text_snippet),
+                    ),
+                    Expanded(
+                      child: Text(
+                        dokument.titel,
+                        textScaleFactor: 1.3,
+                      ),
+                    ),
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          FilePage(portal, dokument.titel, dokument.endpoint),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
     );
-  }
-
-  Future<String> prepareTestPdf() async {
-    final ByteData bytes = await rootBundle.load("images/KFZ.pdf");
-    final Uint8List list = bytes.buffer.asUint8List();
-
-    final tempDir = await getTemporaryDirectory();
-    final tempDocumentPath = '${tempDir.path}/contract.pdf';
-
-    final file = await File(tempDocumentPath).create(recursive: true);
-    file.writeAsBytesSync(list);
-    return tempDocumentPath;
   }
 }
 

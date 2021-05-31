@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
         );
       case 1:
         return VertraegePage(
+          portal,
           portal.vertraege,
           key: UniqueKey(),
         );

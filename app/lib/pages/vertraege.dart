@@ -1,20 +1,14 @@
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
-class VertraegePage extends StatefulWidget {
-  VertraegePage(this.vertraege, {Key key}) : super(key: key);
+class VertraegePage extends StatelessWidget {
+  VertraegePage(this.portal, this.vertraege, {Key key}) : super(key: key);
 
-  final List<Vertrag> vertraege;
-
-  @override
-  _VertraegePageState createState() => _VertraegePageState(this.vertraege);
-}
-
-class _VertraegePageState extends State<VertraegePage> {
-  _VertraegePageState(this.vertraege);
+  final Portal portal;
   final List<Vertrag> vertraege;
 
   Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
@@ -80,7 +74,7 @@ class _VertraegePageState extends State<VertraegePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => VertragPage(vertrag: vertrag)),
+                builder: (context) => VertragPage(portal, vertrag: vertrag)),
           ),
         },
         child: Column(
