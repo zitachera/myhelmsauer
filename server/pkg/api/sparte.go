@@ -53,6 +53,13 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 				Max:          3,
 				Min:          0,
 			},
+			{
+				ID:           "polizei",
+				Label:        "Polizeiliche Unfall\u00ADaufnahmen",
+				Beschreibung: "Wenn möglich können Fotos der Polizeiliche Unfallaufnahmen hinzugefügt werden.",
+				Max:          3,
+				Min:          0,
+			},
 		}
 	}
 	return []vertragAufnahmeKategorie{}
