@@ -155,13 +155,13 @@ class _MeldenState extends State<MeldenPage> {
               ),
             ),
             _MultiLine(
-              caption: 'Standort',
+              caption: 'Unfallort',
               child: TextFormField(
                 initialValue: ort,
                 onChanged: (s) => ort = s,
                 validator: (s) {
                   if (s.isNotEmpty) return null;
-                  return "Bitte geben Sie den Ort des Vorgangs an!";
+                  return "Bitte geben Sie den Ort des Unfalls an!";
                 },
               ),
             ),
