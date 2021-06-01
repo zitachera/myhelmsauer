@@ -1,12 +1,15 @@
 package api
 
-func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
+const imagesKind = "images"
+
+func meldeFelderForSparte(sparte string) []meldeFeld {
 	switch sparte {
 	case "SPN200008031656319BP", "SPNAAAAAAAAAA": // Kraftfahrtversicherung
-		return []vertragAufnahmeKategorie{
+		return []meldeFeld{
 			{
 				ID:           "ausweisVorderseite",
 				Label:        "Ausweis\u00ADvorderseite",
+				Kind:         imagesKind,
 				Beschreibung: "Ausweis\u00ADvorderseite des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -14,6 +17,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "ausweisRueckseite",
 				Label:        "Ausweis\u00ADrückseite",
+				Kind:         imagesKind,
 				Beschreibung: "Ausweis\u00ADrückseite des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -21,6 +25,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "fuehrerscheinVorderseite",
 				Label:        "Führerschein\u00ADvorderseite",
+				Kind:         imagesKind,
 				Beschreibung: "Führerschein\u00ADvorderseite des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -28,6 +33,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "fuehrerscheinRueckseite",
 				Label:        "Führerschein\u00ADrückseite",
+				Kind:         imagesKind,
 				Beschreibung: "Führerschein\u00ADrückseite des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -35,6 +41,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "fahrzeugschein",
 				Label:        "Fahrzeug\u00ADschein",
+				Kind:         imagesKind,
 				Beschreibung: "Fahrzeugschein des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -42,6 +49,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "gegnerischesKennzeichen",
 				Label:        "Kennzeichen",
+				Kind:         imagesKind,
 				Beschreibung: "Kennzeichen des Unfallgegners",
 				Max:          1,
 				Min:          0,
@@ -49,6 +57,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "unfall",
 				Label:        "Unfall\u00ADfotos",
+				Kind:         imagesKind,
 				Beschreibung: "",
 				Max:          3,
 				Min:          0,
@@ -56,16 +65,17 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			{
 				ID:           "polizei",
 				Label:        "Polizeiliche Unfall\u00ADaufnahmen",
+				Kind:         imagesKind,
 				Beschreibung: "Wenn möglich können Fotos der Polizeiliche Unfallaufnahmen hinzugefügt werden.",
 				Max:          3,
 				Min:          0,
 			},
 		}
 	}
-	return []vertragAufnahmeKategorie{}
+	return []meldeFeld{}
 }
 
-func spartenLabel(id string, kats []vertragAufnahmeKategorie) string {
+func spartenLabel(id string, kats []meldeFeld) string {
 	for _, kat := range kats {
 		if id == kat.ID {
 			return kat.Label

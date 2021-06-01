@@ -32,7 +32,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	kats := aufnahmeKategorienForSparte(vertrag.SpartenID)
+	kats := meldeFelderForSparte(vertrag.SpartenID)
 
 	categories := make([]string, 0, len(m.Aufnahmen))
 
@@ -127,7 +127,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 			Gesellschaft:       v.Gesellschaft,
 			Vertragsnummer:     v.Nr,
 			Ablauf:             v.Ablauf,
-			AufnahmeKategorien: aufnahmeKategorienForSparte(v.SpartenID),
+			AufnahmeKategorien: meldeFelderForSparte(v.SpartenID),
 			Dokumente:          doks,
 		}
 	}
@@ -210,16 +210,16 @@ type meldung struct {
 }
 
 type vertrag struct {
-	ID                 string                     `json:"id"`
-	Sparte             string                     `json:"sparte"`
-	Gesellschaft       string                     `json:"gesellschaft"`
-	Vertragsnummer     string                     `json:"vertragsnummer"`
-	Ablauf             string                     `json:"ablauf"`
-	Status             string                     `json:"status"`
-	Beitrag            string                     `json:"beitrag"`
-	Risiko             string                     `json:"risiko"`
-	AufnahmeKategorien []vertragAufnahmeKategorie `json:"aufnahmeKategorien"`
-	Dokumente          []dokument                 `json:"dokumente"`
+	ID                 string      `json:"id"`
+	Sparte             string      `json:"sparte"`
+	Gesellschaft       string      `json:"gesellschaft"`
+	Vertragsnummer     string      `json:"vertragsnummer"`
+	Ablauf             string      `json:"ablauf"`
+	Status             string      `json:"status"`
+	Beitrag            string      `json:"beitrag"`
+	Risiko             string      `json:"risiko"`
+	AufnahmeKategorien []meldeFeld `json:"aufnahmeKategorien"`
+	Dokumente          []dokument  `json:"dokumente"`
 }
 
 type dokument struct {
@@ -227,9 +227,10 @@ type dokument struct {
 	Titel    string `json:"titel"`
 }
 
-type vertragAufnahmeKategorie struct {
+type meldeFeld struct {
 	ID           string `json:"id"`
 	Label        string `json:"label"`
+	Kind         string `json:"kind"`
 	Beschreibung string `json:"beschreibung"`
 	Max          int    `json:"max"`
 	Min          int    `json:"min"`

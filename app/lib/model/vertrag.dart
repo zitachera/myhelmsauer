@@ -107,10 +107,7 @@ class MeldeFeld {
   MeldeFeld.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         label = json['label'],
-        kind = MeldeFeldKind.values.firstWhere(
-          (k) => k.toString() == json['kind'],
-          orElse: () => MeldeFeldKind.images,
-        ),
+        kind = _jsonToMeldeFeldKind(json['kind']),
         beschreibung = json['beschreibung'] ?? "",
         max = json['max'],
         min = json['min'];
@@ -132,3 +129,9 @@ VertragStatus _jsonToVertragStatus(String status) =>
     VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status);
 
 enum MeldeFeldKind { images, textfield, section }
+
+String _meldeFeldKindToJson(MeldeFeldKind status) =>
+    status.toString().split('.')[1];
+
+MeldeFeldKind _jsonToMeldeFeldKind(String status) =>
+    MeldeFeldKind.values.firstWhere((v) => _meldeFeldKindToJson(v) == status);
