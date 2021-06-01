@@ -1,6 +1,10 @@
 package api
 
-const imagesKind = "images"
+const (
+	imagesKind    = "images"
+	textfieldKind = "textfield"
+	sectionKind   = "section"
+)
 
 func meldeFelderForSparte(sparte string) []meldeFeld {
 	switch sparte {
@@ -76,9 +80,13 @@ func meldeFelderForSparte(sparte string) []meldeFeld {
 }
 
 func spartenLabel(id string, kats []meldeFeld) string {
+	prefix := ""
 	for _, kat := range kats {
 		if id == kat.ID {
-			return kat.Label
+			return prefix + kat.Label
+		}
+		if kat.Kind == sectionKind {
+			prefix = kat.Label
 		}
 	}
 	return id

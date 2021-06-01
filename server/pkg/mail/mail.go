@@ -21,6 +21,7 @@ type Meldung struct {
 	Latitude            float64
 	Longitude           float64
 	Aufnahmen           []Image
+	Felder              map[string]string
 
 	KundeAnrede  string
 	KundeTitel   string

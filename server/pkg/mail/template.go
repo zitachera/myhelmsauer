@@ -151,6 +151,14 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 
 </table> 
 </p>
+
+{{- range $caption, $field := .Felder}}
+<h2>{{$caption}}</h2>
+<blockquote>
+{{$field}}
+</blockquote>
+{{- end}}
+
 <h2>Zeitpunkt</h2>
 <blockquote>
 {{.Zeitpunkt}}

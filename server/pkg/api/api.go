@@ -60,6 +60,13 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	fields := map[string]string{}
+	if m.Felder != nil {
+		for key, field := range m.Felder {
+			fields[spartenLabel(key, kats)] = field
+		}
+	}
+
 	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt)
 
 	if err != nil {
@@ -74,11 +81,12 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Risiko:              vertrag.Risiko,
 		Gesellschaft:        vertrag.Gesellschaft,
 		Schadenhergang:      m.Schadenhergang,
-		Aufnahmen:           imgs,
 		Ort:                 m.Ort,
 		Latitude:            m.Latitude,
 		Longitude:           m.Longitude,
 		Zeitpunkt:           z.Format("02.01.2006 15:04"),
+		Aufnahmen:           imgs,
+		Felder:              fields,
 
 		KundeAnrede:  vertrag.KundeAnrede,
 		KundeTitel:   vertrag.KundeTitel,
@@ -207,6 +215,7 @@ type meldung struct {
 	Latitude       float64              `json:"latitude"`
 	Longitude      float64              `json:"longitude"`
 	Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
+	Felder         map[string]string    `json:"felder"`
 }
 
 type vertrag struct {
