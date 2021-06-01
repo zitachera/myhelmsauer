@@ -71,51 +71,80 @@ class _MeldenState extends State<MeldenPage> {
         .then((position) => gps = position);
   }
 
+  bool small(MeldeFeld f) => f.kind == MeldeFeldKind.images && f.max == 1;
+
   List<Widget> _aufnahmeFields() {
     List<Widget> cols = [];
     Row row;
 
-    vertrag.aufnahmeKategorien.forEach((kat) {
-      if (kat.max == 1) {
-        if (row == null) {
-          row = Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: _aufnahmeField(kat),
-              ),
-            ],
-          );
-          cols.add(row);
-          return;
-        }
-        row.children.add(Expanded(
-          flex: 1,
-          child: _aufnahmeField(kat),
-        ));
+    vertrag.meldeFelder.forEach((f) {
+      if (!small(f)) {
         row = null;
+        cols.add(buildField(f));
         return;
       }
+      if (row == null) {
+        row = Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: buildField(f),
+            ),
+          ],
+        );
+        cols.add(row);
+        return;
+      }
+      row.children.add(Expanded(
+        flex: 1,
+        child: buildField(f),
+      ));
       row = null;
-      cols.add(_aufnahmeField(kat));
     });
     return cols;
   }
 
-  PhotoCollectionField _aufnahmeField(VertragAufnahmeKategorie kategorie) {
-    if (_aufnahmen[kategorie.id] == null) {
-      _aufnahmen[kategorie.id] = <Uint8List>[];
+  Widget buildField(MeldeFeld f) {
+    switch (f.kind) {
+      case MeldeFeldKind.images:
+        if (_aufnahmen[f.id] == null) {
+          _aufnahmen[f.id] = <Uint8List>[];
+        }
+        return PhotoCollectionField(
+          images: _aufnahmen[f.id],
+          labelAdd: "${f.label} hinzufügen",
+          label: f.label,
+          onDelete: (i) => setState(() => _aufnahmen[f.id].removeAt(i)),
+          onAdd: (image) => setState(() => _aufnahmen[f.id].add(image)),
+          infoAdd: f.beschreibung != "" ? Text(f.beschreibung) : null,
+          max: f.max,
+        );
+      case MeldeFeldKind.textfield:
+        return _Line(
+          caption: f.label,
+          child: TextFormField(
+            // initialValue: schadenhergang,
+            // onChanged: (s) => schadenhergang = s, TODO
+            decoration: InputDecoration(hintText: f.beschreibung),
+          ),
+        );
+      case MeldeFeldKind.section:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+              child: Text(f.label, textScaleFactor: 1.5),
+            ),
+            if (f.beschreibung != "")
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                child: Text(f.beschreibung, textScaleFactor: 1.3),
+              ),
+          ],
+        );
     }
-    return PhotoCollectionField(
-      images: _aufnahmen[kategorie.id],
-      labelAdd: "${kategorie.label} hinzufügen",
-      label: kategorie.label,
-      onDelete: (i) => setState(() => _aufnahmen[kategorie.id].removeAt(i)),
-      onAdd: (image) => setState(() => _aufnahmen[kategorie.id].add(image)),
-      infoAdd:
-          kategorie.beschreibung != "" ? Text(kategorie.beschreibung) : null,
-      max: kategorie.max,
-    );
+    throw "Unsupported field.";
   }
 
   final _formKey = GlobalKey<FormState>();

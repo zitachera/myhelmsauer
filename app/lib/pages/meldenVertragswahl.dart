@@ -40,8 +40,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           ),
         ),
         ...vertraege
-            .where((v) =>
-                v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
+            .where((v) => v.meldeFelder != null && v.meldeFelder.isNotEmpty)
             .map(
               (vertrag) => _buildVertrag(
                 context,

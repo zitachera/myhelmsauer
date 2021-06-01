@@ -1,5 +1,6 @@
 import 'package:dataclass/dataclass.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 @dataClass
 class Vertrag {
@@ -12,7 +13,7 @@ class Vertrag {
   final VertragStatus status;
   final String beitrag;
   final String risiko;
-  final List<VertragAufnahmeKategorie> aufnahmeKategorien;
+  final List<MeldeFeld> meldeFelder;
   final List<VertragDokument> dokumente;
 
   Vertrag({
@@ -24,7 +25,7 @@ class Vertrag {
     this.status,
     this.beitrag,
     this.risiko,
-    this.aufnahmeKategorien,
+    this.meldeFelder,
     this.dokumente,
   });
 
@@ -37,9 +38,10 @@ class Vertrag {
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
         risiko = json['risiko'],
-        aufnahmeKategorien = (json['aufnahmeKategorien'] as List)
-            .map((e) => VertragAufnahmeKategorie.fromJson(e))
-            .toList(),
+        meldeFelder =
+            ((json['aufnahmeKategorien'] ?? json['aufnahmeKategorien']) as List)
+                .map((e) => MeldeFeld.fromJson(e))
+                .toList(),
         dokumente = (json['dokumente'] as List)
             .map((e) => VertragDokument.fromJson(e))
             .toList();
@@ -53,8 +55,7 @@ class Vertrag {
         'status': _vertragStatusToJson(status),
         'beitrag': beitrag,
         'risiko': risiko,
-        'aufnahmeKategorien':
-            aufnahmeKategorien.map((e) => e.toJson()).toList(),
+        'meldeFelder': meldeFelder.map((e) => e.toJson()).toList(),
         'dokumente': dokumente.map((e) => e.toJson()).toList(),
       };
 }
@@ -86,24 +87,30 @@ class VertragDokument {
       };
 }
 
-class VertragAufnahmeKategorie {
+class MeldeFeld {
   final String id;
   final String label;
+  final MeldeFeldKind kind;
   final String beschreibung;
   final int max;
   final int min;
 
-  VertragAufnahmeKategorie({
+  MeldeFeld({
     @required this.id,
     @required this.label,
+    @required this.kind,
     this.beschreibung = "",
     this.max = 1,
     this.min = 0,
   });
 
-  VertragAufnahmeKategorie.fromJson(Map<String, dynamic> json)
+  MeldeFeld.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         label = json['label'],
+        kind = MeldeFeldKind.values.firstWhere(
+          (k) => k.toString() == json['kind'],
+          orElse: () => MeldeFeldKind.images,
+        ),
         beschreibung = json['beschreibung'] ?? "",
         max = json['max'],
         min = json['min'];
@@ -111,6 +118,7 @@ class VertragAufnahmeKategorie {
   Map<String, dynamic> toJson() => {
         'id': id,
         'label': label,
+        'kind': kind.toString(),
         'beschreibung': beschreibung,
         'max': max,
         'min': min,
@@ -122,3 +130,5 @@ String _vertragStatusToJson(VertragStatus status) =>
 
 VertragStatus _jsonToVertragStatus(String status) =>
     VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status);
+
+enum MeldeFeldKind { images, textfield, section }
