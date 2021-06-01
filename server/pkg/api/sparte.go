@@ -33,9 +33,9 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 				Min:          0,
 			},
 			{
-				ID:           "grueneKarte",
-				Label:        "Grüne Karte",
-				Beschreibung: "Grüne Karte des Unfallgegners",
+				ID:           "fahrzeugschein",
+				Label:        "Fahrzeug\u00ADschein",
+				Beschreibung: "Fahrzeugschein des Unfallgegners",
 				Max:          1,
 				Min:          0,
 			},
