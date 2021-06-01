@@ -48,7 +48,7 @@ func aufnahmeKategorienForSparte(sparte string) []vertragAufnahmeKategorie {
 			},
 			{
 				ID:           "unfall",
-				Label:        "Unfall\u00ADaufnahme",
+				Label:        "Unfall\u00ADfotos",
 				Beschreibung: "",
 				Max:          3,
 				Min:          0,
