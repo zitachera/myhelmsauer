@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dataclass/dataclass.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonSerializable()
-@dataClass
+@JsonSerializable(explicitToJson: true)
 class Vorgang {
   final String id;
   final String vertragsID;
@@ -39,7 +37,7 @@ class Vorgang {
   //       ),
   //       aufnahmen = (json['aufnahmen'] as Map<String, List<String>>)
   //           .map((key, value) => MapEntry(key, _dataFromBase64Strings(value)));
-
+  //_$VorgangToJson(this);
   Map<String, dynamic> toJson() => {
         'id': id,
         'vertragsID': vertragsID,

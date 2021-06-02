@@ -1,8 +1,5 @@
-import 'package:dataclass/dataclass.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:flutter/material.dart';
 
-@dataClass
 class Vertrag {
   final String id;
 
@@ -66,7 +63,6 @@ enum VertragStatus {
   storno,
 }
 
-@dataClass
 class VertragDokument {
   final String endpoint;
 
