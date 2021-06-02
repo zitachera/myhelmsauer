@@ -8,9 +8,7 @@ import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
@@ -223,77 +221,13 @@ class _MeldenState extends State<MeldenPage> {
                 //   );
                 //   return;
                 // }
-                var nav = Navigator.of(context);
-
-                var pr = new ProgressDialog(context);
-                pr.style(
-                  message: 'Sende Schadenmeldung...',
-                  borderRadius: 10.0,
-                  backgroundColor: Colors.white,
-                  progressWidget: SpinKitCircle(color: helmsauerBlue),
-                  elevation: 10.0,
-                  insetAnimCurve: Curves.easeInOut,
-                  messageTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                );
-
-                await pr.show();
-                try {
-                  await portal.sendMeldung(vorgang);
-
-                  await pr.hide();
-                } catch (e) {
-                  await pr.hide();
-
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Der Bericht konnte nicht gesendet werden.',
-                          textScaleFactor: 1.3,
-                        ),
-                        content:
-                            Text('Bite senden Sie die Schadenmeldung erneut.'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text("Weiter"),
-                          )
-                        ],
-                      );
-                    },
-                  );
-
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Der Bericht konnte nicht gesendet werden."),
-                  ));
-                  return;
-                }
 
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(
-                        'Ihre Schadenmeldung ist eingegangen.',
-                        textScaleFactor: 1.3,
-                      ),
-                      content: Text('Wir melden uns kurzfristig bei Ihnen.'),
-                      actions: [
-                        MaterialButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text("Abschließen"),
-                        )
-                      ],
-                    );
+                    return _SendDialog(portal, vorgang);
                   },
                 );
-
-                nav.popUntil((route) => route.isFirst);
               },
               icon: const Icon(
                 Icons.send,
@@ -398,6 +332,80 @@ class _Line extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SendDialog extends StatelessWidget {
+  const _SendDialog(
+    this.portal,
+    this.vorgang, {
+    Key key,
+  }) : super(key: key);
+
+  final Portal portal;
+  final Vorgang vorgang;
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(
+        'Schadenmeldung senden',
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: FutureBuilder<void>(
+            future: portal.sendMeldung(vorgang),
+            builder: builder,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget builder(BuildContext context, AsyncSnapshot snapshot) {
+    var nav = Navigator.of(context);
+    if (snapshot.hasError) {
+      return Column(
+        children: [
+          Text(
+            'Der Bericht konnte nicht gesendet werden.',
+            textScaleFactor: 1.3,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4, bottom: 8),
+            child: Text('Bite senden Sie die Schadenmeldung erneut.'),
+          ),
+          MaterialButton(
+            onPressed: () => nav.pop(),
+            child: Text("Weiter"),
+          ),
+        ],
+      );
+    }
+    if (snapshot.connectionState != ConnectionState.done) {
+      return Padding(
+        padding: const EdgeInsets.all(50),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Ihre Schadenmeldung ist eingegangen.',
+          textScaleFactor: 1.3,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 8),
+          child: Text('Wir melden uns kurzfristig bei Ihnen.'),
+        ),
+        MaterialButton(
+          onPressed: () => nav.popUntil((route) => route.isFirst),
+          child: Text("Abschließen"),
+        ),
+      ],
     );
   }
 }
