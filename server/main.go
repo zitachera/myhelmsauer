@@ -17,7 +17,7 @@ func main() {
 	r.Use(
 		middleware.Recoverer,
 		middleware.Logger,
-		middleware.Timeout(time.Minute),
+		middleware.Timeout(10*time.Minute),
 	)
 
 	r.Route("/api/v1", func(r chi.Router) {
