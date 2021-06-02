@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,15 +11,15 @@ class Vorgang {
   final DateTime zeitpunkt;
   final String schadenhergang;
   final String ort;
-  final Position gps;
-  final Map<String, List<Uint8List>> aufnahmen;
+  final Position? gps;
+  final Map<String, List<Uint8List>>? aufnahmen;
 
   Vorgang({
-    @required this.id,
-    @required this.vertragsID,
-    this.zeitpunkt,
-    this.schadenhergang,
-    this.ort,
+    required this.id,
+    required this.vertragsID,
+    required this.zeitpunkt,
+    required this.schadenhergang,
+    required this.ort,
     this.gps,
     this.aufnahmen,
   });
@@ -46,8 +45,8 @@ class Vorgang {
         'ort': ort,
         'latitude': gps?.latitude,
         'longitude': gps?.longitude,
-        'aufnahmen':
-            aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
+        'aufnahmen': aufnahmen!
+            .map((key, value) => MapEntry(key, _base64Strings(value))),
       };
 }
 

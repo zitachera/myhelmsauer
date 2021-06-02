@@ -4,7 +4,7 @@ import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 
 class NewsPage extends StatefulWidget {
-  NewsPage({Key key}) : super(key: key);
+  NewsPage({Key? key}) : super(key: key);
 
   @override
   _NewsPageState createState() => _NewsPageState();
@@ -21,7 +21,7 @@ class _NewsPageState extends State<NewsPage> {
             OutlinedButton(
               onPressed: () async {
                 await Portal.logout();
-                WidgetsBinding.instance.addPostFrameCallback(
+                WidgetsBinding.instance!.addPostFrameCallback(
                   (_) => Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => LoginPage(),

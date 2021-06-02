@@ -5,7 +5,7 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal, {Key key}) : super(key: key);
+  MeldenVertragwahlPage(this.portal, {Key? key}) : super(key: key);
 
   final Portal portal;
 
@@ -39,9 +39,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
             textScaleFactor: 1.3,
           ),
         ),
-        ...vertraege
-            .where((v) => v.meldeFelder != null && v.meldeFelder.isNotEmpty)
-            .map(
+        ...vertraege.where((v) => v.meldeFelder.isNotEmpty).map(
               (vertrag) => _buildVertrag(
                 context,
                 vertrag,

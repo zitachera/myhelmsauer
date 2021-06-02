@@ -12,7 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({Key key, @required this.vertrag, @required this.portal})
+  MeldenPage({Key? key, required this.vertrag, required this.portal})
       : super(key: key);
 
   final Vertrag vertrag;
@@ -29,7 +29,11 @@ class MeldenPage extends StatefulWidget {
 }
 
 class _MeldenState extends State<MeldenPage> {
-  _MeldenState({this.vertrag, this.portal, this.datum, this.zeit});
+  _MeldenState(
+      {required this.vertrag,
+      required this.portal,
+      required this.datum,
+      required this.zeit});
 
   final Vertrag vertrag;
 
@@ -46,7 +50,7 @@ class _MeldenState extends State<MeldenPage> {
 
   String schadenhergang = "";
   String ort = "";
-  Position gps;
+  Position? gps;
   Map<String, List<Uint8List>> _aufnahmen = Map();
 
   DateTime datum;
@@ -73,7 +77,7 @@ class _MeldenState extends State<MeldenPage> {
 
   List<Widget> _aufnahmeFields() {
     List<Widget> cols = [];
-    Row row;
+    Row? row;
 
     vertrag.meldeFelder.forEach((f) {
       if (!small(f)) {
@@ -90,10 +94,10 @@ class _MeldenState extends State<MeldenPage> {
             ),
           ],
         );
-        cols.add(row);
+        cols.add(row!);
         return;
       }
-      row.children.add(Expanded(
+      row!.children.add(Expanded(
         flex: 1,
         child: buildField(f),
       ));
@@ -109,11 +113,11 @@ class _MeldenState extends State<MeldenPage> {
           _aufnahmen[f.id] = <Uint8List>[];
         }
         return PhotoCollectionField(
-          images: _aufnahmen[f.id],
+          images: _aufnahmen[f.id]!,
           labelAdd: "${f.label} hinzufügen",
           label: f.label,
-          onDelete: (i) => setState(() => _aufnahmen[f.id].removeAt(i)),
-          onAdd: (image) => setState(() => _aufnahmen[f.id].add(image)),
+          onDelete: (i) => setState(() => _aufnahmen[f.id]!.removeAt(i)),
+          onAdd: (image) => setState(() => _aufnahmen[f.id]!.add(image)),
           infoAdd: f.beschreibung != "" ? Text(f.beschreibung) : null,
           max: f.max,
         );
@@ -142,7 +146,6 @@ class _MeldenState extends State<MeldenPage> {
           ],
         );
     }
-    throw "Unsupported field.";
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -187,7 +190,7 @@ class _MeldenState extends State<MeldenPage> {
                 initialValue: ort,
                 onChanged: (s) => ort = s,
                 validator: (s) {
-                  if (s.isNotEmpty) return null;
+                  if (s!.isNotEmpty) return null;
                   return "Bitte geben Sie den Ort des Unfalls an!";
                 },
               ),
@@ -203,7 +206,7 @@ class _MeldenState extends State<MeldenPage> {
             ),
             ElevatedButton.icon(
               onPressed: () async {
-                if (!_formKey.currentState.validate()) {
+                if (!_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Bitte geben Sie alle nötigen Daten an.'),
@@ -247,7 +250,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: datum,
       firstDate: DateTime(datum.year - 5),
@@ -261,7 +264,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay picked =
+    final TimeOfDay? picked =
         await showTimePicker(context: context, initialTime: zeit);
     if (picked != null && picked != zeit) {
       setState(() {
@@ -273,9 +276,9 @@ class _MeldenState extends State<MeldenPage> {
 
 class _MultiLine extends StatelessWidget {
   const _MultiLine({
-    Key key,
-    this.caption,
-    this.child,
+    Key? key,
+    required this.caption,
+    required this.child,
   }) : super(key: key);
 
   final String caption;
@@ -303,9 +306,9 @@ class _MultiLine extends StatelessWidget {
 
 class _Line extends StatelessWidget {
   const _Line({
-    Key key,
-    this.caption,
-    this.child,
+    Key? key,
+    required this.caption,
+    required this.child,
   }) : super(key: key);
 
   final String caption;
@@ -340,7 +343,7 @@ class _SendDialog extends StatelessWidget {
   const _SendDialog(
     this.portal,
     this.vorgang, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final Portal portal;

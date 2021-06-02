@@ -12,7 +12,7 @@ class Portal {
 
     await portal._readToken();
 
-    if (portal._token == null || portal._token.isEmpty) {
+    if (portal._token == null || portal._token!.isEmpty) {
       return portal;
     }
 
@@ -28,7 +28,7 @@ class Portal {
 
   static const String _tokenKey = 'token';
   static final _storage = FlutterSecureStorage();
-  String _token;
+  String? _token;
   bool _testServer = false;
   static const String _testPrefix = "-<test>-";
 
@@ -67,28 +67,28 @@ class Portal {
   }
 
   Future<void> _readToken() async {
-    _token = await _storage.read(key: _tokenKey);
+    _token = await (_storage.read(key: _tokenKey));
 
-    if (_token != null && _token.startsWith(_testPrefix)) {
+    if (_token != null && _token!.startsWith(_testPrefix)) {
       _testServer = true;
-      _token = _token.substring(_testPrefix.length);
+      _token = _token!.substring(_testPrefix.length);
     }
   }
 
   Future<void> _writeToken() async {
-    var token = _token;
+    var token = _token!;
     if (_testServer) token = _testPrefix + token;
     await _storage.write(key: _tokenKey, value: _token);
   }
 
   Future<void> reload() async {
-    if (_token.isEmpty) {
+    if (_token!.isEmpty) {
       throw ("no access token available");
     }
     // load verträge, kontakte und news ...
     final response = await http.get(
       _uri('verträge'),
-      headers: {HttpHeaders.authorizationHeader: _token},
+      headers: {HttpHeaders.authorizationHeader: _token!},
     );
     if (response.statusCode != 200) {
       throw ('Failed to get vertraege: ' + response.body);
@@ -101,7 +101,7 @@ class Portal {
   Future<void> sendMeldung(Vorgang meldung) async {
     final response = await http.post(
       _uri('vorgänge'),
-      headers: {HttpHeaders.authorizationHeader: _token},
+      headers: {HttpHeaders.authorizationHeader: _token!},
       body: jsonEncode(meldung.toJson()),
     );
     if (response.statusCode != 200) {
@@ -115,6 +115,6 @@ class Portal {
 
   Future<http.Response> getRessource(String endpoint) => http.get(
         _uri(endpoint),
-        headers: {HttpHeaders.authorizationHeader: _token},
+        headers: {HttpHeaders.authorizationHeader: _token!},
       );
 }

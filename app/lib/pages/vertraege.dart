@@ -6,7 +6,7 @@ import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatelessWidget {
-  VertraegePage(this.portal, this.vertraege, {Key key}) : super(key: key);
+  VertraegePage(this.portal, this.vertraege, {Key? key}) : super(key: key);
 
   final Portal portal;
   final List<Vertrag> vertraege;

@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 class VertragPage extends StatelessWidget {
   VertragPage(
     this.portal, {
-    Key key,
-    @required this.vertrag,
+    Key? key,
+    required this.vertrag,
   }) : super(key: key);
 
   final Vertrag vertrag;
@@ -84,9 +84,9 @@ class VertragPage extends StatelessWidget {
 
 class _InfoLine extends StatelessWidget {
   const _InfoLine({
-    Key key,
-    this.caption,
-    this.value,
+    Key? key,
+    required this.caption,
+    required this.value,
   }) : super(key: key);
 
   final String caption;

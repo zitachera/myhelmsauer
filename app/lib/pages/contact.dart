@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ContactPage extends StatelessWidget {
   ContactPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const String _phone = "0911/9292-03";
@@ -55,17 +55,17 @@ class ContactPage extends StatelessWidget {
 
 class _Button extends StatelessWidget {
   const _Button({
-    Key key,
-    this.caption,
-    this.child,
-    this.onPressed,
+    Key? key,
+    required this.caption,
+    required this.child,
+    required this.onPressed,
   }) : super(key: key);
 
   _Button.url({
-    Key key,
-    this.caption,
-    String value,
-    String url,
+    Key? key,
+    required this.caption,
+    required String value,
+    String? url,
   })  : child = Text(
           value,
           textScaleFactor: 1.3,
@@ -74,7 +74,7 @@ class _Button extends StatelessWidget {
             color: helmsauerBlue,
           ),
         ),
-        onPressed = (() => UrlLauncher.launch(url)),
+        onPressed = (() => UrlLauncher.launch(url!)),
         super(key: key);
 
   final String caption;
@@ -84,7 +84,7 @@ class _Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       padding: EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -104,7 +104,7 @@ class _Link extends StatelessWidget {
   const _Link(
     this.text,
     this.url, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String text;

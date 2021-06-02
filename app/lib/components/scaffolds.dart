@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
   HsSingleChildScrollScaffold(
-      {Key key,
-      this.title,
-      this.body,
+      {Key? key,
+      required this.title,
+      required this.body,
       this.actions,
       this.floatingActionButton,
       this.bottomNavigationBar})
@@ -13,13 +13,13 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
 
   final String title;
   final Widget body;
-  final List<Widget> actions;
-  final Widget bottomNavigationBar;
+  final List<Widget>? actions;
+  final Widget? bottomNavigationBar;
 
   /// A button displayed floating above [body], in the bottom right corner.
   ///
   /// Typically a [FloatingActionButton].
-  final Widget floatingActionButton;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +53,16 @@ PreferredSize appBarBottom = const PreferredSize(
 
 class HsNestedScrollScaffold extends StatelessWidget {
   HsNestedScrollScaffold({
-    Key key,
-    @required this.title,
-    this.body,
+    Key? key,
+    required this.title,
+    required this.body,
     this.bottomNavigationBar,
     this.onRefresh,
   }) : super(key: key);
 
   final String title;
   final Widget body;
-  final Widget bottomNavigationBar;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
     if (onRefresh != null) {
       scrollView = RefreshIndicator(
-        onRefresh: onRefresh,
+        onRefresh: onRefresh!,
         child: scrollView,
       );
     }
@@ -123,5 +123,5 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
   }
 
-  final Future<void> Function() onRefresh;
+  final Future<void> Function()? onRefresh;
 }

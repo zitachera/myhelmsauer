@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Vertrag {
   final String id;
 
@@ -14,16 +12,16 @@ class Vertrag {
   final List<VertragDokument> dokumente;
 
   Vertrag({
-    @required this.id,
-    this.sparte,
-    this.gesellschaft,
-    this.vertragsnummer,
-    this.ablauf,
-    this.status,
-    this.beitrag,
-    this.risiko,
-    this.meldeFelder,
-    this.dokumente,
+    required this.id,
+    required this.sparte,
+    required this.gesellschaft,
+    required this.vertragsnummer,
+    required this.ablauf,
+    required this.status,
+    required this.beitrag,
+    required this.risiko,
+    required this.meldeFelder,
+    required this.dokumente,
   });
 
   Vertrag.fromJson(Map<String, dynamic> json)
@@ -36,7 +34,7 @@ class Vertrag {
         beitrag = json['beitrag'],
         risiko = json['risiko'],
         meldeFelder =
-            ((json['aufnahmeKategorien'] ?? json['aufnahmeKategorien']) as List)
+            ((json['aufnahmeKategorien'] ?? json['meldeFelder']) as List)
                 .map((e) => MeldeFeld.fromJson(e))
                 .toList(),
         dokumente = (json['dokumente'] as List)
@@ -69,8 +67,8 @@ class VertragDokument {
   final String titel;
 
   VertragDokument({
-    @required this.endpoint,
-    this.titel,
+    required this.endpoint,
+    required this.titel,
   });
 
   VertragDokument.fromJson(Map<String, dynamic> json)
@@ -92,9 +90,9 @@ class MeldeFeld {
   final int min;
 
   MeldeFeld({
-    @required this.id,
-    @required this.label,
-    @required this.kind,
+    required this.id,
+    required this.label,
+    required this.kind,
     this.beschreibung = "",
     this.max = 1,
     this.min = 0,

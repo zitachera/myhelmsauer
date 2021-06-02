@@ -8,7 +8,7 @@ import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage(this.portal, {Key key}) : super(key: key);
+  HomePage(this.portal, {Key? key}) : super(key: key);
 
   final Portal portal;
 
