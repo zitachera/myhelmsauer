@@ -86,7 +86,7 @@ func spartenLabel(id string, kats []meldeFeld) string {
 			return prefix + kat.Label
 		}
 		if kat.Kind == sectionKind {
-			prefix = kat.Label
+			prefix = kat.Label + " "
 		}
 	}
 	return id
