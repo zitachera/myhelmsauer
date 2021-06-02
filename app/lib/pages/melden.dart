@@ -51,7 +51,8 @@ class _MeldenState extends State<MeldenPage> {
   String schadenhergang = "";
   String ort = "";
   Position? gps;
-  Map<String, List<Uint8List>> _aufnahmen = Map();
+  Map<String, List<Uint8List>> aufnahmen = Map();
+  Map<String, String> felder = Map();
 
   DateTime datum;
   TimeOfDay zeit;
@@ -61,9 +62,11 @@ class _MeldenState extends State<MeldenPage> {
         vertragsID: vertrag.id,
         schadenhergang: schadenhergang,
         ort: ort,
-        gps: gps,
+        latitude: gps?.latitude,
+        longitude: gps?.longitude,
         zeitpunkt: zeitpunkt,
-        aufnahmen: _aufnahmen,
+        aufnahmen: aufnahmen,
+        felder: felder,
       );
 
   @override
@@ -109,15 +112,15 @@ class _MeldenState extends State<MeldenPage> {
   Widget buildField(MeldeFeld f) {
     switch (f.kind) {
       case MeldeFeldKind.images:
-        if (_aufnahmen[f.id] == null) {
-          _aufnahmen[f.id] = <Uint8List>[];
+        if (aufnahmen[f.id] == null) {
+          aufnahmen[f.id] = <Uint8List>[];
         }
         return PhotoCollectionField(
-          images: _aufnahmen[f.id]!,
+          images: aufnahmen[f.id]!,
           labelAdd: "${f.label} hinzufügen",
           label: f.label,
-          onDelete: (i) => setState(() => _aufnahmen[f.id]!.removeAt(i)),
-          onAdd: (image) => setState(() => _aufnahmen[f.id]!.add(image)),
+          onDelete: (i) => setState(() => aufnahmen[f.id]!.removeAt(i)),
+          onAdd: (image) => setState(() => aufnahmen[f.id]!.add(image)),
           infoAdd: f.beschreibung != "" ? Text(f.beschreibung) : null,
           max: f.max,
         );
@@ -125,8 +128,8 @@ class _MeldenState extends State<MeldenPage> {
         return _Line(
           caption: f.label,
           child: TextFormField(
-            // initialValue: schadenhergang,
-            // onChanged: (s) => schadenhergang = s, TODO
+            initialValue: felder[f.id] ?? "",
+            onChanged: (s) => felder[f.id] = s,
             decoration: InputDecoration(hintText: f.beschreibung),
           ),
         );
