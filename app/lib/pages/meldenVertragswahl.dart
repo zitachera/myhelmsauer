@@ -5,7 +5,7 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal, {Key key}) : super(key: key);
+  MeldenVertragwahlPage(this.portal, {Key? key}) : super(key: key);
 
   final Portal portal;
 
@@ -35,14 +35,11 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
         Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 14),
           child: Text(
-            "Wählen sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
+            "Wählen Sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
             textScaleFactor: 1.3,
           ),
         ),
-        ...vertraege
-            .where((v) =>
-                v.aufnahmeKategorien != null && v.aufnahmeKategorien.isNotEmpty)
-            .map(
+        ...vertraege.where((v) => v.meldeFelder.isNotEmpty).map(
               (vertrag) => _buildVertrag(
                 context,
                 vertrag,
@@ -61,6 +58,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           borderRadius: BorderRadius.all(Radius.circular(3)),
         ),
         color: const Color.fromRGBO(245, 245, 245, 1),
+        elevation: 0,
         onPressed: () => {
           Navigator.push(
             context,

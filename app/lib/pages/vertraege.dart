@@ -1,19 +1,14 @@
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
-class VertraegePage extends StatefulWidget {
-  VertraegePage(this.vertraege, {Key key}) : super(key: key);
+class VertraegePage extends StatelessWidget {
+  VertraegePage(this.portal, this.vertraege, {Key? key}) : super(key: key);
 
-  final List<Vertrag> vertraege;
-
-  @override
-  _VertraegePageState createState() => _VertraegePageState(this.vertraege);
-}
-
-class _VertraegePageState extends State<VertraegePage> {
-  _VertraegePageState(this.vertraege);
+  final Portal portal;
   final List<Vertrag> vertraege;
 
   Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
@@ -27,9 +22,32 @@ class _VertraegePageState extends State<VertraegePage> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 15, bottom: 14),
-          child: Text(
-            "Vertragsübersicht (${vertraege.length})",
-            textScaleFactor: 2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Vertragsübersicht",
+                  textScaleFactor: 2,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: helmsauerBlue.withAlpha(128),
+                ),
+                padding: EdgeInsets.all(4),
+                height: 35,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: FittedBox(
+                    child: Text(
+                      "${vertraege.length}",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
         ...vertraege.map(
@@ -50,12 +68,13 @@ class _VertraegePageState extends State<VertraegePage> {
           borderRadius: BorderRadius.all(Radius.circular(3)),
         ),
         padding: const EdgeInsets.all(5),
+        elevation: 0,
         color: const Color.fromRGBO(245, 245, 245, 1),
         onPressed: () => {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => VertragPage(vertrag: vertrag)),
+                builder: (context) => VertragPage(portal, vertrag: vertrag)),
           ),
         },
         child: Column(

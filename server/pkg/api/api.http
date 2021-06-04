@@ -8,7 +8,31 @@ content-type: application/json
     "gruppe":"hk"
 }
 
-### get verträge
-GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/vertraege HTTP/1.1
+### verträge
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
+
+
+##################### local #####################
+
+### login
+POST http://localhost:8080/api/v1/login HTTP/1.1
+content-type: application/json
+
+{
+    "user":"Demokunde",
+    "password":"Demo90443HK",
+    "gruppe":"hk"
+}
+
+### verträge
+GET http://localhost:8080/api/v1/verträge HTTP/1.1
+content-type: application/json
+authorization: 69399023-62e2-4a60-9949-6f0fbd6bd3b6
+
+### Dokument
+GET http://localhost:8080/api/v1/adressen/AD_201406170853335LI/dokumente/DOK20140703114017KSI HTTP/1.1
+content-type: application/json
+authorization: 69399023-62e2-4a60-9949-6f0fbd6bd3b6
+

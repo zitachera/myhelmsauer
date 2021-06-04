@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"sort"
 	"strings"
 	"time"
@@ -16,11 +17,7 @@ import (
 )
 
 func Melden(w http.ResponseWriter, r *http.Request) {
-	c, err := data.LoadCredentials(r.Header.Get("authorization"))
-	if err != nil {
-		handleError(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
+	c := getClientFromRequest(r)
 
 	var m meldung
 	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
@@ -35,7 +32,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	kats := aufnahmeKategorienForSparte(vertrag.SpartenID)
+	kats := meldeFelderForSparte(vertrag.SpartenID)
 
 	categories := make([]string, 0, len(m.Aufnahmen))
 
@@ -63,6 +60,13 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	fields := map[string]string{}
+	if m.Felder != nil {
+		for key, field := range m.Felder {
+			fields[spartenLabel(key, kats)] = field
+		}
+	}
+
 	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt)
 
 	if err != nil {
@@ -77,11 +81,12 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 		Risiko:              vertrag.Risiko,
 		Gesellschaft:        vertrag.Gesellschaft,
 		Schadenhergang:      m.Schadenhergang,
-		Aufnahmen:           imgs,
 		Ort:                 m.Ort,
 		Latitude:            m.Latitude,
 		Longitude:           m.Longitude,
 		Zeitpunkt:           z.Format("02.01.2006 15:04"),
+		Aufnahmen:           imgs,
+		Felder:              fields,
 
 		KundeAnrede:  vertrag.KundeAnrede,
 		KundeTitel:   vertrag.KundeTitel,
@@ -100,11 +105,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 }
 
 func Vertraege(w http.ResponseWriter, r *http.Request) {
-	c, err := data.LoadCredentials(r.Header.Get("authorization"))
-	if err != nil {
-		handleError(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
+	c := getClientFromRequest(r)
 
 	vs, err := c.GetVertraege()
 	if err != nil {
@@ -115,6 +116,16 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 	vertraege := make([]vertrag, len(vs))
 
 	for i, v := range vs {
+		doks := make([]dokument, 0, len(v.Dokumente))
+		for _, d := range v.Dokumente {
+			if d.Deleted || !d.Online {
+				continue
+			}
+			doks = append(doks, dokument{
+				Endpoint: "/adressen/" + url.PathEscape(v.AdresseID) + "/dokumente/" + url.PathEscape(d.ID),
+				Titel:    d.Titel,
+			})
+		}
 		vertraege[i] = vertrag{
 			ID:                 v.ID,
 			Status:             strings.ToLower(v.Status),
@@ -124,11 +135,32 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 			Gesellschaft:       v.Gesellschaft,
 			Vertragsnummer:     v.Nr,
 			Ablauf:             v.Ablauf,
-			AufnahmeKategorien: aufnahmeKategorienForSparte(v.SpartenID),
+			AufnahmeKategorien: meldeFelderForSparte(v.SpartenID),
+			Dokumente:          doks,
 		}
 	}
 
 	if err := json.NewEncoder(w).Encode(vertraege); err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+// Dokument bietet ein ProCLient Dokument direkt zum Download an.
+func Dokument(w http.ResponseWriter, r *http.Request) {
+	c := getClientFromRequest(r)
+
+	contentType, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
+	if err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", contentType)
+
+	_, err = w.Write(body)
+
+	if err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -183,23 +215,31 @@ type meldung struct {
 	Latitude       float64              `json:"latitude"`
 	Longitude      float64              `json:"longitude"`
 	Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
+	Felder         map[string]string    `json:"felder"`
 }
 
 type vertrag struct {
-	ID                 string                     `json:"id"`
-	Sparte             string                     `json:"sparte"`
-	Gesellschaft       string                     `json:"gesellschaft"`
-	Vertragsnummer     string                     `json:"vertragsnummer"`
-	Ablauf             string                     `json:"ablauf"`
-	Status             string                     `json:"status"`
-	Beitrag            string                     `json:"beitrag"`
-	Risiko             string                     `json:"risiko"`
-	AufnahmeKategorien []vertragAufnahmeKategorie `json:"aufnahmeKategorien"`
+	ID                 string      `json:"id"`
+	Sparte             string      `json:"sparte"`
+	Gesellschaft       string      `json:"gesellschaft"`
+	Vertragsnummer     string      `json:"vertragsnummer"`
+	Ablauf             string      `json:"ablauf"`
+	Status             string      `json:"status"`
+	Beitrag            string      `json:"beitrag"`
+	Risiko             string      `json:"risiko"`
+	AufnahmeKategorien []meldeFeld `json:"aufnahmeKategorien"`
+	Dokumente          []dokument  `json:"dokumente"`
 }
 
-type vertragAufnahmeKategorie struct {
+type dokument struct {
+	Endpoint string `json:"endpoint"`
+	Titel    string `json:"titel"`
+}
+
+type meldeFeld struct {
 	ID           string `json:"id"`
 	Label        string `json:"label"`
+	Kind         string `json:"kind"`
 	Beschreibung string `json:"beschreibung"`
 	Max          int    `json:"max"`
 	Min          int    `json:"min"`

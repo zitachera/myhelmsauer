@@ -1,30 +1,27 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dataclass/dataclass.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable()
-@dataClass
 class Vorgang {
   final String id;
   final String vertragsID;
   final DateTime zeitpunkt;
   final String schadenhergang;
   final String ort;
-  final Position gps;
+  final double? latitude;
+  final double? longitude;
   final Map<String, List<Uint8List>> aufnahmen;
+  final Map<String, String> felder;
 
   Vorgang({
-    @required this.id,
-    @required this.vertragsID,
-    this.zeitpunkt,
-    this.schadenhergang,
-    this.ort,
-    this.gps,
-    this.aufnahmen,
+    required this.id,
+    required this.vertragsID,
+    required this.zeitpunkt,
+    required this.schadenhergang,
+    required this.ort,
+    this.latitude,
+    this.longitude,
+    required this.aufnahmen,
+    required this.felder,
   });
 
   Vorgang.fromJson(Map<String, dynamic> json)
@@ -33,12 +30,11 @@ class Vorgang {
         zeitpunkt = DateTime.parse(json['zeitpunkt']),
         schadenhergang = json['schadenhergang'],
         ort = json['ort'],
-        gps = Position(
-          latitude: json['latitude'],
-          longitude: json['longitude'],
-        ),
+        latitude = json['latitude'],
+        longitude = json['longitude'],
         aufnahmen = (json['aufnahmen'] as Map<String, List<String>>)
-            .map((key, value) => MapEntry(key, _dataFromBase64Strings(value)));
+            .map((key, value) => MapEntry(key, _dataFromBase64Strings(value))),
+        felder = (json['felder'] as Map<String, String>);
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -46,10 +42,11 @@ class Vorgang {
         'zeitpunkt': zeitpunkt.toIso8601String(),
         'schadenhergang': schadenhergang,
         'ort': ort,
-        'latitude': gps?.latitude,
-        'longitude': gps?.longitude,
+        'latitude': latitude,
+        'longitude': longitude,
         'aufnahmen':
             aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
+        'felder': felder,
       };
 }
 

@@ -1,12 +1,11 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_full_pdf_viewer/flutter_full_pdf_viewer.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
   HsSingleChildScrollScaffold(
-      {Key key,
-      this.title,
-      this.body,
+      {Key? key,
+      required this.title,
+      required this.body,
       this.actions,
       this.floatingActionButton,
       this.bottomNavigationBar})
@@ -14,13 +13,13 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
 
   final String title;
   final Widget body;
-  final List<Widget> actions;
-  final Widget bottomNavigationBar;
+  final List<Widget>? actions;
+  final Widget? bottomNavigationBar;
 
   /// A button displayed floating above [body], in the bottom right corner.
   ///
   /// Typically a [FloatingActionButton].
-  final Widget floatingActionButton;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
           title,
         ),
         actions: actions,
-        bottom: _appBarBottom,
+        bottom: appBarBottom,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -44,25 +43,26 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
   }
 }
 
-PreferredSize get _appBarBottom => PreferredSize(
-    child: Container(
+PreferredSize appBarBottom = const PreferredSize(
+    child: const Divider(
       color: helmsauerRed,
+      thickness: 2.5,
       height: 2.5,
     ),
-    preferredSize: Size.fromHeight(2.5));
+    preferredSize: const Size.fromHeight(2.5));
 
 class HsNestedScrollScaffold extends StatelessWidget {
   HsNestedScrollScaffold({
-    Key key,
-    @required this.title,
-    this.body,
+    Key? key,
+    required this.title,
+    required this.body,
     this.bottomNavigationBar,
     this.onRefresh,
   }) : super(key: key);
 
   final String title;
   final Widget body;
-  final Widget bottomNavigationBar;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
     if (onRefresh != null) {
       scrollView = RefreshIndicator(
-        onRefresh: onRefresh,
+        onRefresh: onRefresh!,
         child: scrollView,
       );
     }
@@ -114,7 +114,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            bottom: _appBarBottom,
+            bottom: appBarBottom,
           ),
         ],
         body: scrollView,
@@ -123,20 +123,5 @@ class HsNestedScrollScaffold extends StatelessWidget {
     );
   }
 
-  final Future<void> Function() onRefresh;
-}
-
-class HsPDFViewerScaffold extends StatelessWidget {
-  final String pdfPath;
-  final String titel;
-
-  HsPDFViewerScaffold({this.pdfPath, this.titel});
-
-  @override
-  Widget build(BuildContext context) => PDFViewerScaffold(
-      appBar: AppBar(
-        title: Text(titel),
-        bottom: _appBarBottom,
-      ),
-      path: pdfPath);
+  final Future<void> Function()? onRefresh;
 }

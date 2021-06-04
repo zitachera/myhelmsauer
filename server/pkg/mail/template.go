@@ -123,7 +123,7 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 <p>
 {{.KundeAnrede}} {{.KundeTitel}} {{.KundeName}} {{.KundeName2}} {{.KundeName3}} <br/>
 {{.KundeStrasse}} {{.KundeHausnr}} <br/>
-{{.KundePlz}} {{.KundeOrt}} {{.KundeLandkz}}
+{{.KundePlz}} {{.KundeOrt}} {{.KundeLandkz}} <br/>
 </p>
 <h2>Vertragdetails</h2>
 <p>
@@ -151,6 +151,14 @@ var bodyTemplate = template.Must(template.New("body").Parse(`<!DOCTYPE html PUBL
 
 </table> 
 </p>
+
+{{- range $caption, $field := .Felder}}
+<h2>{{$caption}}</h2>
+<blockquote>
+{{$field}}
+</blockquote>
+{{- end}}
+
 <h2>Zeitpunkt</h2>
 <blockquote>
 {{.Zeitpunkt}}

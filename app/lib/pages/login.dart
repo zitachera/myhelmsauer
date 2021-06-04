@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -66,10 +66,10 @@ class _LoginPageState extends State<LoginPage> {
             );
           }
 
-          final portal = snapshot.data;
+          final portal = snapshot.data!;
 
           if (portal.loggedIn) {
-            WidgetsBinding.instance.addPostFrameCallback(
+            WidgetsBinding.instance!.addPostFrameCallback(
               (_) => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => HomePage(portal),
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({Key key, @required this.login, @required this.lastUserName})
+  _LoginForm({Key? key, required this.login, required this.lastUserName})
       : super(key: key);
 
   final _LoginFunc login;
@@ -107,7 +107,8 @@ class _LoginFormState extends State<_LoginForm> {
 
   String user = "";
   String password = "";
-  String gruppe = "hk";
+  String gruppe = defaultgruppe;
+  static const defaultgruppe = "hk";
 
   final _LoginFunc login;
 
@@ -124,9 +125,9 @@ class _LoginFormState extends State<_LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final gruppeField = DropdownButton(
+    final gruppeField = DropdownButton<String>(
       isExpanded: true,
-      items: <DropdownMenuItem>[
+      items: [
         _gruppeItem("hk", "Helmsauer Assekuranzmakler"),
         _gruppeItem("jade", "Jade Assekuranzmakler"),
         _gruppeItem("sue", "Schmidt & Erdsiek Assekuranzmakler"),
@@ -135,7 +136,7 @@ class _LoginFormState extends State<_LoginForm> {
         _gruppeItem("hp", "Helmsauer und Preuß"),
       ],
       value: gruppe,
-      onChanged: (s) => setState(() => gruppe = s),
+      onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),
     );
 
     final userField = TextFormField(

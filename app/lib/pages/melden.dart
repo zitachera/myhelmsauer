@@ -8,13 +8,11 @@ import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({Key key, @required this.vertrag, @required this.portal})
+  MeldenPage({Key? key, required this.vertrag, required this.portal})
       : super(key: key);
 
   final Vertrag vertrag;
@@ -31,7 +29,11 @@ class MeldenPage extends StatefulWidget {
 }
 
 class _MeldenState extends State<MeldenPage> {
-  _MeldenState({this.vertrag, this.portal, this.datum, this.zeit});
+  _MeldenState(
+      {required this.vertrag,
+      required this.portal,
+      required this.datum,
+      required this.zeit});
 
   final Vertrag vertrag;
 
@@ -48,8 +50,9 @@ class _MeldenState extends State<MeldenPage> {
 
   String schadenhergang = "";
   String ort = "";
-  Position gps;
-  Map<String, List<Uint8List>> _aufnahmen = Map();
+  Position? gps;
+  Map<String, List<Uint8List>> aufnahmen = Map();
+  Map<String, String> felder = Map();
 
   DateTime datum;
   TimeOfDay zeit;
@@ -59,9 +62,11 @@ class _MeldenState extends State<MeldenPage> {
         vertragsID: vertrag.id,
         schadenhergang: schadenhergang,
         ort: ort,
-        gps: gps,
+        latitude: gps?.latitude,
+        longitude: gps?.longitude,
         zeitpunkt: zeitpunkt,
-        aufnahmen: _aufnahmen,
+        aufnahmen: aufnahmen,
+        felder: felder,
       );
 
   @override
@@ -71,51 +76,79 @@ class _MeldenState extends State<MeldenPage> {
         .then((position) => gps = position);
   }
 
+  bool small(MeldeFeld f) => f.kind == MeldeFeldKind.images && f.max == 1;
+
   List<Widget> _aufnahmeFields() {
     List<Widget> cols = [];
-    Row row;
+    Row? row;
 
-    vertrag.aufnahmeKategorien.forEach((kat) {
-      if (kat.max == 1) {
-        if (row == null) {
-          row = Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: _aufnahmeField(kat),
-              ),
-            ],
-          );
-          cols.add(row);
-          return;
-        }
-        row.children.add(Expanded(
-          flex: 1,
-          child: _aufnahmeField(kat),
-        ));
+    vertrag.meldeFelder.forEach((f) {
+      if (!small(f)) {
         row = null;
+        cols.add(buildField(f));
         return;
       }
+      if (row == null) {
+        row = Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: buildField(f),
+            ),
+          ],
+        );
+        cols.add(row!);
+        return;
+      }
+      row!.children.add(Expanded(
+        flex: 1,
+        child: buildField(f),
+      ));
       row = null;
-      cols.add(_aufnahmeField(kat));
     });
     return cols;
   }
 
-  PhotoCollectionField _aufnahmeField(VertragAufnahmeKategorie kategorie) {
-    if (_aufnahmen[kategorie.id] == null) {
-      _aufnahmen[kategorie.id] = <Uint8List>[];
+  Widget buildField(MeldeFeld f) {
+    switch (f.kind) {
+      case MeldeFeldKind.images:
+        if (aufnahmen[f.id] == null) {
+          aufnahmen[f.id] = <Uint8List>[];
+        }
+        return PhotoCollectionField(
+          images: aufnahmen[f.id]!,
+          labelAdd: "${f.label} hinzufügen",
+          label: f.label,
+          onDelete: (i) => setState(() => aufnahmen[f.id]!.removeAt(i)),
+          onAdd: (image) => setState(() => aufnahmen[f.id]!.add(image)),
+          infoAdd: f.beschreibung != "" ? Text(f.beschreibung) : null,
+          max: f.max,
+        );
+      case MeldeFeldKind.textfield:
+        return _Line(
+          caption: f.label,
+          child: TextFormField(
+            initialValue: felder[f.id] ?? "",
+            onChanged: (s) => felder[f.id] = s,
+            decoration: InputDecoration(hintText: f.beschreibung),
+          ),
+        );
+      case MeldeFeldKind.section:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+              child: Text(f.label, textScaleFactor: 1.5),
+            ),
+            if (f.beschreibung != "")
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                child: Text(f.beschreibung, textScaleFactor: 1.3),
+              ),
+          ],
+        );
     }
-    return PhotoCollectionField(
-      images: _aufnahmen[kategorie.id],
-      labelAdd: "${kategorie.label} hinzufügen",
-      label: kategorie.label,
-      onDelete: (i) => setState(() => _aufnahmen[kategorie.id].removeAt(i)),
-      onAdd: (image) => setState(() => _aufnahmen[kategorie.id].add(image)),
-      infoAdd:
-          kategorie.beschreibung != "" ? Text(kategorie.beschreibung) : null,
-      max: kategorie.max,
-    );
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -130,46 +163,38 @@ class _MeldenState extends State<MeldenPage> {
             ..._aufnahmeFields(),
             _Line(
               caption: 'Datum',
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.black38),
-                  ),
+              child: MaterialButton(
+                shape: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black38),
                 ),
-                child: MaterialButton(
-                  child: Text(
-                    dateFormat.format(zeitpunkt),
-                    textScaleFactor: 1.3,
-                  ),
-                  onPressed: () => _selectDate(context),
+                child: Text(
+                  dateFormat.format(zeitpunkt),
+                  textScaleFactor: 1.3,
                 ),
+                onPressed: () => _selectDate(context),
               ),
             ),
             _Line(
               caption: 'Uhrzeit',
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(width: 1.0, color: Colors.black38),
-                  ),
+              child: MaterialButton(
+                shape: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black38),
                 ),
-                child: MaterialButton(
-                  child: Text(
-                    timeFormat.format(zeitpunkt),
-                    textScaleFactor: 1.3,
-                  ),
-                  onPressed: () => _selectTime(context),
+                child: Text(
+                  timeFormat.format(zeitpunkt),
+                  textScaleFactor: 1.3,
                 ),
+                onPressed: () => _selectTime(context),
               ),
             ),
             _MultiLine(
-              caption: 'Standort',
+              caption: 'Unfallort',
               child: TextFormField(
                 initialValue: ort,
                 onChanged: (s) => ort = s,
                 validator: (s) {
-                  if (s.isNotEmpty) return null;
-                  return "Bitte geben Sie den Ort des Vorgangs an!";
+                  if (s!.isNotEmpty) return null;
+                  return "Bitte geben Sie den Ort des Unfalls an!";
                 },
               ),
             ),
@@ -184,7 +209,7 @@ class _MeldenState extends State<MeldenPage> {
             ),
             ElevatedButton.icon(
               onPressed: () async {
-                if (!_formKey.currentState.validate()) {
+                if (!_formKey.currentState!.validate()) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Bitte geben Sie alle nötigen Daten an.'),
@@ -202,77 +227,13 @@ class _MeldenState extends State<MeldenPage> {
                 //   );
                 //   return;
                 // }
-                var nav = Navigator.of(context);
-
-                var pr = new ProgressDialog(context);
-                pr.style(
-                  message: 'Sende Schadenmeldung...',
-                  borderRadius: 10.0,
-                  backgroundColor: Colors.white,
-                  progressWidget: SpinKitCircle(color: helmsauerBlue),
-                  elevation: 10.0,
-                  insetAnimCurve: Curves.easeInOut,
-                  messageTextStyle: TextStyle(
-                    color: Colors.black,
-                    fontSize: 19.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                );
-
-                await pr.show();
-                try {
-                  await portal.sendMeldung(vorgang);
-
-                  await pr.hide();
-                } catch (e) {
-                  await pr.hide();
-
-                  await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Der Bericht konnte nicht gesendet werden.',
-                          textScaleFactor: 1.3,
-                        ),
-                        content:
-                            Text('Bite senden Sie die Schadenmeldung erneut.'),
-                        actions: [
-                          MaterialButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text("Weiter"),
-                          )
-                        ],
-                      );
-                    },
-                  );
-
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Der Bericht konnte nicht gesendet werden."),
-                  ));
-                  return;
-                }
 
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text(
-                        'Ihre Schadenmeldung ist eingegangen.',
-                        textScaleFactor: 1.3,
-                      ),
-                      content: Text('Wir melden uns kurzfristig bei Ihnen.'),
-                      actions: [
-                        MaterialButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text("Abschließen"),
-                        )
-                      ],
-                    );
+                    return _SendDialog(portal, vorgang);
                   },
                 );
-
-                nav.popUntil((route) => route.isFirst);
               },
               icon: const Icon(
                 Icons.send,
@@ -292,7 +253,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: datum,
       firstDate: DateTime(datum.year - 5),
@@ -306,7 +267,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay picked =
+    final TimeOfDay? picked =
         await showTimePicker(context: context, initialTime: zeit);
     if (picked != null && picked != zeit) {
       setState(() {
@@ -318,9 +279,9 @@ class _MeldenState extends State<MeldenPage> {
 
 class _MultiLine extends StatelessWidget {
   const _MultiLine({
-    Key key,
-    this.caption,
-    this.child,
+    Key? key,
+    required this.caption,
+    required this.child,
   }) : super(key: key);
 
   final String caption;
@@ -348,9 +309,9 @@ class _MultiLine extends StatelessWidget {
 
 class _Line extends StatelessWidget {
   const _Line({
-    Key key,
-    this.caption,
-    this.child,
+    Key? key,
+    required this.caption,
+    required this.child,
   }) : super(key: key);
 
   final String caption;
@@ -377,6 +338,80 @@ class _Line extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _SendDialog extends StatelessWidget {
+  const _SendDialog(
+    this.portal,
+    this.vorgang, {
+    Key? key,
+  }) : super(key: key);
+
+  final Portal portal;
+  final Vorgang vorgang;
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(
+        'Schadenmeldung senden',
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: FutureBuilder<void>(
+            future: portal.sendMeldung(vorgang),
+            builder: builder,
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget builder(BuildContext context, AsyncSnapshot snapshot) {
+    var nav = Navigator.of(context);
+    if (snapshot.hasError) {
+      return Column(
+        children: [
+          Text(
+            'Der Bericht konnte nicht gesendet werden.',
+            textScaleFactor: 1.3,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4, bottom: 8),
+            child: Text('Bite senden Sie die Schadenmeldung erneut.'),
+          ),
+          MaterialButton(
+            onPressed: () => nav.pop(),
+            child: Text("Weiter"),
+          ),
+        ],
+      );
+    }
+    if (snapshot.connectionState != ConnectionState.done) {
+      return Padding(
+        padding: const EdgeInsets.all(50),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          'Ihre Schadenmeldung ist eingegangen.',
+          textScaleFactor: 1.3,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 8),
+          child: Text('Wir melden uns kurzfristig bei Ihnen.'),
+        ),
+        MaterialButton(
+          onPressed: () => nav.popUntil((route) => route.isFirst),
+          child: Text("Abschließen"),
+        ),
+      ],
     );
   }
 }
