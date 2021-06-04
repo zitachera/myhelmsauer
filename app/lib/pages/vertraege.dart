@@ -67,7 +67,7 @@ class _VertraegePageState extends State<VertraegePage> {
             ),
             SizedBox(height: 4),
             Text(
-              vertrag.gesellschaft + "d",
+              vertrag.gesellschaft,
               textScaleFactor: 1.1,
             ),
             SizedBox(height: 4),

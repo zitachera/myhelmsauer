@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return MaterialApp(
-      title: 'Helmsauer Versicherungen Portal',
+      title: 'myHelmsauer',
       theme: ThemeData(
         primarySwatch: _createMaterialColor(helmsauerBlue),
         secondaryHeaderColor: _createMaterialColor(helmsauerRed),

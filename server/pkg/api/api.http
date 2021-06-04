@@ -1,4 +1,4 @@
-### open patient Y480151179
+### login
 POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/login HTTP/1.1
 content-type: application/json
 
@@ -8,7 +8,7 @@ content-type: application/json
     "gruppe":"hk"
 }
 
-### open patient Y480151179
+### get verträge
 GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/vertraege HTTP/1.1
 content-type: application/json
 authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
