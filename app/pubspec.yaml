@@ -19,7 +19,7 @@ environment:
 dependencies:
   intl: ^0.17.0
   geolocator: ^7.0.3
-  image_picker: ^0.7.5+2
+  image_picker: ^0.8.0+3
   flutter:
     sdk: flutter
   uuid: ^3.0.4
@@ -39,7 +39,6 @@ dev_dependencies:
   json_serializable: ^4.0.0-nullsafety.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons:
 
 
 # For information on the generic Dart part of this file, see the
