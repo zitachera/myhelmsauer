@@ -11,6 +11,11 @@ func meldeFelderForSparte(sparte string) []meldeFeld {
 	case "SPN200008031656319BP", "SPNAAAAAAAAAA": // Kraftfahrtversicherung
 		return []meldeFeld{
 			{
+				Label:        "Unfallgegner",
+				Kind:         sectionKind,
+				Beschreibung: "",
+			},
+			{
 				ID:           "ausweisVorderseite",
 				Label:        "Ausweis\u00ADvorderseite",
 				Kind:         imagesKind,
@@ -42,6 +47,38 @@ func meldeFelderForSparte(sparte string) []meldeFeld {
 				Max:          1,
 				Min:          0,
 			},
+
+			{
+				ID:           "vorname",
+				Label:        "Vor\u00ADname",
+				Kind:         textfieldKind,
+				Beschreibung: "Falls nicht auf Foto erkennbar",
+			},
+			{
+				ID:           "nachname",
+				Label:        "Nach\u00ADname",
+				Kind:         textfieldKind,
+				Beschreibung: "Falls nicht auf Foto erkennbar",
+			},
+			{
+				ID:           "anschrift",
+				Label:        "Anschrift",
+				Kind:         textfieldKind,
+				Beschreibung: "Falls nicht auf Foto erkennbar",
+			},
+			{
+				ID:           "telefonnummer",
+				Label:        "Telefon\u00ADnummer",
+				Kind:         textfieldKind,
+				Beschreibung: "",
+			},
+			{
+				ID:           "e-mail",
+				Label:        "E-Mail",
+				Kind:         textfieldKind,
+				Beschreibung: "",
+			},
+
 			{
 				ID:           "fahrzeugschein",
 				Label:        "Fahrzeug\u00ADschein",
@@ -57,6 +94,11 @@ func meldeFelderForSparte(sparte string) []meldeFeld {
 				Beschreibung: "Kennzeichen des Unfallgegners",
 				Max:          1,
 				Min:          0,
+			},
+			{
+				Label:        "Schaden",
+				Kind:         sectionKind,
+				Beschreibung: "",
 			},
 			{
 				ID:           "unfall",
