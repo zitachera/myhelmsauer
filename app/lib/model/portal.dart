@@ -36,7 +36,7 @@ class Portal {
 
   Uri _uri(String resource) => Uri.https(
       _testServer
-          ? "test.schadenmeldung.helmsauer-gruppe.de"
+          ? "testschadenmeldung.helmsauer-gruppe.de"
           : "schadenmeldung.helmsauer-gruppe.de",
       'api/v1/' + resource);
 

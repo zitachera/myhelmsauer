@@ -2,7 +2,7 @@
 
 
 [H&K]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN20090923105559LW5;       (000)
 SPN20091019211455JZ0;       Allgemeiner Satz
 SPN00000000000000003;       Auslandsreisekrankenversicherung
@@ -34,31 +34,31 @@ SPN20130123084230XVC;       Gewerbliche Inhaltsversicherung mit BU
 SPN20120627144336CK9;       GKV-Mitgliedschaft
 SPN_S8H0VM4LR;              Glas
 SPN20130123085221MC2;       Gruppenunfallversicherung
-SPN_S8K0U8JVU;              Haft
-SPN2010121613394369R;       Haft Bauherrenhaftpflichtversicherung
-SPN20101216133924R6M;       Haft Betriebshaftpflichtversicherung
-SPN20140926091229KX7;       Haft BHV Excedent
-SPN20101216122047NF1;       Haft BHV mit PHV
-SPN201602231545415GG;       Haft BHV mit PHV_BNC
-SPN20101216122147XTC;       Haft BHV ohne PHV
-SPN20160223154818IW3;       Haft BHV ohne PHV_BNC
-SPN20110111112415Y9B;       Haft BHVBNCstat mit PHV
-SPN20110111112012QMX;       Haft BHVBNCstat ohne PHV
-SPN20110713052141RGA;       Haft D&O
-SPN20101216133819D9Q;       Haft Haus-und Grundbesitzerhaftpflichtversicherung
-SPN20110110133802YIB;       Haft Jagdhaftpflicht
-SPN201101280955486RH;       Haft Land und Forstwirtschaft
-SPN20181212085313QKF;       Haft Photovoltaikhaftpflichtversicherung
-SPN20101222145048KWI;       Haft PHV
-SPN20181212092233G45;       Haft sonstige Haftpflichtversicherungen
-SPN20101216133736GA3;       Haft Tierhalterhaftpflichtversicherung
-SPN201012161338490R1;       Haft Umweltanlagenhaftpflichtversicherung
-SPN201301230848075XQ;       Haft Umweltschadenhaftpflichtversicherung
-SPN20181212085206AWJ;       Haft Veranstaltungshaftpflichtversicherung
-SPN201812120852508QN;       Haft Vereinshaftpflichtversicherung
-SPN201102171225505E2;       Haft Vermögensschadenhaftpflicht
-SPN201708081306186F4;       Haft Vertrauensschadenversicherung
-SPN20101216133911H0B;       Haft Wassersporthaftpflicht
+SPN_S8K0U8JVU;              Haft;                                                 Private Haftpflicht
+SPN2010121613394369R;       Haft Bauherrenhaftpflichtversicherung;                Private Haftpflicht
+SPN20101216133924R6M;       Haft Betriebshaftpflichtversicherung;                 Private Haftpflicht
+SPN20140926091229KX7;       Haft BHV Excedent;                                    Private Haftpflicht
+SPN20101216122047NF1;       Haft BHV mit PHV;                                     Private Haftpflicht
+SPN201602231545415GG;       Haft BHV mit PHV_BNC;                                 Private Haftpflicht
+SPN20101216122147XTC;       Haft BHV ohne PHV;
+SPN20160223154818IW3;       Haft BHV ohne PHV_BNC;
+SPN20110111112415Y9B;       Haft BHVBNCstat mit PHV;                              Private Haftpflicht
+SPN20110111112012QMX;       Haft BHVBNCstat ohne PHV;
+SPN20110713052141RGA;       Haft D&O;                                             Private Haftpflicht
+SPN20101216133819D9Q;       Haft Haus-und Grundbesitzerhaftpflichtversicherung;   Private Haftpflicht
+SPN20110110133802YIB;       Haft Jagdhaftpflicht;                                 Private Haftpflicht
+SPN201101280955486RH;       Haft Land und Forstwirtschaft;                        Private Haftpflicht
+SPN20181212085313QKF;       Haft Photovoltaikhaftpflichtversicherung;             Private Haftpflicht
+SPN20101222145048KWI;       Haft PHV;                                             Private Haftpflicht
+SPN20181212092233G45;       Haft sonstige Haftpflichtversicherungen;              Private Haftpflicht
+SPN20101216133736GA3;       Haft Tierhalterhaftpflichtversicherung;               Private Haftpflicht
+SPN201012161338490R1;       Haft Umweltanlagenhaftpflichtversicherung;            Private Haftpflicht
+SPN201301230848075XQ;       Haft Umweltschadenhaftpflichtversicherung;            Private Haftpflicht
+SPN20181212085206AWJ;       Haft Veranstaltungshaftpflichtversicherung;           Private Haftpflicht
+SPN201812120852508QN;       Haft Vereinshaftpflichtversicherung;                  Private Haftpflicht
+SPN201102171225505E2;       Haft Vermögensschadenhaftpflicht;                     Private Haftpflicht
+SPN201708081306186F4;       Haft Vertrauensschadenversicherung;                   Private Haftpflicht
+SPN20101216133911H0B;       Haft Wassersporthaftpflicht;                          Private Haftpflicht
 SPN_S8E0WVOBK;              Hausrat
 SPN20100322095748SI7;       Investment (550)
 SPN201812201033472D7;       Jagd-und Sportwaffenversicherung
@@ -129,7 +129,7 @@ SPN20181220103554RT0;       Warentransportversicherung
 SPN20130122125650198;       Wohngebäudeversicherung
 
 [BBG]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN_115xxxxxxxxxxxxx;       Altersvorsorge
 SPN_316xxxxxxxxxxxxx;       Arzthaftpflicht
 SPN_201xxxxxxxxxxxxx;       AuslandsreiseKranken
@@ -264,7 +264,7 @@ SPN_623xxxxxxxxxxxxx;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
 
 
 [SuE]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN20180713201944LJW;       (000)
 SPN20180717182932UVX;       Allgemeinersatz (160)
 SPN_115xxxxxxxxxxxxx;       Altersvorsorge
@@ -443,7 +443,7 @@ SPN_620xxxxxxxxxxxxx;       Wohngebäude
 SPN_623xxxxxxxxxxxxx;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
 
 [Jade]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN20180727101351F06;       (000)
 SPN_630xxxxxxxxxxxxx;       Adel-Konzept
 SPN_115_____________;       Altersvorsorge
@@ -612,7 +612,7 @@ SPN_620_____________;       Wohngebäude
 SPN_623_____________;       Wohngebäude + Haus-u.Grundbesitzer-Haftpflicht
 
 [H&P]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN20080219122915JLJ;       Allgemeine KFZ-Versicherung
 SPN20080219122915JNC;       Allgemeine Rechtsschutzversicherung
 SPN20080326161134F93;       Allgemeine Sachversicherung
@@ -693,7 +693,7 @@ SPN20110221102412QLL;       Wassersporthaftpflicht
 SPN20080326161808V1N;       Wohngebäudeversicherung mit Glas
 
 [Detmer]
-// SP_ID;                   SP_SPARTENNAME // @Header
+// SP_ID;                   SP_SPARTENNAME;                                       myHelmsauerSparte // @Header
 SPN20201230160122C99;       Bauleistungsversicherung
 SPN20201230160122C9G;       Bausparvertrag
 SPN20201230181537ZLE;       Beteiligung (Immobilien)

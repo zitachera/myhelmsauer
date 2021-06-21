@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: _createMaterialColor(helmsauerBlue),
         secondaryHeaderColor: _createMaterialColor(helmsauerRed),
         bottomAppBarColor: _createMaterialColor(helmsauerBlue),
+        fontFamily: "Frutiger 45",
       ),
       home: LoginPage(),
     );
