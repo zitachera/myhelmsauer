@@ -66,6 +66,10 @@ flutter:
     - family: Chub Gothic
       fonts:
         - asset: fonts/chubgothic.ttf
+    - family: Frutiger 45
+      fonts:
+        - asset: fonts/frutiger45_bold.ttf
+        - asset: fonts/frutigerlt45_regular.ttf
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
