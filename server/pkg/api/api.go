@@ -16,7 +16,11 @@ import (
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
 
-func Melden(w http.ResponseWriter, r *http.Request) {
+type Server struct {
+	SchadenmeldungReceiver []string
+}
+
+func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {
 	c := getClientFromRequest(r)
 
 	var m meldung
@@ -104,7 +108,7 @@ func Melden(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Vertraege(w http.ResponseWriter, r *http.Request) {
+func (s *Server) Vertraege(w http.ResponseWriter, r *http.Request) {
 	c := getClientFromRequest(r)
 
 	vs, err := c.GetVertraege()
@@ -147,7 +151,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 }
 
 // Dokument bietet ein ProCLient Dokument direkt zum Download an.
-func Dokument(w http.ResponseWriter, r *http.Request) {
+func (s *Server) Dokument(w http.ResponseWriter, r *http.Request) {
 	c := getClientFromRequest(r)
 
 	contentType, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
@@ -166,7 +170,7 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
 	var l requestLogin
 	if err := json.NewDecoder(r.Body).Decode(&l); err != nil {
 		handleError(w, err.Error(), http.StatusBadRequest)
