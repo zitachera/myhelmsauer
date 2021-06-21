@@ -1,3 +1,4 @@
 .vscode/settings.json
 server/server
 server/server.exe
+app/ios/build/
