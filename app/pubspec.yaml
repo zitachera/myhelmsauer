@@ -66,10 +66,18 @@ flutter:
     - family: Chub Gothic
       fonts:
         - asset: fonts/chubgothic.ttf
-    - family: Frutiger 45
+    - family: OpenSans
       fonts:
-        - asset: fonts/frutiger45_bold.ttf
-        - asset: fonts/frutigerlt45_regular.ttf
+        - asset: fonts/OpenSans-Bold.ttf
+        - asset: fonts/OpenSans-BoldItalic.ttf
+        - asset: fonts/OpenSans-ExtraBold.ttf
+        - asset: fonts/OpenSans-ExtraBoldItalic.ttf
+        - asset: fonts/OpenSans-Italic.ttf
+        - asset: fonts/OpenSans-Light.ttf
+        - asset: fonts/OpenSans-LightItalic.ttf
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-SemiBold.ttf
+        - asset: fonts/OpenSans-SemiBoldItalic.ttf
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

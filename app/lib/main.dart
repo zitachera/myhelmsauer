@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: helmsauerBlau,
         secondaryHeaderColor: helmsauerRot,
         bottomAppBarColor: helmsauerBlau,
-        fontFamily: "Frutiger 45",
+        fontFamily: "OpenSans",
       ),
       home: LoginPage(),
       debugShowCheckedModeBanner: false,
