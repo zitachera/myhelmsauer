@@ -36,13 +36,13 @@ class _NewsPageState extends State<NewsPage> {
                     child: Text(
                       "Log out",
                       style: TextStyle(
-                        color: helmsauerRed,
+                        color: helmsauerRot,
                       ),
                     ),
                   ),
                   Icon(
                     Icons.logout,
-                    color: helmsauerRed,
+                    color: helmsauerRot,
                   ),
                 ],
               ),

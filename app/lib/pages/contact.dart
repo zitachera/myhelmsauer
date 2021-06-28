@@ -71,7 +71,7 @@ class _Button extends StatelessWidget {
           textScaleFactor: 1.3,
           style: TextStyle(
             decoration: TextDecoration.underline,
-            color: helmsauerBlue,
+            color: helmsauerBlau,
           ),
         ),
         onPressed = (() => UrlLauncher.launch(url!)),
@@ -120,7 +120,7 @@ class _Link extends StatelessWidget {
         textScaleFactor: 1.3,
         style: TextStyle(
           decoration: TextDecoration.underline,
-          color: helmsauerBlue,
+          color: helmsauerBlau,
         ),
       ),
     );

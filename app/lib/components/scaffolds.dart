@@ -45,7 +45,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
 
 PreferredSize appBarBottom = const PreferredSize(
     child: const Divider(
-      color: helmsauerRed,
+      color: helmsauerRot,
       thickness: 2.5,
       height: 2.5,
     ),
@@ -96,7 +96,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                       foreground: Paint()
                         ..style = PaintingStyle.stroke
                         ..strokeWidth = 3
-                        ..color = helmsauerBlue,
+                        ..color = helmsauerBlau,
                     ),
                   ),
                   Text(

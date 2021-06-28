@@ -33,7 +33,7 @@ class VertraegePage extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: helmsauerBlue.withAlpha(128),
+                  color: helmsauerBlau.withAlpha(128),
                 ),
                 padding: EdgeInsets.all(4),
                 height: 35,

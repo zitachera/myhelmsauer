@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
         ],
         showUnselectedLabels: true,
         currentIndex: _selectedIndex,
-        selectedItemColor: helmsauerBlue,
+        selectedItemColor: helmsauerBlau,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

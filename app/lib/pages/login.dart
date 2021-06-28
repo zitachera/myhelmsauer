@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 5.0),
                 Text(
                   msg,
-                  style: TextStyle(color: helmsauerRed),
+                  style: TextStyle(color: helmsauerRot),
                 ),
                 _form,
               ],

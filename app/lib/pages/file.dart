@@ -34,7 +34,7 @@ class FilePage extends StatelessWidget {
                 SizedBox(height: 5.0),
                 Text(
                   msg,
-                  style: TextStyle(color: helmsauerRed),
+                  style: TextStyle(color: helmsauerRot),
                 ),
               ],
             );
@@ -71,7 +71,7 @@ class FilePage extends StatelessWidget {
               SizedBox(height: 5.0),
               Text(
                 "Für dieses Dokument ist keine Appansicht verfügbar.",
-                style: TextStyle(color: helmsauerRed),
+                style: TextStyle(color: helmsauerRot),
               ),
             ],
           );
