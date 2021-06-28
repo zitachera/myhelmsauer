@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Frutiger 45",
       ),
       home: LoginPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
