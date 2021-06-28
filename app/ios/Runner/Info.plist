@@ -42,15 +42,11 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>This app needs access to location when open.</string>
-		<key>NSLocationAlwaysUsageDescription</key>
-		<string>This app needs access to location when in the background.</string>
+		<string>This app needs access to location when open to enrich the users damage claim with the geo position of the damage.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>This app needs access to photos.</string>
+		<string>This app needs access to photos to let the user document his damage claim with pictures of the damage.</string>
 		<key>NSCameraUsageDescription</key>
-		<string>This app needs access to take photos.</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>This app needs access to the microfon.</string>
+		<string>This app needs access to take photos to let the user document his damage claim with pictures of the damage.</string>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>https</string>
