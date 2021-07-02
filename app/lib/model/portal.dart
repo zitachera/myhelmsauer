@@ -78,7 +78,7 @@ class Portal {
   Future<void> _writeToken() async {
     var token = _token!;
     if (_testServer) token = _testPrefix + token;
-    await _storage.write(key: _tokenKey, value: _token);
+    await _storage.write(key: _tokenKey, value: token);
   }
 
   Future<void> reload() async {
