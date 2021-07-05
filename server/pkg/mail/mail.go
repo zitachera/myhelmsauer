@@ -34,7 +34,7 @@ type Meldung struct {
 	KundeOrt     string
 	KundeLandkz  string
 
-	MailReceiver []string
+	MailRecipients []string
 }
 
 type Image struct {
@@ -66,7 +66,7 @@ func Send(meldung Meldung) error {
 	email.SetFrom("Schadenmeldung <no-reply-schadenmeldung@helmsauer-gruppe.de>").
 		SetSubject(meldung.Titel)
 
-	for _, receiver := range meldung.MailReceiver {
+	for _, receiver := range meldung.MailRecipients {
 		email.AddTo(receiver)
 	}
 

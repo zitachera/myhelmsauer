@@ -14,6 +14,7 @@ import (
 var testserver = flag.Bool("testserver", false, "Startet den Server mit einer test config.")
 
 func main() {
+	flag.Parse()
 	r := chi.NewRouter()
 
 	r.Use(
@@ -53,6 +54,7 @@ func server() api.Server {
 				"jan-erik.keller@helmsauer-gruppe.de",
 				"udo.roehlich@helmsauer-gruppe.de",
 				"bastian.helmsauer@helmsauer-gruppe.de",
+				"generikhelmsauer-gruppe@gmail.com",
 			},
 		}
 	}

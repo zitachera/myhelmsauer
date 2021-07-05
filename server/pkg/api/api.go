@@ -102,6 +102,8 @@ func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {
 		KundePlz:     vertrag.KundePlz,
 		KundeOrt:     vertrag.KundeOrt,
 		KundeLandkz:  vertrag.KundeLandkz,
+
+		MailRecipients: s.SchadenmeldungReceiver,
 	}); err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
