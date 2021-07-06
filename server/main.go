@@ -54,15 +54,14 @@ func server() api.Server {
 				"jan-erik.keller@helmsauer-gruppe.de",
 				"udo.roehlich@helmsauer-gruppe.de",
 				"bastian.helmsauer@helmsauer-gruppe.de",
-				"generikhelmsauer-gruppe@gmail.com",
 			},
 		}
 	}
 
 	return api.Server{
 		SchadenmeldungReceiver: []string{
+			"info@helmsauer-gruppe.de",
 			"jan-erik.keller@helmsauer-gruppe.de",
-			"udo.roehlich@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		},
 	}

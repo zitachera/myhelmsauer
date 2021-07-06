@@ -58,11 +58,13 @@ class HsNestedScrollScaffold extends StatelessWidget {
     required this.body,
     this.bottomNavigationBar,
     this.onRefresh,
+    this.actions,
   }) : super(key: key);
 
   final String title;
   final Widget body;
   final Widget? bottomNavigationBar;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +84,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
         key: ValueKey(body.key),
         headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
           SliverAppBar(
+            actions: actions,
             expandedHeight: 200.0,
             floating: false,
             pinned: true,
