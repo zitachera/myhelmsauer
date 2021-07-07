@@ -76,12 +76,13 @@ class _NewsPageState extends State<NewsPage> {
           ],
         ),
         _faqTop(
-            SvgPicture.asset(
-              // images/menu/rot/schaden.svg
-              "images/schaden.svg", //"images/menu/weiß/aktuelles.svg",
-              color: Colors.white,
-            ),
-            "text")
+          SvgPicture.asset(
+            "images/menu/aktuelles.svg",
+            color: Colors.white,
+            cacheColorFilter: true,
+          ),
+          "text",
+        ),
       ],
     );
   }
