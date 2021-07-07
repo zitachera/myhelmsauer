@@ -2,11 +2,6 @@
 <!-- Generator: Adobe Illustrator 25.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-<style type="text/css">
-	.st0{clip-path:url(#SVGID_2_);}
-	.st1{fill:#0074BC;}
-	.st2{clip-path:url(#SVGID_4_);}
-</style>
 <g>
 	<g>
 		<defs>
@@ -15,27 +10,27 @@
 		<clipPath id="SVGID_2_">
 			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
 		</clipPath>
-		<g class="st0">
-			<path class="st1" d="M401.1,512.5H117.7c-27.9,0-50.6-22.7-50.6-50.6V74.8c0-27.9,22.7-50.6,50.6-50.6h242.6v61.5
+		<g>
+			<path d="M401.1,512.5H117.7c-27.9,0-50.6-22.7-50.6-50.6V74.8c0-27.9,22.7-50.6,50.6-50.6h242.6v61.5
 				c0,15.5,12.6,28.2,28.2,28.2h63.2v348C451.7,489.8,429,512.5,401.1,512.5z M117.7,46.6c-15.5,0-28.2,12.6-28.2,28.2v387.1
 				c0,15.5,12.6,28.2,28.2,28.2h283.4c15.5,0,28.2-12.6,28.2-28.2V136.3h-40.7c-27.9,0-50.6-22.7-50.6-50.6V46.6H117.7z"/>
 		</g>
 	</g>
 </g>
 <g>
-	<rect x="140" y="178.5" class="st1" width="239" height="22.4"/>
+	<rect x="140" y="178.5" width="239" height="22.4"/>
 </g>
 <g>
-	<rect x="140" y="234.3" class="st1" width="239" height="22.4"/>
+	<rect x="140" y="234.3" width="239" height="22.4"/>
 </g>
 <g>
-	<rect x="140" y="290.1" class="st1" width="239" height="22.4"/>
+	<rect x="140" y="290.1" width="239" height="22.4"/>
 </g>
 <g>
-	<rect x="140" y="346" class="st1" width="239" height="22.4"/>
+	<rect x="140" y="346" width="239" height="22.4"/>
 </g>
 <g>
-	<rect x="140" y="401.8" class="st1" width="239" height="22.4"/>
+	<rect x="140" y="401.8" width="239" height="22.4"/>
 </g>
 <g>
 	<g>
@@ -45,9 +40,9 @@
 		<clipPath id="SVGID_4_">
 			<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
 		</clipPath>
-		<g class="st2">
+		<g>
 			
-				<rect x="387" y="13" transform="matrix(0.7002 -0.714 0.714 0.7002 64.3615 307.4226)" class="st1" width="22.4" height="128.2"/>
+				<rect x="387" y="13" transform="matrix(0.7002 -0.714 0.714 0.7002 64.3615 307.4226)" width="22.4" height="128.2"/>
 		</g>
 	</g>
 </g>

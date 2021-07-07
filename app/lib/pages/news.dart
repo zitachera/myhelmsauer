@@ -79,9 +79,61 @@ class _NewsPageState extends State<NewsPage> {
           SvgPicture.asset(
             "images/menu/aktuelles.svg",
             color: Colors.white,
-            cacheColorFilter: true,
           ),
-          "text",
+          "FAQ",
+        ),
+        _faqMiddle(
+          SvgPicture.asset(
+            "images/menu/smartphone.svg",
+            color: helmsauerBlau,
+          ),
+          "Auf der myHelmsauer Startseite finden Sie im Newsbereich wechselnde " +
+              "Artikel zu interesanten Versicherungsthemen.",
+        ),
+        _faqMiddle(
+          Icon(
+            Icons.text_snippet,
+            color: helmsauerBlau,
+          ),
+          "In Ihrer Vertragsübersicht haben Sie Zugriff auf " +
+              "all Ihre bestehenden Versicherungsverträge und" +
+              "finden nähere Informationen dazu.",
+        ),
+        _faqMiddle(
+          Icon(
+            Icons.warning,
+            color: helmsauerBlau,
+          ),
+          "Für den Bereich KFZ können Sie schnell und unkompliziert " +
+              "eine Schadenmeldung vornehmen. " +
+              "Weitere Sparten werden zeitnah hinzugefügt.",
+        ),
+        _faqMiddle(
+          Icon(
+            Icons.contact_page,
+            color: helmsauerBlau,
+          ),
+          "Über verschiedene Wege können Sie direkt mit " +
+              "uns in Verbindung treten. Wann, wo und so oft " +
+              "Sie wollen. Wir sind gerne für Sie da!",
+        ),
+        _faqMiddle(
+          SvgPicture.asset(
+            "images/menu/chat.svg",
+            color: helmsauerBlau,
+          ),
+          "Viele Zusatzfunktionen werden Ihnen bald zur " +
+              "Verfügung stehen. Wir arbeiten permanent an " +
+              "der App um Ihnen den best möglichen Service " +
+              "zu bieten.",
+        ),
+        _faqBottom(
+          SvgPicture.asset(
+            "images/menu/chat.svg",
+            color: helmsauerBlau,
+          ),
+          "Bei Fragen oder Anregungen wenden Sie sich gerne " +
+              "an uns. Sie erreichen uns im Reiter Kontakt.",
         ),
       ],
     );
@@ -89,45 +141,101 @@ class _NewsPageState extends State<NewsPage> {
 
   Widget _faqTop(Widget icon, String text) => Container(
         decoration: new BoxDecoration(
-            color: helmsauerBlau,
-            borderRadius: BorderRadius.all(Radius.circular(5))),
+          color: helmsauerBlau,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+        ),
+        margin: EdgeInsets.all(2),
         child: Row(
           children: [
-            SizedBox(
-              width: 100,
-              child: FittedBox(
-                child: icon,
-                fit: BoxFit.fitWidth,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 50,
+                child: FittedBox(
+                  child: icon,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
-            Expanded(
-              child: Text(text),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                ),
+              ),
             ),
           ],
         ),
       );
 
-  Widget _faqMiddle(Widget icon, String text) => Row(
-        children: [
-          Expanded(
-              child: Container(
-            decoration: new BoxDecoration(
-                color: Color.fromARGB(255, 241, 244, 247),
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Text("test"),
-          )),
-        ],
+  Widget _faqMiddle(Widget icon, String text) => Container(
+        decoration: new BoxDecoration(
+          color: Color.fromARGB(255, 241, 244, 247),
+        ),
+        margin: EdgeInsets.all(2),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 50,
+                child: FittedBox(
+                  child: icon,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: dunklesBlau,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       );
 
-  Widget _faqBottom(Widget icon, String text) => Row(
-        children: [
-          Expanded(
-              child: Container(
-            decoration: new BoxDecoration(
-                color: Color.fromARGB(255, 241, 244, 247),
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Text("test"),
-          )),
-        ],
+  Widget _faqBottom(Widget icon, String text) => Container(
+        decoration: new BoxDecoration(
+          color: Color.fromARGB(255, 241, 244, 247),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+        ),
+        margin: EdgeInsets.all(2),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 50,
+                child: FittedBox(
+                  child: icon,
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: dunklesBlau,
+                  ),
+                  maxLines: 50,
+                ),
+              ),
+            ),
+          ],
+        ),
       );
 }

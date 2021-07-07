@@ -18,6 +18,12 @@ class MyApp extends StatelessWidget {
         secondaryHeaderColor: helmsauerRot,
         bottomAppBarColor: helmsauerBlau,
         fontFamily: "OpenSans",
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            fontSize: 14,
+            color: dunklesBlau,
+          ),
+        ),
       ),
       home: LoginPage(),
       debugShowCheckedModeBanner: false,

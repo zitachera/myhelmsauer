@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
