@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/hashicorp/go-version"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
@@ -26,13 +27,26 @@ const (
 	proclientKey ctxKey = iota
 )
 
-func CredentialChecker(next http.Handler) http.Handler {
+func (s *Server) CredentialChecker(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		c, err := data.LoadCredentials(r.Header.Get("authorization"))
 		if err != nil {
 			handleError(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
+		clientVersion := r.Header.Get("client-version")
+		if clientVersion != "" {
+			cv, err := version.NewSemver(clientVersion)
+			if err != nil {
+				handleError(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			if cv.LessThan(s.MinClientVersion) {
+				handleError(w, "Client Version "+s.MinClientVersion.String()+" required", http.StatusUpgradeRequired)
+				return
+			}
+		}
+
 		ctx := context.WithValue(r.Context(), proclientKey, c)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/hashicorp/go-version"
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
@@ -18,6 +19,7 @@ import (
 
 type Server struct {
 	SchadenmeldungReceiver []string
+	MinClientVersion       *version.Version
 }
 
 func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {

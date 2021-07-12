@@ -5,6 +5,7 @@ import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info/package_info.dart';
 
 class Portal {
   static Future<Portal> restore() async {
@@ -46,6 +47,7 @@ class Portal {
       _testServer = true;
       user = user.substring(_testPrefix.length);
     }
+
     final response = await http.post(
       _uri('login'),
       headers: <String, String>{
@@ -85,11 +87,20 @@ class Portal {
     if (_token!.isEmpty) {
       throw ("no access token available");
     }
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     // load verträge, kontakte und news ...
     final response = await http.get(
       _uri('verträge'),
-      headers: {HttpHeaders.authorizationHeader: _token!},
+      headers: {
+        HttpHeaders.authorizationHeader: _token!,
+        'client-version': packageInfo.version,
+      },
     );
+    if (response.statusCode == 426) {
+      throw ('Bitte aktuallisieren Sie die App auf die neueste Version.');
+    }
     if (response.statusCode != 200) {
       throw ('Failed to get vertraege: ' + response.body);
     }

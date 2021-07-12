@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/hashicorp/go-version"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api"
 )
 
@@ -29,7 +30,7 @@ func main() {
 		r.Post("/login", s.Login)
 
 		r = r.With(
-			api.CredentialChecker,
+			s.CredentialChecker,
 		)
 		r.Route("/verträge", func(r chi.Router) {
 			r.Get("/", s.Vertraege)
@@ -48,6 +49,7 @@ func main() {
 }
 
 func server() api.Server {
+	minClient := version.Must(version.NewSemver("1.4.0"))
 	if *testserver {
 		return api.Server{
 			SchadenmeldungReceiver: []string{
@@ -55,6 +57,7 @@ func server() api.Server {
 				"udo.roehlich@helmsauer-gruppe.de",
 				"bastian.helmsauer@helmsauer-gruppe.de",
 			},
+			MinClientVersion: minClient,
 		}
 	}
 
@@ -64,5 +67,6 @@ func server() api.Server {
 			"jan-erik.keller@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		},
+		MinClientVersion: minClient,
 	}
 }
