@@ -119,7 +119,7 @@ class _NewsPageState extends State<NewsPage> {
         ),
         _faqMiddle(
           SvgPicture.asset(
-            "images/menu/chat.svg",
+            "images/menu/idee.svg",
             color: helmsauerBlau,
           ),
           "Viele Zusatzfunktionen werden Ihnen bald zur " +
@@ -129,7 +129,7 @@ class _NewsPageState extends State<NewsPage> {
         ),
         _faqBottom(
           SvgPicture.asset(
-            "images/menu/chat.svg",
+            "images/menu/kontakt.svg",
             color: helmsauerBlau,
           ),
           "Bei Fragen oder Anregungen wenden Sie sich gerne " +

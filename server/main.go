@@ -19,8 +19,8 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(
-		middleware.Recoverer,
 		middleware.Logger,
+		middleware.Recoverer,
 		middleware.Timeout(10*time.Minute),
 	)
 
@@ -39,10 +39,6 @@ func main() {
 			r.Get(string("/{"+api.AdressID+"}/dokumente/{"+api.DokumentID+"}"), s.Dokument)
 		})
 		r.Post("/vorgänge", s.Melden)
-
-		// legacy
-		r.Get("/vertraege", s.Vertraege)
-		r.Post("/melden", s.Melden)
 	})
 
 	log.Fatal(http.ListenAndServe(":8080", r))
