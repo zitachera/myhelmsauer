@@ -161,7 +161,7 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
 
-    final loginButon = Material(
+    final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Color(0xff01A0C7),
@@ -174,6 +174,25 @@ class _LoginFormState extends State<_LoginForm> {
           textAlign: TextAlign.center,
           style:
               style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
+    final demoButton = Material(
+      elevation: 2.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color.fromARGB(255, 241, 244, 247),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
+        child: Text(
+          "Demozugang",
+          textAlign: TextAlign.center,
+          style: style.copyWith(
+            color: dunklesBlau,
+            fontSize: 16,
+          ),
         ),
       ),
     );
@@ -191,7 +210,9 @@ class _LoginFormState extends State<_LoginForm> {
           SizedBox(height: 25.0),
           passwordField,
           SizedBox(height: 35.0),
-          loginButon,
+          loginButton,
+          SizedBox(height: 35.0),
+          demoButton,
           SizedBox(height: 15.0),
         ],
       ),

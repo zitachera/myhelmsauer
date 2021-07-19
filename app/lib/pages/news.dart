@@ -151,6 +151,7 @@ class _NewsPageState extends State<NewsPage> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 50,
+                height: 50,
                 child: FittedBox(
                   child: icon,
                   fit: BoxFit.fitWidth,
@@ -182,6 +183,7 @@ class _NewsPageState extends State<NewsPage> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 50,
+                height: 50,
                 child: FittedBox(
                   child: icon,
                   fit: BoxFit.fitWidth,
@@ -216,6 +218,7 @@ class _NewsPageState extends State<NewsPage> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: 50,
+                height: 50,
                 child: FittedBox(
                   child: icon,
                   fit: BoxFit.fitWidth,

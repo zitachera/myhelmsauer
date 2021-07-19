@@ -31,6 +31,10 @@ func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if c.User == "maxmustermann" && c.Gruppe == "hk" {
+		return
+	}
+
 	vertrag, err := c.GetVertrag(m.VertragsID)
 
 	if err != nil {
