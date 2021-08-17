@@ -19,8 +19,13 @@ class MyApp extends StatelessWidget {
         bottomAppBarColor: helmsauerBlau,
         fontFamily: "OpenSans",
         textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 26,
+            color: dunklesBlau,
+            fontWeight: FontWeight.w500,
+          ),
           bodyText1: TextStyle(
-            fontSize: 14,
+            fontSize: 18,
             color: dunklesBlau,
           ),
         ),

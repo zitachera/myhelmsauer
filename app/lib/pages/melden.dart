@@ -78,14 +78,14 @@ class _MeldenState extends State<MeldenPage> {
 
   bool small(MeldeFeld f) => f.kind == MeldeFeldKind.images && f.max == 1;
 
-  List<Widget> _aufnahmeFields() {
+  List<Widget> _aufnahmeFields(BuildContext context) {
     List<Widget> cols = [];
     Row? row;
 
     vertrag.meldeFelder.forEach((f) {
       if (!small(f)) {
         row = null;
-        cols.add(buildField(f));
+        cols.add(buildField(context, f));
         return;
       }
       if (row == null) {
@@ -93,7 +93,7 @@ class _MeldenState extends State<MeldenPage> {
           children: [
             Expanded(
               flex: 1,
-              child: buildField(f),
+              child: buildField(context, f),
             ),
           ],
         );
@@ -102,14 +102,14 @@ class _MeldenState extends State<MeldenPage> {
       }
       row!.children.add(Expanded(
         flex: 1,
-        child: buildField(f),
+        child: buildField(context, f),
       ));
       row = null;
     });
     return cols;
   }
 
-  Widget buildField(MeldeFeld f) {
+  Widget buildField(BuildContext context, MeldeFeld f) {
     switch (f.kind) {
       case MeldeFeldKind.images:
         if (aufnahmen[f.id] == null) {
@@ -139,14 +139,25 @@ class _MeldenState extends State<MeldenPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-              child: Text(f.label, textScaleFactor: 1.5),
+              child:
+                  Text(f.label, style: Theme.of(context).textTheme.headline1),
             ),
             if (f.beschreibung != "")
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Text(f.beschreibung, textScaleFactor: 1.3),
+                child: Text(f.beschreibung,
+                    style: Theme.of(context).textTheme.bodyText1),
               ),
           ],
+        );
+      case MeldeFeldKind.choice:
+        if (felder[f.id] != "ja") felder[f.id] = "nein";
+        return _InvertedLine(
+          child: Checkbox(
+              value: felder[f.id] == "ja",
+              onChanged: (selected) => setState(
+                  () => felder[f.id] = selected == true ? "ja" : "nein")),
+          caption: f.label,
         );
     }
   }
@@ -160,7 +171,7 @@ class _MeldenState extends State<MeldenPage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            ..._aufnahmeFields(),
+            ..._aufnahmeFields(context),
             _Line(
               caption: 'Datum',
               child: MaterialButton(
@@ -297,7 +308,7 @@ class _MultiLine extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Text(
               caption + ":",
-              textScaleFactor: 1.3,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
           child,
@@ -328,12 +339,47 @@ class _Line extends StatelessWidget {
           Expanded(
             child: Text(
               caption + ":",
-              textScaleFactor: 1.3,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
             flex: 1,
           ),
           Expanded(
             child: child,
+            flex: 2,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _InvertedLine extends StatelessWidget {
+  const _InvertedLine({
+    Key? key,
+    required this.caption,
+    required this.child,
+  }) : super(key: key);
+
+  final Widget child;
+  final String caption;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        textBaseline: TextBaseline.alphabetic,
+        children: <Widget>[
+          Expanded(
+            child: child,
+            flex: 1,
+          ),
+          Expanded(
+            child: Text(
+              caption,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
             flex: 2,
           ),
         ],

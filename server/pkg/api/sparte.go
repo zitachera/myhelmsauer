@@ -4,6 +4,7 @@ const (
 	imagesKind    = "images"
 	textfieldKind = "textfield"
 	sectionKind   = "section"
+	choiceKind    = "choice"
 )
 
 func meldeFelderForSparte(sparte string) []meldeFeld {
@@ -115,6 +116,11 @@ func meldeFelderForSparte(sparte string) []meldeFeld {
 				Beschreibung: "Wenn möglich können Fotos der Polizeiliche Unfallaufnahmen hinzugefügt werden.",
 				Max:          3,
 				Min:          0,
+			},
+			{
+				ID:    "schuldig",
+				Label: "Halten sie sich verantwortlich für die Verursachung des Schaden?",
+				Kind:  choiceKind,
 			},
 		}
 
