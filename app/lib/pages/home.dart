@@ -68,22 +68,22 @@ class _HomePageState extends State<HomePage> {
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: SvgIcon("images/menu/home.svg"),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.text_snippet),
+            icon: SvgIcon("images/menu/vertrag.svg"),
             label: 'Vertrag',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.warning,
+            icon: SvgIcon(
+              "images/menu/schaden.svg",
               color: Colors.red,
             ),
             label: 'Schaden',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.contact_page),
+            icon: SvgIcon("images/menu/kontakt.svg"),
             label: 'Kontakt',
           ),
         ],

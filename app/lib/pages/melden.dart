@@ -180,7 +180,7 @@ class _MeldenState extends State<MeldenPage> {
                 ),
                 child: Text(
                   dateFormat.format(zeitpunkt),
-                  textScaleFactor: 1.3,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () => _selectDate(context),
               ),
@@ -193,7 +193,7 @@ class _MeldenState extends State<MeldenPage> {
                 ),
                 child: Text(
                   timeFormat.format(zeitpunkt),
-                  textScaleFactor: 1.3,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 onPressed: () => _selectTime(context),
               ),

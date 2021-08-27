@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ContactPage extends StatelessWidget {
@@ -22,19 +23,31 @@ class ContactPage extends StatelessWidget {
             textScaleFactor: 2,
           ),
         ),
-        _Button.url(
+        _Button(
           caption: "Telefon",
-          value: _phone,
+          icon: SvgPicture.asset(
+            "images/menu/telefon.svg",
+            color: helmsauerBlau,
+          ),
+          label: _phone,
           url: 'tel://$_phone',
         ),
-        _Button.url(
+        _Button(
           caption: "Mail",
-          value: _mail,
+          icon: SvgPicture.asset(
+            "images/menu/email.svg",
+            color: helmsauerBlau,
+          ),
+          label: _mail,
           url: 'mailto://$_mail',
         ),
-        _Button.url(
+        _Button(
           caption: "Website",
-          value: _web,
+          icon: SvgPicture.asset(
+            "images/menu/webadresse.svg",
+            color: helmsauerBlau,
+          ),
+          label: _web,
           url: 'http://$_web',
         ),
         SizedBox(height: 150),
@@ -57,43 +70,52 @@ class _Button extends StatelessWidget {
   const _Button({
     Key? key,
     required this.caption,
-    required this.child,
-    required this.onPressed,
+    required this.url,
+    required this.label,
+    required this.icon,
   }) : super(key: key);
 
-  _Button.url({
-    Key? key,
-    required this.caption,
-    required String value,
-    String? url,
-  })  : child = Text(
-          value,
-          textScaleFactor: 1.3,
-          style: TextStyle(
-            decoration: TextDecoration.underline,
-            color: helmsauerBlau,
-          ),
-        ),
-        onPressed = (() => UrlLauncher.launch(url!)),
-        super(key: key);
-
   final String caption;
-  final Widget child;
-  final Function onPressed;
+  final String url;
+  final String label;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = Theme.of(context).textTheme.bodyText1 ?? TextStyle();
     return MaterialButton(
-      onPressed: onPressed as void Function()?,
+      onPressed: () => UrlLauncher.launch(url),
       padding: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
-            caption + ":",
-            textScaleFactor: 1.3,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 50,
+              height: 50,
+              child: FittedBox(
+                child: icon,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
           ),
-          child,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  caption + ":",
+                  style: textStyle,
+                ),
+                Text(
+                  label,
+                  style: textStyle.copyWith(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

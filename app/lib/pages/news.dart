@@ -91,8 +91,8 @@ class _NewsPageState extends State<NewsPage> {
               "Artikel zu interesanten Versicherungsthemen.",
         ),
         _faqMiddle(
-          Icon(
-            Icons.text_snippet,
+          SvgPicture.asset(
+            "images/menu/vertrag.svg",
             color: helmsauerBlau,
           ),
           "In Ihrer Vertragsübersicht haben Sie Zugriff auf " +
@@ -100,8 +100,8 @@ class _NewsPageState extends State<NewsPage> {
               "finden nähere Informationen dazu.",
         ),
         _faqMiddle(
-          Icon(
-            Icons.warning,
+          SvgPicture.asset(
+            "images/menu/schaden.svg",
             color: helmsauerBlau,
           ),
           "Für den Bereich KFZ können Sie schnell und unkompliziert " +
@@ -109,8 +109,8 @@ class _NewsPageState extends State<NewsPage> {
               "Weitere Sparten werden zeitnah hinzugefügt.",
         ),
         _faqMiddle(
-          Icon(
-            Icons.contact_page,
+          SvgPicture.asset(
+            "images/menu/kontakt.svg",
             color: helmsauerBlau,
           ),
           "Über verschiedene Wege können Sie direkt mit " +
