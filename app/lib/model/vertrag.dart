@@ -2,6 +2,7 @@ class Vertrag {
   final String id;
 
   final String sparte;
+  final String sparteID;
   final String gesellschaft;
   final String vertragsnummer;
   final DateTime ablauf;
@@ -14,6 +15,7 @@ class Vertrag {
   Vertrag({
     required this.id,
     required this.sparte,
+    required this.sparteID,
     required this.gesellschaft,
     required this.vertragsnummer,
     required this.ablauf,
@@ -27,6 +29,7 @@ class Vertrag {
   Vertrag.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         sparte = json['sparte'],
+        sparteID = json['sparteID'],
         gesellschaft = json['gesellschaft'],
         vertragsnummer = json['vertragsnummer'],
         ablauf = DateTime.parse(json['ablauf']),
@@ -44,6 +47,7 @@ class Vertrag {
   Map<String, dynamic> toJson() => {
         'id': id,
         'sparte': sparte,
+        'sparteID': sparteID,
         'gesellschaft': gesellschaft,
         'vertragsnummer': vertragsnummer,
         'ablauf': ablauf.toIso8601String(),

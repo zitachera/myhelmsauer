@@ -28,9 +28,11 @@ class Portal {
   }
 
   static const String _tokenKey = 'token';
+  static const String _kfzKey = 'kfz';
   static final _storage = FlutterSecureStorage();
   String? _token;
   bool _testServer = false;
+  bool kfzMode = false;
   static const String _testPrefix = "-<test>-";
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
@@ -75,12 +77,15 @@ class Portal {
       _testServer = true;
       _token = _token!.substring(_testPrefix.length);
     }
+    var kfz = await (_storage.read(key: _kfzKey));
+    kfzMode = kfz == "x";
   }
 
   Future<void> _writeToken() async {
     var token = _token!;
     if (_testServer) token = _testPrefix + token;
     await _storage.write(key: _tokenKey, value: token);
+    await _storage.write(key: _kfzKey, value: kfzMode ? "x" : "_");
   }
 
   Future<void> reload() async {

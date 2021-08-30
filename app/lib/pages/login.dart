@@ -161,38 +161,33 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
 
-    final loginButton = Material(
+    final loginButton = MaterialButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
       color: Color(0xff01A0C7),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () => login(user, password, gruppe),
-        child: Text(
-          "Login",
-          textAlign: TextAlign.center,
-          style:
-              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      onPressed: () => login(user, password, gruppe),
+      child: Text(
+        "Login",
+        textAlign: TextAlign.center,
+        style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
       ),
     );
 
-    final demoButton = Material(
-      elevation: 2.0,
-      borderRadius: BorderRadius.circular(30.0),
+    final demoButton = MaterialButton(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       color: Color.fromARGB(255, 241, 244, 247),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
-        child: Text(
-          "Demozugang",
-          textAlign: TextAlign.center,
-          style: style.copyWith(
-            color: dunklesBlau,
-            fontSize: 16,
-          ),
+      elevation: 2.0,
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
+      child: Text(
+        "Demozugang",
+        textAlign: TextAlign.center,
+        style: style.copyWith(
+          color: dunklesBlau,
+          fontSize: 16,
         ),
       ),
     );

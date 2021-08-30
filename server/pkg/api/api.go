@@ -42,7 +42,7 @@ func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	kats := meldeFelderForSparte(vertrag.SpartenID)
+	kats := meldeFelderForSparte(vertrag.SpartenID).AufnahmeKategorien
 
 	categories := make([]string, 0, len(m.Aufnahmen))
 
@@ -139,16 +139,16 @@ func (s *Server) Vertraege(w http.ResponseWriter, r *http.Request) {
 			})
 		}
 		vertraege[i] = vertrag{
-			ID:                 v.ID,
-			Status:             strings.ToLower(v.Status),
-			Sparte:             v.SpartenName,
-			Risiko:             v.Risiko,
-			Beitrag:            v.NettotJahrebeitrag,
-			Gesellschaft:       v.Gesellschaft,
-			Vertragsnummer:     v.Nr,
-			Ablauf:             v.Ablauf,
-			AufnahmeKategorien: meldeFelderForSparte(v.SpartenID),
-			Dokumente:          doks,
+			ID:             v.ID,
+			Status:         strings.ToLower(v.Status),
+			Sparte:         v.SpartenName,
+			Risiko:         v.Risiko,
+			Beitrag:        v.NettotJahrebeitrag,
+			Gesellschaft:   v.Gesellschaft,
+			Vertragsnummer: v.Nr,
+			Ablauf:         v.Ablauf,
+			sparte:         meldeFelderForSparte(v.SpartenID),
+			Dokumente:      doks,
 		}
 	}
 
@@ -231,21 +231,26 @@ type meldung struct {
 }
 
 type vertrag struct {
-	ID                 string      `json:"id"`
-	Sparte             string      `json:"sparte"`
-	Gesellschaft       string      `json:"gesellschaft"`
-	Vertragsnummer     string      `json:"vertragsnummer"`
-	Ablauf             string      `json:"ablauf"`
-	Status             string      `json:"status"`
-	Beitrag            string      `json:"beitrag"`
-	Risiko             string      `json:"risiko"`
-	AufnahmeKategorien []meldeFeld `json:"aufnahmeKategorien"`
-	Dokumente          []dokument  `json:"dokumente"`
+	ID             string `json:"id"`
+	Sparte         string `json:"sparte"`
+	Gesellschaft   string `json:"gesellschaft"`
+	Vertragsnummer string `json:"vertragsnummer"`
+	Ablauf         string `json:"ablauf"`
+	Status         string `json:"status"`
+	Beitrag        string `json:"beitrag"`
+	Risiko         string `json:"risiko"`
+	sparte
+	Dokumente []dokument `json:"dokumente"`
 }
 
 type dokument struct {
 	Endpoint string `json:"endpoint"`
 	Titel    string `json:"titel"`
+}
+
+type sparte struct {
+	SpartenID          string      `json:"spartenID"`
+	AufnahmeKategorien []meldeFeld `json:"aufnahmeKategorien"`
 }
 
 type meldeFeld struct {
