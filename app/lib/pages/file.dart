@@ -49,7 +49,6 @@ class FilePage extends StatelessWidget {
           final response = snapshot.data!;
 
           if (response.headers['content-type'] == 'application/pdf') {
-            // TODO it could also look like this application/pdf; version="1.0"
             WidgetsBinding.instance!.addPostFrameCallback(
               (_) => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(

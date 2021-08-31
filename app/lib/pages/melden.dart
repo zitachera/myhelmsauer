@@ -140,7 +140,7 @@ class _MeldenState extends State<MeldenPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
               child:
-                  Text(f.label, style: Theme.of(context).textTheme.headline1),
+                  Text(f.label, style: Theme.of(context).textTheme.headline2),
             ),
             if (f.beschreibung != "")
               Padding(
