@@ -189,7 +189,7 @@ func meldeFelderForSparte(proClientSparte string) sparte {
 				},
 			}}
 	}
-	return sparte{}
+	return sparte{SpartenID: "unknown", AufnahmeKategorien: []meldeFeld{}}
 }
 
 func spartenLabel(id string, kats []meldeFeld) string {

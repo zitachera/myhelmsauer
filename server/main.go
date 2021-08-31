@@ -45,7 +45,7 @@ func main() {
 }
 
 func server() api.Server {
-	minClient := version.Must(version.NewSemver("1.4.0"))
+	minClient := version.Must(version.NewSemver("1.6.0"))
 	if *testserver {
 		return api.Server{
 			SchadenmeldungReceiver: []string{

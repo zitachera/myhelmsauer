@@ -14,7 +14,7 @@ class RestrictedPage extends StatefulWidget {
 
   @override
   _RestrictedPageState createState() {
-    portal.vertraege.removeWhere((v) => v.sparteID != "KFZ");
+    portal.vertraege.removeWhere((v) => v.spartenID != "KFZ");
     return _RestrictedPageState(this.portal);
   }
 }
@@ -51,7 +51,7 @@ class _RestrictedPageState extends State<RestrictedPage> {
 
   Future _reload() async {
     await portal.reload();
-    portal.vertraege.removeWhere((v) => v.sparteID != "KFZ");
+    portal.vertraege.removeWhere((v) => v.spartenID != "KFZ");
     setState(() {});
   }
 

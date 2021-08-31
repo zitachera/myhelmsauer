@@ -4,6 +4,7 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
+import 'package:customer_portal_app/pages/restricted.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,20 +21,21 @@ class _LoginPageState extends State<LoginPage> {
 
   String lastUserName = "";
 
-  Future<Portal> login(String user, String password, String gruppe) async {
-    final portal = Portal();
-    await portal.login(user, password, gruppe);
-    return portal;
+  _LoginForm get _form {
+    return _LoginForm(
+      login: (user, password, gruppe, restricted) => setState(() {
+        loader = () async {
+          final portal = Portal();
+          if (restricted) portal.kfzMode = true;
+          await portal.login(user, password, gruppe);
+          return portal;
+        }();
+        loaderKey = UniqueKey();
+        lastUserName = user;
+      }),
+      lastUserName: lastUserName,
+    );
   }
-
-  _LoginForm get _form => _LoginForm(
-        login: (user, password, gruppe) => setState(() {
-          loader = login(user, password, gruppe);
-          loaderKey = UniqueKey();
-          lastUserName = user;
-        }),
-        lastUserName: lastUserName,
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
             WidgetsBinding.instance!.addPostFrameCallback(
               (_) => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => HomePage(portal),
+                  builder: (context) => portal.kfzMode
+                      ? RestrictedPage(portal)
+                      : HomePage(portal),
                 ),
               ),
             );
@@ -97,7 +101,8 @@ class _LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState(login, lastUserName);
 }
 
-typedef _LoginFunc = void Function(String user, String password, String gruppe);
+typedef _LoginFunc = void Function(
+    String user, String password, String gruppe, bool restricted);
 
 class _LoginFormState extends State<_LoginForm> {
   TextStyle style = TextStyle(
@@ -167,7 +172,7 @@ class _LoginFormState extends State<_LoginForm> {
       color: Color(0xff01A0C7),
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => login(user, password, gruppe),
+      onPressed: () => login(user, password, gruppe, _restricted),
       child: Text(
         "Login",
         textAlign: TextAlign.center,
@@ -181,7 +186,7 @@ class _LoginFormState extends State<_LoginForm> {
       elevation: 2.0,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
+      onPressed: () => login("maxmustermann", "ad45XV78?", "hk", false),
       child: Text(
         "Demozugang",
         textAlign: TextAlign.center,
@@ -190,6 +195,17 @@ class _LoginFormState extends State<_LoginForm> {
           fontSize: 16,
         ),
       ),
+    );
+
+    final restrictedCheck = Row(
+      children: [
+        Checkbox(
+          value: _restricted,
+          onChanged: (v) => setState(() => _restricted = v ?? false),
+        ),
+        Text("KFZ Flotten Anmeldung"),
+      ],
+      mainAxisAlignment: MainAxisAlignment.center,
     );
 
     return Padding(
@@ -206,6 +222,8 @@ class _LoginFormState extends State<_LoginForm> {
           passwordField,
           SizedBox(height: 35.0),
           loginButton,
+          SizedBox(height: 15.0),
+          restrictedCheck,
           SizedBox(height: 35.0),
           demoButton,
           SizedBox(height: 15.0),
@@ -213,4 +231,6 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
   }
+
+  bool _restricted = false;
 }
