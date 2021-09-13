@@ -63,6 +63,7 @@ enum VertragStatus {
   aktiv,
   antrag,
   storno,
+  other,
 }
 
 class VertragDokument {
@@ -124,7 +125,8 @@ String _vertragStatusToJson(VertragStatus status) =>
     status.toString().split('.')[1];
 
 VertragStatus _jsonToVertragStatus(String status) =>
-    VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status);
+    VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status,
+        orElse: () => VertragStatus.other);
 
 enum MeldeFeldKind { images, textfield, section, choice }
 

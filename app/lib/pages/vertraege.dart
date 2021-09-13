@@ -1,7 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
-import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +9,6 @@ class VertraegePage extends StatelessWidget {
 
   final Portal portal;
   final List<Vertrag> vertraege;
-
-  Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
-        (v) => v.id == vorgang.vertragsID,
-      );
 
   @override
   Widget build(BuildContext context) {
