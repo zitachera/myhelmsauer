@@ -128,7 +128,16 @@ VertragStatus _jsonToVertragStatus(String status) =>
     VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status,
         orElse: () => VertragStatus.other);
 
-enum MeldeFeldKind { images, textfield, section, choice }
+enum MeldeFeldKind {
+  images,
+  textfield,
+  multiline,
+  section,
+  choice,
+  time,
+  date,
+  location,
+}
 
 String _meldeFeldKindToJson(MeldeFeldKind status) =>
     status.toString().split('.')[1];

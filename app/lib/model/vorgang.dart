@@ -5,7 +5,6 @@ class Vorgang {
   final String id;
   final String vertragsID;
   final DateTime zeitpunkt;
-  final String schadenhergang;
   final String ort;
   final double? latitude;
   final double? longitude;
@@ -16,7 +15,6 @@ class Vorgang {
     required this.id,
     required this.vertragsID,
     required this.zeitpunkt,
-    required this.schadenhergang,
     required this.ort,
     this.latitude,
     this.longitude,
@@ -28,7 +26,6 @@ class Vorgang {
       : id = json['id'],
         vertragsID = json['vertragsID'],
         zeitpunkt = DateTime.parse(json['zeitpunkt']),
-        schadenhergang = json['schadenhergang'],
         ort = json['ort'],
         latitude = json['latitude'],
         longitude = json['longitude'],
@@ -40,7 +37,6 @@ class Vorgang {
         'id': id,
         'vertragsID': vertragsID,
         'zeitpunkt': zeitpunkt.toIso8601String(),
-        'schadenhergang': schadenhergang,
         'ort': ort,
         'latitude': latitude,
         'longitude': longitude,

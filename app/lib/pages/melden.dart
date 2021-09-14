@@ -48,7 +48,6 @@ class _MeldenState extends State<MeldenPage> {
         0,
       );
 
-  String schadenhergang = "";
   String ort = "";
   Position? gps;
   Map<String, List<Uint8List>> aufnahmen = Map();
@@ -60,7 +59,6 @@ class _MeldenState extends State<MeldenPage> {
   Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
         vertragsID: vertrag.id,
-        schadenhergang: schadenhergang,
         ort: ort,
         latitude: gps?.latitude,
         longitude: gps?.longitude,
@@ -72,8 +70,11 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((position) => gps = position);
+    if (vertrag.meldeFelder
+        .where((f) => f.kind == MeldeFeldKind.location)
+        .isNotEmpty)
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((position) => gps = position);
   }
 
   bool small(MeldeFeld f) => f.kind == MeldeFeldKind.images && f.max == 1;
@@ -159,6 +160,56 @@ class _MeldenState extends State<MeldenPage> {
                   () => felder[f.id] = selected == true ? "ja" : "nein")),
           caption: f.label,
         );
+      case MeldeFeldKind.multiline:
+        return _MultiLine(
+          caption: f.label,
+          child: TextFormField(
+            initialValue: felder[f.id],
+            onChanged: (s) => felder[f.id] = s,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+          ),
+        );
+      case MeldeFeldKind.time:
+        return _Line(
+          caption: 'Uhrzeit',
+          child: MaterialButton(
+            shape: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black38),
+            ),
+            child: Text(
+              timeFormat.format(zeitpunkt),
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            onPressed: () => _selectTime(context),
+          ),
+        );
+      case MeldeFeldKind.date:
+        return _Line(
+          caption: f.label,
+          child: MaterialButton(
+            shape: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.black38),
+            ),
+            child: Text(
+              dateFormat.format(zeitpunkt),
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            onPressed: () => _selectDate(context),
+          ),
+        );
+      case MeldeFeldKind.location:
+        return _MultiLine(
+          caption: f.label,
+          child: TextFormField(
+            initialValue: ort,
+            onChanged: (s) => ort = s,
+            validator: (s) {
+              if (s!.isNotEmpty) return null;
+              return f.beschreibung;
+            },
+          ),
+        );
     }
   }
 
@@ -172,52 +223,6 @@ class _MeldenState extends State<MeldenPage> {
         child: Column(
           children: <Widget>[
             ..._aufnahmeFields(context),
-            _Line(
-              caption: 'Datum',
-              child: MaterialButton(
-                shape: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black38),
-                ),
-                child: Text(
-                  dateFormat.format(zeitpunkt),
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                onPressed: () => _selectDate(context),
-              ),
-            ),
-            _Line(
-              caption: 'Uhrzeit',
-              child: MaterialButton(
-                shape: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black38),
-                ),
-                child: Text(
-                  timeFormat.format(zeitpunkt),
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                onPressed: () => _selectTime(context),
-              ),
-            ),
-            _MultiLine(
-              caption: 'Unfallort',
-              child: TextFormField(
-                initialValue: ort,
-                onChanged: (s) => ort = s,
-                validator: (s) {
-                  if (s!.isNotEmpty) return null;
-                  return "Bitte geben Sie den Ort des Unfalls an!";
-                },
-              ),
-            ),
-            _MultiLine(
-              caption: 'Schadenhergang',
-              child: TextFormField(
-                initialValue: schadenhergang,
-                onChanged: (s) => schadenhergang = s,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-              ),
-            ),
             ElevatedButton.icon(
               onPressed: () async {
                 if (!_formKey.currentState!.validate()) {

@@ -114,5 +114,24 @@ var sparteKfz = sparte{
 			Label: "Halten sie sich verantwortlich für die Verursachung des Schaden?",
 			Kind:  choiceKind,
 		},
+		{
+			Beschreibung: "Datum",
+			Kind:         dateKind,
+		},
+		{
+			Beschreibung: "Uhrzeit",
+			Kind:         timeKind,
+		},
+		{
+			Label:        "Unfallort",
+			Beschreibung: "Bitte geben Sie den Ort des Unfalls an!",
+			Kind:         locationKind,
+		},
+		{
+			ID:           "hergang",
+			Label:        "Schadenhergang",
+			Beschreibung: "",
+			Kind:         multilineKind,
+		},
 	},
 }

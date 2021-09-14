@@ -3,8 +3,12 @@ package api
 const (
 	imagesKind    = "images"
 	textfieldKind = "textfield"
+	multilineKind = "multiline"
 	sectionKind   = "section"
 	choiceKind    = "choice"
+	timeKind      = "time"
+	dateKind      = "date"
+	locationKind  = "location"
 )
 
 func meldeFelderForSparte(proClientSparte string) sparte {

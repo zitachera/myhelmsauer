@@ -65,5 +65,24 @@ var spartePhv = sparte{
 			Kind:         textfieldKind,
 			Beschreibung: "Falls Rechnung nicht vorhanden",
 		},
+		{
+			Beschreibung: "Datum",
+			Kind:         dateKind,
+		},
+		{
+			Beschreibung: "Uhrzeit",
+			Kind:         timeKind,
+		},
+		{
+			Label:        "Schadenort",
+			Beschreibung: "Bitte geben Sie den Ort des Schadens an!",
+			Kind:         locationKind,
+		},
+		{
+			ID:           "hergang",
+			Label:        "Schadenhergang",
+			Beschreibung: "",
+			Kind:         multilineKind,
+		},
 	},
 }
