@@ -19,6 +19,7 @@ func main() {
 	r := chi.NewRouter()
 
 	r.Use(
+		middleware.RequestID,
 		middleware.Logger,
 		middleware.Recoverer,
 		middleware.Timeout(10*time.Minute),

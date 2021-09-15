@@ -2,9 +2,11 @@ package api
 
 import (
 	"context"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hashicorp/go-version"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
@@ -34,6 +36,10 @@ func (s *Server) CredentialChecker(next http.Handler) http.Handler {
 			handleError(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
+
+		reqID := middleware.GetReqID(r.Context())
+		log.Printf("%s user %s %s", reqID, c.Gruppe, c.User)
+
 		clientVersion := r.Header.Get("client-version")
 		if clientVersion != "" {
 			cv, err := version.NewSemver(clientVersion)
