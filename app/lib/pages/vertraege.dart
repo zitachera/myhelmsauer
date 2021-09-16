@@ -4,14 +4,23 @@ import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
-class VertraegePage extends StatelessWidget {
+class VertraegePage extends StatefulWidget {
   VertraegePage(this.portal, this.vertraege, {Key? key}) : super(key: key);
 
   final Portal portal;
   final List<Vertrag> vertraege;
 
   @override
+  State<VertraegePage> createState() => _VertraegePageState();
+}
+
+class _VertraegePageState extends State<VertraegePage> {
+  String filter = "";
+
+  @override
   Widget build(BuildContext context) {
+    final keyword = filter.toLowerCase();
+    final matchs = (String s) => s.toLowerCase().contains(keyword);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -36,7 +45,7 @@ class VertraegePage extends StatelessWidget {
                   aspectRatio: 1,
                   child: FittedBox(
                     child: Text(
-                      "${vertraege.length}",
+                      "${widget.vertraege.length}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -45,12 +54,34 @@ class VertraegePage extends StatelessWidget {
             ],
           ),
         ),
-        ...vertraege.map(
-          (vertrag) => _buildVertrag(
-            context,
-            vertrag,
+        if (widget.vertraege.length >= 5)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.search),
+              ),
+              Expanded(
+                child: TextFormField(
+                  initialValue: filter,
+                  onChanged: (value) => setState(() {
+                    filter = value;
+                  }),
+                  decoration: InputDecoration(hintText: "Verträge durchsuchen"),
+                ),
+              )
+            ],
           ),
-        ),
+        ...widget.vertraege
+            .where((v) =>
+                matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
+            .map(
+              (vertrag) => _buildVertrag(
+                context,
+                vertrag,
+              ),
+            ),
       ],
     );
   }
@@ -69,7 +100,8 @@ class VertraegePage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => VertragPage(portal, vertrag: vertrag)),
+                builder: (context) =>
+                    VertragPage(widget.portal, vertrag: vertrag)),
           ),
         },
         child: Column(

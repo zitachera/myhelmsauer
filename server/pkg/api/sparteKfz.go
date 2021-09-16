@@ -115,12 +115,12 @@ var sparteKfz = sparte{
 			Kind:  choiceKind,
 		},
 		{
-			Beschreibung: "Datum",
-			Kind:         dateKind,
+			Label: "Datum",
+			Kind:  dateKind,
 		},
 		{
-			Beschreibung: "Uhrzeit",
-			Kind:         timeKind,
+			Label: "Uhrzeit",
+			Kind:  timeKind,
 		},
 		{
 			Label:        "Unfallort",

@@ -172,7 +172,7 @@ class _MeldenState extends State<MeldenPage> {
         );
       case MeldeFeldKind.time:
         return _Line(
-          caption: 'Uhrzeit',
+          caption: f.label,
           child: MaterialButton(
             shape: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.black38),

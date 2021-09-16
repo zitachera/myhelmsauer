@@ -66,12 +66,12 @@ var spartePhv = sparte{
 			Beschreibung: "Falls Rechnung nicht vorhanden",
 		},
 		{
-			Beschreibung: "Datum",
-			Kind:         dateKind,
+			Label: "Datum",
+			Kind:  dateKind,
 		},
 		{
-			Beschreibung: "Uhrzeit",
-			Kind:         timeKind,
+			Label: "Uhrzeit",
+			Kind:  timeKind,
 		},
 		{
 			Label:        "Schadenort",
