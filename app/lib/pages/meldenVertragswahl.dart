@@ -17,6 +17,7 @@ class MeldenVertragwahlPage extends StatefulWidget {
 class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
   _MeldenVertragwahlPageState(this.vertraege, this.portal);
   final List<Vertrag> vertraege;
+  String filter = "";
 
   final Portal portal;
 
@@ -26,6 +27,8 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
 
   @override
   Widget build(BuildContext context) {
+    final keyword = filter.toLowerCase();
+    final matchs = (String s) => s.toLowerCase().contains(keyword);
     return Column(
       children: <Widget>[
         Text(
@@ -39,7 +42,32 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
             textScaleFactor: 1.3,
           ),
         ),
-        ...vertraege.where((v) => v.meldeFelder.isNotEmpty).map(
+        if (vertraege.length >= 5)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.search),
+              ),
+              Expanded(
+                child: TextFormField(
+                  initialValue: filter,
+                  onChanged: (value) => setState(() {
+                    filter = value;
+                  }),
+                  decoration: InputDecoration(hintText: "Verträge durchsuchen"),
+                ),
+              )
+            ],
+          ),
+        ...vertraege
+            .where((v) =>
+                v.meldeFelder.isNotEmpty &&
+                (matchs(v.sparte) ||
+                    matchs(v.risiko) ||
+                    matchs(v.gesellschaft)))
+            .map(
               (vertrag) => _buildVertrag(
                 context,
                 vertrag,
