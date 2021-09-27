@@ -111,7 +111,7 @@ var sparteKfz = sparte{
 		},
 		{
 			ID:    "schuldig",
-			Label: "Halten sie sich verantwortlich für die Verursachung des Schaden?",
+			Label: "Halten Sie sich verantwortlich für die Verursachung des Schadens?",
 			Kind:  choiceKind,
 		},
 		{

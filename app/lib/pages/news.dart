@@ -88,7 +88,7 @@ class _NewsPageState extends State<NewsPage> {
             color: helmsauerBlau,
           ),
           "Auf der myHelmsauer Startseite finden Sie im Newsbereich wechselnde " +
-              "Artikel zu interesanten Versicherungsthemen.",
+              "Artikel zu interessanten Versicherungsthemen.",
         ),
         _faqMiddle(
           SvgPicture.asset(
@@ -96,7 +96,7 @@ class _NewsPageState extends State<NewsPage> {
             color: helmsauerBlau,
           ),
           "In Ihrer Vertragsübersicht haben Sie Zugriff auf " +
-              "all Ihre bestehenden Versicherungsverträge und" +
+              "all Ihre bestehenden Versicherungsverträge und " +
               "finden nähere Informationen dazu.",
         ),
         _faqMiddle(
@@ -124,7 +124,7 @@ class _NewsPageState extends State<NewsPage> {
           ),
           "Viele Zusatzfunktionen werden Ihnen bald zur " +
               "Verfügung stehen. Wir arbeiten permanent an " +
-              "der App um Ihnen den best möglichen Service " +
+              "der App um Ihnen den bestmöglichen Service " +
               "zu bieten.",
         ),
         _faqBottom(
