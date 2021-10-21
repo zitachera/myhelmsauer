@@ -221,13 +221,23 @@ Geo-Link
 		KundePlz     string
 		KundeOrt     string
 		KundeLandkz  string
+	}
 
-		MailRecipients []string
+	type requestBody struct {
+		ID             string               `json:"id"`
+		VertragsID     string               `json:"vertragsID"`
+		Zeitpunkt      string               `json:"zeitpunkt"`
+		Schadenhergang string               `json:"schadenhergang"`
+		Ort            string               `json:"ort"`
+		Latitude       float64              `json:"latitude"`
+		Longitude      float64              `json:"longitude"`
+		Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
+		Felder         map[string]string    `json:"felder"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		c := auth.GetClientFromRequest(r)
 
-		var m meldung
+		var m requestBody
 		if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
 			handleError(w, err.Error(), http.StatusBadRequest)
 			return
@@ -252,7 +262,8 @@ Geo-Link
 			categories = append(categories, cat)
 		}
 
-		email := mail.New("Schadenmeldung von " + c.Gruppe + " / " + c.User)
+		title := "Schadenmeldung von " + c.Gruppe + " / " + c.User
+		email := mail.New(title)
 
 		sort.Strings(categories)
 		for _, cat := range categories {
@@ -284,6 +295,8 @@ Geo-Link
 		if err := email.Send(recipients, bodyTemplate,
 
 			data{
+				Titel: title,
+
 				Versicherungsnummer: vertrag.Nr,
 				Sparte:              vertrag.SpartenName,
 				Risiko:              vertrag.Risiko,

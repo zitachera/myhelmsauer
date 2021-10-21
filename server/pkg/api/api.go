@@ -89,18 +89,6 @@ func handleError(w http.ResponseWriter, error string, code int) {
 	http.Error(w, error, code)
 }
 
-type meldung struct {
-	ID             string               `json:"id"`
-	VertragsID     string               `json:"vertragsID"`
-	Zeitpunkt      string               `json:"zeitpunkt"`
-	Schadenhergang string               `json:"schadenhergang"`
-	Ort            string               `json:"ort"`
-	Latitude       float64              `json:"latitude"`
-	Longitude      float64              `json:"longitude"`
-	Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
-	Felder         map[string]string    `json:"felder"`
-}
-
 type vertrag struct {
 	ID             string `json:"id"`
 	Sparte         string `json:"sparte"`

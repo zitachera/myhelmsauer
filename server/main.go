@@ -28,6 +28,11 @@ func main() {
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Post("/login", auth.Login())
+		r.Post("/remind", auth.PostRemind(mailRecipients(
+			"info@helmsauer-gruppe.de",
+			"jan-erik.keller@helmsauer-gruppe.de",
+			"bastian.helmsauer@helmsauer-gruppe.de",
+		)))
 
 		r = r.With(
 			auth.CredentialChecker(version.Must(version.NewSemver("1.6.0"))),
@@ -52,7 +57,6 @@ func mailRecipients(recipients ...string) []string {
 	if *testserver {
 		return []string{
 			"jan-erik.keller@helmsauer-gruppe.de",
-			"udo.roehlich@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		}
 	}

@@ -16,7 +16,7 @@ type Mail struct {
 func New(title string) *Mail {
 	return &Mail{
 		email: mail.NewMSG().
-			SetFrom("Schadenmeldung <no-reply-schadenmeldung@helmsauer-gruppe.de>").
+			SetFrom("myHelmsauer <no-reply-schadenmeldung@helmsauer-gruppe.de>").
 			SetSubject(title),
 	}
 }
