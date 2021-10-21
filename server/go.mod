@@ -6,6 +6,6 @@ require (
 	github.com/go-chi/chi/v5 v5.0.4
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/go-version v1.3.0
-	github.com/mattn/go-sqlite3 v1.14.8
+	github.com/mattn/go-sqlite3 v1.14.9
 	github.com/xhit/go-simple-mail/v2 v2.10.0
 )

@@ -5,119 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"sort"
 	"strings"
-	"time"
 
-	"github.com/google/uuid"
-	"github.com/hashicorp/go-version"
-
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
+	"github.com/go-chi/chi/v5"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 )
 
-type Server struct {
-	SchadenmeldungReceiver []string
-	MinClientVersion       *version.Version
-}
-
-func (s *Server) Melden(w http.ResponseWriter, r *http.Request) {
-	c := getClientFromRequest(r)
-
-	var m meldung
-	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if c.User == "maxmustermann" && c.Gruppe == "hk" {
-		return
-	}
-
-	vertrag, err := c.GetVertrag(m.VertragsID)
-
-	if err != nil {
-		handleError(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	kats := meldeFelderForSparte(vertrag.SpartenID).AufnahmeKategorien
-
-	categories := make([]string, 0, len(m.Aufnahmen))
-
-	for cat := range m.Aufnahmen {
-		categories = append(categories, cat)
-	}
-
-	sort.Strings(categories)
-
-	imgs := make([]mail.Image, 0, len(categories))
-
-	for _, cat := range categories {
-		for i, data := range m.Aufnahmen[cat] {
-			mime := http.DetectContentType(data)
-			ext := "bin"
-			if strings.HasPrefix(mime, "image/") {
-				ext = strings.Split(mime, "/")[1]
-			}
-			img := mail.Image{
-				Name: fmt.Sprintf("%s %d.%s", spartenLabel(cat, kats), i+1, ext),
-				Mime: mime,
-				Data: data,
-			}
-			imgs = append(imgs, img)
-		}
-	}
-
-	fields := map[string]string{}
-	if m.Felder != nil {
-		for key, field := range m.Felder {
-			fields[spartenLabel(key, kats)] = field
-		}
-	}
-
-	z, err := time.Parse("2006-01-02T15:04:05.000", m.Zeitpunkt)
-
-	if err != nil {
-		handleError(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	if err := mail.Send(mail.Meldung{
-		Titel:               "Schadenmeldung von " + c.Gruppe + " / " + c.User,
-		Versicherungsnummer: vertrag.Nr,
-		Sparte:              vertrag.SpartenName,
-		Risiko:              vertrag.Risiko,
-		Gesellschaft:        vertrag.Gesellschaft,
-		Schadenhergang:      m.Schadenhergang,
-		Ort:                 m.Ort,
-		Latitude:            m.Latitude,
-		Longitude:           m.Longitude,
-		Zeitpunkt:           z.Format("02.01.2006 15:04"),
-		Aufnahmen:           imgs,
-		Felder:              fields,
-
-		KundeAnrede:  vertrag.KundeAnrede,
-		KundeTitel:   vertrag.KundeTitel,
-		KundeName:    vertrag.KundeName,
-		KundeName2:   vertrag.KundeName2,
-		KundeName3:   vertrag.KundeName3,
-		KundeStrasse: vertrag.KundeStrasse,
-		KundeHausnr:  vertrag.KundeHausnr,
-		KundePlz:     vertrag.KundePlz,
-		KundeOrt:     vertrag.KundeOrt,
-		KundeLandkz:  vertrag.KundeLandkz,
-
-		MailRecipients: s.SchadenmeldungReceiver,
-	}); err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
-
-func (s *Server) Vertraege(w http.ResponseWriter, r *http.Request) {
-	c := getClientFromRequest(r)
+func Vertraege(w http.ResponseWriter, r *http.Request) {
+	c := auth.GetClientFromRequest(r)
 
 	vs, err := c.GetVertraege()
 	if err != nil {
@@ -159,8 +54,8 @@ func (s *Server) Vertraege(w http.ResponseWriter, r *http.Request) {
 }
 
 // Dokument bietet ein ProCLient Dokument direkt zum Download an.
-func (s *Server) Dokument(w http.ResponseWriter, r *http.Request) {
-	c := getClientFromRequest(r)
+func Dokument(w http.ResponseWriter, r *http.Request) {
+	c := auth.GetClientFromRequest(r)
 
 	contentType, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
 	if err != nil {
@@ -178,39 +73,15 @@ func (s *Server) Dokument(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) Login(w http.ResponseWriter, r *http.Request) {
-	var l requestLogin
-	if err := json.NewDecoder(r.Body).Decode(&l); err != nil {
-		handleError(w, err.Error(), http.StatusBadRequest)
-		return
-	}
+type URLParameter string
 
-	client := proclient.Client{
-		User:     l.User,
-		Password: l.Password,
-		Gruppe:   l.Gruppe,
-	}
+const (
+	AdressID   URLParameter = "adressID"
+	DokumentID URLParameter = "dokumentID"
+)
 
-	msg, ok, err := client.Login()
-	if err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	if !ok {
-		handleError(w, msg, http.StatusForbidden)
-		return
-	}
-
-	token := uuid.New().String()
-
-	data.StoreCredentials(token, client)
-
-	if err := json.NewEncoder(w).Encode(map[string]interface{}{
-		"token": token,
-	}); err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+func (p URLParameter) From(r *http.Request) string {
+	return chi.URLParam(r, string(p))
 }
 
 func handleError(w http.ResponseWriter, error string, code int) {
@@ -260,10 +131,4 @@ type meldeFeld struct {
 	Beschreibung string `json:"beschreibung"`
 	Max          int    `json:"max"`
 	Min          int    `json:"min"`
-}
-
-type requestLogin struct {
-	User     string `json:"user"`
-	Password string `json:"password"`
-	Gruppe   string `json:"gruppe"`
 }
