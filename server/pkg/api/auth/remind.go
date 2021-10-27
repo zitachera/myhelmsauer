@@ -130,13 +130,11 @@ func PostRemind(recipients []string) http.HandlerFunc {
 <p>
 Ein Passwort wurde angefordert. Bitte prüfen Sie die Anfrage bevor Sie dem Kunden sein Passwort zusenden.
 </p>
+<br>
 
 <h2>Name</h2>
 <blockquote>
-{{.Nachname}}
-</blockquote>
-<blockquote>
-{{.Vorname}}
+{{.Nachname}}, {{.Vorname}}
 </blockquote>
 
 <h2>Adresse</h2>
@@ -152,6 +150,11 @@ Ein Passwort wurde angefordert. Bitte prüfen Sie die Anfrage bevor Sie dem Kund
 		Vorname  string `json:"vorname"`
 		Adresse  string `json:"adresse"`
 	}
+
+	type content struct {
+		Titel string
+		requestBody
+	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		var m requestBody
 		if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
@@ -159,9 +162,10 @@ Ein Passwort wurde angefordert. Bitte prüfen Sie die Anfrage bevor Sie dem Kund
 			return
 		}
 
-		email := mail.New("Passwort Anforderung " + m.Nachname + ", " + m.Vorname)
+		title := "Passwort Anforderung " + m.Nachname + ", " + m.Vorname
+		email := mail.New(title)
 
-		if err := email.Send(recipients, bodyTemplate, m); err != nil {
+		if err := email.Send(recipients, bodyTemplate, content{title, m}); err != nil {
 			handleError(w, err.Error(), http.StatusInternalServerError)
 			return
 		}

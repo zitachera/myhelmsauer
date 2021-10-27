@@ -8,6 +8,14 @@ content-type: application/json
     "gruppe":"hk"
 }
 
+### verträge
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
+content-type: application/json
+authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
+
+
+##################### test #####################
+
 ### login testserver
 POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/login HTTP/1.1
 content-type: application/json
@@ -18,16 +26,24 @@ content-type: application/json
     "gruppe":"hk"
 }
 
-### verträge
-GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
-content-type: application/json
-authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
-
 ### verträge testserver
+
 GET https://testschadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 613fa513-32a1-4671-8d91-59e6779912d4
-client-version: 1.0.0
+client-version: 1.6.0
+
+### pw request testserver
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/remind HTTP/1.1
+content-type: application/json
+authorization: 613fa513-32a1-4671-8d91-59e6779912d4
+client-version: 1.6.0
+
+{
+    "nachname": "Mustermann",
+    "vorname": "Erika",
+    "adresse": "Musterstraße"
+}
 
 
 
