@@ -4,6 +4,7 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
+import 'package:customer_portal_app/pages/remind.dart';
 import 'package:customer_portal_app/pages/restricted.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -167,9 +168,14 @@ class _LoginFormState extends State<_LoginForm> {
     );
 
     final loginButton = MaterialButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
       elevation: 5.0,
-      color: Color(0xff01A0C7),
+      color: helmsauerBlau,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       onPressed: () => login(user, password, gruppe, _restricted),
@@ -181,7 +187,12 @@ class _LoginFormState extends State<_LoginForm> {
     );
 
     final demoButton = MaterialButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          topLeft: Radius.circular(30),
+        ),
+      ),
       color: Color.fromARGB(255, 241, 244, 247),
       elevation: 2.0,
       minWidth: MediaQuery.of(context).size.width,
@@ -208,6 +219,19 @@ class _LoginFormState extends State<_LoginForm> {
       mainAxisAlignment: MainAxisAlignment.center,
     );
 
+    final remind = MaterialButton(
+      child: Text(
+        "Passwort vergessen",
+        style: Theme.of(context).textTheme.bodyText1,
+      ),
+      onPressed: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RemindPage()),
+        ),
+      },
+    );
+
     return Padding(
       padding: const EdgeInsets.all(36.0),
       child: Column(
@@ -221,11 +245,22 @@ class _LoginFormState extends State<_LoginForm> {
           SizedBox(height: 25.0),
           passwordField,
           SizedBox(height: 35.0),
-          loginButton,
-          SizedBox(height: 35.0),
-          demoButton,
+          Row(
+            children: [
+              Expanded(
+                child: demoButton,
+                flex: 2,
+              ),
+              Expanded(
+                child: loginButton,
+                flex: 3,
+              ),
+            ],
+          ),
           SizedBox(height: 35.0),
           restrictedCheck,
+          SizedBox(height: 15.0),
+          remind,
           SizedBox(height: 15.0),
         ],
       ),
