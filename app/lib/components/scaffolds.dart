@@ -2,19 +2,22 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
-  HsSingleChildScrollScaffold(
-      {Key? key,
-      required this.title,
-      required this.body,
-      this.actions,
-      this.floatingActionButton,
-      this.bottomNavigationBar})
-      : super(key: key);
+  HsSingleChildScrollScaffold({
+    Key? key,
+    required this.title,
+    required this.body,
+    this.actions,
+    this.floatingActionButton,
+    this.bottomNavigationBar,
+    this.onRefresh,
+  }) : super(key: key);
 
   final String title;
   final Widget body;
   final List<Widget>? actions;
   final Widget? bottomNavigationBar;
+
+  final Future<void> Function()? onRefresh;
 
   /// A button displayed floating above [body], in the bottom right corner.
   ///
@@ -23,27 +26,33 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget scrollView = SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: EdgeInsets.all(10),
+      child: body,
+    );
+    if (onRefresh != null) {
+      scrollView = RefreshIndicator(
+        onRefresh: onRefresh!,
+        child: scrollView,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
           title,
         ),
         actions: actions,
-        bottom: appBarBottom,
+        bottom: _appBarBottom,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: body,
-        ),
-      ),
+      body: scrollView,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar,
     );
   }
 }
 
-PreferredSize appBarBottom = const PreferredSize(
+PreferredSize _appBarBottom = const PreferredSize(
     child: const Divider(
       color: helmsauerRot,
       thickness: 2.5,
@@ -94,20 +103,9 @@ class HsNestedScrollScaffold extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Chub Gothic',
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 3
-                        ..color = helmsauerBlau,
-                    ),
-                  ),
-                  Text(
-                    title,
-                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 25.0,
-                      fontFamily: 'Chub Gothic',
+                      fontFamily: 'FuturaRound',
                     ),
                   ),
                 ],
@@ -117,7 +115,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            bottom: appBarBottom,
+            bottom: _appBarBottom,
           ),
         ],
         body: scrollView,
