@@ -60,10 +60,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return HsNestedScrollScaffold(
-      title: 'Helmsauer',
-      body: _content,
-      onRefresh: _reload,
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 110,
+        title: Column(
+          children: [
+            Text(
+              "Wilkommen bei",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w300,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              "myHELMSAUER",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w500,
+                fontSize: 42,
+                letterSpacing: 3,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+        backgroundColor: helmsauerBlau,
+        bottom: appBarBottom,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _reload,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.all(10),
+                child: _content,
+              ),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[

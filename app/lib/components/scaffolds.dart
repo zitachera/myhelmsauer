@@ -43,7 +43,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
           title,
         ),
         actions: actions,
-        bottom: _appBarBottom,
+        bottom: appBarBottom,
       ),
       body: scrollView,
       floatingActionButton: floatingActionButton,
@@ -52,7 +52,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
   }
 }
 
-PreferredSize _appBarBottom = const PreferredSize(
+PreferredSize appBarBottom = const PreferredSize(
     child: const Divider(
       color: helmsauerRot,
       thickness: 2.5,
@@ -115,7 +115,7 @@ class HsNestedScrollScaffold extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            bottom: _appBarBottom,
+            bottom: appBarBottom,
           ),
         ],
         body: scrollView,
