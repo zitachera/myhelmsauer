@@ -199,12 +199,14 @@ class _LoginFormState extends State<_LoginForm> {
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
       onPressed: () => login("maxmustermann", "ad45XV78?", "hk", false),
       child: Text(
-        "Demozugang",
+        "Demo",
         textAlign: TextAlign.center,
         style: style.copyWith(
           color: dunklesBlau,
           fontSize: 16,
         ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       ),
     );
 

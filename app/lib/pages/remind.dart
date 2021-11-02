@@ -36,9 +36,7 @@ class _RemindPageState extends State<RemindPage> {
         return null;
       },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: "Nachname",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -52,16 +50,14 @@ class _RemindPageState extends State<RemindPage> {
         return null;
       },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: "Vorname",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final adresseField = TextFormField(
       onChanged: (value) => adresse = value,
       style: style,
-      maxLines: 5,
+      maxLines: 4,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Geben Sie Ihre Adresse an.';
@@ -69,15 +65,13 @@ class _RemindPageState extends State<RemindPage> {
         return null;
       },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         hintText: "Adresse",
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final remindButton = MaterialButton(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(5),
       ),
       elevation: 5.0,
       color: helmsauerBlau,
@@ -109,10 +103,9 @@ class _RemindPageState extends State<RemindPage> {
       child: Text(
         "Neues Passwort anfordern",
         textAlign: TextAlign.center,
-        style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        style: style.copyWith(color: Colors.white),
       ),
     );
-
     return HsSingleChildScrollScaffold(
       title: "Passwort vergessen",
       body: Padding(
@@ -120,7 +113,7 @@ class _RemindPageState extends State<RemindPage> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 30.0),
@@ -129,7 +122,12 @@ class _RemindPageState extends State<RemindPage> {
               vornameField,
               SizedBox(height: 35.0),
               adresseField,
-              SizedBox(height: 35.0),
+              SizedBox(height: 25.0),
+              Text(
+                "Bitte beachten Sie, dass Ihre neuen Zugangsdaten auf dem postalischen Weg übermittelt werden.",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              SizedBox(height: 25.0),
               remindButton,
               SizedBox(height: 15.0),
             ],
