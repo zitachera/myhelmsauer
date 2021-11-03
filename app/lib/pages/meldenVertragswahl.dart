@@ -31,15 +31,11 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
     final matchs = (String s) => s.toLowerCase().contains(keyword);
     return Column(
       children: <Widget>[
-        Text(
-          "Schadenmeldung",
-          textScaleFactor: 2,
-        ),
         Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 14),
           child: Text(
-            "Wählen Sie den Vertrag zu dem Sie den Schaden melden wollen aus.",
-            textScaleFactor: 1.3,
+            "Zu welchen Vertrag möchten Sie einen Schaden melden.",
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
         if (vertraege.length >= 5)

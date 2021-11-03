@@ -28,6 +28,20 @@ class _HomePageState extends State<HomePage> {
     setState(() => _selectedIndex = index);
   }
 
+  String? get _title {
+    switch (_selectedIndex) {
+      case 0:
+        return null;
+      case 1:
+        return "Vertragsübersicht";
+      case 2:
+        return "Schadenmeldung";
+      case 3:
+        return "Kontakt";
+    }
+    throw ("unknown tab index");
+  }
+
   Widget get _content {
     switch (_selectedIndex) {
       case 0:
@@ -60,13 +74,50 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavigationBar = BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: SvgIcon("images/menu/home.svg"),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgIcon("images/menu/vertrag.svg"),
+          label: 'Vertrag',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgIcon(
+            "images/menu/schaden.svg",
+            color: Colors.red,
+          ),
+          label: 'Schaden',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgIcon("images/menu/kontakt.svg"),
+          label: 'Kontakt',
+        ),
+      ],
+      showUnselectedLabels: true,
+      currentIndex: _selectedIndex,
+      selectedItemColor: helmsauerBlau,
+      unselectedItemColor: Colors.grey,
+      onTap: _onItemTapped,
+    );
+    final title = _title;
+    if (title != null)
+      return HsSingleChildScrollScaffold(
+        title: title,
+        body: _content,
+        onRefresh: _reload,
+        bottomNavigationBar: bottomNavigationBar,
+      );
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 110,
         title: Column(
           children: [
             Text(
-              "Wilkommen bei",
+              "Willkommen bei",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'FuturaRound',
@@ -80,8 +131,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 fontFamily: 'FuturaRound',
                 fontWeight: FontWeight.w500,
-                fontSize: 42,
-                letterSpacing: 3,
+                fontSize: 36,
               ),
             ),
           ],
@@ -104,35 +154,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: SvgIcon("images/menu/home.svg"),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgIcon("images/menu/vertrag.svg"),
-            label: 'Vertrag',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgIcon(
-              "images/menu/schaden.svg",
-              color: Colors.red,
-            ),
-            label: 'Schaden',
-          ),
-          BottomNavigationBarItem(
-            icon: SvgIcon("images/menu/kontakt.svg"),
-            label: 'Kontakt',
-          ),
-        ],
-        showUnselectedLabels: true,
-        currentIndex: _selectedIndex,
-        selectedItemColor: helmsauerBlau,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-      ),
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

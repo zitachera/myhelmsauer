@@ -28,10 +28,8 @@ class Portal {
   }
 
   static const String _tokenKey = 'token';
-  static const String _kfzKey = 'kfz';
   static final _storage = FlutterSecureStorage();
   String? _token;
-  bool kfzMode = false;
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
 
@@ -75,15 +73,11 @@ class Portal {
 
   Future<void> _readToken() async {
     _token = await (_storage.read(key: _tokenKey));
-
-    var kfz = await (_storage.read(key: _kfzKey));
-    kfzMode = kfz == "x";
   }
 
   Future<void> _writeToken() async {
     var token = _token!;
     await _storage.write(key: _tokenKey, value: token);
-    await _storage.write(key: _kfzKey, value: kfzMode ? "x" : "_");
   }
 
   Future<void> reload() async {

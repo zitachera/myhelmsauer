@@ -44,6 +44,7 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
         ),
         actions: actions,
         bottom: appBarBottom,
+        backgroundColor: helmsauerBlau,
       ),
       body: scrollView,
       floatingActionButton: floatingActionButton,
@@ -59,70 +60,3 @@ PreferredSize appBarBottom = const PreferredSize(
       height: 2.5,
     ),
     preferredSize: const Size.fromHeight(2.5));
-
-class HsNestedScrollScaffold extends StatelessWidget {
-  HsNestedScrollScaffold({
-    Key? key,
-    required this.title,
-    required this.body,
-    this.bottomNavigationBar,
-    this.onRefresh,
-    this.actions,
-  }) : super(key: key);
-
-  final String title;
-  final Widget body;
-  final Widget? bottomNavigationBar;
-  final List<Widget>? actions;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget scrollView = SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
-      padding: EdgeInsets.all(10),
-      child: body,
-    );
-    if (onRefresh != null) {
-      scrollView = RefreshIndicator(
-        onRefresh: onRefresh!,
-        child: scrollView,
-      );
-    }
-    return Scaffold(
-      body: NestedScrollView(
-        key: ValueKey(body.key),
-        headerSliverBuilder: (context, innerBoxIsScrolled) => <Widget>[
-          SliverAppBar(
-            actions: actions,
-            expandedHeight: 200.0,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Stack(
-                children: <Widget>[
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                      fontFamily: 'FuturaRound',
-                    ),
-                  ),
-                ],
-              ),
-              background: Image.asset(
-                "images/tower-background.jpg",
-                fit: BoxFit.cover,
-              ),
-            ),
-            bottom: appBarBottom,
-          ),
-        ],
-        body: scrollView,
-      ),
-      bottomNavigationBar: bottomNavigationBar,
-    );
-  }
-
-  final Future<void> Function()? onRefresh;
-}

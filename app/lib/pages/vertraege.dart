@@ -24,55 +24,43 @@ class _VertraegePageState extends State<VertraegePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 15, bottom: 14),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Vertragsübersicht",
-                  textScaleFactor: 2,
-                ),
+        // if (widget.vertraege.length >= 5)
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(Icons.search),
+            ),
+            Expanded(
+              child: TextFormField(
+                initialValue: filter,
+                onChanged: (value) => setState(() {
+                  filter = value;
+                }),
+                decoration: InputDecoration(hintText: "Verträge durchsuchen"),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: helmsauerBlau.withAlpha(128),
-                ),
-                padding: EdgeInsets.all(4),
-                height: 35,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: FittedBox(
-                    child: Text(
-                      "${widget.vertraege.length}",
-                      style: TextStyle(color: Colors.white),
-                    ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: helmsauerBlau.withAlpha(128),
+              ),
+              padding: EdgeInsets.all(4),
+              margin: EdgeInsets.only(left: 6),
+              height: 35,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: FittedBox(
+                  child: Text(
+                    "${widget.vertraege.length}",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-              )
-            ],
-          ),
-        ),
-        if (widget.vertraege.length >= 5)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(Icons.search),
               ),
-              Expanded(
-                child: TextFormField(
-                  initialValue: filter,
-                  onChanged: (value) => setState(() {
-                    filter = value;
-                  }),
-                  decoration: InputDecoration(hintText: "Verträge durchsuchen"),
-                ),
-              )
-            ],
-          ),
+            )
+          ],
+        ),
         ...widget.vertraege
             .where((v) =>
                 matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))

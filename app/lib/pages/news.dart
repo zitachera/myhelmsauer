@@ -55,7 +55,7 @@ class _NewsPageState extends State<NewsPage> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8),
                 child: Image.asset(
                   "images/siegel/1.png",
                   fit: BoxFit.fitWidth,
@@ -65,9 +65,29 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8),
                 child: Image.asset(
                   "images/siegel/2.png",
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  "images/siegel/3.png",
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  "images/siegel/4.png",
                   fit: BoxFit.fitWidth,
                 ),
               ),
@@ -104,7 +124,7 @@ class _NewsPageState extends State<NewsPage> {
             "images/menu/schaden.svg",
             color: helmsauerBlau,
           ),
-          "Für den Bereich KFZ können Sie schnell und unkompliziert " +
+          "Für einige Sparten können Sie schnell und unkompliziert " +
               "eine Schadenmeldung vornehmen. " +
               "Weitere Sparten werden zeitnah hinzugefügt.",
         ),

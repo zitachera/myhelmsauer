@@ -16,13 +16,6 @@ class ContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(bottom: 14),
-          child: Text(
-            "Kontakt",
-            textScaleFactor: 2,
-          ),
-        ),
         _Button(
           caption: "Telefon",
           icon: SvgPicture.asset(

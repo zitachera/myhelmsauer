@@ -5,7 +5,6 @@ import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
 import 'package:customer_portal_app/pages/remind.dart';
-import 'package:customer_portal_app/pages/restricted.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +23,9 @@ class _LoginPageState extends State<LoginPage> {
 
   _LoginForm get _form {
     return _LoginForm(
-      login: (user, password, gruppe, restricted) => setState(() {
+      login: (user, password, gruppe) => setState(() {
         loader = () async {
           final portal = Portal();
-          if (restricted) portal.kfzMode = true;
           await portal.login(user, password, gruppe);
           return portal;
         }();
@@ -40,53 +38,77 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return HsNestedScrollScaffold(
-      title: "Helmsauer",
-      key: loaderKey,
-      body: FutureBuilder<Portal>(
-        future: loader,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            var msg = snapshot.error.toString();
-            if (snapshot.error is SocketException) {
-              msg = "Keine Verbindung zum Server!";
-            }
-            return Column(
-              children: [
-                SizedBox(height: 5.0),
-                Text(
-                  msg,
-                  style: TextStyle(color: helmsauerRot),
-                ),
-                _form,
-              ],
-            );
+    final body = FutureBuilder<Portal>(
+      future: loader,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          var msg = snapshot.error.toString();
+          if (snapshot.error is SocketException) {
+            msg = "Keine Verbindung zum Server!";
           }
-          if (!snapshot.hasData) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 100),
-              child: Center(child: CircularProgressIndicator()),
-            );
-          }
-
-          final portal = snapshot.data!;
-
-          if (portal.loggedIn) {
-            WidgetsBinding.instance!.addPostFrameCallback(
-              (_) => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => portal.kfzMode
-                      ? RestrictedPage(portal)
-                      : HomePage(portal),
-                ),
+          return Column(
+            children: [
+              SizedBox(height: 5.0),
+              Text(
+                msg,
+                style: TextStyle(color: helmsauerRot),
               ),
-            );
-            return Center(child: CircularProgressIndicator());
-          }
+              Expanded(child: _form),
+            ],
+          );
+        }
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-          return _form;
-        },
+        final portal = snapshot.data!;
+
+        if (portal.loggedIn) {
+          WidgetsBinding.instance!.addPostFrameCallback(
+            (_) => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => HomePage(portal),
+              ),
+            ),
+          );
+          return Center(child: CircularProgressIndicator());
+        }
+
+        return _form;
+      },
+    );
+
+    return Scaffold(
+      key: loaderKey,
+      appBar: AppBar(
+        toolbarHeight: 110,
+        title: Column(
+          children: [
+            Text(
+              "Willkommen bei",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w300,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              "myHELMSAUER",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w500,
+                fontSize: 36,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+        backgroundColor: helmsauerBlau,
+        bottom: appBarBottom,
       ),
+      body: body,
     );
   }
 }
@@ -102,8 +124,7 @@ class _LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState(login, lastUserName);
 }
 
-typedef _LoginFunc = void Function(
-    String user, String password, String gruppe, bool restricted);
+typedef _LoginFunc = void Function(String user, String password, String gruppe);
 
 class _LoginFormState extends State<_LoginForm> {
   TextStyle style = TextStyle(
@@ -178,7 +199,7 @@ class _LoginFormState extends State<_LoginForm> {
       color: helmsauerBlau,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => login(user, password, gruppe, _restricted),
+      onPressed: () => login(user, password, gruppe),
       child: Text(
         "Login",
         textAlign: TextAlign.center,
@@ -197,7 +218,7 @@ class _LoginFormState extends State<_LoginForm> {
       elevation: 2.0,
       minWidth: MediaQuery.of(context).size.width,
       padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => login("maxmustermann", "ad45XV78?", "hk", false),
+      onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
       child: Text(
         "Demo",
         textAlign: TextAlign.center,
@@ -208,17 +229,6 @@ class _LoginFormState extends State<_LoginForm> {
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
-    );
-
-    final restrictedCheck = Row(
-      children: [
-        Checkbox(
-          value: _restricted,
-          onChanged: (v) => setState(() => _restricted = v ?? false),
-        ),
-        Text("KFZ Flotten Anmeldung"),
-      ],
-      mainAxisAlignment: MainAxisAlignment.center,
     );
 
     final remind = MaterialButton(
@@ -234,40 +244,38 @@ class _LoginFormState extends State<_LoginForm> {
       },
     );
 
-    return Padding(
-      padding: const EdgeInsets.all(36.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(height: 30.0),
-          gruppeField,
-          SizedBox(height: 25.0),
-          userField,
-          SizedBox(height: 25.0),
-          passwordField,
-          SizedBox(height: 35.0),
-          Row(
-            children: [
-              Expanded(
-                child: demoButton,
-                flex: 2,
-              ),
-              Expanded(
-                child: loginButton,
-                flex: 3,
-              ),
-            ],
-          ),
-          SizedBox(height: 35.0),
-          restrictedCheck,
-          SizedBox(height: 15.0),
-          remind,
-          SizedBox(height: 15.0),
-        ],
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 36.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(height: 30.0),
+            gruppeField,
+            SizedBox(height: 25.0),
+            userField,
+            SizedBox(height: 25.0),
+            passwordField,
+            SizedBox(height: 35.0),
+            Row(
+              children: [
+                Expanded(
+                  child: demoButton,
+                  flex: 2,
+                ),
+                Expanded(
+                  child: loginButton,
+                  flex: 3,
+                ),
+              ],
+            ),
+            SizedBox(height: 35.0),
+            remind,
+            SizedBox(height: 50.0),
+          ],
+        ),
       ),
     );
   }
-
-  bool _restricted = false;
 }
