@@ -1,20 +1,27 @@
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class NewsPage extends StatefulWidget {
-  NewsPage({Key? key}) : super(key: key);
+  NewsPage(
+      {Key? key, required this.bottomNavigationBar, required this.onRefresh})
+      : super(key: key);
 
   @override
   _NewsPageState createState() => _NewsPageState();
+
+  final Widget bottomNavigationBar;
+
+  final Future<void> Function() onRefresh;
 }
 
 class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
@@ -156,6 +163,51 @@ class _NewsPageState extends State<NewsPage> {
               "an uns. Sie erreichen uns im Reiter Kontakt.",
         ),
       ],
+    );
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 110,
+        title: Column(
+          children: [
+            Text(
+              "Willkommen bei",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w300,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              "myHELMSAUER",
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'FuturaRound',
+                fontWeight: FontWeight.w500,
+                fontSize: 36,
+              ),
+            ),
+          ],
+        ),
+        centerTitle: true,
+        backgroundColor: helmsauerBlau,
+        bottom: appBarBottom,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: widget.onRefresh,
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.all(10),
+                child: content,
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 

@@ -1,5 +1,4 @@
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/contact.dart';
@@ -26,45 +25,6 @@ class _HomePageState extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(() => _selectedIndex = index);
-  }
-
-  String? get _title {
-    switch (_selectedIndex) {
-      case 0:
-        return null;
-      case 1:
-        return "Vertragsübersicht";
-      case 2:
-        return "Schadenmeldung";
-      case 3:
-        return "Kontakt";
-    }
-    throw ("unknown tab index");
-  }
-
-  Widget get _content {
-    switch (_selectedIndex) {
-      case 0:
-        return NewsPage(
-          key: UniqueKey(),
-        );
-      case 1:
-        return VertraegePage(
-          portal,
-          portal.vertraege,
-          key: UniqueKey(),
-        );
-      case 2:
-        return MeldenVertragwahlPage(
-          portal,
-          key: UniqueKey(),
-        );
-      case 3:
-        return ContactPage(
-          key: UniqueKey(),
-        );
-    }
-    throw ("unknown tab index");
   }
 
   Future _reload() async {
@@ -103,58 +63,35 @@ class _HomePageState extends State<HomePage> {
       unselectedItemColor: Colors.grey,
       onTap: _onItemTapped,
     );
-    final title = _title;
-    if (title != null)
-      return HsSingleChildScrollScaffold(
-        title: title,
-        body: _content,
-        onRefresh: _reload,
-        bottomNavigationBar: bottomNavigationBar,
-      );
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 110,
-        title: Column(
-          children: [
-            Text(
-              "Willkommen bei",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'FuturaRound',
-                fontWeight: FontWeight.w300,
-                fontSize: 24,
-              ),
-            ),
-            Text(
-              "myHELMSAUER",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'FuturaRound',
-                fontWeight: FontWeight.w500,
-                fontSize: 36,
-              ),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        backgroundColor: helmsauerBlau,
-        bottom: appBarBottom,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: _reload,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.all(10),
-                child: _content,
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: bottomNavigationBar,
-    );
+    switch (_selectedIndex) {
+      case 0:
+        return NewsPage(
+          key: UniqueKey(),
+          bottomNavigationBar: bottomNavigationBar,
+          onRefresh: _reload,
+        );
+      case 1:
+        return VertraegePage(
+          portal,
+          portal.vertraege,
+          key: UniqueKey(),
+          bottomNavigationBar: bottomNavigationBar,
+          onRefresh: _reload,
+        );
+      case 2:
+        return MeldenVertragwahlPage(
+          portal,
+          key: UniqueKey(),
+          bottomNavigationBar: bottomNavigationBar,
+          onRefresh: _reload,
+        );
+      case 3:
+        return ContactPage(
+          key: UniqueKey(),
+          bottomNavigationBar: bottomNavigationBar,
+          onRefresh: _reload,
+        );
+    }
+    throw ("unknown tab index");
   }
 }

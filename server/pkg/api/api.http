@@ -33,6 +33,17 @@ content-type: application/json
 authorization: 613fa513-32a1-4671-8d91-59e6779912d4
 client-version: 1.6.0
 
+### fremdverträge testserver
+
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/fremdverträge/ HTTP/1.1
+content-type: application/json
+authorization: 613fa513-32a1-4671-8d91-59e6779912d4
+client-version: 1.6.0
+
+{
+    "files":{}
+}
+
 ### pw request testserver
 POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/remind HTTP/1.1
 content-type: application/json
