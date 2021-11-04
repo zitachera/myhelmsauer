@@ -15,6 +15,12 @@ type Vertrag struct {
 	Gesellschaft       string `xml:"cgesname"`
 	Ablauf             string `xml:"ver_ablauf"`
 
+	Adresse
+
+	Dokumente []Dokument
+}
+
+type Adresse struct {
 	AdresseID    string
 	KundeAnrede  string
 	KundeTitel   string
@@ -26,8 +32,6 @@ type Vertrag struct {
 	KundePlz     string
 	KundeOrt     string
 	KundeLandkz  string
-
-	Dokumente []Dokument
 }
 
 type vertraegeResponse struct {
@@ -55,26 +59,20 @@ type adresse struct {
 
 // GetVertraege returns the Verträge from ProClient or an error.
 func (c Client) GetVertraege() ([]Vertrag, error) {
-	if c.User == "Mocked" {
-		if c.Password != "MockMe90403" {
-			return nil, errors.New("invalid password")
-		}
-		return nil, nil
-	}
 	vertraege := make([]Vertrag, 0, 4)
 
-	var adressen adresseResponse
-	if err := c.request("Adressen", &adressen); err != nil {
+	adressen, err := c.GetAdressen()
+	if err != nil {
 		return nil, err
 	}
-	for _, adresse := range adressen.Adressen {
+	for _, adresse := range adressen {
 		var response vertraegeResponse
-		if err := c.requestByID("Vertraege", "AdressID", adresse.ID, &response); err != nil {
+		if err := c.requestByID("Vertraege", "AdressID", adresse.AdresseID, &response); err != nil {
 			return nil, err
 		}
 		for i := range response.Vertraege {
-			refineVertragData(&response.Vertraege[i], adresse)
-			doks, err := c.getDokumente(adresse.ID, response.Vertraege[i].ID)
+			response.Vertraege[i].Adresse = adresse
+			doks, err := c.getDokumente(adresse.AdresseID, response.Vertraege[i].ID)
 			if err != nil {
 				return nil, err
 			}
@@ -86,38 +84,50 @@ func (c Client) GetVertraege() ([]Vertrag, error) {
 	return vertraege, nil
 }
 
+// GetAdressen returns the Adressen from ProClient or an error.
+func (c Client) GetAdressen() ([]Adresse, error) {
+	adressen := make([]Adresse, 0, 4)
+	var response adresseResponse
+	if err := c.request("Adressen", &response); err != nil {
+		return nil, err
+	}
+	for _, a := range response.Adressen {
+		adressen = append(adressen, Adresse{
+			AdresseID:    a.ID,
+			KundeAnrede:  a.Anrede,
+			KundeTitel:   a.Titel,
+			KundeName:    a.Name,
+			KundeName2:   a.Name2,
+			KundeName3:   a.Name3,
+			KundeStrasse: a.Strasse,
+			KundeHausnr:  a.Hausnr,
+			KundePlz:     a.Plz,
+			KundeOrt:     a.Ort,
+			KundeLandkz:  a.Landkz,
+		})
+	}
+
+	return adressen, nil
+}
+
 // GetVertrag returns a Vertrag with given id from ProClient or an error.
 func (c Client) GetVertrag(id string) (Vertrag, error) {
-	var adressen adresseResponse
-	if err := c.request("Adressen", &adressen); err != nil {
+	adressen, err := c.GetAdressen()
+	if err != nil {
 		return Vertrag{}, err
 	}
-	for _, adresse := range adressen.Adressen {
+	for _, adresse := range adressen {
 		var response vertraegeResponse
-		if err := c.requestByID("Vertraege", "AdressID", adresse.ID, &response); err != nil {
+		if err := c.requestByID("Vertraege", "AdressID", adresse.AdresseID, &response); err != nil {
 			return Vertrag{}, err
 		}
 		for _, vertrag := range response.Vertraege {
 			if vertrag.ID == id {
-				refineVertragData(&vertrag, adresse)
+				vertrag.Adresse = adresse
 				return vertrag, nil
 			}
 		}
 	}
 
 	return Vertrag{}, errors.New("Vertrag " + id + " not found")
-}
-
-func refineVertragData(v *Vertrag, a adresse) {
-	v.AdresseID = a.ID
-	v.KundeAnrede = a.Anrede
-	v.KundeTitel = a.Titel
-	v.KundeName = a.Name
-	v.KundeName2 = a.Name2
-	v.KundeName3 = a.Name3
-	v.KundeStrasse = a.Strasse
-	v.KundeHausnr = a.Hausnr
-	v.KundePlz = a.Plz
-	v.KundeOrt = a.Ort
-	v.KundeLandkz = a.Landkz
 }

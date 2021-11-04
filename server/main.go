@@ -40,6 +40,13 @@ func main() {
 		r.Route("/verträge", func(r chi.Router) {
 			r.Get("/", api.Vertraege)
 		})
+		r.Route("/fremdverträge", func(r chi.Router) {
+			r.Post("/", api.PostForeignVertrag(mailRecipients(
+				"info@helmsauer-gruppe.de",
+				"jan-erik.keller@helmsauer-gruppe.de",
+				"bastian.helmsauer@helmsauer-gruppe.de",
+			)))
+		})
 		r.Route("/adressen", func(r chi.Router) {
 			r.Get(string("/{"+api.AdressID+"}/dokumente/{"+api.DokumentID+"}"), api.Dokument)
 		})
@@ -55,10 +62,7 @@ func main() {
 
 func mailRecipients(recipients ...string) []string {
 	if *testserver {
-		return []string{
-			"jan-erik.keller@helmsauer-gruppe.de",
-			"bastian.helmsauer@helmsauer-gruppe.de",
-		}
+		return []string{"jan-erik.keller@helmsauer-gruppe.de"}
 	}
 	return recipients
 }
