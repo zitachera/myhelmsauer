@@ -18,7 +18,7 @@ func PostForeignVertrag(recipients []string) http.HandlerFunc {
 </p>
 
 <p>
-Der Kunde {{.KundeName}} hat
+Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 </p>
 
 `))

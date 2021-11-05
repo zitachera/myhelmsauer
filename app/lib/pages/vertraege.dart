@@ -1,14 +1,21 @@
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatefulWidget {
-  VertraegePage(this.portal, this.vertraege, {Key? key}) : super(key: key);
+  VertraegePage(this.portal, this.vertraege,
+      {Key? key, this.bottomNavigationBar, this.onRefresh})
+      : super(key: key);
 
   final Portal portal;
   final List<Vertrag> vertraege;
+
+  final Widget? bottomNavigationBar;
+
+  final Future<void> Function()? onRefresh;
 
   @override
   State<VertraegePage> createState() => _VertraegePageState();
@@ -21,7 +28,7 @@ class _VertraegePageState extends State<VertraegePage> {
   Widget build(BuildContext context) {
     final keyword = filter.toLowerCase();
     final matchs = (String s) => s.toLowerCase().contains(keyword);
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         // if (widget.vertraege.length >= 5)
@@ -71,6 +78,12 @@ class _VertraegePageState extends State<VertraegePage> {
               ),
             ),
       ],
+    );
+    return HsSingleChildScrollScaffold(
+      title: "Vertragsübersicht",
+      body: content,
+      onRefresh: widget.onRefresh,
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 

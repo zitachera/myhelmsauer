@@ -1,4 +1,5 @@
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -6,7 +7,13 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 class ContactPage extends StatelessWidget {
   ContactPage({
     Key? key,
+    this.bottomNavigationBar,
+    this.onRefresh,
   }) : super(key: key);
+
+  final Widget? bottomNavigationBar;
+
+  final Future<void> Function()? onRefresh;
 
   static const String _phone = "0911/9292-03";
   static const String _mail = "info@helmsauer-gruppe.de";
@@ -14,7 +21,7 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final content = Column(
       children: <Widget>[
         _Button(
           caption: "Telefon",
@@ -55,6 +62,12 @@ class ContactPage extends StatelessWidget {
           ],
         )
       ],
+    );
+    return HsSingleChildScrollScaffold(
+      title: "Kontakt",
+      body: content,
+      onRefresh: onRefresh,
+      bottomNavigationBar: bottomNavigationBar,
     );
   }
 }

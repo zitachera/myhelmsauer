@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
@@ -5,9 +6,15 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal, {Key? key}) : super(key: key);
+  MeldenVertragwahlPage(this.portal,
+      {Key? key, this.bottomNavigationBar, this.onRefresh})
+      : super(key: key);
 
   final Portal portal;
+
+  final Widget? bottomNavigationBar;
+
+  final Future<void> Function()? onRefresh;
 
   @override
   _MeldenVertragwahlPageState createState() =>
@@ -29,7 +36,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
   Widget build(BuildContext context) {
     final keyword = filter.toLowerCase();
     final matchs = (String s) => s.toLowerCase().contains(keyword);
-    return Column(
+    final content = Column(
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 14),
@@ -70,6 +77,12 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
               ),
             ),
       ],
+    );
+    return HsSingleChildScrollScaffold(
+      title: "Schadenmeldung",
+      body: content,
+      onRefresh: widget.onRefresh,
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 
