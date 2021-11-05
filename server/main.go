@@ -35,7 +35,7 @@ func main() {
 		)))
 
 		r = r.With(
-			auth.CredentialChecker(version.Must(version.NewSemver("1.6.0"))),
+			auth.CredentialChecker(version.Must(version.NewSemver("1.7.2"))),
 		)
 		r.Route("/verträge", func(r chi.Router) {
 			r.Get("/", api.Vertraege)
