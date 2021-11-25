@@ -41,7 +41,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
         Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 14),
           child: Text(
-            "Zu welchen Vertrag möchten Sie einen Schaden melden.",
+            "Zu welchen Vertrag möchten Sie einen Schaden melden?",
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
@@ -87,6 +87,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
   }
 
   Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
+    final bodyTheme = Theme.of(context).textTheme.bodyText1!;
     return Container(
       margin: EdgeInsets.all(3),
       child: MaterialButton(
@@ -111,19 +112,20 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           children: <Widget>[
             Text(
               vertrag.sparte,
-              textScaleFactor: 1.3,
+              textScaleFactor: 1.1,
+              style: bodyTheme,
             ),
             SizedBox(height: 4),
             Text(
               vertrag.gesellschaft,
-              textScaleFactor: 1.1,
+              textScaleFactor: 0.9,
+              style: bodyTheme,
             ),
             SizedBox(height: 4),
             if (vertrag.risiko != "")
               Text(
                 vertrag.risiko,
-                textScaleFactor: 1.2,
-                style: TextStyle(
+                style: bodyTheme.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
