@@ -31,7 +31,6 @@ class _VertraegePageState extends State<VertraegePage> {
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        // if (widget.vertraege.length >= 5)
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -88,6 +87,7 @@ class _VertraegePageState extends State<VertraegePage> {
   }
 
   Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
+    final bodyTheme = Theme.of(context).textTheme.bodyText1!;
     return Container(
       margin: const EdgeInsets.all(3),
       child: MaterialButton(
@@ -110,19 +110,20 @@ class _VertraegePageState extends State<VertraegePage> {
           children: <Widget>[
             Text(
               vertrag.sparte,
-              textScaleFactor: 1.3,
+              textScaleFactor: 1.1,
+              style: bodyTheme,
             ),
             SizedBox(height: 4),
             Text(
               vertrag.gesellschaft,
-              textScaleFactor: 1.1,
+              textScaleFactor: 0.9,
+              style: bodyTheme,
             ),
             SizedBox(height: 4),
             if (vertrag.risiko != "")
               Text(
                 vertrag.risiko,
-                textScaleFactor: 1.2,
-                style: TextStyle(
+                style: bodyTheme.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -34,6 +34,12 @@ class MyApp extends StatelessWidget {
             color: dunklesBlau,
           ),
         ),
+        appBarTheme: AppBarTheme(
+          color: helmsauerBlau,
+          shape: UnderlineInputBorder(
+            borderSide: BorderSide(color: helmsauerRot, width: 2.5),
+          ),
+        ),
       ),
       home: LoginPage(),
       debugShowCheckedModeBanner: false,

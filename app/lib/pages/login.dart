@@ -105,8 +105,6 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
         centerTitle: true,
-        backgroundColor: helmsauerBlau,
-        bottom: appBarBottom,
       ),
       body: body,
     );

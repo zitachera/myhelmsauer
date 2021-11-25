@@ -190,8 +190,6 @@ class _NewsPageState extends State<NewsPage> {
           ],
         ),
         centerTitle: true,
-        backgroundColor: helmsauerBlau,
-        bottom: appBarBottom,
       ),
       body: Column(
         children: [

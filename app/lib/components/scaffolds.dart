@@ -1,4 +1,3 @@
-import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
@@ -43,8 +42,6 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
           title,
         ),
         actions: actions,
-        bottom: appBarBottom,
-        backgroundColor: helmsauerBlau,
       ),
       body: scrollView,
       floatingActionButton: floatingActionButton,
@@ -52,11 +49,3 @@ class HsSingleChildScrollScaffold extends StatelessWidget {
     );
   }
 }
-
-PreferredSize appBarBottom = const PreferredSize(
-    child: const Divider(
-      color: helmsauerRot,
-      thickness: 2.5,
-      height: 2.5,
-    ),
-    preferredSize: const Size.fromHeight(2.5));

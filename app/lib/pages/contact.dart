@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/components/stretchScroll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -21,52 +22,58 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final content = Column(
+    final content = StretchScroll(
+      onRefresh: onRefresh,
       children: <Widget>[
-        _Button(
-          caption: "Telefon",
-          icon: SvgPicture.asset(
-            "images/menu/telefon.svg",
-            color: helmsauerBlau,
+        Column(children: <Widget>[
+          _Button(
+            caption: "Telefon",
+            icon: SvgPicture.asset(
+              "images/menu/telefon.svg",
+              color: helmsauerBlau,
+            ),
+            label: _phone,
+            url: 'tel://$_phone',
           ),
-          label: _phone,
-          url: 'tel://$_phone',
-        ),
-        _Button(
-          caption: "Mail",
-          icon: SvgPicture.asset(
-            "images/menu/email.svg",
-            color: helmsauerBlau,
+          _Button(
+            caption: "Mail",
+            icon: SvgPicture.asset(
+              "images/menu/email.svg",
+              color: helmsauerBlau,
+            ),
+            label: _mail,
+            url: 'mailto://$_mail',
           ),
-          label: _mail,
-          url: 'mailto://$_mail',
-        ),
-        _Button(
-          caption: "Website",
-          icon: SvgPicture.asset(
-            "images/menu/webadresse.svg",
-            color: helmsauerBlau,
+          _Button(
+            caption: "Website",
+            icon: SvgPicture.asset(
+              "images/menu/webadresse.svg",
+              color: helmsauerBlau,
+            ),
+            label: _web,
+            url: 'http://$_web',
           ),
-          label: _web,
-          url: 'http://$_web',
-        ),
-        SizedBox(height: 150),
-        Row(
-          children: <Widget>[
-            Expanded(
-                child: _Link("Datenschutz",
-                    "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/")),
-            Expanded(
-                child: _Link("Impressum",
-                    "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
-          ],
+        ]),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                  child: _Link("Datenschutz",
+                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/")),
+              Expanded(
+                  child: _Link("Impressum",
+                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
+            ],
+          ),
         )
       ],
     );
-    return HsSingleChildScrollScaffold(
-      title: "Kontakt",
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Kontakt"),
+      ),
       body: content,
-      onRefresh: onRefresh,
       bottomNavigationBar: bottomNavigationBar,
     );
   }
