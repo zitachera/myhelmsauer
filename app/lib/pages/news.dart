@@ -4,6 +4,7 @@ import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
 
 class NewsPage extends StatefulWidget {
   NewsPage(
@@ -101,6 +102,50 @@ class _NewsPageState extends State<NewsPage> {
               flex: 1,
             ),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.all(4),
+          child: MaterialButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            padding: EdgeInsets.zero,
+            color: Color.fromARGB(255, 241, 244, 247),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Scaffold(
+                  appBar: new AppBar(
+                    title: Text("Cyberkriminalität"),
+                  ),
+                  backgroundColor: Colors.grey,
+                  body: PdfViewer.openAsset("images/cyber.pdf"),
+                ),
+              ),
+            ),
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    "images/cyber.jpg",
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Cyberkriminalität – so schützen Sie Ihr Unternehmen!",
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
         _faqTop(
           SvgPicture.asset(
