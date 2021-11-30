@@ -239,7 +239,7 @@ class _AddButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var accentColor = Theme.of(context).accentColor;
+    var accentColor = Theme.of(context).colorScheme.secondary;
     return _ButtonBox(
       borderColor: accentColor,
       onPressed: () {
@@ -344,7 +344,7 @@ class _AddImageAction extends StatelessWidget {
         onPressed: () async {
           Navigator.of(context).pop();
 
-          var image = await ImagePicker().getImage(
+          var image = await ImagePicker().pickImage(
             source: source,
             imageQuality: 90,
           );

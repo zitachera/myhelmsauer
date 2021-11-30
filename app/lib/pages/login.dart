@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
 import 'package:customer_portal_app/pages/remind.dart';
