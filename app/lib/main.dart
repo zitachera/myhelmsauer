@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         primaryColor: helmsauerBlau,
         secondaryHeaderColor: helmsauerRot,
         bottomAppBarColor: helmsauerBlau,
+        primaryColorDark: dunklesBlau,
         fontFamily: "OpenSans",
         textTheme: TextTheme(
           headline1: TextStyle(
@@ -33,6 +34,17 @@ class MyApp extends StatelessWidget {
             fontSize: 18,
             color: dunklesBlau,
           ),
+          button: TextStyle(
+            fontSize: 18,
+            color: dunklesBlau,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        buttonTheme: ButtonThemeData(
+          padding: EdgeInsets.all(5),
+          textTheme: ButtonTextTheme.accent,
+          colorScheme:
+              Theme.of(context).colorScheme.copyWith(secondary: dunklesBlau),
         ),
         appBarTheme: AppBarTheme(
           color: helmsauerBlau,

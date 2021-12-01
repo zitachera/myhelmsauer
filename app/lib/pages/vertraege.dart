@@ -87,7 +87,6 @@ class _VertraegePageState extends State<VertraegePage> {
   }
 
   Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
-    final bodyTheme = Theme.of(context).textTheme.bodyText1!;
     return Container(
       margin: const EdgeInsets.all(3),
       child: MaterialButton(
@@ -111,21 +110,19 @@ class _VertraegePageState extends State<VertraegePage> {
             Text(
               vertrag.sparte,
               textScaleFactor: 1.1,
-              style: bodyTheme,
+              style: TextStyle(fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 4),
             Text(
               vertrag.gesellschaft,
               textScaleFactor: 0.9,
-              style: bodyTheme,
+              style: TextStyle(fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 4),
             if (vertrag.risiko != "")
               Text(
                 vertrag.risiko,
-                style: bodyTheme.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
           ],
         ),
