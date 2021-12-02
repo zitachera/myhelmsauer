@@ -55,6 +55,11 @@ func main() {
 			"jan-erik.keller@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		)))
+		r.Post("/message", api.PostMessage(mailRecipients(
+			"info@helmsauer-gruppe.de",
+			"jan-erik.keller@helmsauer-gruppe.de",
+			"bastian.helmsauer@helmsauer-gruppe.de",
+		)))
 	})
 
 	log.Fatal(http.ListenAndServe(":8080", r))

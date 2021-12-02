@@ -1,6 +1,7 @@
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/components/stretchScroll.dart';
+import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/pages/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
@@ -10,11 +11,14 @@ class ContactPage extends StatelessWidget {
     Key? key,
     this.bottomNavigationBar,
     this.onRefresh,
+    required this.portal,
   }) : super(key: key);
 
   final Widget? bottomNavigationBar;
 
   final Future<void> Function()? onRefresh;
+
+  final Portal portal;
 
   static const String _phone = "0911/9292-03";
   static const String _mail = "info@helmsauer-gruppe.de";
@@ -26,7 +30,7 @@ class ContactPage extends StatelessWidget {
       onRefresh: onRefresh,
       children: <Widget>[
         Column(children: <Widget>[
-          _Button(
+          _Button.url(
             caption: "Telefon",
             icon: SvgPicture.asset(
               "images/menu/telefon.svg",
@@ -35,7 +39,7 @@ class ContactPage extends StatelessWidget {
             label: _phone,
             url: 'tel://$_phone',
           ),
-          _Button(
+          _Button.url(
             caption: "Mail",
             icon: SvgPicture.asset(
               "images/menu/email.svg",
@@ -44,7 +48,7 @@ class ContactPage extends StatelessWidget {
             label: _mail,
             url: 'mailto://$_mail',
           ),
-          _Button(
+          _Button.url(
             caption: "Website",
             icon: SvgPicture.asset(
               "images/menu/webadresse.svg",
@@ -52,6 +56,19 @@ class ContactPage extends StatelessWidget {
             ),
             label: _web,
             url: 'http://$_web',
+          ),
+          _Button(
+            child: Text("Nachricht schreiben"),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MessagePage(portal: portal),
+              ),
+            ),
+            icon: SvgPicture.asset(
+              "images/menu/chat.svg",
+              color: helmsauerBlau,
+            ),
           ),
         ]),
         Padding(
@@ -82,22 +99,41 @@ class ContactPage extends StatelessWidget {
 class _Button extends StatelessWidget {
   const _Button({
     Key? key,
-    required this.caption,
-    required this.url,
-    required this.label,
+    required this.onPressed,
+    required this.child,
     required this.icon,
   }) : super(key: key);
 
-  final String caption;
-  final String url;
-  final String label;
+  final VoidCallback? onPressed;
+  final Widget child;
   final Widget icon;
+
+  _Button.url({
+    Key? key,
+    required String url,
+    required String caption,
+    required String label,
+    required this.icon,
+  })  : onPressed = (() => UrlLauncher.launch(url)),
+        child = Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(caption + ":"),
+            Text(
+              label,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = Theme.of(context).textTheme.bodyText1 ?? TextStyle();
     return MaterialButton(
-      onPressed: () => UrlLauncher.launch(url),
+      onPressed: onPressed,
       padding: EdgeInsets.all(10),
       child: Row(
         children: [
@@ -112,23 +148,7 @@ class _Button extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Text(
-                  caption + ":",
-                  style: textStyle,
-                ),
-                Text(
-                  label,
-                  style: textStyle.copyWith(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          Expanded(child: child),
         ],
       ),
     );
@@ -152,10 +172,9 @@ class _Link extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Text(
         text,
-        textScaleFactor: 1.3,
         style: TextStyle(
           decoration: TextDecoration.underline,
-          color: helmsauerBlau,
+          fontWeight: FontWeight.normal,
         ),
       ),
     );

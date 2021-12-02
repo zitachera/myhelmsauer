@@ -60,16 +60,14 @@ class Portal {
     loggedIn = true;
   }
 
-  static Future<http.Response> publicPost(
-      String ressource, Object content) async {
-    return await http.post(
-      _uri(ressource),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(content),
-    );
-  }
+  static Future<http.Response> publicPost(String ressource, Object content) =>
+      http.post(
+        _uri(ressource),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(content),
+      );
 
   Future<void> _readToken() async {
     _token = await (_storage.read(key: _tokenKey));
@@ -107,11 +105,7 @@ class Portal {
   }
 
   Future<void> sendMeldung(Vorgang meldung) async {
-    final response = await http.post(
-      _uri('vorgänge'),
-      headers: {HttpHeaders.authorizationHeader: _token!},
-      body: jsonEncode(meldung.toJson()),
-    );
+    final response = await postRessource('vorgänge', meldung.toJson());
     if (response.statusCode != 200) {
       throw ('Meldung senden fehlgeschlagen.');
     }
@@ -124,5 +118,15 @@ class Portal {
   Future<http.Response> getRessource(String endpoint) => http.get(
         _uri(endpoint),
         headers: {HttpHeaders.authorizationHeader: _token!},
+      );
+
+  Future<http.Response> postRessource(String endpoint, Object content) =>
+      http.post(
+        _uri(endpoint),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: _token!,
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(content),
       );
 }

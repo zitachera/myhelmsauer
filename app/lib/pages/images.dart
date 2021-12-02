@@ -43,7 +43,7 @@ class PhotoCollectionField extends StatelessWidget {
     required this.labelAdd,
     required this.onDelete,
     required this.onAdd,
-    required this.infoAdd,
+    this.infoAdd,
   }) : super(key: key);
 
   final List<Uint8List> images;

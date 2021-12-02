@@ -88,6 +88,7 @@ class _HomePageState extends State<HomePage> {
       case 3:
         return ContactPage(
           key: UniqueKey(),
+          portal: portal,
           bottomNavigationBar: bottomNavigationBar,
           onRefresh: _reload,
         );
