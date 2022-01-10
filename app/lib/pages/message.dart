@@ -44,10 +44,12 @@ class _MessageState extends State<MessagePage> {
               initialValue: text,
               minLines: 3,
               decoration: InputDecoration(
-                  hintText: "Bitte geben Sie Ihre Nachricht ein."),
+                hintText: "Bitte geben Sie Ihre Nachricht ein.",
+              ),
               onChanged: (s) => text = s,
               keyboardType: TextInputType.multiline,
               maxLines: null,
+              textAlignVertical: TextAlignVertical.bottom,
               validator: (value) => text.length > 5
                   ? null
                   : "Bitte geben Sie eine längere Nachricht ein.",
