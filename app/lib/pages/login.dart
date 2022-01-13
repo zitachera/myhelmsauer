@@ -4,7 +4,6 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/home.dart';
 import 'package:customer_portal_app/pages/remind.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

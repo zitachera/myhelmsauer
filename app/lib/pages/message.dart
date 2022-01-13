@@ -4,7 +4,6 @@ import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class MessagePage extends StatefulWidget {
   MessagePage({Key? key, required this.portal}) : super(key: key);
