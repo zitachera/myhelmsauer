@@ -2,9 +2,11 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
 	"sort"
+	"strings"
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
@@ -37,7 +39,8 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 	}
 
 	type requestBody struct {
-		Files map[string][][]uint8 `json:"files"`
+		Images [][]uint8          `json:"images"`
+		Files  map[string][]uint8 `json:"files"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		c := auth.GetClientFromRequest(r)
@@ -72,10 +75,19 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 
 		sort.Strings(fileNames)
 		for _, name := range fileNames {
-			for _, data := range m.Files[name] {
-				mime := http.DetectContentType(data)
-				email.AddAttachmentData(data, name, mime)
+			data := m.Files[name]
+			mime := http.DetectContentType(data)
+			email.AddAttachmentData(data, name, mime)
+		}
+
+		for i, data := range m.Images {
+			mime := http.DetectContentType(data)
+			ext := "bin"
+			if strings.HasPrefix(mime, "image/") {
+				ext = strings.Split(mime, "/")[1]
 			}
+			name := fmt.Sprintf("%s %d.%s", "bild", i+1, ext)
+			email.AddAttachmentData(data, name, mime)
 		}
 
 		if err := email.Send("Schadenmeldung von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
