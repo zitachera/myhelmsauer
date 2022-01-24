@@ -1,10 +1,13 @@
 import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/contact.dart';
+import 'package:customer_portal_app/pages/file.dart';
 import 'package:customer_portal_app/pages/home.dart';
 import 'package:customer_portal_app/pages/login.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
 import 'package:customer_portal_app/pages/vertraege.dart';
+import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class Pages {
@@ -44,9 +47,12 @@ class Pages {
   Widget vertraege(
           Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
       VertraegePage(
-        portal,
         portal.vertraege,
         key: UniqueKey(),
+        viewVertrag: (context, vertrag) => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => this.vertrag(vertrag)),
+        ),
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
       );
@@ -67,5 +73,18 @@ class Pages {
         portal: portal,
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
+      );
+
+  Widget vertrag(Vertrag vertrag) => VertragPage(
+        viewDocument: (context, dokument) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  FilePage(portal, dokument.titel, dokument.endpoint),
+            ),
+          );
+        },
+        vertrag: vertrag,
       );
 }

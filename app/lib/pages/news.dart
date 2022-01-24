@@ -31,7 +31,7 @@ class _NewsPageState extends State<NewsPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
-              onPressed: () => widget.logout,
+              onPressed: () => widget.logout(context),
               child: Row(
                 children: [
                   Padding(

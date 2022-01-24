@@ -1,16 +1,17 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
-import 'package:customer_portal_app/pages/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatefulWidget {
-  VertraegePage(this.portal, this.vertraege,
-      {Key? key, this.bottomNavigationBar, this.onRefresh})
+  VertraegePage(this.vertraege,
+      {Key? key,
+      required this.viewVertrag,
+      this.bottomNavigationBar,
+      this.onRefresh})
       : super(key: key);
 
-  final Portal portal;
+  final void Function(BuildContext, Vertrag) viewVertrag;
   final List<Vertrag> vertraege;
 
   final Widget? bottomNavigationBar;
@@ -96,14 +97,7 @@ class _VertraegePageState extends State<VertraegePage> {
         padding: const EdgeInsets.all(5),
         elevation: 0,
         color: const Color.fromRGBO(245, 245, 245, 1),
-        onPressed: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    VertragPage(widget.portal, vertrag: vertrag)),
-          ),
-        },
+        onPressed: () => widget.viewVertrag(context, vertrag),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

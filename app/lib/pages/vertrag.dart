@@ -1,20 +1,18 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
-import 'package:customer_portal_app/pages/file.dart';
 import 'package:flutter/material.dart';
 
 class VertragPage extends StatelessWidget {
-  VertragPage(
-    this.portal, {
+  VertragPage({
     Key? key,
+    required this.viewDocument,
     required this.vertrag,
   }) : super(key: key);
 
   final Vertrag vertrag;
 
-  final Portal portal;
+  final void Function(BuildContext, VertragDokument) viewDocument;
 
   @override
   Widget build(BuildContext context) {
@@ -65,15 +63,7 @@ class VertragPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          FilePage(portal, dokument.titel, dokument.endpoint),
-                    ),
-                  );
-                },
+                onPressed: () => viewDocument(context, dokument),
               ),
           ],
         ),
