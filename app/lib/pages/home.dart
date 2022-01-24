@@ -1,26 +1,33 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/svgicon.dart';
-import 'package:customer_portal_app/model/portal.dart';
-import 'package:customer_portal_app/pages/contact.dart';
-import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
-import 'package:customer_portal_app/pages/news.dart';
-import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage(this.portal, {Key? key}) : super(key: key);
-
-  final Portal portal;
+  HomePage(
+      {Key? key,
+      required this.reloadData,
+      required this.newsPage,
+      required this.vertraegePage,
+      required this.meldenPage,
+      required this.kontaktPage})
+      : super(key: key);
+  final Future<void> Function() reloadData;
+  final Widget Function(
+      Future<void> Function() onRefresh, Widget bottomNavigationBar) newsPage;
+  final Widget Function(
+          Future<void> Function() onRefresh, Widget bottomNavigationBar)
+      vertraegePage;
+  final Widget Function(
+      Future<void> Function() onRefresh, Widget bottomNavigationBar) meldenPage;
+  final Widget Function(
+          Future<void> Function() onRefresh, Widget bottomNavigationBar)
+      kontaktPage;
 
   @override
-  _HomePageState createState() => _HomePageState(this.portal);
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  _HomePageState(this.portal);
-
-  final Portal portal;
-
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -28,7 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future _reload() async {
-    await portal.reload();
+    await widget.reloadData();
     setState(() {});
   }
 
@@ -65,33 +72,13 @@ class _HomePageState extends State<HomePage> {
     );
     switch (_selectedIndex) {
       case 0:
-        return NewsPage(
-          key: UniqueKey(),
-          bottomNavigationBar: bottomNavigationBar,
-          onRefresh: _reload,
-        );
+        return widget.newsPage(_reload, bottomNavigationBar);
       case 1:
-        return VertraegePage(
-          portal,
-          portal.vertraege,
-          key: UniqueKey(),
-          bottomNavigationBar: bottomNavigationBar,
-          onRefresh: _reload,
-        );
+        return widget.vertraegePage(_reload, bottomNavigationBar);
       case 2:
-        return MeldenVertragwahlPage(
-          portal,
-          key: UniqueKey(),
-          bottomNavigationBar: bottomNavigationBar,
-          onRefresh: _reload,
-        );
+        return widget.meldenPage(_reload, bottomNavigationBar);
       case 3:
-        return ContactPage(
-          key: UniqueKey(),
-          portal: portal,
-          bottomNavigationBar: bottomNavigationBar,
-          onRefresh: _reload,
-        );
+        return widget.kontaktPage(_reload, bottomNavigationBar);
     }
     throw ("unknown tab index");
   }

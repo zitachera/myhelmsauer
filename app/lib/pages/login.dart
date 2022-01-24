@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/portal.dart';
-import 'package:customer_portal_app/pages/home.dart';
+import 'package:customer_portal_app/pages/pages.dart';
 import 'package:customer_portal_app/pages/remind.dart';
 import 'package:flutter/material.dart';
 
@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
           WidgetsBinding.instance!.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => HomePage(portal),
+                builder: (context) => Pages(portal).home,
               ),
             ),
           );
