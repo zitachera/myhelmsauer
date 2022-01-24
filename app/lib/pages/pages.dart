@@ -1,6 +1,7 @@
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/home.dart';
+import 'package:customer_portal_app/pages/login.dart';
 import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
 import 'package:customer_portal_app/pages/vertraege.dart';
@@ -28,6 +29,16 @@ class Pages {
         key: UniqueKey(),
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
+        logout: (context) async {
+          await Portal.logout();
+          WidgetsBinding.instance!.addPostFrameCallback(
+            (_) => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => LoginPage(),
+              ),
+            ),
+          );
+        },
       );
 
   Widget vertraege(

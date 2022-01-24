@@ -1,14 +1,15 @@
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/model/portal.dart';
-import 'package:customer_portal_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 class NewsPage extends StatefulWidget {
-  NewsPage(
-      {Key? key, required this.bottomNavigationBar, required this.onRefresh})
-      : super(key: key);
+  NewsPage({
+    Key? key,
+    required this.bottomNavigationBar,
+    required this.onRefresh,
+    required this.logout,
+  }) : super(key: key);
 
   @override
   _NewsPageState createState() => _NewsPageState();
@@ -16,6 +17,8 @@ class NewsPage extends StatefulWidget {
   final Widget bottomNavigationBar;
 
   final Future<void> Function() onRefresh;
+
+  final void Function(BuildContext) logout;
 }
 
 class _NewsPageState extends State<NewsPage> {
@@ -28,16 +31,7 @@ class _NewsPageState extends State<NewsPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
-              onPressed: () async {
-                await Portal.logout();
-                WidgetsBinding.instance!.addPostFrameCallback(
-                  (_) => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ),
-                  ),
-                );
-              },
+              onPressed: () => widget.logout,
               child: Row(
                 children: [
                   Padding(
