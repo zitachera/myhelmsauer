@@ -76,10 +76,7 @@ class _VertraegePageState extends State<VertraegePage> {
             .where((v) =>
                 matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
             .map(
-              (vertrag) => _buildVertrag(
-                context,
-                vertrag,
-              ),
+              (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),
       ],
     );
@@ -95,8 +92,20 @@ class _VertraegePageState extends State<VertraegePage> {
       bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
+}
 
-  Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
+class _Vertrag extends StatelessWidget {
+  const _Vertrag({
+    Key? key,
+    required this.vertraegePage,
+    required this.vertrag,
+  }) : super(key: key);
+
+  final VertraegePage vertraegePage;
+  final Vertrag vertrag;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(3),
       child: MaterialButton(
@@ -106,7 +115,7 @@ class _VertraegePageState extends State<VertraegePage> {
         padding: const EdgeInsets.all(5),
         elevation: 0,
         color: const Color.fromRGBO(245, 245, 245, 1),
-        onPressed: () => widget.viewVertrag(context, vertrag),
+        onPressed: () => vertraegePage.viewVertrag(context, vertrag),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
