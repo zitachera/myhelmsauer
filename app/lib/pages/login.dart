@@ -184,10 +184,7 @@ class _LoginFormState extends State<_LoginForm> {
 
     final loginButton = MaterialButton(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
       elevation: 5.0,
       color: helmsauerBlau,
@@ -201,29 +198,29 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
 
-    final demoButton = MaterialButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          topLeft: Radius.circular(30),
-        ),
-      ),
-      color: Color.fromARGB(255, 241, 244, 247),
-      elevation: 2.0,
-      minWidth: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-      onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
-      child: Text(
-        "Demo",
-        textAlign: TextAlign.center,
-        style: style.copyWith(
-          color: dunklesBlau,
-          fontSize: 16,
-        ),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-      ),
-    );
+    // final demoButton = MaterialButton(
+    //   shape: RoundedRectangleBorder(
+    //     borderRadius: BorderRadius.only(
+    //       bottomLeft: Radius.circular(30),
+    //       topLeft: Radius.circular(30),
+    //     ),
+    //   ),
+    //   color: Color.fromARGB(255, 241, 244, 247),
+    //   elevation: 2.0,
+    //   minWidth: MediaQuery.of(context).size.width,
+    //   padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+    //   onPressed: () => login("maxmustermann", "ad45XV78?", "hk"),
+    //   child: Text(
+    //     "Demo",
+    //     textAlign: TextAlign.center,
+    //     style: style.copyWith(
+    //       color: dunklesBlau,
+    //       fontSize: 16,
+    //     ),
+    //     overflow: TextOverflow.ellipsis,
+    //     maxLines: 1,
+    //   ),
+    // );
 
     final remind = MaterialButton(
       child: Text(
@@ -252,18 +249,19 @@ class _LoginFormState extends State<_LoginForm> {
             SizedBox(height: 25.0),
             passwordField,
             SizedBox(height: 35.0),
-            Row(
-              children: [
-                Expanded(
-                  child: demoButton,
-                  flex: 2,
-                ),
-                Expanded(
-                  child: loginButton,
-                  flex: 3,
-                ),
-              ],
-            ),
+            loginButton,
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: demoButton,
+            //       flex: 2,
+            //     ),
+            //     Expanded(
+            //       child: loginButton,
+            //       flex: 3,
+            //     ),
+            //   ],
+            // ),
             SizedBox(height: 35.0),
             remind,
             SizedBox(height: 50.0),
