@@ -20,7 +20,9 @@ func PostForeignVertrag(recipients []string) http.HandlerFunc {
 </p>
 
 <p>
-Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
+Der Kunde {{.KundeName}} hat folgenden Fremdvertrag hochgeladen.
+{{- if .Integrieren}} Der Kunde möchte die Vertragsdaten als Fremdvertrag ins System eingeflegt bekommen.{{end}}
+{{- if .VergleichsangebotErstellen}} Der Kunde wünscht Vergleichsangebote.{{end}}
 </p>
 
 `))
@@ -36,11 +38,16 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 		KundePlz     string
 		KundeOrt     string
 		KundeLandkz  string
+
+		Integrieren                bool
+		VergleichsangebotErstellen bool
 	}
 
 	type requestBody struct {
-		Images [][]uint8          `json:"images"`
-		Files  map[string][]uint8 `json:"files"`
+		Aufnahmen                  [][]uint8          `json:"aufnahmen"`
+		Files                      map[string][]uint8 `json:"files"`
+		Integrieren                bool               `json:"integrieren"`
+		VergleichsangebotErstellen bool               `json:"vergleichsangebotErstellen"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		c := auth.GetClientFromRequest(r)
@@ -80,7 +87,7 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 			email.AddAttachmentData(data, name, mime)
 		}
 
-		for i, data := range m.Images {
+		for i, data := range m.Aufnahmen {
 			mime := http.DetectContentType(data)
 			ext := "bin"
 			if strings.HasPrefix(mime, "image/") {
@@ -90,7 +97,7 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 			email.AddAttachmentData(data, name, mime)
 		}
 
-		if err := email.Send("Schadenmeldung von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
+		if err := email.Send("Fremdvertrag von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
 
 			data{
 				KundeAnrede:  adressen[0].KundeAnrede,
@@ -103,6 +110,9 @@ Der Kunde {{.KundeName}} möchte folgenden Fremdvertrag aufnehmen.
 				KundePlz:     adressen[0].KundePlz,
 				KundeOrt:     adressen[0].KundeOrt,
 				KundeLandkz:  adressen[0].KundeLandkz,
+
+				Integrieren:                m.Integrieren,
+				VergleichsangebotErstellen: m.VergleichsangebotErstellen,
 			}); err != nil {
 			handleError(w, err.Error(), http.StatusInternalServerError)
 			return

@@ -85,7 +85,6 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               "Willkommen bei",
               style: TextStyle(
-                color: Colors.white,
                 fontFamily: 'FuturaRound',
                 fontWeight: FontWeight.w300,
                 fontSize: 24,
@@ -94,7 +93,6 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               "myHELMSAUER",
               style: TextStyle(
-                color: Colors.white,
                 fontFamily: 'FuturaRound',
                 fontWeight: FontWeight.w500,
                 fontSize: 36,

@@ -210,7 +210,6 @@ class _NewsPageState extends State<NewsPage> {
             Text(
               "Willkommen bei",
               style: TextStyle(
-                color: Colors.white,
                 fontFamily: 'FuturaRound',
                 fontWeight: FontWeight.w300,
                 fontSize: 24,
@@ -219,7 +218,6 @@ class _NewsPageState extends State<NewsPage> {
             Text(
               "myHELMSAUER",
               style: TextStyle(
-                color: Colors.white,
                 fontFamily: 'FuturaRound',
                 fontWeight: FontWeight.w500,
                 fontSize: 36,

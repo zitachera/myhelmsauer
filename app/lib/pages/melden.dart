@@ -20,23 +20,13 @@ class MeldenPage extends StatefulWidget {
 
   @override
   _MeldenState createState() => _MeldenState(
-        vertrag: vertrag,
-        portal: portal,
         datum: DateTime.now(),
         zeit: TimeOfDay.now(),
       );
 }
 
 class _MeldenState extends State<MeldenPage> {
-  _MeldenState(
-      {required this.vertrag,
-      required this.portal,
-      required this.datum,
-      required this.zeit});
-
-  final Vertrag vertrag;
-
-  final Portal portal;
+  _MeldenState({required this.datum, required this.zeit});
 
   DateTime get zeitpunkt => DateTime(
         datum.year,
@@ -57,7 +47,7 @@ class _MeldenState extends State<MeldenPage> {
 
   Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
-        vertragsID: vertrag.id,
+        vertragsID: widget.vertrag.id,
         ort: ort,
         latitude: gps?.latitude,
         longitude: gps?.longitude,
@@ -69,7 +59,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    if (vertrag.meldeFelder
+    if (widget.vertrag.meldeFelder
         .where((f) => f.kind == MeldeFeldKind.location)
         .isNotEmpty)
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
@@ -82,7 +72,7 @@ class _MeldenState extends State<MeldenPage> {
     List<Widget> cols = [];
     Row? row;
 
-    vertrag.meldeFelder.forEach((f) {
+    widget.vertrag.meldeFelder.forEach((f) {
       if (!small(f)) {
         row = null;
         cols.add(buildField(context, f));
@@ -246,7 +236,7 @@ class _MeldenState extends State<MeldenPage> {
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return _SendDialog(portal, vorgang);
+                    return _SendDialog(widget.portal, vorgang);
                   },
                 );
               },

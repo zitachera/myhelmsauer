@@ -57,7 +57,7 @@ class _VertraegePageState extends State<VertraegePage> {
                 shape: BoxShape.circle,
                 color: helmsauerBlau.withAlpha(128),
               ),
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               margin: EdgeInsets.only(left: 6),
               height: 35,
               child: AspectRatio(

@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/pages/addFremdvertrag.dart';
 import 'package:customer_portal_app/pages/contact.dart';
 import 'package:customer_portal_app/pages/file.dart';
 import 'package:customer_portal_app/pages/home.dart';
@@ -53,8 +54,14 @@ class Pages {
           context,
           MaterialPageRoute(builder: (context) => this.vertrag(vertrag)),
         ),
-        erfasseFremdvertrag: (context) =>
-            null, // TODO navigation implementieren
+        erfasseFremdvertrag: (context) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddFremdvertragPage(portal: portal),
+            ),
+          );
+        },
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
       );
