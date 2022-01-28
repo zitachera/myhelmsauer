@@ -18,54 +18,57 @@ class VertragPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
       title: 'Vertragsinfo',
-      body: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            _InfoLine(
-              caption: "Sparte",
-              value: vertrag.sparte,
-            ),
-            _InfoLine(
-              caption: "VSNR",
-              value: vertrag.vertragsnummer,
-            ),
-            _InfoLine(
-              caption: "Gesellschaft",
-              value: vertrag.gesellschaft,
-            ),
-            _InfoLine(
-              caption: "Ablauf",
-              value: dateFormat.format(vertrag.ablauf),
-            ),
-            _InfoLine(
-              caption: "Beitrag",
-              value: vertrag.beitrag,
-            ),
-            _InfoLine(
-              caption: "versichertes Risiko",
-              value: vertrag.risiko,
-            ),
-            for (var dokument in vertrag.dokumente)
-              MaterialButton(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(Icons.text_snippet),
-                    ),
-                    Expanded(
-                      child: Text(
-                        dokument.titel,
-                        textScaleFactor: 1.3,
-                      ),
-                    ),
-                  ],
-                ),
-                onPressed: () => viewDocument(context, dokument),
+      body: DefaultTextStyle(
+        style: Theme.of(context).textTheme.bodyText1!,
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              _InfoLine(
+                caption: "Sparte",
+                value: vertrag.sparte,
               ),
-          ],
+              _InfoLine(
+                caption: "VSNR",
+                value: vertrag.vertragsnummer,
+              ),
+              _InfoLine(
+                caption: "Gesellschaft",
+                value: vertrag.gesellschaft,
+              ),
+              _InfoLine(
+                caption: "Ablauf",
+                value: dateFormat.format(vertrag.ablauf),
+              ),
+              _InfoLine(
+                caption: "Beitrag",
+                value: vertrag.beitrag,
+              ),
+              _InfoLine(
+                caption: "versichertes Risiko",
+                value: vertrag.risiko,
+              ),
+              for (var dokument in vertrag.dokumente)
+                MaterialButton(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: const Icon(Icons.text_snippet),
+                      ),
+                      Expanded(
+                        child: Text(
+                          dokument.titel,
+                          textScaleFactor: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onPressed: () => viewDocument(context, dokument),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -95,14 +98,12 @@ class _InfoLine extends StatelessWidget {
           Expanded(
             child: Text(
               caption + ":",
-              textScaleFactor: 1.3,
             ),
             flex: 2,
           ),
           Expanded(
             child: Text(
               value,
-              textScaleFactor: 1.3,
             ),
             flex: 3,
           ),
