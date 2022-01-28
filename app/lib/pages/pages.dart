@@ -53,6 +53,8 @@ class Pages {
           context,
           MaterialPageRoute(builder: (context) => this.vertrag(vertrag)),
         ),
+        erfasseFremdvertrag: (context) =>
+            null, // TODO navigation implementieren
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
       );

@@ -4,12 +4,14 @@ import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatefulWidget {
-  VertraegePage(this.vertraege,
-      {Key? key,
-      required this.viewVertrag,
-      this.bottomNavigationBar,
-      this.onRefresh})
-      : super(key: key);
+  VertraegePage(
+    this.vertraege, {
+    Key? key,
+    required this.viewVertrag,
+    this.bottomNavigationBar,
+    this.onRefresh,
+    required this.erfasseFremdvertrag,
+  }) : super(key: key);
 
   final void Function(BuildContext, Vertrag) viewVertrag;
   final List<Vertrag> vertraege;
@@ -17,6 +19,8 @@ class VertraegePage extends StatefulWidget {
   final Widget? bottomNavigationBar;
 
   final Future<void> Function()? onRefresh;
+
+  final void Function(BuildContext) erfasseFremdvertrag;
 
   @override
   State<VertraegePage> createState() => _VertraegePageState();
@@ -82,6 +86,11 @@ class _VertraegePageState extends State<VertraegePage> {
     return HsSingleChildScrollScaffold(
       title: "Vertragsübersicht",
       body: content,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => widget.erfasseFremdvertrag(context),
+        label: Text('Fremdvertrag erfassen'),
+        icon: const Icon(Icons.add_moderator),
+      ),
       onRefresh: widget.onRefresh,
       bottomNavigationBar: widget.bottomNavigationBar,
     );
