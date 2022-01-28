@@ -348,9 +348,8 @@ class _AddImageAction extends StatelessWidget {
             source: source,
             imageQuality: 90,
           );
-          if (image == null) {
-            return; // canceld
-          }
+          if (image == null) return; // canceld
+
           var bytes = await image.readAsBytes();
 
           onAdd(bytes);
@@ -363,7 +362,6 @@ class _AddImageAction extends StatelessWidget {
               Text(
                 caption,
                 textAlign: TextAlign.center,
-                textScaleFactor: 1.3,
                 maxLines: null,
               ),
             ],
