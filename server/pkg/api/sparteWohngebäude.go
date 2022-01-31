@@ -9,13 +9,13 @@ var sparteWohngebäude = sparte{
 			Kind:  dateKind,
 		},
 		{
-			Label:        "Schadenort",
+			Label:        "Versicherungsort",
 			Beschreibung: "Bitte geben Sie den Ort, an dem der Schaden aufgetreten ist, an!",
 			Kind:         sectionKind,
 		},
 		{
 			Label:        "Adresse",
-			Beschreibung: "Bitte geben Sie die Adresse des Schadenorts an!",
+			Beschreibung: "Bitte geben Sie die Adresse des Versicherungsorts an!",
 			Kind:         locationKind,
 		},
 		{
@@ -54,7 +54,7 @@ var sparteWohngebäude = sparte{
 		{
 			Label:        "Polizei",
 			Kind:         sectionKind,
-			Beschreibung: "Bei Einbruch, Vandalismus oder Diebstahl können Sie Informationen der Polizei angeben.",
+			Beschreibung: "Bei Einbruch, Vandalismus oder Diebstahl benötigen wir Ihre Informationen zur Meldung bei der zuständigen Polizei-Behörde.",
 		},
 		{
 			ID:           "Dienststelle",
@@ -79,9 +79,9 @@ var sparteWohngebäude = sparte{
 			Kind:  textfieldKind,
 		},
 		{
-			ID:    "IBAN",
-			Label: "IBAN",
-			Kind:  textfieldKind,
+			ID:    "BeitragKonto",
+			Label: "Regulierung ist zugunsten des Kontos erwünscht, von dem die Beiträge eingezogen werden",
+			Kind:  choiceKind,
 		},
 	},
 }
