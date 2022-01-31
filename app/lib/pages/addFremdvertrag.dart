@@ -39,7 +39,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
       PhotoCollectionField(
         images: aufnahmen,
         labelAdd: "Aufnahme hinzufügen",
-        label: "Aufnahmen",
+        label: "Aufnahme",
         onDelete: (i) => setState(() => aufnahmen.removeAt(i)),
         onAdd: (image) => setState(() => aufnahmen.add(image)),
         // infoAdd: beschreibung,
@@ -102,7 +102,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
       ),
     ];
     return HsSingleChildScrollScaffold(
-      title: 'Freamdvertrag hinzufügen',
+      title: 'Fremdvertrag erfassen',
       body: Form(
         key: _formKey,
         child: Column(
