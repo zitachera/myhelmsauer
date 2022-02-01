@@ -54,7 +54,7 @@ var sparteHaurat = sparte{
 		{
 			Label:        "Polizei",
 			Kind:         sectionKind,
-			Beschreibung: "Bei Einbruch, Vandalismus oder Diebstahl benötigen wir die von Ihnen gegebenen Informationen im Rahmen der Meldung bei der zuständigen Polizeibehörde.",
+			Beschreibung: "Bei Einbruch, Vandalismus oder Diebstahl benötigen wir die von Ihnen gegebenen Informationen bzgl. Ihrer Meldung bei der zuständigen Polizeibehörde.",
 		},
 		{
 			ID:           "Dienststelle",
