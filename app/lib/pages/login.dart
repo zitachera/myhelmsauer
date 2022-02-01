@@ -149,12 +149,12 @@ class _LoginFormState extends State<_LoginForm> {
     final gruppeField = DropdownButton<String>(
       isExpanded: true,
       items: [
-        _gruppeItem("hk", "Helmsauer Assekuranzmakler"),
-        _gruppeItem("jade", "Jade Assekuranzmakler"),
-        _gruppeItem("sue", "Schmidt & Erdsiek Assekuranzmakler"),
-        _gruppeItem("bbg", "von Berenberg-Gossler Assekuranzmakler"),
-        _gruppeItem("detmer", "Ärzte Wirtschaftszentrum Köln"),
-        _gruppeItem("hp", "Helmsauer und Preuß"),
+        _gruppeItem("hk", "Helmsauer Assekuranzmakler AG"),
+        _gruppeItem("sue", "Dr. Schmidt & Erdsiek Versicherungsmakler"),
+        _gruppeItem("jade", "Dr. Schmidt & Erdsiek (Ex-Jade)"),
+        _gruppeItem("bbg", "Dr. Schmidt & Erdsiek (Ex-Berenberg-Gossler)"),
+        _gruppeItem("aewz", "Ärzte Wirtschaftszentrum Köln"),
+        _gruppeItem("hp", "Helmsauer und Preuß GmbH"),
       ],
       value: gruppe,
       onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),

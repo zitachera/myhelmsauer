@@ -73,7 +73,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
               value: integrieren,
               onChanged: (selected) =>
                   setState(() => integrieren = selected == true)),
-          Text("Vertrag dauerhaft speichern")
+          Text("Vertrag bitte dauerhaft speichern")
         ],
       ),
       Row(
@@ -82,7 +82,10 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
               value: vergleichsangebotErstellen,
               onChanged: (selected) => setState(
                   () => vergleichsangebotErstellen = selected == true)),
-          Text("Vergleichsangebot erstellen")
+          Text(
+            "Bitte zusätzlich Vergleichsangebot erstellen",
+            overflow: TextOverflow.fade,
+          )
         ],
       ),
       Center(
@@ -93,7 +96,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
             color: Colors.white,
           ),
           label: Text(
-            'Antrag Einreichen',
+            'Police speichern',
             style: TextStyle(
               color: Colors.white,
             ),

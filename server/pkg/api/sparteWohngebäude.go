@@ -70,7 +70,7 @@ var sparteWohngebäude = sparte{
 		},
 		{
 			Label:        "Bankdaten",
-			Beschreibung: "Bitte geben Sie Ihre Bankdaten zur Regulierung an!",
+			Beschreibung: "Bitte geben Sie Ihre Bankdaten zur Regulierung an.",
 			Kind:         sectionKind,
 		},
 		{
