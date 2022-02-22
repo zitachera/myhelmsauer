@@ -91,7 +91,7 @@ func PostMessage(recipients []string) http.HandlerFunc {
 			email.AddAttachmentData(data, name, mime)
 		}
 
-		if err := email.Send("Nachricht von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
+		if err := email.Send("Nachricht von "+c.User+" bei "+c.PortalName(), recipients, bodyTemplate,
 
 			data{
 				Text: m.Text,

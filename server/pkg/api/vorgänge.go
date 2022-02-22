@@ -169,7 +169,7 @@ Geo-Link
 			return
 		}
 
-		if err := email.Send("Schadenmeldung von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
+		if err := email.Send("Schadenmeldung von "+c.User+" bei "+c.PortalName(), recipients, bodyTemplate,
 
 			data{
 				Versicherungsnummer: vertrag.Nr,

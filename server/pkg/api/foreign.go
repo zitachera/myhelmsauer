@@ -97,7 +97,7 @@ Der Kunde {{.KundeName}} hat folgenden Fremdvertrag hochgeladen.
 			email.AddAttachmentData(data, name, mime)
 		}
 
-		if err := email.Send("Fremdvertrag von "+c.Gruppe+" / "+c.User, recipients, bodyTemplate,
+		if err := email.Send("Fremdvertrag von "+c.User+" bei "+c.PortalName(), recipients, bodyTemplate,
 
 			data{
 				KundeAnrede:  adressen[0].KundeAnrede,
