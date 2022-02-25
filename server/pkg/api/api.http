@@ -13,6 +13,17 @@ GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
 
+##################### Monitoring #####################
+
+### Stats
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/stats HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+### Direct Stats (nur via vpn?)
+GET http://192.168.35.40:8080/api/v1/stats HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 
 ##################### test #####################
 
@@ -89,3 +100,7 @@ GET http://localhost:8080/api/v1/adressen/AD_201406170853335LI/dokumente/DOK2014
 content-type: application/json
 authorization: 69399023-62e2-4a60-9949-6f0fbd6bd3b6
 
+### Stats
+GET http://localhost:8080/api/v1/stats HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8

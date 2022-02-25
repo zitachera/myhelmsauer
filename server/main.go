@@ -33,6 +33,7 @@ func main() {
 			"jan-erik.keller@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		)))
+		r.Get("/stats", api.Stats)
 
 		r = r.With(
 			auth.CredentialChecker(version.Must(version.NewSemver("1.7.2"))),

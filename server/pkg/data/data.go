@@ -54,3 +54,20 @@ func LoadCredentials(token string) (proclient.Client, error) {
 	}
 	return c, nil
 }
+
+// UniqueLogins returns the number of unique logins.
+func UniqueLogins() (int, error) {
+	var n int
+	rows, err := db.Query("select count (*) from (select distinct User, Portal from Credential)")
+	if err != nil {
+		return 0, err
+	}
+	defer rows.Close()
+	if !rows.Next() {
+		return 0, errors.New("unknown login token")
+	}
+	if err := rows.Scan(&n); err != nil {
+		return 0, err
+	}
+	return n, nil
+}

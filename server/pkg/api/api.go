@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 )
 
 func Vertraege(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +69,28 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 	_, err = w.Write(body)
 
 	if err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func Stats(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("authorization") != "6ac06fc6-285e-4e39-8df8-14d7373fe4a8" {
+		handleError(w, "Invalid authorization", http.StatusUnauthorized)
+		return
+	}
+
+	n, err := data.UniqueLogins()
+	if err != nil {
+		handleError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := json.NewEncoder(w).Encode(struct {
+		UniqueLogins int
+	}{
+		UniqueLogins: n,
+	}); err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
