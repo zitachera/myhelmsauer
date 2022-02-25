@@ -9,7 +9,7 @@ var sparteHaurat = sparte{
 			Kind:  dateKind,
 		},
 		{
-			Label:        "Versicherungsort",
+			Label:        "Schadenort",
 			Beschreibung: "Bitte geben Sie den Ort, an dem der Schaden aufgetreten ist, an!",
 			Kind:         sectionKind,
 		},
