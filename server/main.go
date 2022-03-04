@@ -84,18 +84,15 @@ func administration(r chi.Router) {
 	r.Route("/user", func(r chi.Router) {
 		handle.Get(r, "/", admin.GetUsers)
 		handle.Post(r, "/", admin.PostUser)
+		handle.Put(r, "/", admin.PutUser)
+
 		r.Route("/"+admin.UserNameID.Ref(), func(r chi.Router) {
 
-			handle.Put(r, "/", admin.PutUser)
 			handle.Delete(r, "/", admin.DeleteUser)
 
 			r.Route("/vertrag", func(r chi.Router) {
 				handle.Get(r, "/", admin.GetVerträge)
-				handle.Post(r, "/", admin.PostVerträge)
-
-				r.Route("/"+admin.VertragID.Ref(), func(r chi.Router) {
-					handle.Delete(r, "/", admin.DeleteVertrag)
-				})
+				handle.Put(r, "/", admin.PutVerträge)
 			})
 		})
 	})

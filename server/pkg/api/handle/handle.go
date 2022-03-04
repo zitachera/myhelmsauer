@@ -90,6 +90,13 @@ func handleError(w http.ResponseWriter, err error, code int) {
 	http.Error(w, msg, code)
 }
 
+func Errorf(code int, format string, args ...any) error {
+	return Error{
+		Inner:    fmt.Errorf(format, args...),
+		HttpCode: code,
+	}
+}
+
 type Error struct {
 	Inner    error
 	HttpCode int

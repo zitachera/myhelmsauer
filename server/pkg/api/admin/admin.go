@@ -2,6 +2,8 @@ package admin
 
 import (
 	"context"
+	"net/http"
+	"regexp"
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
@@ -34,7 +36,6 @@ func GetUsers(ctx context.Context) ([]getUserOutput, error) {
 
 const (
 	UserNameID handle.URLParameter = "userNameID"
-	VertragID  handle.URLParameter = "vertragID"
 )
 
 func DeleteUser(ctx context.Context) (string, error) {
@@ -53,7 +54,15 @@ type postUserInput struct {
 	MainPassword string `json:"mainPassword"`
 }
 
+var userNamePattern = regexp.MustCompile("^[a-zA-Z0-9]+$")
+
 func PostUser(ctx context.Context, user postUserInput) (string, error) {
+
+	if !userNamePattern.MatchString(user.Name) {
+		return "", handle.Errorf(http.StatusBadRequest,
+			"invalid user name %q", user.Name)
+	}
+
 	return user.Name, data.AddUser(
 		user.Name,
 		auth.PassHash(user.Password),
@@ -100,17 +109,11 @@ func GetVerträge(ctx context.Context) ([]string, error) {
 	return vertragIDs, nil
 }
 
-func DeleteVertrag(ctx context.Context) (string, error) {
+func PutVerträge(ctx context.Context, vertragIds []string) ([]string, error) {
 	user := UserNameID.FromContext(ctx)
-	id := VertragID.FromContext(ctx)
-	if err := data.RemoveVertragFromUser(user, id); err != nil {
-		return "", err
+	if err := data.RemoveVerträgeFromUser(user); err != nil {
+		return nil, err
 	}
-	return id, nil
-}
-
-func PostVerträge(ctx context.Context, vertragIds []string) ([]string, error) {
-	user := UserNameID.FromContext(ctx)
 	for _, id := range vertragIds {
 		err := data.AddVertragToUser(user, id)
 		if err != nil {

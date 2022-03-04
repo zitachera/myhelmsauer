@@ -96,7 +96,7 @@ content-type: application/json
 authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 
 {
-    "name":"test2",
+    "name":"test",
     "password":"123",
     "mainname":"Demokunde",
     "gruppe":"hk",
@@ -116,8 +116,19 @@ authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
     "mainPassword":"Demo90443HK"
 }
 
-### Add Vertrag
-POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
+### Remove User
+DELETE  https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test2 HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+
+### Vertrag
+GET  https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+### Change Verträge
+PUT  https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
 content-type: application/json
 authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 

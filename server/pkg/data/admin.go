@@ -86,6 +86,13 @@ func UpdateUser(name, passhash, mainUser, mainPassword, portal string) error {
 	return err
 }
 
+func RemoveVerträgeFromUser(user string) error {
+	_, err := db.Exec("delete from Vertrag where SubAccountName=?",
+		user,
+	)
+	return err
+}
+
 func RemoveVertragFromUser(user, vertragId string) error {
 	_, err := db.Exec("delete from Vertrag where SubAccountName=? and VertragId=?",
 		user,
