@@ -2,7 +2,8 @@ package auth
 
 import (
 	"context"
-	"encoding/json"
+	"crypto/md5"
+	"encoding/base64"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-version"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
@@ -30,7 +32,7 @@ func CredentialChecker(minClientVersion *version.Version) func(next http.Handler
 			}
 
 			reqID := middleware.GetReqID(r.Context())
-			log.Printf("%s user %s %s", reqID, c.Gruppe, c.User)
+			log.Printf("[%s] user %s %s", reqID, c.Gruppe, c.User)
 
 			clientVersion := r.Header.Get("client-version")
 			if clientVersion != "" {
@@ -51,6 +53,18 @@ func CredentialChecker(minClientVersion *version.Version) func(next http.Handler
 	}
 }
 
+func AdminTokenChecker() func(next http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if r.Header.Get("authorization") != "6ac06fc6-285e-4e39-8df8-14d7373fe4a8" {
+				handleError(w, "Invalid authorization", http.StatusUnauthorized)
+				return
+			}
+			next.ServeHTTP(w, r)
+		})
+	}
+}
+
 // GetClientFromRequest returns the ProClient of the middleware CredentialChecker.
 func GetClientFromRequest(r *http.Request) proclient.Client {
 	return GetClient(r.Context())
@@ -66,45 +80,68 @@ type requestLogin struct {
 	Password string `json:"password"`
 	Gruppe   string `json:"gruppe"`
 }
+type responseLogin struct {
+	Token string `json:"token"`
+}
 
-func Login() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		var l requestLogin
-		if err := json.NewDecoder(r.Body).Decode(&l); err != nil {
-			handleError(w, err.Error(), http.StatusBadRequest)
-			return
-		}
+func Login(ctx context.Context, l requestLogin) (responseLogin, error) {
+	if l.Gruppe == data.MyHelmsauerGroup {
+		return loginMyHelmsauerAccount(l.User, l.Password)
+	}
 
-		client := proclient.Client{
-			User:     l.User,
-			Password: l.Password,
-			Gruppe:   l.Gruppe,
-		}
+	client := proclient.Client{
+		User:     l.User,
+		Password: l.Password,
+		Gruppe:   l.Gruppe,
+	}
 
-		msg, ok, err := client.Login()
-		if err != nil {
-			handleError(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		if !ok {
-			handleError(w, msg, http.StatusForbidden)
-			return
-		}
-
-		token := uuid.New().String()
-
-		data.StoreCredentials(token, client)
-
-		if err := json.NewEncoder(w).Encode(map[string]interface{}{
-			"token": token,
-		}); err != nil {
-			handleError(w, err.Error(), http.StatusInternalServerError)
-			return
+	msg, ok, err := client.Login()
+	if err != nil {
+		return responseLogin{}, err
+	}
+	if !ok {
+		return responseLogin{}, handle.Error{
+			Inner:    fmt.Errorf(msg),
+			HttpCode: http.StatusForbidden,
 		}
 	}
+
+	token := uuid.New().String()
+
+	data.StoreCredentials(token, client)
+
+	return responseLogin{
+		Token: token,
+	}, nil
+}
+
+func loginMyHelmsauerAccount(user, pw string) (responseLogin, error) {
+	account, err := data.LoadSubaccount(user)
+	if err != nil {
+		return responseLogin{}, err
+	}
+	if PassHash(pw) != account.PasswordHash {
+		return responseLogin{}, handle.Error{
+			Inner:    fmt.Errorf("Ungültiges Passwort"),
+			HttpCode: http.StatusForbidden,
+		}
+	}
+
+	token := uuid.New().String()
+
+	data.StoreSubAccountToken(token, account.SubAccount)
+
+	return responseLogin{
+		Token: token,
+	}, nil
 }
 
 func handleError(w http.ResponseWriter, error string, code int) {
 	fmt.Println(code, error)
 	http.Error(w, error, code)
+}
+
+func PassHash(pw string) string {
+	b := md5.Sum([]byte(pw))
+	return base64.StdEncoding.EncodeToString(b[:])
 }

@@ -7,8 +7,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/go-chi/chi/v5"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 )
 
@@ -75,11 +75,6 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 }
 
 func Stats(w http.ResponseWriter, r *http.Request) {
-	if r.Header.Get("authorization") != "6ac06fc6-285e-4e39-8df8-14d7373fe4a8" {
-		handleError(w, "Invalid authorization", http.StatusUnauthorized)
-		return
-	}
-
 	n, err := data.UniqueLogins()
 	if err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
@@ -96,16 +91,10 @@ func Stats(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type URLParameter string
-
 const (
-	AdressID   URLParameter = "adressID"
-	DokumentID URLParameter = "dokumentID"
+	AdressID   handle.URLParameter = "adressID"
+	DokumentID handle.URLParameter = "dokumentID"
 )
-
-func (p URLParameter) From(r *http.Request) string {
-	return chi.URLParam(r, string(p))
-}
 
 func handleError(w http.ResponseWriter, error string, code int) {
 	fmt.Println(code, error)

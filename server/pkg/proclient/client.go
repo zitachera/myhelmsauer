@@ -9,9 +9,13 @@ import (
 
 // Client is a client for the ProClient API.
 type Client struct {
-	User     string
-	Password string
-	Gruppe   string
+	User       string
+	Password   string
+	Gruppe     string
+	SubAccount string
+	// PasswordHash is a hash of the SubAccount accounts password
+	PasswordHash string
+	VertragIds   map[string]struct{}
 }
 
 func (c Client) request(query string, res interface{}) error {
@@ -88,4 +92,12 @@ func (c Client) PortalName() string {
 	case "hp":
 		return "Helmsauer und Preuß GmbH"
 	}
+}
+
+func (c Client) hasAccessToVertrag(id string) bool {
+	if c.VertragIds == nil {
+		return true
+	}
+	_, in := c.VertragIds[id]
+	return in
 }

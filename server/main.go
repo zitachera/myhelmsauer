@@ -10,7 +10,9 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hashicorp/go-version"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/admin"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
 )
 
 var testserver = flag.Bool("testserver", false, "Startet den Server mit einer test config.")
@@ -27,13 +29,14 @@ func main() {
 	)
 
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Post("/login", auth.Login())
+		handle.Post(r, "/login", auth.Login)
 		r.Post("/remind", auth.PostRemind(mailRecipients(
 			"info@helmsauer-gruppe.de",
 			"jan-erik.keller@helmsauer-gruppe.de",
 			"bastian.helmsauer@helmsauer-gruppe.de",
 		)))
-		r.Get("/stats", api.Stats)
+
+		r.Route("/admin", administration)
 
 		r = r.With(
 			auth.CredentialChecker(version.Must(version.NewSemver("1.7.2"))),
@@ -49,7 +52,7 @@ func main() {
 			)))
 		})
 		r.Route("/adressen", func(r chi.Router) {
-			r.Get(string("/{"+api.AdressID+"}/dokumente/{"+api.DokumentID+"}"), api.Dokument)
+			r.Get("/"+api.AdressID.Ref()+"/dokumente/"+api.DokumentID.Ref(), api.Dokument)
 		})
 		r.Post("/vorgänge", api.PostVorgang(mailRecipients(
 			"info@helmsauer-gruppe.de",
@@ -71,4 +74,29 @@ func mailRecipients(recipients ...string) []string {
 		return []string{"jan-erik.keller@helmsauer-gruppe.de"}
 	}
 	return recipients
+}
+
+func administration(r chi.Router) {
+	r = r.With(
+		auth.AdminTokenChecker(),
+	)
+	r.Get("/stats", api.Stats)
+	r.Route("/user", func(r chi.Router) {
+		handle.Get(r, "/", admin.GetUsers)
+		handle.Post(r, "/", admin.PostUser)
+		r.Route("/"+admin.UserNameID.Ref(), func(r chi.Router) {
+
+			handle.Put(r, "/", admin.PutUser)
+			handle.Delete(r, "/", admin.DeleteUser)
+
+			r.Route("/vertrag", func(r chi.Router) {
+				handle.Get(r, "/", admin.GetVerträge)
+				handle.Post(r, "/", admin.PostVerträge)
+
+				r.Route("/"+admin.VertragID.Ref(), func(r chi.Router) {
+					handle.Delete(r, "/", admin.DeleteVertrag)
+				})
+			})
+		})
+	})
 }

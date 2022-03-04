@@ -1,6 +1,8 @@
 package proclient
 
-import "errors"
+import (
+	"errors"
+)
 
 // Vertrag is a ProClient Vertrag.
 type Vertrag struct {
@@ -70,15 +72,19 @@ func (c Client) GetVertraege() ([]Vertrag, error) {
 		if err := c.requestByID("Vertraege", "AdressID", adresse.AdresseID, &response); err != nil {
 			return nil, err
 		}
-		for i := range response.Vertraege {
-			response.Vertraege[i].Adresse = adresse
-			doks, err := c.getDokumente(adresse.AdresseID, response.Vertraege[i].ID)
+		for _, vertrag := range response.Vertraege {
+
+			if !c.hasAccessToVertrag(vertrag.ID) {
+				continue
+			}
+			vertrag.Adresse = adresse
+			doks, err := c.getDokumente(adresse.AdresseID, vertrag.ID)
 			if err != nil {
 				return nil, err
 			}
-			response.Vertraege[i].Dokumente = doks
+			vertrag.Dokumente = doks
+			vertraege = append(vertraege, vertrag)
 		}
-		vertraege = append(vertraege, response.Vertraege...)
 	}
 
 	return vertraege, nil
@@ -112,22 +118,23 @@ func (c Client) GetAdressen() ([]Adresse, error) {
 
 // GetVertrag returns a Vertrag with given id from ProClient or an error.
 func (c Client) GetVertrag(id string) (Vertrag, error) {
-	adressen, err := c.GetAdressen()
-	if err != nil {
-		return Vertrag{}, err
-	}
-	for _, adresse := range adressen {
-		var response vertraegeResponse
-		if err := c.requestByID("Vertraege", "AdressID", adresse.AdresseID, &response); err != nil {
+	if c.hasAccessToVertrag(id) {
+		adressen, err := c.GetAdressen()
+		if err != nil {
 			return Vertrag{}, err
 		}
-		for _, vertrag := range response.Vertraege {
-			if vertrag.ID == id {
-				vertrag.Adresse = adresse
-				return vertrag, nil
+		for _, adresse := range adressen {
+			var response vertraegeResponse
+			if err := c.requestByID("Vertraege", "AdressID", adresse.AdresseID, &response); err != nil {
+				return Vertrag{}, err
+			}
+			for _, vertrag := range response.Vertraege {
+				if vertrag.ID == id {
+					vertrag.Adresse = adresse
+					return vertrag, nil
+				}
 			}
 		}
 	}
-
 	return Vertrag{}, errors.New("Vertrag " + id + " not found")
 }

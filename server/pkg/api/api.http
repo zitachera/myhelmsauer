@@ -76,7 +76,52 @@ client-version: 1.7.2
     "adresse": "Musterstraße"
 }
 
+################ Test Monitoring ################
 
+### Stats
+GET https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/stats HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+################### Test Admin ###################
+
+### Users
+GET https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+### Add User
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+{
+    "name":"test2",
+    "password":"123",
+    "mainname":"Demokunde",
+    "gruppe":"hk",
+    "mainPassword":"Demo90443HK"
+}
+
+### Change User
+PUT https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+{
+    "name":"test",
+    "password":"123",
+    "mainname":"Demokunde",
+    "gruppe":"hk",
+    "mainPassword":"Demo90443HK"
+}
+
+### Add Vertrag
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+["VER20140626092811P76"]
 
 ##################### local #####################
 

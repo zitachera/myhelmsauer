@@ -155,6 +155,7 @@ class _LoginFormState extends State<_LoginForm> {
         _gruppeItem("bbg", "Dr. Schmidt & Erdsiek (Ex-Berenberg-Gossler)"),
         _gruppeItem("aewz", "Ärzte Wirtschaftszentrum Köln"),
         _gruppeItem("hp", "Helmsauer und Preuß GmbH"),
+        _gruppeItem("myh", "myHelmsauer"),
       ],
       value: gruppe,
       onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),

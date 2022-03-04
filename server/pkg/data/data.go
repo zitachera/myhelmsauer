@@ -11,22 +11,7 @@ import (
 
 var db *sql.DB
 
-func init() {
-	var err error
-	db, err = sql.Open("sqlite3", "file:database.db")
-	if err != nil {
-		panic(err)
-	}
-	_, err = db.Exec("create table if not exists Credential (Id integer primary key not null, " +
-		"Token            text not null unique," +
-		"User             text not null," +
-		"Password         text not null," +
-		"Portal           text not null," +
-		"CreationDate     text not null default current_timestamp)")
-	if err != nil {
-		panic(err)
-	}
-}
+const MyHelmsauerGroup = "myh"
 
 // StoreCredentials stores given credentials in the database or returns an error
 func StoreCredentials(token string, c proclient.Client) error {
@@ -35,6 +20,16 @@ func StoreCredentials(token string, c proclient.Client) error {
 		c.User,
 		c.Password,
 		c.Gruppe)
+	return err
+}
+
+// StoreSubAccountToken stores given access token for given user in the database or returns an error
+func StoreSubAccountToken(token, account string) error {
+	_, err := db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
+		token,
+		account,
+		"",
+		MyHelmsauerGroup)
 	return err
 }
 
@@ -52,7 +47,65 @@ func LoadCredentials(token string) (proclient.Client, error) {
 	if err := rows.Scan(&c.User, &c.Password, &c.Gruppe); err != nil {
 		return proclient.Client{}, err
 	}
+	if err := rows.Close(); err != nil {
+		return proclient.Client{}, err
+	}
+	if c.Gruppe == MyHelmsauerGroup {
+		return LoadSubaccount(c.User)
+	}
+
 	return c, nil
+}
+
+// LoadSubaccount returns a sub account with the given name or an error.
+func LoadSubaccount(subAccountName string) (client proclient.Client, err error) {
+	var c proclient.Client
+	rows, err := db.Query("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName)
+	if err != nil {
+		return proclient.Client{}, err
+	}
+	defer rows.Close()
+	if !rows.Next() {
+		return proclient.Client{}, errors.New("unknown user")
+	}
+	c.SubAccount = subAccountName
+	if err := rows.Scan(&c.PasswordHash, &c.User, &c.Password, &c.Gruppe); err != nil {
+		return proclient.Client{}, err
+	}
+	if err := rows.Close(); err != nil {
+		return proclient.Client{}, err
+	}
+	vertragIds, err := LoadVertragIds(subAccountName)
+
+	if err != nil {
+		return proclient.Client{}, err
+	}
+	c.VertragIds = map[string]struct{}{}
+	for _, id := range vertragIds {
+		c.VertragIds[id] = struct{}{}
+	}
+	return c, nil
+}
+
+// LoadVertragIds returns a slice of the vertrag ids of the user with given account name or an error.
+func LoadVertragIds(subAccountName string) ([]string, error) {
+	ids := make([]string, 0, 8)
+	rows, err := db.Query("select VertragId from Vertrag where SubAccountName = ?", subAccountName)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var id string
+		if err := rows.Scan(&id); err != nil {
+			return nil, err
+		}
+		ids = append(ids, id)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	return ids, nil
 }
 
 // UniqueLogins returns the number of unique logins.
