@@ -2,17 +2,10 @@ package sparte
 
 import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
 
-func template(id string, fs ...melde.Feld) melde.Template {
-	return melde.Template{
-		ID:     id,
-		Felder: fs,
-	}
-}
-
 var sparteKfz = Sparte{
 	SpartenID: "KFZ",
 	MeldeTemplates: []melde.Template{
-		template("schaden",
+		schadenTemplate(
 			melde.Section("Unfallgegner"),
 
 			melde.Images("ausweisVorderseite", "Ausweis\u00ADvorderseite").

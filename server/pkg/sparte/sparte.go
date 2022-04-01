@@ -58,3 +58,19 @@ func ByProClientID(proClientSparte string) Sparte {
 	}
 	return Sparte{SpartenID: "unknown", MeldeTemplates: []melde.Template{}}
 }
+
+func schadenTemplate(fs ...melde.Feld) melde.Template {
+	return melde.Template{
+		ID:     "schaden",
+		Name:   "Schadenmeldung",
+		Felder: fs,
+	}
+}
+
+func wertsachenTemplate(fs ...melde.Feld) melde.Template {
+	return melde.Template{
+		ID:     "wertsachen",
+		Name:   "Wertsachenmeldung",
+		Felder: fs,
+	}
+}

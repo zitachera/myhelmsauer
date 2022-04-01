@@ -5,7 +5,7 @@ import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
 var sparteHaurat = Sparte{
 	SpartenID: "Hausrat",
 	MeldeTemplates: []melde.Template{
-		template("schaden",
+		schadenTemplate(
 
 			melde.Date("Schadentag"),
 
@@ -44,6 +44,17 @@ var sparteHaurat = Sparte{
 			melde.Textfield("IBAN", "IBAN"),
 
 			melde.Choice("BeitragKonto", "Regulierung ist zugunsten des Kontos erwünscht, von dem die Beiträge eingezogen werden"),
+		),
+		wertsachenTemplate(
+
+			melde.Images("fotos", "Foto").
+				WithBeschreibung("Fotos des Wertgegenstands").
+				WithMax(4),
+
+			melde.Multiline("beschreibung", "Beschreibung"),
+
+			melde.Textfield("wert", "Wert").
+				WithBeschreibung("Ungefährer Wert in Euro"),
 		),
 	},
 }

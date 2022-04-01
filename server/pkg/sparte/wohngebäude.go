@@ -5,7 +5,7 @@ import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
 var sparteWohngebäude = Sparte{
 	SpartenID: "Hausrat",
 	MeldeTemplates: []melde.Template{
-		template("schaden",
+		schadenTemplate(
 
 			melde.Date("Schadentag"),
 

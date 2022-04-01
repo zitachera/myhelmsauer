@@ -5,7 +5,7 @@ import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
 var spartePhv = Sparte{
 	SpartenID: "PHV",
 	MeldeTemplates: []melde.Template{
-		template("schaden",
+		schadenTemplate(
 
 			melde.Section("Kontaktdaten des Geschädigten"),
 

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 class Vorgang {
   final String id;
   final String vertragsID;
+  final String templateID;
   final DateTime zeitpunkt;
   final String ort;
   final double? latitude;
@@ -14,6 +15,7 @@ class Vorgang {
   Vorgang({
     required this.id,
     required this.vertragsID,
+    required this.templateID,
     required this.zeitpunkt,
     required this.ort,
     this.latitude,
@@ -25,6 +27,7 @@ class Vorgang {
   Vorgang.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         vertragsID = json['vertragsID'],
+        templateID = json['templateID'],
         zeitpunkt = DateTime.parse(json['zeitpunkt']),
         ort = json['ort'],
         latitude = json['latitude'],
@@ -36,12 +39,12 @@ class Vorgang {
   Map<String, dynamic> toJson() => {
         'id': id,
         'vertragsID': vertragsID,
+        'templateID': templateID,
         'zeitpunkt': zeitpunkt.toIso8601String(),
         'ort': ort,
         'latitude': latitude,
         'longitude': longitude,
-        'aufnahmen':
-            aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
+        'aufnahmen': aufnahmen.map((key, value) => MapEntry(key, _base64Strings(value))),
         'felder': felder,
       };
 }
@@ -49,5 +52,4 @@ class Vorgang {
 List<Uint8List> _dataFromBase64Strings(List<String> base64String) =>
     base64String.map(base64Decode).toList();
 
-List<String> _base64Strings(List<Uint8List> data) =>
-    data.map(base64Encode).toList();
+List<String> _base64Strings(List<Uint8List> data) => data.map(base64Encode).toList();

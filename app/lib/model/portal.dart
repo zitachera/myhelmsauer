@@ -35,9 +35,7 @@ class Portal {
 
   static const bool isProd = const bool.fromEnvironment("dart.vm.product");
   static Uri _uri(String resource) => Uri.https(
-      isProd
-          ? "schadenmeldung.helmsauer-gruppe.de"
-          : "testschadenmeldung.helmsauer-gruppe.de",
+      isProd ? "schadenmeldung.helmsauer-gruppe.de" : "testschadenmeldung.helmsauer-gruppe.de",
       'api/v1/' + resource);
 
   Future<void> login(String user, String password, String gruppe) async {
@@ -60,8 +58,7 @@ class Portal {
     loggedIn = true;
   }
 
-  static Future<http.Response> publicPost(String ressource, Object content) =>
-      http.post(
+  static Future<http.Response> publicPost(String ressource, Object content) => http.post(
         _uri(ressource),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -99,9 +96,7 @@ class Portal {
     if (response.statusCode != 200) {
       throw ('Failed to get vertraege: ' + response.body);
     }
-    vertraege = (jsonDecode(response.body) as List)
-        .map((e) => Vertrag.fromJson(e))
-        .toList();
+    vertraege = (jsonDecode(response.body) as List).map((e) => Vertrag.fromJson(e)).toList();
   }
 
   Future<void> sendMeldung(Vorgang meldung) async {
@@ -120,8 +115,7 @@ class Portal {
         headers: {HttpHeaders.authorizationHeader: _token!},
       );
 
-  Future<http.Response> postRessource(String endpoint, Object content) =>
-      http.post(
+  Future<http.Response> postRessource(String endpoint, Object content) => http.post(
         _uri(endpoint),
         headers: <String, String>{
           HttpHeaders.authorizationHeader: _token!,

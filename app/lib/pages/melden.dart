@@ -54,6 +54,7 @@ class _MeldenState extends State<MeldenPage> {
   Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
         vertragsID: widget.vertragID,
+        templateID: widget.template.id,
         ort: ort,
         latitude: gps?.latitude,
         longitude: gps?.longitude,
@@ -208,7 +209,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   Widget build(BuildContext context) {
     return HsSingleChildScrollScaffold(
-      title: 'Schadenmeldung',
+      title: widget.template.name,
       body: Form(
         key: _formKey,
         child: Column(
@@ -238,7 +239,11 @@ class _MeldenState extends State<MeldenPage> {
                 await showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return _SendDialog(widget.portal, vorgang);
+                    return _SendDialog(
+                      portal: widget.portal,
+                      vorgang: vorgang,
+                      subject: widget.template.name,
+                    );
                   },
                 );
               },
@@ -384,14 +389,16 @@ class _InvertedLine extends StatelessWidget {
 }
 
 class _SendDialog extends StatelessWidget {
-  const _SendDialog(
-    this.portal,
-    this.vorgang, {
+  const _SendDialog({
     Key? key,
+    required this.portal,
+    required this.vorgang,
+    required this.subject,
   }) : super(key: key);
 
   final Portal portal;
   final Vorgang vorgang;
+  final String subject;
 
   @override
   Widget build(BuildContext context) {
@@ -417,12 +424,12 @@ class _SendDialog extends StatelessWidget {
       return Column(
         children: [
           Text(
-            'Der Bericht konnte nicht gesendet werden.',
+            'Die $subject konnte nicht gesendet werden.',
             textScaleFactor: 1.3,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
-            child: Text('Bite senden Sie die Schadenmeldung erneut.'),
+            child: Text('Bite senden Sie die $subject erneut.'),
           ),
           MaterialButton(
             onPressed: () => nav.pop(),
@@ -441,7 +448,7 @@ class _SendDialog extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Ihre Schadenmeldung ist eingegangen.',
+          'Ihre $subject ist eingegangen.',
           textScaleFactor: 1.3,
         ),
         Padding(

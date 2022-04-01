@@ -58,14 +58,6 @@ func PostVorgang(recipients []string) http.HandlerFunc {
 <blockquote>
 {{.Zeitpunkt}}
 </blockquote>
-<h2>Schadenhergang</h2>
-{{if .Schadenhergang}}
-<blockquote>
-{{.Schadenhergang}}
-</blockquote>
-{{else}}
-<p>Keine Schadensbeschreibung</p>
-{{end}}
 <h2>Ort</h2>
 <blockquote>
 {{.Ort}}
@@ -84,7 +76,6 @@ Geo-Link
 		Risiko              string
 		Gesellschaft        string
 		Zeitpunkt           string
-		Schadenhergang      string
 		Ort                 string
 		Latitude            float64
 		Longitude           float64
@@ -103,15 +94,15 @@ Geo-Link
 	}
 
 	type requestBody struct {
-		ID             string               `json:"id"`
-		VertragsID     string               `json:"vertragsID"`
-		Zeitpunkt      string               `json:"zeitpunkt"`
-		Schadenhergang string               `json:"schadenhergang"`
-		Ort            string               `json:"ort"`
-		Latitude       float64              `json:"latitude"`
-		Longitude      float64              `json:"longitude"`
-		Aufnahmen      map[string][][]uint8 `json:"aufnahmen"`
-		Felder         map[string]string    `json:"felder"`
+		ID         string               `json:"id"`
+		VertragsID string               `json:"vertragsID"`
+		TemplateID string               `json:"templateID"`
+		Zeitpunkt  string               `json:"zeitpunkt"`
+		Ort        string               `json:"ort"`
+		Latitude   float64              `json:"latitude"`
+		Longitude  float64              `json:"longitude"`
+		Aufnahmen  map[string][][]uint8 `json:"aufnahmen"`
+		Felder     map[string]string    `json:"felder"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		c := auth.GetClientFromRequest(r)
@@ -122,9 +113,9 @@ Geo-Link
 			return
 		}
 
-		if c.User == "maxmustermann" && c.Gruppe == "hk" {
-			return
-		}
+		// if c.User == "maxmustermann" && c.Gruppe == "hk" {
+		// 	return
+		// }
 
 		vertrag, err := c.GetVertrag(m.VertragsID)
 
@@ -133,7 +124,7 @@ Geo-Link
 			return
 		}
 
-		template, _ := sparte.ByProClientID(vertrag.SpartenID).MeldeTemplate("schaden")
+		template, _ := sparte.ByProClientID(vertrag.SpartenID).MeldeTemplate(m.TemplateID)
 
 		categories := make([]string, 0, len(m.Aufnahmen))
 
@@ -170,14 +161,13 @@ Geo-Link
 			return
 		}
 
-		if err := email.Send("Schadenmeldung von "+c.User+" bei "+c.PortalName(), recipients, bodyTemplate,
+		if err := email.Send(template.Name+" von "+c.User+" bei "+c.PortalName(), recipients, bodyTemplate,
 
 			data{
 				Versicherungsnummer: vertrag.Nr,
 				Sparte:              vertrag.SpartenName,
 				Risiko:              vertrag.Risiko,
 				Gesellschaft:        vertrag.Gesellschaft,
-				Schadenhergang:      m.Schadenhergang,
 				Ort:                 m.Ort,
 				Latitude:            m.Latitude,
 				Longitude:           m.Longitude,

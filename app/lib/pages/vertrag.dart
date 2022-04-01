@@ -1,5 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +8,15 @@ class VertragPage extends StatelessWidget {
   VertragPage({
     Key? key,
     required this.viewDocument,
+    required this.viewMeldeDialog,
     required this.vertrag,
   }) : super(key: key);
 
   final Vertrag vertrag;
 
   final void Function(BuildContext, VertragDokument) viewDocument;
+
+  final void Function(BuildContext, String, MeldeTemplate) viewMeldeDialog;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,25 @@ class VertragPage extends StatelessWidget {
                 caption: "versichertes Risiko",
                 value: vertrag.risiko,
               ),
+              for (var template in vertrag.meldeTemplates)
+                MaterialButton(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4, right: 12.0),
+                        child: SvgIcon("images/menu/kontakt.svg"),
+                      ),
+                      Expanded(
+                        child: Text(
+                          "Neue ${template.name}",
+                          textScaleFactor: 1.3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onPressed: () => viewMeldeDialog(context, vertrag.id, template),
+                ),
               for (var dokument in vertrag.dokumente)
                 MaterialButton(
                   padding: const EdgeInsets.all(8.0),

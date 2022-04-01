@@ -134,7 +134,7 @@ class _Vertrag extends StatelessWidget {
             if (vertrag.risiko != "")
               Text(
                 vertrag.risiko,
-                style: TextStyle(fontWeight: FontWeight.normal),
+                style: TextStyle(fontWeight: FontWeight.w600),
               ),
           ],
         ),
