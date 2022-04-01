@@ -11,6 +11,7 @@ import (
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
 )
 
 func PostVorgang(recipients []string) http.HandlerFunc {
@@ -132,7 +133,7 @@ Geo-Link
 			return
 		}
 
-		kats := meldeFelderForSparte(vertrag.SpartenID).AufnahmeKategorien
+		template, _ := sparte.ByProClientID(vertrag.SpartenID).MeldeTemplate("schaden")
 
 		categories := make([]string, 0, len(m.Aufnahmen))
 
@@ -150,7 +151,7 @@ Geo-Link
 				if strings.HasPrefix(mime, "image/") {
 					ext = strings.Split(mime, "/")[1]
 				}
-				name := fmt.Sprintf("%s %d.%s", spartenLabel(cat, kats), i+1, ext)
+				name := fmt.Sprintf("%s %d.%s", template.FieldLabel(cat), i+1, ext)
 				email.AddAttachmentData(data, name, mime)
 			}
 		}
@@ -158,7 +159,7 @@ Geo-Link
 		fields := map[string]string{}
 		if m.Felder != nil {
 			for key, field := range m.Felder {
-				fields[spartenLabel(key, kats)] = field
+				fields[template.FieldLabel(key)] = field
 			}
 		}
 

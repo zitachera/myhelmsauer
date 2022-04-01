@@ -35,6 +35,7 @@ class _VertraegePageState extends State<VertraegePage> {
     final matchs = (String s) => s.toLowerCase().contains(keyword);
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -73,8 +74,7 @@ class _VertraegePageState extends State<VertraegePage> {
           ],
         ),
         ...widget.vertraege
-            .where((v) =>
-                matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
+            .where((v) => matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
             .map(
               (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),

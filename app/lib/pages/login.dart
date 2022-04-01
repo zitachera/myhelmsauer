@@ -108,8 +108,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({Key? key, required this.login, required this.lastUserName})
-      : super(key: key);
+  _LoginForm({Key? key, required this.login, required this.lastUserName}) : super(key: key);
 
   final _LoginFunc login;
   final String lastUserName;
@@ -135,8 +134,7 @@ class _LoginFormState extends State<_LoginForm> {
 
   _LoginFormState(this.login, this.user);
 
-  DropdownMenuItem<String> _gruppeItem(String id, String name) =>
-      DropdownMenuItem(
+  DropdownMenuItem<String> _gruppeItem(String id, String name) => DropdownMenuItem(
         child: Text(
           name,
           overflow: TextOverflow.ellipsis,

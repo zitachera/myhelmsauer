@@ -13,17 +13,6 @@ GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
 
-##################### Monitoring #####################
-
-### Stats
-GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/stats HTTP/1.1
-content-type: application/json
-authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
-
-### Direct Stats (nur via vpn?)
-GET http://192.168.35.40:8080/api/v1/stats HTTP/1.1
-content-type: application/json
-authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 
 ##################### test #####################
 
@@ -37,11 +26,27 @@ content-type: application/json
     "gruppe":"hk"
 }
 
-### verträge testserver
+### login testserver maxmustermann
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/login HTTP/1.1
+content-type: application/json
+
+{
+    "user":"maxmustermann",
+    "password":"ad45XV78?",
+    "gruppe":"hk"
+}
+
+### verträge testserver demo
 
 GET https://testschadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 613fa513-32a1-4671-8d91-59e6779912d4
+
+### verträge testserver maxmustermann
+
+GET https://testschadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
+content-type: application/json
+authorization: 3f09cfd9-3529-4a09-98ec-ffa0421818c4
 
 ### fremdverträge testserver
 

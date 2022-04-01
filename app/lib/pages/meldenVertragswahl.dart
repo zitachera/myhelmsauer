@@ -1,13 +1,11 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
-import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal,
-      {Key? key, this.bottomNavigationBar, this.onRefresh})
+  MeldenVertragwahlPage(this.portal, {Key? key, this.bottomNavigationBar, this.onRefresh})
       : super(key: key);
 
   final Portal portal;
@@ -17,25 +15,18 @@ class MeldenVertragwahlPage extends StatefulWidget {
   final Future<void> Function()? onRefresh;
 
   @override
-  _MeldenVertragwahlPageState createState() =>
-      _MeldenVertragwahlPageState(portal.vertraege, portal);
+  _MeldenVertragwahlPageState createState() => _MeldenVertragwahlPageState();
 }
 
 class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
-  _MeldenVertragwahlPageState(this.vertraege, this.portal);
-  final List<Vertrag> vertraege;
   String filter = "";
-
-  final Portal portal;
-
-  Vertrag vertragZuVorgang(Vorgang vorgang) => vertraege.firstWhere(
-        (v) => v.id == vorgang.vertragsID,
-      );
 
   @override
   Widget build(BuildContext context) {
     final keyword = filter.toLowerCase();
     final matchs = (String s) => s.toLowerCase().contains(keyword);
+    final vertraege = widget.portal.vertraege;
+
     final content = Column(
       children: <Widget>[
         Padding(
@@ -66,15 +57,10 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           ),
         ...vertraege
             .where((v) =>
-                v.meldeFelder.isNotEmpty &&
-                (matchs(v.sparte) ||
-                    matchs(v.risiko) ||
-                    matchs(v.gesellschaft)))
+                v.hasSchadenTemplate &&
+                (matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft)))
             .map(
-              (vertrag) => _buildVertrag(
-                context,
-                vertrag,
-              ),
+              (vertrag) => _Vertrag(widget: widget, context: context, vertrag: vertrag),
             ),
       ],
     );
@@ -85,8 +71,22 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
       bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
+}
 
-  Widget _buildVertrag(BuildContext context, Vertrag vertrag) {
+class _Vertrag extends StatelessWidget {
+  const _Vertrag({
+    Key? key,
+    required this.widget,
+    required this.context,
+    required this.vertrag,
+  }) : super(key: key);
+
+  final MeldenVertragwahlPage widget;
+  final BuildContext context;
+  final Vertrag vertrag;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(3),
       child: MaterialButton(
@@ -96,15 +96,17 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
         ),
         color: const Color.fromRGBO(245, 245, 245, 1),
         elevation: 0,
-        onPressed: () => {
+        onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MeldenPage(
-                      vertrag: vertrag,
-                      portal: portal,
-                    )),
-          ),
+              builder: (context) => MeldenPage(
+                vertragID: vertrag.id,
+                template: vertrag.schadenTemplate,
+                portal: widget.portal,
+              ),
+            ),
+          );
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

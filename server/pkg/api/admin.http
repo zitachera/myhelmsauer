@@ -1,0 +1,55 @@
+
+### Stats
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/stats HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+
+### Users
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+### Add User
+POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+{
+    "name":"test",
+    "password":"123",
+    "mainname":"Demokunde",
+    "gruppe":"hk",
+    "mainPassword":"Demo90443HK"
+}
+
+### Change User
+PUT https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+{
+    "name":"test",
+    "password":"123",
+    "mainname":"Demokunde",
+    "gruppe":"hk",
+    "mainPassword":"Demo90443HK"
+}
+
+### Remove User
+DELETE  https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test2 HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+
+### Vertrag
+GET  https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+### Change Verträge
+PUT  https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
+content-type: application/json
+authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
+
+["VER20140626092811P76"]

@@ -10,6 +10,7 @@ import (
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
 )
 
 func Vertraege(w http.ResponseWriter, r *http.Request) {
@@ -37,13 +38,13 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 		vertraege[i] = vertrag{
 			ID:             v.ID,
 			Status:         strings.ToLower(v.Status),
-			Sparte:         v.SpartenName,
+			SpartenName:    v.SpartenName,
 			Risiko:         v.Risiko,
 			Beitrag:        v.NettotJahrebeitrag,
 			Gesellschaft:   v.Gesellschaft,
 			Vertragsnummer: v.Nr,
 			Ablauf:         v.Ablauf,
-			sparte:         meldeFelderForSparte(v.SpartenID),
+			Sparte:         sparte.ByProClientID(v.SpartenID),
 			Dokumente:      doks,
 		}
 	}
@@ -103,32 +104,18 @@ func handleError(w http.ResponseWriter, error string, code int) {
 
 type vertrag struct {
 	ID             string `json:"id"`
-	Sparte         string `json:"sparte"`
+	SpartenName    string `json:"sparte"`
 	Gesellschaft   string `json:"gesellschaft"`
 	Vertragsnummer string `json:"vertragsnummer"`
 	Ablauf         string `json:"ablauf"`
 	Status         string `json:"status"`
 	Beitrag        string `json:"beitrag"`
 	Risiko         string `json:"risiko"`
-	sparte
+	sparte.Sparte
 	Dokumente []dokument `json:"dokumente"`
 }
 
 type dokument struct {
 	Endpoint string `json:"endpoint"`
 	Titel    string `json:"titel"`
-}
-
-type sparte struct {
-	SpartenID          string      `json:"spartenID"`
-	AufnahmeKategorien []meldeFeld `json:"aufnahmeKategorien"`
-}
-
-type meldeFeld struct {
-	ID           string `json:"id"`
-	Label        string `json:"label"`
-	Kind         string `json:"kind"`
-	Beschreibung string `json:"beschreibung"`
-	Max          int    `json:"max"`
-	Min          int    `json:"min"`
 }

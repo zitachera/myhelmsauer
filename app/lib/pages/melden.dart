@@ -11,10 +11,16 @@ import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({Key? key, required this.vertrag, required this.portal})
-      : super(key: key);
+  MeldenPage({
+    Key? key,
+    required this.vertragID,
+    required this.template,
+    required this.portal,
+  }) : super(key: key);
 
-  final Vertrag vertrag;
+  final String vertragID;
+
+  final MeldeTemplate template;
 
   final Portal portal;
 
@@ -47,7 +53,7 @@ class _MeldenState extends State<MeldenPage> {
 
   Vorgang get vorgang => Vorgang(
         id: Uuid().v1(),
-        vertragsID: widget.vertrag.id,
+        vertragsID: widget.vertragID,
         ort: ort,
         latitude: gps?.latitude,
         longitude: gps?.longitude,
@@ -59,9 +65,7 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.vertrag.meldeFelder
-        .where((f) => f.kind == MeldeFeldKind.location)
-        .isNotEmpty)
+    if (widget.template.felder.where((f) => f.kind == MeldeFeldKind.location).isNotEmpty)
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
           .then((position) => gps = position);
   }
@@ -72,7 +76,7 @@ class _MeldenState extends State<MeldenPage> {
     List<Widget> cols = [];
     Row? row;
 
-    widget.vertrag.meldeFelder.forEach((f) {
+    widget.template.felder.forEach((f) {
       if (!small(f)) {
         row = null;
         cols.add(buildField(context, f));
@@ -129,14 +133,12 @@ class _MeldenState extends State<MeldenPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-              child:
-                  Text(f.label, style: Theme.of(context).textTheme.headline2),
+              child: Text(f.label, style: Theme.of(context).textTheme.headline2),
             ),
             if (f.beschreibung != "")
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Text(f.beschreibung,
-                    style: Theme.of(context).textTheme.bodyText1),
+                child: Text(f.beschreibung, style: Theme.of(context).textTheme.bodyText1),
               ),
           ],
         );
@@ -145,8 +147,8 @@ class _MeldenState extends State<MeldenPage> {
         return _InvertedLine(
           child: Checkbox(
               value: felder[f.id] == "ja",
-              onChanged: (selected) => setState(
-                  () => felder[f.id] = selected == true ? "ja" : "nein")),
+              onChanged: (selected) =>
+                  setState(() => felder[f.id] = selected == true ? "ja" : "nein")),
           caption: f.label,
         );
       case MeldeFeldKind.multiline:
@@ -272,8 +274,7 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked =
-        await showTimePicker(context: context, initialTime: zeit);
+    final TimeOfDay? picked = await showTimePicker(context: context, initialTime: zeit);
     if (picked != null && picked != zeit) {
       setState(() {
         zeit = picked;

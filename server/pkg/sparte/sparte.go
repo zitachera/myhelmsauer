@@ -1,17 +1,25 @@
-package api
+package sparte
 
-const (
-	imagesKind    = "images"
-	textfieldKind = "textfield"
-	multilineKind = "multiline"
-	sectionKind   = "section"
-	choiceKind    = "choice"
-	timeKind      = "time"
-	dateKind      = "date"
-	locationKind  = "location"
-)
+import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
 
-func meldeFelderForSparte(proClientSparte string) sparte {
+// Sparte beinhaltet alle Meldetemplates für eine Sparte.
+type Sparte struct {
+	SpartenID      string           `json:"spartenID"`
+	MeldeTemplates []melde.Template `json:"meldeTemplates"`
+}
+
+// MeldeTemplate returns the template with the given ID.
+func (sp Sparte) MeldeTemplate(id string) (melde.Template, bool) {
+	for _, t := range sp.MeldeTemplates {
+		if t.ID == id {
+			return t, true
+		}
+	}
+	return melde.Template{}, false
+}
+
+// ByProClientID returns the Sparte with the given ProClient SpartenID.
+func ByProClientID(proClientSparte string) Sparte {
 	switch proClientSparte {
 	case "SPN200008031656319BP",
 		"SPNAAAAAAAAAA":
@@ -48,18 +56,5 @@ func meldeFelderForSparte(proClientSparte string) sparte {
 		"SPN_S8E0WMGB4":
 		return sparteWohngebäude
 	}
-	return sparte{SpartenID: "unknown", AufnahmeKategorien: []meldeFeld{}}
-}
-
-func spartenLabel(id string, kats []meldeFeld) string {
-	prefix := ""
-	for _, kat := range kats {
-		if id == kat.ID {
-			return prefix + kat.Label
-		}
-		if kat.Kind == sectionKind {
-			prefix = kat.Label + " "
-		}
-	}
-	return id
+	return Sparte{SpartenID: "unknown", MeldeTemplates: []melde.Template{}}
 }
