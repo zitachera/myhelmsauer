@@ -42,7 +42,7 @@ func main() {
 			auth.CredentialChecker(version.Must(version.NewSemver("1.7.2"))),
 		)
 		r.Route("/verträge", func(r chi.Router) {
-			r.Get("/", api.Vertraege)
+			handle.Get(r, "/", api.Verträge)
 		})
 		r.Route("/fremdverträge", func(r chi.Router) {
 			r.Post("/", api.PostForeignVertrag(mailRecipients(

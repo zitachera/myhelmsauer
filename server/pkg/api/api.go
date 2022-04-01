@@ -1,6 +1,7 @@
 package api
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -13,13 +14,12 @@ import (
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
 )
 
-func Vertraege(w http.ResponseWriter, r *http.Request) {
-	c := auth.GetClientFromRequest(r)
+func Verträge(ctx context.Context) ([]vertrag, error) {
+	c := auth.GetClient(ctx)
 
 	vs, err := c.GetVertraege()
 	if err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
+		return nil, err
 	}
 
 	vertraege := make([]vertrag, len(vs))
@@ -49,10 +49,7 @@ func Vertraege(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if err := json.NewEncoder(w).Encode(vertraege); err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return vertraege, nil
 }
 
 // Dokument bietet ein ProCLient Dokument direkt zum Download an.
@@ -66,6 +63,7 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", contentType)
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	_, err = w.Write(body)
 
