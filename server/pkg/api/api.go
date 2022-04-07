@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -73,21 +72,19 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Stats(w http.ResponseWriter, r *http.Request) {
+type stats struct {
+	UniqueLogins int
+}
+
+func Stats(ctx context.Context) (stats, error) {
 	n, err := data.UniqueLogins()
 	if err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
+		return stats{}, err
 	}
 
-	if err := json.NewEncoder(w).Encode(struct {
-		UniqueLogins int
-	}{
+	return stats{
 		UniqueLogins: n,
-	}); err != nil {
-		handleError(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	}, nil
 }
 
 const (
