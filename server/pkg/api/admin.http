@@ -1,6 +1,6 @@
 
 ### Stats
-GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/stats HTTP/1.1
+GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/admin/stats HTTP/1.1
 content-type: application/json
 authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 
