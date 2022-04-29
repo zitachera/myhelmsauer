@@ -56,7 +56,7 @@ class _NewsPageState extends State<NewsPage> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(20),
                 child: Image.asset(
                   "images/siegel/1.png",
                   fit: BoxFit.fitWidth,
@@ -66,17 +66,7 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  "images/siegel/2.png",
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(20),
                 child: Image.asset(
                   "images/siegel/3.png",
                   fit: BoxFit.fitWidth,
@@ -86,7 +76,7 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(20),
                 child: Image.asset(
                   "images/siegel/4.png",
                   fit: BoxFit.fitWidth,
