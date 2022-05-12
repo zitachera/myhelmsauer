@@ -5,8 +5,12 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal, {Key? key, this.bottomNavigationBar, this.onRefresh})
-      : super(key: key);
+  MeldenVertragwahlPage(
+    this.portal, {
+    super.key,
+    this.bottomNavigationBar,
+    this.onRefresh,
+  });
 
   final Portal portal;
 
@@ -75,11 +79,10 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
 
 class _Vertrag extends StatelessWidget {
   const _Vertrag({
-    Key? key,
     required this.widget,
     required this.context,
     required this.vertrag,
-  }) : super(key: key);
+  });
 
   final MeldenVertragwahlPage widget;
   final BuildContext context;

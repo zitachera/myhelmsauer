@@ -12,11 +12,11 @@ import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
   MeldenPage({
-    Key? key,
+    super.key,
     required this.vertragID,
     required this.template,
     required this.portal,
-  }) : super(key: key);
+  });
 
   final String vertragID;
 
@@ -290,10 +290,9 @@ class _MeldenState extends State<MeldenPage> {
 
 class _MultiLine extends StatelessWidget {
   const _MultiLine({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final String caption;
   final Widget child;
@@ -320,10 +319,9 @@ class _MultiLine extends StatelessWidget {
 
 class _Line extends StatelessWidget {
   const _Line({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final String caption;
   final Widget child;
@@ -355,10 +353,9 @@ class _Line extends StatelessWidget {
 
 class _InvertedLine extends StatelessWidget {
   const _InvertedLine({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final String caption;
@@ -390,11 +387,10 @@ class _InvertedLine extends StatelessWidget {
 
 class _SendDialog extends StatelessWidget {
   const _SendDialog({
-    Key? key,
     required this.portal,
     required this.vorgang,
     required this.subject,
-  }) : super(key: key);
+  });
 
   final Portal portal;
   final Vorgang vorgang;

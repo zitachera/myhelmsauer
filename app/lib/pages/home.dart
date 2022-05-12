@@ -3,25 +3,20 @@ import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage(
-      {Key? key,
-      required this.reloadData,
-      required this.newsPage,
-      required this.vertraegePage,
-      required this.meldenPage,
-      required this.kontaktPage})
-      : super(key: key);
+  HomePage({
+    super.key,
+    required this.reloadData,
+    required this.newsPage,
+    required this.vertraegePage,
+    required this.meldenPage,
+    required this.kontaktPage,
+  });
   final Future<void> Function() reloadData;
-  final Widget Function(
-      Future<void> Function() onRefresh, Widget bottomNavigationBar) newsPage;
-  final Widget Function(
-          Future<void> Function() onRefresh, Widget bottomNavigationBar)
+  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) newsPage;
+  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar)
       vertraegePage;
-  final Widget Function(
-      Future<void> Function() onRefresh, Widget bottomNavigationBar) meldenPage;
-  final Widget Function(
-          Future<void> Function() onRefresh, Widget bottomNavigationBar)
-      kontaktPage;
+  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) meldenPage;
+  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) kontaktPage;
 
   @override
   _HomePageState createState() => _HomePageState();

@@ -5,11 +5,11 @@ import 'package:pdf_render/pdf_render_widgets.dart';
 
 class NewsPage extends StatefulWidget {
   NewsPage({
-    Key? key,
+    super.key,
     required this.bottomNavigationBar,
     required this.onRefresh,
     required this.logout,
-  }) : super(key: key);
+  });
 
   @override
   _NewsPageState createState() => _NewsPageState();

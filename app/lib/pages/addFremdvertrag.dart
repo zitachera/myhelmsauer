@@ -8,7 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddFremdvertragPage extends StatefulWidget {
-  AddFremdvertragPage({Key? key, required this.portal}) : super(key: key);
+  AddFremdvertragPage({super.key, required this.portal});
 
   final Portal portal;
 
@@ -71,8 +71,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
         children: [
           Checkbox(
               value: integrieren,
-              onChanged: (selected) =>
-                  setState(() => integrieren = selected == true)),
+              onChanged: (selected) => setState(() => integrieren = selected == true)),
           Text("Vertrag bitte dauerhaft speichern")
         ],
       ),
@@ -80,8 +79,8 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
         children: [
           Checkbox(
               value: vergleichsangebotErstellen,
-              onChanged: (selected) => setState(
-                  () => vergleichsangebotErstellen = selected == true)),
+              onChanged: (selected) =>
+                  setState(() => vergleichsangebotErstellen = selected == true)),
           Text(
             "Bitte zusätzlich Vergleichsangebot erstellen",
             overflow: TextOverflow.fade,
@@ -135,8 +134,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
     if (aufnahmen.isEmpty && files.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text('Bitte tragen mindestens ein Bild oder eine Datei ein.'),
+          content: Text('Bitte tragen mindestens ein Bild oder eine Datei ein.'),
         ),
       );
       return;
@@ -169,11 +167,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
 }
 
 class _SendDialog extends StatelessWidget {
-  const _SendDialog(
-    this.portal,
-    this.fremdvertragAntrag, {
-    Key? key,
-  }) : super(key: key);
+  const _SendDialog(this.portal, this.fremdvertragAntrag);
 
   final Portal portal;
   final FremdvertragAntrag fremdvertragAntrag;
@@ -188,8 +182,7 @@ class _SendDialog extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: FutureBuilder<void>(
-            future: portal.postRessource(
-                "fremdverträge", fremdvertragAntrag.toJson()),
+            future: portal.postRessource("fremdverträge", fremdvertragAntrag.toJson()),
             builder: builder,
           ),
         )

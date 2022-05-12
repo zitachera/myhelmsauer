@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
   HsSingleChildScrollScaffold({
-    Key? key,
+    super.key,
     required this.title,
     required this.body,
     this.actions,
     this.floatingActionButton,
     this.bottomNavigationBar,
     this.onRefresh,
-  }) : super(key: key);
+  });
 
   final String title;
   final Widget body;

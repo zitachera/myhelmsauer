@@ -7,7 +7,7 @@ import 'package:customer_portal_app/pages/remind.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({Key? key, required this.login, required this.lastUserName}) : super(key: key);
+  _LoginForm({required this.login, required this.lastUserName});
 
   final _LoginFunc login;
   final String lastUserName;

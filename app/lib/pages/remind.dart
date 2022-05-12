@@ -4,7 +4,7 @@ import 'package:customer_portal_app/model/portal.dart';
 import 'package:flutter/material.dart';
 
 class RemindPage extends StatefulWidget {
-  RemindPage({Key? key}) : super(key: key);
+  RemindPage({super.key});
 
   @override
   _RemindPageState createState() => _RemindPageState();
@@ -138,7 +138,7 @@ class _RemindPageState extends State<RemindPage> {
 }
 
 class _SendDialog extends StatelessWidget {
-  const _SendDialog(this.future, {Key? key}) : super(key: key);
+  const _SendDialog(this.future);
 
   final Future<void> future;
 

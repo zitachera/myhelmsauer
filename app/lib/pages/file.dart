@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 class FilePage extends StatelessWidget {
-  FilePage(this.portal, this.title, this.endpoint, {Key? key}) : super(key: key);
+  FilePage(this.portal, this.title, this.endpoint, {super.key});
 
   final Portal portal;
 
