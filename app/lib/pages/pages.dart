@@ -33,7 +33,7 @@ class Pages {
         onRefresh: onRefresh,
         logout: (context) async {
           await Portal.logout();
-          WidgetsBinding.instance!.addPostFrameCallback(
+          WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => LoginPage(),

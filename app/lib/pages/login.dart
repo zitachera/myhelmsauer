@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         final portal = snapshot.data!;
 
         if (portal.loggedIn) {
-          WidgetsBinding.instance!.addPostFrameCallback(
+          WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => Pages(portal).home,
