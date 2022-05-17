@@ -78,6 +78,7 @@ class _VertraegePageState extends State<VertraegePage> {
             .map(
               (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),
+        SizedBox(height: 60),
       ],
     );
     return HsSingleChildScrollScaffold(
