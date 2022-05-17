@@ -22,7 +22,8 @@ func (sp Sparte) MeldeTemplate(id string) (melde.Template, bool) {
 func ByProClientID(proClientSparte string) Sparte {
 	switch proClientSparte {
 	case "SPN200008031656319BP",
-		"SPNAAAAAAAAAA":
+		"SPNAAAAAAAAAA",
+		"SPN_501xxxxxxxxxxxxx":
 		return sparteKfz
 
 	case "SPN20101222145048KWI",
@@ -56,7 +57,7 @@ func ByProClientID(proClientSparte string) Sparte {
 		"SPN_S8E0WMGB4":
 		return sparteWohngebäude
 	}
-	return Sparte{SpartenID: "unknown", MeldeTemplates: []melde.Template{}}
+	return Sparte{SpartenID: proClientSparte, MeldeTemplates: []melde.Template{}}
 }
 
 func schadenTemplate(fs ...melde.Feld) melde.Template {
