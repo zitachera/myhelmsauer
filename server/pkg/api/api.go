@@ -23,7 +23,24 @@ func Verträge(ctx context.Context) ([]vertrag, error) {
 
 	vertraege := make([]vertrag, len(vs))
 
+	sub := c.Gruppe == "myh"
+
 	for i, v := range vs {
+		if sub {
+			vertraege[i] = vertrag{
+				ID:             v.ID,
+				Status:         "nicht sichtbar",
+				SpartenName:    v.SpartenName,
+				Risiko:         v.Risiko,
+				Beitrag:        "nicht sichtbar",
+				Gesellschaft:   v.Gesellschaft,
+				Vertragsnummer: "nicht sichtbar",
+				Ablauf:         "nicht sichtbar",
+				Sparte:         sparte.ByProClientID(v.SpartenID),
+				Dokumente:      []dokument{},
+			}
+			continue
+		}
 		doks := make([]dokument, 0, len(v.Dokumente))
 		for _, d := range v.Dokumente {
 			if d.Deleted || !d.Online {
