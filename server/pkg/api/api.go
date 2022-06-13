@@ -9,7 +9,6 @@ import (
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
 )
 
@@ -87,21 +86,6 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
-
-type stats struct {
-	UniqueLogins int
-}
-
-func Stats(ctx context.Context) (stats, error) {
-	n, err := data.UniqueLogins()
-	if err != nil {
-		return stats{}, err
-	}
-
-	return stats{
-		UniqueLogins: n,
-	}, nil
 }
 
 const (

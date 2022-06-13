@@ -80,7 +80,7 @@ func administration(r chi.Router) {
 	r = r.With(
 		auth.AdminTokenChecker(),
 	)
-	handle.Get(r, "/stats", api.Stats)
+	handle.Get(r, "/stats", admin.Stats)
 	r.Route("/user", func(r chi.Router) {
 		handle.Get(r, "/", admin.GetUsers)
 		handle.Post(r, "/", admin.PostUser)
