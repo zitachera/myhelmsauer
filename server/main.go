@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hashicorp/go-version"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/account"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/admin"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
@@ -41,6 +42,9 @@ func main() {
 		r = r.With(
 			auth.CredentialChecker(version.Must(version.NewSemver("1.9.0"))),
 		)
+		r.Route("/info", func(r chi.Router) {
+			handle.Get(r, "/", account.Info)
+		})
 		r.Route("/verträge", func(r chi.Router) {
 			handle.Get(r, "/", api.Verträge)
 		})
