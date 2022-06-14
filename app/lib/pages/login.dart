@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/firmen_gruppe.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/pages.dart';
 import 'package:customer_portal_app/pages/remind.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<Portal> loader = Portal.restore();
+  Future<PortalService> loader = PortalService.restore();
   Key loaderKey = UniqueKey();
 
   String lastUserName = "";
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return _LoginForm(
       login: (user, password, gruppe) => setState(() {
         loader = () async {
-          final portal = Portal();
+          final portal = PortalService();
           await portal.login(user, password, gruppe);
           return portal;
         }();
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final body = FutureBuilder<Portal>(
+    final body = FutureBuilder<PortalService>(
       future: loader,
       builder: (context, snapshot) {
         if (snapshot.hasError) {

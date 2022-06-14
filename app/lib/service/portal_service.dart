@@ -7,9 +7,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
-class Portal {
-  static Future<Portal> restore() async {
-    final portal = Portal();
+class PortalService {
+  static Future<PortalService> restore() async {
+    final portal = PortalService();
 
     await portal._readToken();
 

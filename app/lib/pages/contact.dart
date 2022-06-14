@@ -1,6 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/stretchScroll.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,7 +18,7 @@ class ContactPage extends StatelessWidget {
 
   final Future<void> Function()? onRefresh;
 
-  final Portal portal;
+  final PortalService portal;
 
   static const String _phone = "0911/9292-03";
   static const String _mail = "info@helmsauer-gruppe.de";

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
@@ -22,7 +22,7 @@ class MeldenPage extends StatefulWidget {
 
   final MeldeTemplate template;
 
-  final Portal portal;
+  final PortalService portal;
 
   @override
   _MeldenState createState() => _MeldenState(
@@ -392,7 +392,7 @@ class _SendDialog extends StatelessWidget {
     required this.subject,
   });
 
-  final Portal portal;
+  final PortalService portal;
   final Vorgang vorgang;
   final String subject;
 

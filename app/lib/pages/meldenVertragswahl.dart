@@ -1,5 +1,5 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class MeldenVertragwahlPage extends StatefulWidget {
     this.onRefresh,
   });
 
-  final Portal portal;
+  final PortalService portal;
 
   final Widget? bottomNavigationBar;
 

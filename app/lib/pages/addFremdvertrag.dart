@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/fremdvertragAntrag.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class AddFremdvertragPage extends StatefulWidget {
   AddFremdvertragPage({super.key, required this.portal});
 
-  final Portal portal;
+  final PortalService portal;
 
   @override
   _AddFremdvertragState createState() => _AddFremdvertragState();
@@ -169,7 +169,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
 class _SendDialog extends StatelessWidget {
   const _SendDialog(this.portal, this.fremdvertragAntrag);
 
-  final Portal portal;
+  final PortalService portal;
   final FremdvertragAntrag fremdvertragAntrag;
 
   @override

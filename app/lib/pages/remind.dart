@@ -1,6 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
 
 class RemindPage extends StatefulWidget {
@@ -90,7 +90,7 @@ class _RemindPageState extends State<RemindPage> {
           context: context,
           builder: (BuildContext context) {
             return _SendDialog(
-              Portal.publicPost("remind", <String, String>{
+              PortalService.publicPost("remind", <String, String>{
                 "nachname": nachname,
                 "vorname": vorname,
                 "adresse": adresse,

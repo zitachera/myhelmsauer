@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 
 class MessagePage extends StatefulWidget {
   MessagePage({super.key, required this.portal});
 
-  final Portal portal;
+  final PortalService portal;
 
   @override
   _MessageState createState() => _MessageState();
