@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/model/firmen_gruppe.dart';
 import 'package:customer_portal_app/model/portal.dart';
 import 'package:customer_portal_app/pages/pages.dart';
 import 'package:customer_portal_app/pages/remind.dart';
@@ -134,27 +135,21 @@ class _LoginFormState extends State<_LoginForm> {
 
   _LoginFormState(this.login, this.user);
 
-  DropdownMenuItem<String> _gruppeItem(String id, String name) => DropdownMenuItem(
-        child: Text(
-          name,
-          overflow: TextOverflow.ellipsis,
-        ),
-        value: id,
-      );
-
   @override
   Widget build(BuildContext context) {
     final gruppeField = DropdownButton<String>(
       isExpanded: true,
-      items: [
-        _gruppeItem("hk", "Helmsauer Assekuranzmakler AG"),
-        _gruppeItem("sue", "Dr. Schmidt & Erdsiek Versicherungsmakler"),
-        _gruppeItem("jade", "Dr. Schmidt & Erdsiek (Ex-Jade)"),
-        _gruppeItem("bbg", "Dr. Schmidt & Erdsiek (Ex-Berenberg-Gossler)"),
-        _gruppeItem("aewz", "Ärzte Wirtschaftszentrum Köln"),
-        _gruppeItem("hp", "Helmsauer und Preuß GmbH"),
-        _gruppeItem("myh", "myHelmsauer"),
-      ],
+      items: FirmenGruppe.all
+          .map(
+            (fg) => DropdownMenuItem(
+              child: Text(
+                fg.name,
+                overflow: TextOverflow.ellipsis,
+              ),
+              value: fg.id,
+            ),
+          )
+          .toList(),
       value: gruppe,
       onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),
     );
