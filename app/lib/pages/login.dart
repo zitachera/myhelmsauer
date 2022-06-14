@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/firmen_gruppe.dart';
-import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/pages.dart';
 import 'package:customer_portal_app/pages/remind.dart';
+import 'package:customer_portal_app/service/session.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<PortalService> loader = PortalService.restore();
+  Future<LoginResult> loader = Session.restore();
   Key loaderKey = UniqueKey();
 
   String lastUserName = "";
@@ -24,9 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return _LoginForm(
       login: (user, password, gruppe) => setState(() {
         loader = () async {
-          final portal = PortalService();
-          await portal.login(user, password, gruppe);
-          return portal;
+          return await Session.login(user, password, gruppe);
         }();
         loaderKey = UniqueKey();
         lastUserName = user;
@@ -37,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final body = FutureBuilder<PortalService>(
+    final body = FutureBuilder<LoginResult>(
       future: loader,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -60,13 +58,26 @@ class _LoginPageState extends State<LoginPage> {
           return Center(child: CircularProgressIndicator());
         }
 
-        final portal = snapshot.data!;
+        final result = snapshot.data!;
 
-        if (portal.loggedIn) {
+        if (result.error != null) {
+          return Column(
+            children: [
+              SizedBox(height: 5.0),
+              Text(
+                result.error!,
+                style: TextStyle(color: helmsauerRot),
+              ),
+              Expanded(child: _form),
+            ],
+          );
+        }
+
+        if (result.portal != null) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => Pages(portal).home,
+                builder: (context) => Pages(result.portal!).home,
               ),
             ),
           );

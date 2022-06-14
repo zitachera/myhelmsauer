@@ -10,6 +10,7 @@ import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
 import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
+import 'package:customer_portal_app/service/session.dart';
 import 'package:flutter/material.dart';
 
 class Pages {
@@ -32,7 +33,7 @@ class Pages {
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
         logout: (context) async {
-          await PortalService.logout();
+          await Session.logout();
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
