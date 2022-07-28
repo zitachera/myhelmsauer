@@ -2,16 +2,15 @@ import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 class FilePage extends StatelessWidget {
-  FilePage(this.portal, this.title, this.endpoint, {Key? key})
-      : super(key: key);
+  FilePage(this.portal, this.title, this.endpoint, {super.key});
 
-  final Portal portal;
+  final PortalService portal;
 
   final String title;
   final String endpoint;
@@ -48,7 +47,7 @@ class FilePage extends StatelessWidget {
           final response = snapshot.data!;
 
           if (response.headers['content-type'] == 'application/pdf') {
-            WidgetsBinding.instance!.addPostFrameCallback(
+            WidgetsBinding.instance.addPostFrameCallback(
               (_) => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => Scaffold(

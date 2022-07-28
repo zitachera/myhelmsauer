@@ -126,3 +126,18 @@ func PutVerträge(ctx context.Context, vertragIds []string) ([]string, error) {
 	}
 	return vertragIDs, nil
 }
+
+type stats struct {
+	UniqueLogins int
+}
+
+func Stats(ctx context.Context) (stats, error) {
+	n, err := data.UniqueLogins()
+	if err != nil {
+		return stats{}, err
+	}
+
+	return stats{
+		UniqueLogins: n,
+	}, nil
+}

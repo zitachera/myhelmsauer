@@ -5,11 +5,11 @@ import 'package:pdf_render/pdf_render_widgets.dart';
 
 class NewsPage extends StatefulWidget {
   NewsPage({
-    Key? key,
+    super.key,
     required this.bottomNavigationBar,
     required this.onRefresh,
     required this.logout,
-  }) : super(key: key);
+  });
 
   @override
   _NewsPageState createState() => _NewsPageState();
@@ -56,7 +56,7 @@ class _NewsPageState extends State<NewsPage> {
           children: [
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(8),
                 child: Image.asset(
                   "images/siegel/1.png",
                   fit: BoxFit.fitWidth,
@@ -66,7 +66,17 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(8),
+                child: Image.asset(
+                  "images/siegel/2.png",
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+              flex: 1,
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
                 child: Image.asset(
                   "images/siegel/3.png",
                   fit: BoxFit.fitWidth,
@@ -76,7 +86,7 @@ class _NewsPageState extends State<NewsPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(8),
                 child: Image.asset(
                   "images/siegel/4.png",
                   fit: BoxFit.fitWidth,

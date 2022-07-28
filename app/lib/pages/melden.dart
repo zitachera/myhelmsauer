@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
 import 'package:customer_portal_app/pages/images.dart';
@@ -12,17 +12,17 @@ import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
   MeldenPage({
-    Key? key,
+    super.key,
     required this.vertragID,
     required this.template,
     required this.portal,
-  }) : super(key: key);
+  });
 
   final String vertragID;
 
   final MeldeTemplate template;
 
-  final Portal portal;
+  final PortalService portal;
 
   @override
   _MeldenState createState() => _MeldenState(
@@ -290,10 +290,9 @@ class _MeldenState extends State<MeldenPage> {
 
 class _MultiLine extends StatelessWidget {
   const _MultiLine({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final String caption;
   final Widget child;
@@ -320,10 +319,9 @@ class _MultiLine extends StatelessWidget {
 
 class _Line extends StatelessWidget {
   const _Line({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final String caption;
   final Widget child;
@@ -355,10 +353,9 @@ class _Line extends StatelessWidget {
 
 class _InvertedLine extends StatelessWidget {
   const _InvertedLine({
-    Key? key,
     required this.caption,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final String caption;
@@ -390,13 +387,12 @@ class _InvertedLine extends StatelessWidget {
 
 class _SendDialog extends StatelessWidget {
   const _SendDialog({
-    Key? key,
     required this.portal,
     required this.vorgang,
     required this.subject,
-  }) : super(key: key);
+  });
 
-  final Portal portal;
+  final PortalService portal;
   final Vorgang vorgang;
   final String subject;
 

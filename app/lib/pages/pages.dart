@@ -1,4 +1,4 @@
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/addFremdvertrag.dart';
 import 'package:customer_portal_app/pages/contact.dart';
@@ -10,12 +10,13 @@ import 'package:customer_portal_app/pages/meldenVertragswahl.dart';
 import 'package:customer_portal_app/pages/news.dart';
 import 'package:customer_portal_app/pages/vertraege.dart';
 import 'package:customer_portal_app/pages/vertrag.dart';
+import 'package:customer_portal_app/service/session.dart';
 import 'package:flutter/material.dart';
 
 class Pages {
   Pages(this.portal);
 
-  final Portal portal;
+  final PortalService portal;
 
   Widget get home => HomePage(
         reloadData: () async => await portal.reload(),
@@ -32,8 +33,8 @@ class Pages {
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
         logout: (context) async {
-          await Portal.logout();
-          WidgetsBinding.instance!.addPostFrameCallback(
+          await Session.logout();
+          WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => LoginPage(),

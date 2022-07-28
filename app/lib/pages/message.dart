@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/images.dart';
 import 'package:flutter/material.dart';
 
 class MessagePage extends StatefulWidget {
-  MessagePage({Key? key, required this.portal}) : super(key: key);
+  MessagePage({super.key, required this.portal});
 
-  final Portal portal;
+  final PortalService portal;
 
   @override
   _MessageState createState() => _MessageState();
@@ -49,9 +49,8 @@ class _MessageState extends State<MessagePage> {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               textAlignVertical: TextAlignVertical.bottom,
-              validator: (value) => text.length > 5
-                  ? null
-                  : "Bitte geben Sie eine längere Nachricht ein.",
+              validator: (value) =>
+                  text.length > 5 ? null : "Bitte geben Sie eine längere Nachricht ein.",
             ),
             ElevatedButton.icon(
               onPressed: () async {
@@ -95,21 +94,19 @@ class _MessageState extends State<MessagePage> {
       {
         'text': text,
         'files': <String, Uint8List>{
-          for (var i = 0; i < aufnahmen.length; i++)
-            "Bild ${i + 1}": aufnahmen[i],
+          for (var i = 0; i < aufnahmen.length; i++) "Bild ${i + 1}": aufnahmen[i],
         },
       },
     );
-    if (response.statusCode != 200)
-      throw "Senden der Nachricht fehlgeschlagen:" + response.body;
+    if (response.statusCode != 200) throw "Senden der Nachricht fehlgeschlagen:" + response.body;
   }
 }
 
 class _SendDialog extends StatelessWidget {
   const _SendDialog(
     this.future, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Future<void> future;
 

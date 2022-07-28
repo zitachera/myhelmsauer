@@ -113,9 +113,9 @@ Geo-Link
 			return
 		}
 
-		// if c.User == "maxmustermann" && c.Gruppe == "hk" {
-		// 	return
-		// }
+		if c.User == "maxmustermann" && c.Gruppe == "hk" {
+			return
+		}
 
 		vertrag, err := c.GetVertrag(m.VertragsID)
 

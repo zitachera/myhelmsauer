@@ -1,14 +1,18 @@
 import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(this.portal, {Key? key, this.bottomNavigationBar, this.onRefresh})
-      : super(key: key);
+  MeldenVertragwahlPage(
+    this.portal, {
+    super.key,
+    this.bottomNavigationBar,
+    this.onRefresh,
+  });
 
-  final Portal portal;
+  final PortalService portal;
 
   final Widget? bottomNavigationBar;
 
@@ -75,11 +79,10 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
 
 class _Vertrag extends StatelessWidget {
   const _Vertrag({
-    Key? key,
     required this.widget,
     required this.context,
     required this.vertrag,
-  }) : super(key: key);
+  });
 
   final MeldenVertragwahlPage widget;
   final BuildContext context;

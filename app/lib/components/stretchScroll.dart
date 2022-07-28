@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 
 class StretchScroll extends StatelessWidget {
   const StretchScroll({
-    Key? key,
+    super.key,
     required this.children,
     this.onRefresh,
-  }) : super(key: key);
+  });
 
   final List<Widget> children;
   final Future<void> Function()? onRefresh;
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+    return LayoutBuilder(builder: (BuildContext context, BoxConstraints viewportConstraints) {
       Widget scrollView = SingleChildScrollView(
-        physics:
-            onRefresh == null ? null : const AlwaysScrollableScrollPhysics(),
+        physics: onRefresh == null ? null : const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(10),
         child: ConstrainedBox(
           constraints: BoxConstraints(

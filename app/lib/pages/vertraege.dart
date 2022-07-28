@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 class VertraegePage extends StatefulWidget {
   VertraegePage(
     this.vertraege, {
-    Key? key,
+    super.key,
     required this.viewVertrag,
     this.bottomNavigationBar,
     this.onRefresh,
     required this.erfasseFremdvertrag,
-  }) : super(key: key);
+  });
 
   final void Function(BuildContext, Vertrag) viewVertrag;
   final List<Vertrag> vertraege;
@@ -78,6 +78,7 @@ class _VertraegePageState extends State<VertraegePage> {
             .map(
               (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),
+        SizedBox(height: 60),
       ],
     );
     return HsSingleChildScrollScaffold(
@@ -96,10 +97,9 @@ class _VertraegePageState extends State<VertraegePage> {
 
 class _Vertrag extends StatelessWidget {
   const _Vertrag({
-    Key? key,
     required this.vertraegePage,
     required this.vertrag,
-  }) : super(key: key);
+  });
 
   final VertraegePage vertraegePage;
   final Vertrag vertrag;

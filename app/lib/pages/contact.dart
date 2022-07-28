@@ -1,6 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/stretchScroll.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/pages/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,17 +8,17 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ContactPage extends StatelessWidget {
   ContactPage({
-    Key? key,
+    super.key,
     this.bottomNavigationBar,
     this.onRefresh,
     required this.portal,
-  }) : super(key: key);
+  });
 
   final Widget? bottomNavigationBar;
 
   final Future<void> Function()? onRefresh;
 
-  final Portal portal;
+  final PortalService portal;
 
   static const String _phone = "0911/9292-03";
   static const String _mail = "info@helmsauer-gruppe.de";
@@ -79,8 +79,8 @@ class ContactPage extends StatelessWidget {
                   child: _Link("Datenschutz",
                       "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/")),
               Expanded(
-                  child: _Link("Impressum",
-                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
+                  child: _Link(
+                      "Impressum", "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
             ],
           ),
         )
@@ -98,23 +98,21 @@ class ContactPage extends StatelessWidget {
 
 class _Button extends StatelessWidget {
   const _Button({
-    Key? key,
     required this.onPressed,
     required this.child,
     required this.icon,
-  }) : super(key: key);
+  });
 
   final VoidCallback? onPressed;
   final Widget child;
   final Widget icon;
 
   _Button.url({
-    Key? key,
     required String url,
     required String caption,
     required String label,
     required this.icon,
-  })  : onPressed = (() => UrlLauncher.launch(url)),
+  })  : onPressed = (() => UrlLauncher.launchUrl(Uri.parse(url))),
         child = Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -127,8 +125,7 @@ class _Button extends StatelessWidget {
               ),
             ),
           ],
-        ),
-        super(key: key);
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -156,11 +153,7 @@ class _Button extends StatelessWidget {
 }
 
 class _Link extends StatelessWidget {
-  const _Link(
-    this.text,
-    this.url, {
-    Key? key,
-  }) : super(key: key);
+  const _Link(this.text, this.url);
 
   final String text;
   final String url;
@@ -168,7 +161,7 @@ class _Link extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      onPressed: () => UrlLauncher.launch(url),
+      onPressed: () => UrlLauncher.launchUrl(Uri.parse(url)),
       padding: EdgeInsets.all(10),
       child: Text(
         text,

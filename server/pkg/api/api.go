@@ -9,7 +9,6 @@ import (
 
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
 	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
 )
 
@@ -23,7 +22,24 @@ func Verträge(ctx context.Context) ([]vertrag, error) {
 
 	vertraege := make([]vertrag, len(vs))
 
+	sub := c.Gruppe == "myh"
+
 	for i, v := range vs {
+		if sub {
+			vertraege[i] = vertrag{
+				ID:             v.ID,
+				Status:         "nicht sichtbar",
+				SpartenName:    v.SpartenName,
+				Risiko:         v.Risiko,
+				Beitrag:        "nicht sichtbar",
+				Gesellschaft:   v.Gesellschaft,
+				Vertragsnummer: "nicht sichtbar",
+				Ablauf:         "nicht sichtbar",
+				Sparte:         sparte.ByProClientID(v.SpartenID),
+				Dokumente:      []dokument{},
+			}
+			continue
+		}
 		doks := make([]dokument, 0, len(v.Dokumente))
 		for _, d := range v.Dokumente {
 			if d.Deleted || !d.Online {
@@ -70,21 +86,6 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
-
-type stats struct {
-	UniqueLogins int
-}
-
-func Stats(ctx context.Context) (stats, error) {
-	n, err := data.UniqueLogins()
-	if err != nil {
-		return stats{}, err
-	}
-
-	return stats{
-		UniqueLogins: n,
-	}, nil
 }
 
 const (

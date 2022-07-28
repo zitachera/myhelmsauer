@@ -1,20 +1,21 @@
 import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/model/portal.dart';
+import 'package:customer_portal_app/model/firmen_gruppe.dart';
 import 'package:customer_portal_app/pages/pages.dart';
 import 'package:customer_portal_app/pages/remind.dart';
+import 'package:customer_portal_app/service/session.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Future<Portal> loader = Portal.restore();
+  Future<LoginResult> loader = Session.restore();
   Key loaderKey = UniqueKey();
 
   String lastUserName = "";
@@ -23,9 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     return _LoginForm(
       login: (user, password, gruppe) => setState(() {
         loader = () async {
-          final portal = Portal();
-          await portal.login(user, password, gruppe);
-          return portal;
+          return await Session.login(user, password, gruppe);
         }();
         loaderKey = UniqueKey();
         lastUserName = user;
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final body = FutureBuilder<Portal>(
+    final body = FutureBuilder<LoginResult>(
       future: loader,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
@@ -59,13 +58,26 @@ class _LoginPageState extends State<LoginPage> {
           return Center(child: CircularProgressIndicator());
         }
 
-        final portal = snapshot.data!;
+        final result = snapshot.data!;
 
-        if (portal.loggedIn) {
-          WidgetsBinding.instance!.addPostFrameCallback(
+        if (result.error != null) {
+          return Column(
+            children: [
+              SizedBox(height: 5.0),
+              Text(
+                result.error!,
+                style: TextStyle(color: helmsauerRot),
+              ),
+              Expanded(child: _form),
+            ],
+          );
+        }
+
+        if (result.portal != null) {
+          WidgetsBinding.instance.addPostFrameCallback(
             (_) => Navigator.of(context).pushReplacement(
               MaterialPageRoute(
-                builder: (context) => Pages(portal).home,
+                builder: (context) => Pages(result.portal!).home,
               ),
             ),
           );
@@ -108,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({Key? key, required this.login, required this.lastUserName}) : super(key: key);
+  _LoginForm({required this.login, required this.lastUserName});
 
   final _LoginFunc login;
   final String lastUserName;
@@ -134,27 +146,21 @@ class _LoginFormState extends State<_LoginForm> {
 
   _LoginFormState(this.login, this.user);
 
-  DropdownMenuItem<String> _gruppeItem(String id, String name) => DropdownMenuItem(
-        child: Text(
-          name,
-          overflow: TextOverflow.ellipsis,
-        ),
-        value: id,
-      );
-
   @override
   Widget build(BuildContext context) {
     final gruppeField = DropdownButton<String>(
       isExpanded: true,
-      items: [
-        _gruppeItem("hk", "Helmsauer Assekuranzmakler AG"),
-        _gruppeItem("sue", "Dr. Schmidt & Erdsiek Versicherungsmakler"),
-        _gruppeItem("jade", "Dr. Schmidt & Erdsiek (Ex-Jade)"),
-        _gruppeItem("bbg", "Dr. Schmidt & Erdsiek (Ex-Berenberg-Gossler)"),
-        _gruppeItem("aewz", "Ärzte Wirtschaftszentrum Köln"),
-        _gruppeItem("hp", "Helmsauer und Preuß GmbH"),
-        _gruppeItem("myh", "myHelmsauer"),
-      ],
+      items: FirmenGruppe.all
+          .map(
+            (fg) => DropdownMenuItem(
+              child: Text(
+                fg.name,
+                overflow: TextOverflow.ellipsis,
+              ),
+              value: fg.id,
+            ),
+          )
+          .toList(),
       value: gruppe,
       onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),
     );
