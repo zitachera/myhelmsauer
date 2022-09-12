@@ -55,7 +55,7 @@ class ContactPage extends StatelessWidget {
               color: helmsauerBlau,
             ),
             label: _web,
-            url: 'http://$_web',
+            url: 'https://$_web',
           ),
           _Button(
             child: Text("Nachricht schreiben"),
