@@ -1,7 +1,7 @@
 package proclient
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
@@ -50,7 +50,7 @@ func (c Client) GetDokument(addressID, dokumentID string) (contentType string, b
 	}
 	defer resp.Body.Close()
 
-	body, err = ioutil.ReadAll(resp.Body)
+	body, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return "", nil, err
 	}
