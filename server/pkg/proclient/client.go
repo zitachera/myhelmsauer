@@ -12,10 +12,7 @@ type Client struct {
 	User       string
 	Password   string
 	Gruppe     string
-	SubAccount string
-	// PasswordHash is a hash of the SubAccount accounts password
-	PasswordHash string
-	VertragIds   map[string]struct{}
+	VertragIds map[string]struct{}
 }
 
 func (c Client) request(query string, res interface{}) error {

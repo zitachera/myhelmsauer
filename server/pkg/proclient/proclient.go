@@ -2,6 +2,8 @@ package proclient
 
 import (
 	"errors"
+	"fmt"
+	"net/url"
 )
 
 // Vertrag is a ProClient Vertrag.
@@ -137,4 +139,24 @@ func (c Client) GetVertrag(id string) (Vertrag, error) {
 		}
 	}
 	return Vertrag{}, errors.New("Vertrag " + id + " not found")
+}
+
+// ChangePassword changes the password of the current user or returns an error.
+func (c Client) ChangePassword(newPassword string) error {
+	var response struct {
+		Success bool `xml:"Success"`
+	}
+
+	if err := c.postForm(url.Values{
+		"Query":       {"SetPassword"},
+		"Username":    {c.User},
+		"Password":    {c.Password},
+		"NewPassword": {newPassword},
+	}, &response); err != nil {
+		return err
+	}
+	if !response.Success {
+		return fmt.Errorf("failed to change password")
+	}
+	return nil
 }

@@ -45,6 +45,9 @@ func main() {
 		r.Route("/info", func(r chi.Router) {
 			handle.Get(r, "/", account.Info)
 		})
+		r.Route("/password", func(r chi.Router) {
+			handle.Post(r, "/", account.ChangePassword)
+		})
 		r.Route("/verträge", func(r chi.Router) {
 			handle.Get(r, "/", api.Verträge)
 		})

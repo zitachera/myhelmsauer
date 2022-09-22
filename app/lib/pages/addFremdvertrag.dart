@@ -201,7 +201,7 @@ class _SendDialog extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
-            child: Text('Bite senden Sie den Antrag erneut.'),
+            child: Text('Bitte senden Sie den Antrag erneut.'),
           ),
           MaterialButton(
             onPressed: () => nav.pop(),

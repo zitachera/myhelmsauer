@@ -9,6 +9,7 @@ class NewsPage extends StatefulWidget {
     required this.bottomNavigationBar,
     required this.onRefresh,
     required this.logout,
+    required this.changePW,
   });
 
   @override
@@ -19,6 +20,8 @@ class NewsPage extends StatefulWidget {
   final Future<void> Function() onRefresh;
 
   final void Function(BuildContext) logout;
+
+  final void Function(BuildContext) changePW;
 }
 
 class _NewsPageState extends State<NewsPage> {
@@ -29,25 +32,41 @@ class _NewsPageState extends State<NewsPage> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            OutlinedButton(
-              onPressed: () => widget.logout(context),
-              child: Row(
-                children: [
-                  Padding(
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlinedButton(
+                  onPressed: () => widget.changePW(context),
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Log out",
-                      style: TextStyle(
-                        color: helmsauerRot,
+                    child: Text("Passwort ändern"),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () => widget.logout(context),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Log out",
+                        style: TextStyle(
+                          color: helmsauerRot,
+                        ),
                       ),
                     ),
-                  ),
-                  Icon(
-                    Icons.logout,
-                    color: helmsauerRot,
-                  ),
-                ],
+                    Icon(
+                      Icons.logout,
+                      color: helmsauerRot,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

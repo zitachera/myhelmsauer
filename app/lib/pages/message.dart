@@ -139,7 +139,7 @@ class _SendDialog extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
-            child: Text('Bite versuchen Sie es später erneut.'),
+            child: Text('Bitte versuchen Sie es später erneut.'),
           ),
           MaterialButton(
             onPressed: () => nav.pop(),

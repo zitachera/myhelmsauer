@@ -5,7 +5,7 @@
 ### Logs ansehen
 
 ```bash
-journalctl --unit schadenmelder
+sudo journalctl -f --unit schadenmelder
 ```
 
 ### Backup-Logs kopieren

@@ -13,6 +13,36 @@ GET https://schadenmeldung.helmsauer-gruppe.de/api/v1/verträge HTTP/1.1
 content-type: application/json
 authorization: 699fcccc-3c34-465e-8922-b94fa7675edd
 
+### login prod maxmustermann
+POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/login HTTP/1.1
+content-type: application/json
+
+{
+    "user":"maxmustermann",
+    "password":"ad45XV78?",
+    "gruppe":"hk"
+}
+
+### change pw prod maxmustermann
+POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: 7e1eda74-9770-4a1b-9b9a-587ba11df3e8
+
+{
+    "oldPassword":"ad45XV78?",
+    "newPassword":"7f59a154969f"
+}
+
+### change back pw prod maxmustermann
+POST https://schadenmeldung.helmsauer-gruppe.de/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: 7e1eda74-9770-4a1b-9b9a-587ba11df3e8
+
+{
+    "oldPassword":"7f59a154969f",
+    "newPassword":"ad45XV78?"
+}
+
 
 ##################### test #####################
 
@@ -34,6 +64,26 @@ content-type: application/json
     "user":"maxmustermann",
     "password":"ad45XV78?",
     "gruppe":"hk"
+}
+
+### change pw testserver maxmustermann
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: 3f09cfd9-3529-4a09-98ec-ffa0421818c4
+
+{
+    "oldPassword":"ad45XV78?",
+    "newPassword":"7f59a154969f"
+}
+
+### change back pw testserver maxmustermann
+POST https://testschadenmeldung.helmsauer-gruppe.de/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: 3f09cfd9-3529-4a09-98ec-ffa0421818c4
+
+{
+    "oldPassword":"7f59a154969f",
+    "newPassword":"ad45XV78?"
 }
 
 ### verträge testserver demo
@@ -150,6 +200,37 @@ content-type: application/json
     "password":"Demo90443HK",
     "gruppe":"hk"
 }
+
+### login local maxmustermann
+POST http://localhost:8080/api/v1/login HTTP/1.1
+content-type: application/json
+
+{
+    "user":"mariamustermann",
+    "password":"!Start1234!",
+    "gruppe":"sue"
+}
+
+### change pw local maxmustermann
+POST http://localhost:8080/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: a6b58f4d-9a3c-47c4-97e6-028e961aa159
+
+{
+    "oldPassword":"!Start1234!",
+    "newPassword":"7f59a154969f"
+}
+
+### change back pw local maxmustermann
+POST http://localhost:8080/api/v1/password HTTP/1.1
+content-type: application/json
+authorization: a6b58f4d-9a3c-47c4-97e6-028e961aa159
+
+{
+    "oldPassword":"7f59a154969f+ieee",
+    "newPassword":"!Start1234!"
+}
+
 
 ### verträge
 GET http://localhost:8080/api/v1/verträge HTTP/1.1

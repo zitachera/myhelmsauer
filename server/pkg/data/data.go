@@ -3,10 +3,10 @@ package data
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 
 	// import sqlite driver
 	_ "github.com/mattn/go-sqlite3"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
 
 var db *sql.DB
@@ -14,9 +14,9 @@ var db *sql.DB
 const MyHelmsauerGroup = "myh"
 
 // StoreCredentials stores given credentials in the database or returns an error
-func StoreCredentials(token string, c proclient.Client) error {
+func StoreCredentials(c Session) error {
 	_, err := db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
-		token,
+		c.AuthToken,
 		c.User,
 		c.Password,
 		c.Gruppe)
@@ -34,57 +34,106 @@ func StoreSubAccountToken(token, account string) error {
 }
 
 // LoadCredentials loads the credentials for given token.
-func LoadCredentials(token string) (proclient.Client, error) {
-	var c proclient.Client
+func LoadCredentials(token string) (Session, error) {
+	var c Session
+	c.AuthToken = token
 	rows, err := db.Query("select User, Password, Portal from Credential where Token = ?", token)
 	if err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	defer rows.Close()
 	if !rows.Next() {
-		return proclient.Client{}, errors.New("unknown login token")
+		return Session{}, errors.New("unknown login token")
 	}
 	if err := rows.Scan(&c.User, &c.Password, &c.Gruppe); err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	if err := rows.Close(); err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	if c.Gruppe == MyHelmsauerGroup {
-		return LoadSubaccount(c.User)
+		return LoadSubaccount(token, c.User)
 	}
 
 	return c, nil
 }
 
 // LoadSubaccount returns a sub account with the given name or an error.
-func LoadSubaccount(subAccountName string) (client proclient.Client, err error) {
-	var c proclient.Client
+func LoadSubaccount(token, subAccountName string) (Session, error) {
+	var c Session
+	c.AuthToken = token
 	rows, err := db.Query("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName)
 	if err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	defer rows.Close()
 	if !rows.Next() {
-		return proclient.Client{}, errors.New("unknown user")
+		return Session{}, errors.New("unknown user")
 	}
 	c.SubAccount = subAccountName
 	if err := rows.Scan(&c.PasswordHash, &c.User, &c.Password, &c.Gruppe); err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	if err := rows.Close(); err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	vertragIds, err := LoadVertragIds(subAccountName)
 
 	if err != nil {
-		return proclient.Client{}, err
+		return Session{}, err
 	}
 	c.VertragIds = map[string]struct{}{}
 	for _, id := range vertragIds {
 		c.VertragIds[id] = struct{}{}
 	}
 	return c, nil
+}
+
+// UpdateCredentials updates given credentials in the database.
+// It updates all subaccounts and removes other stored credentials for this account.
+func UpdateCredentials(c Session) error {
+	if _, err := db.Exec("update Credential set Password=? where Token=? and User=? and Portal=?",
+		c.Password,
+		c.AuthToken,
+		c.User,
+		c.Gruppe); err != nil {
+		return err
+	}
+	fmt.Println(c.Password,
+		c.AuthToken,
+		c.User,
+		c.Gruppe)
+	if _, err := db.Exec("update SubAccount set MainPassword=? where MainUser=? and Portal=?",
+		c.Password,
+		c.User,
+		c.Gruppe); err != nil {
+		return err
+	}
+	if _, err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
+		c.User,
+		c.AuthToken,
+		c.Gruppe); err != nil {
+		return err
+	}
+	return nil
+}
+
+// UpdateSubCredentials updates given credentials for the subaccount in the database.
+// It removes other stored credentials for this subaccount.
+func UpdateSubCredentials(c Session) error {
+	if _, err := db.Exec("update SubAccount set Passhash=? where Name=?",
+		c.PasswordHash,
+		c.SubAccount,
+		c.Gruppe); err != nil {
+		return err
+	}
+	if _, err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
+		c.SubAccount,
+		c.AuthToken,
+		c.Gruppe); err != nil {
+		return err
+	}
+	return nil
 }
 
 // LoadVertragIds returns a slice of the vertrag ids of the user with given account name or an error.

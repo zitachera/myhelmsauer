@@ -1,3 +1,4 @@
+import 'package:customer_portal_app/pages/settings/change_password.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/addFremdvertrag.dart';
@@ -42,6 +43,13 @@ class Pages {
             ),
           );
         },
+        changePW: (context) => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ChangePasswordPage(
+              portal: portal,
+            ),
+          ),
+        ),
       );
 
   Widget vertraege(Future<void> Function() onRefresh, Widget bottomNavigationBar) => VertraegePage(

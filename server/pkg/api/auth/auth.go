@@ -66,13 +66,13 @@ func AdminTokenChecker() func(next http.Handler) http.Handler {
 }
 
 // GetClientFromRequest returns the ProClient of the middleware CredentialChecker.
-func GetClientFromRequest(r *http.Request) proclient.Client {
+func GetClientFromRequest(r *http.Request) data.Session {
 	return GetClient(r.Context())
 }
 
 // GetClient returns the ProClient of the middleware CredentialChecker.
-func GetClient(ctx context.Context) proclient.Client {
-	return ctx.Value(proclientKey).(proclient.Client)
+func GetClient(ctx context.Context) data.Session {
+	return ctx.Value(proclientKey).(data.Session)
 }
 
 type requestLogin struct {
@@ -108,7 +108,10 @@ func Login(ctx context.Context, l requestLogin) (responseLogin, error) {
 
 	token := uuid.New().String()
 
-	data.StoreCredentials(token, client)
+	data.StoreCredentials(data.Session{
+		AuthToken: token,
+		Client:    client,
+	})
 
 	return responseLogin{
 		Token: token,
@@ -116,7 +119,7 @@ func Login(ctx context.Context, l requestLogin) (responseLogin, error) {
 }
 
 func loginMyHelmsauerAccount(user, pw string) (responseLogin, error) {
-	account, err := data.LoadSubaccount(user)
+	account, err := data.LoadSubaccount(uuid.New().String(), user)
 	if err != nil {
 		return responseLogin{}, err
 	}
@@ -127,12 +130,10 @@ func loginMyHelmsauerAccount(user, pw string) (responseLogin, error) {
 		}
 	}
 
-	token := uuid.New().String()
-
-	data.StoreSubAccountToken(token, account.SubAccount)
+	data.StoreSubAccountToken(account.AuthToken, account.SubAccount)
 
 	return responseLogin{
-		Token: token,
+		Token: account.AuthToken,
 	}, nil
 }
 

@@ -425,7 +425,7 @@ class _SendDialog extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
-            child: Text('Bite senden Sie die $subject erneut.'),
+            child: Text('Bitte senden Sie die $subject erneut.'),
           ),
           MaterialButton(
             onPressed: () => nav.pop(),
