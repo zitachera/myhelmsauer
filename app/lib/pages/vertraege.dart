@@ -78,17 +78,30 @@ class _VertraegePageState extends State<VertraegePage> {
             .map(
               (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),
-        SizedBox(height: 60),
+        SizedBox(height: 20),
+        OutlinedButton(
+          onPressed: () => widget.erfasseFremdvertrag(context),
+          child: Row(
+            children: [
+              const Icon(Icons.add_moderator),
+              Expanded(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Nicht von der Helmsauer-Gruppe betreuten Versicherungsvertrag für elektronische Kundenakte erfassen (Fremdvertrag)',
+                    softWrap: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
     return HsSingleChildScrollScaffold(
       title: "Vertragsübersicht",
       body: content,
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => widget.erfasseFremdvertrag(context),
-        label: Text('Fremdvertrag erfassen'),
-        icon: const Icon(Icons.add_moderator),
-      ),
       onRefresh: widget.onRefresh,
       bottomNavigationBar: widget.bottomNavigationBar,
     );

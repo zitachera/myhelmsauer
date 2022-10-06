@@ -72,18 +72,21 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
           Checkbox(
               value: integrieren,
               onChanged: (selected) => setState(() => integrieren = selected == true)),
-          Text("Vertrag bitte dauerhaft speichern")
+          Expanded(
+            child: Text("Vertrag in elektronische Kundenakte aufnehmen"),
+          )
         ],
       ),
       Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Checkbox(
               value: vergleichsangebotErstellen,
               onChanged: (selected) =>
                   setState(() => vergleichsangebotErstellen = selected == true)),
-          Text(
-            "Bitte zusätzlich Vergleichsangebot erstellen",
-            overflow: TextOverflow.fade,
+          Expanded(
+            child: Text("Bitte zusätzlich Vergleichsangebot erstellen"),
           )
         ],
       ),
@@ -108,7 +111,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
       body: Form(
         key: _formKey,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: children
               .map(
                 (w) => Padding(
