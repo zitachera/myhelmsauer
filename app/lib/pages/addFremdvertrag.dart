@@ -38,8 +38,8 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
     var children = <Widget>[
       PhotoCollectionField(
         images: aufnahmen,
-        labelAdd: "Aufnahme hinzufügen",
-        label: "Aufnahme",
+        labelAdd: "Vertragsscan hinzufügen",
+        label: "Vertragsscan",
         onDelete: (i) => setState(() => aufnahmen.removeAt(i)),
         onAdd: (image) => setState(() => aufnahmen.add(image)),
         // infoAdd: beschreibung,
