@@ -67,6 +67,10 @@ func (c Client) url() string {
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_detmer/CustomerQuery.aspx"
 	case "hp":
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_hp/CustomerQuery.aspx"
+	case "idf":
+		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_idf/CustomerQuery.aspx"
+	case "ufb":
+		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_ufb/CustomerQuery.aspx"
 	}
 }
 
@@ -75,9 +79,9 @@ func (c Client) PortalName() string {
 	default:
 		fallthrough
 	case "hk":
-		return "Helmsauer Assekuranzmakler AG"
+		return "Helmsauer & Kollegen"
 	case "jade":
-		return "Dr. Schmidt & Erdsiek Versicherungsmakler"
+		return "Dr. Schmidt & Erdsiek"
 	case "sue":
 		return "Dr. Schmidt & Erdsiek (Ex-Jade)"
 	case "bbg":
@@ -85,9 +89,13 @@ func (c Client) PortalName() string {
 	case "detmer":
 		fallthrough
 	case "aewz":
-		return "Ärzte Wirtschaftszentrum Köln"
+		return "AEWZ Ärzte-Wirtschafts-Zentrum"
 	case "hp":
-		return "Helmsauer und Preuß GmbH"
+		return "Helmsauer & Preuß"
+	case "idf":
+		return "Ingenieur-Dienst-Finanzberatung"
+	case "ufb":
+		return "UFB:UMU"
 	}
 }
 

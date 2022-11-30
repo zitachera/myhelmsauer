@@ -5,10 +5,12 @@ class FirmenGruppe {
   FirmenGruppe._(this.id, this.name);
 
   static final List<FirmenGruppe> all = [
-    FirmenGruppe._("hk", "Helmsauer Assekuranzmakler AG"),
-    FirmenGruppe._("sue", "Dr. Schmidt & Erdsiek Versicherungsmakler"),
-    FirmenGruppe._("aewz", "Ärzte Wirtschaftszentrum Köln"),
-    FirmenGruppe._("hp", "Helmsauer und Preuß GmbH"),
+    FirmenGruppe._("hk", "Helmsauer & Kollegen"),
+    FirmenGruppe._("sue", "Dr. Schmidt & Erdsiek"),
+    FirmenGruppe._("aewz", "AEWZ Ärzte-Wirtschafts-Zentrum"),
+    FirmenGruppe._("hp", "Helmsauer & Preuß"),
+    FirmenGruppe._("idf", "Ingenieur-Dienst-Finanzberatung"),
+    FirmenGruppe._("ufb", "UFB:UMU"),
     FirmenGruppe._("myh", "myHelmsauer"),
   ];
 
