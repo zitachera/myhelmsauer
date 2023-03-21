@@ -1,7 +1,8 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pdf_render/pdf_render_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class NewsPage extends StatefulWidget {
   NewsPage({
@@ -25,6 +26,38 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            // if (request.url.startsWith('https://www.youtube.com/')) {
+            //   return NavigationDecision.prevent;
+            // }
+            launchUrl(
+              Uri.parse(request.url),
+              mode: LaunchMode.externalApplication,
+            );
+            return NavigationDecision.prevent;
+            //return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse('https://www.helmsauer-gruppe.de/?headless=1'));
+  }
+
   @override
   Widget build(BuildContext context) {
     final content = Column(
@@ -71,154 +104,7 @@ class _NewsPageState extends State<NewsPage> {
             ),
           ],
         ),
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  "images/siegel/1.png",
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  "images/siegel/2.png",
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  "images/siegel/3.png",
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              flex: 1,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  "images/siegel/4.png",
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              flex: 1,
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(4),
-          child: MaterialButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            padding: EdgeInsets.zero,
-            color: Color.fromARGB(255, 241, 244, 247),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Scaffold(
-                  appBar: new AppBar(
-                    title: Text("Cyberkriminalität"),
-                  ),
-                  backgroundColor: Colors.grey,
-                  body: PdfViewer.openAsset("images/cyber.pdf"),
-                ),
-              ),
-            ),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
-                    "images/cyber.jpg",
-                    fit: BoxFit.fitWidth,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Cyberkriminalität – so schützen Sie Ihr Unternehmen!",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        _faqTop(
-          SvgPicture.asset(
-            "images/menu/aktuelles.svg",
-            color: Colors.white,
-          ),
-          "FAQ",
-        ),
-        _faqMiddle(
-          SvgPicture.asset(
-            "images/menu/smartphone.svg",
-            color: helmsauerBlau,
-          ),
-          "Auf der myHelmsauer Startseite finden Sie im Newsbereich wechselnde " +
-              "Artikel zu interessanten Versicherungsthemen.",
-        ),
-        _faqMiddle(
-          SvgPicture.asset(
-            "images/menu/vertrag.svg",
-            color: helmsauerBlau,
-          ),
-          "In Ihrer Vertragsübersicht haben Sie Zugriff auf " +
-              "all Ihre bestehenden Versicherungsverträge und " +
-              "finden nähere Informationen dazu.",
-        ),
-        _faqMiddle(
-          SvgPicture.asset(
-            "images/menu/schaden.svg",
-            color: helmsauerBlau,
-          ),
-          "Für einige Sparten können Sie schnell und unkompliziert " +
-              "eine Schadenmeldung vornehmen. " +
-              "Weitere Sparten werden zeitnah hinzugefügt.",
-        ),
-        _faqMiddle(
-          SvgPicture.asset(
-            "images/menu/kontakt.svg",
-            color: helmsauerBlau,
-          ),
-          "Über verschiedene Wege können Sie direkt mit " +
-              "uns in Verbindung treten. Wann, wo und so oft " +
-              "Sie wollen. Wir sind gerne für Sie da!",
-        ),
-        _faqMiddle(
-          SvgPicture.asset(
-            "images/menu/idee.svg",
-            color: helmsauerBlau,
-          ),
-          "Viele Zusatzfunktionen werden Ihnen bald zur " +
-              "Verfügung stehen. Wir arbeiten permanent an " +
-              "der App um Ihnen den bestmöglichen Service " +
-              "zu bieten.",
-        ),
-        _faqBottom(
-          SvgPicture.asset(
-            "images/menu/kontakt.svg",
-            color: helmsauerBlau,
-          ),
-          "Bei Fragen oder Anregungen wenden Sie sich gerne " +
-              "an uns. Sie erreichen uns im Reiter Kontakt.",
-        ),
+        Expanded(child: WebViewWidget(controller: _controller)),
       ],
     );
     return Scaffold(
@@ -246,124 +132,8 @@ class _NewsPageState extends State<NewsPage> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: RefreshIndicator(
-              onRefresh: widget.onRefresh,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.all(10),
-                child: content,
-              ),
-            ),
-          ),
-        ],
-      ),
+      body: content,
       bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
-
-  Widget _faqTop(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
-          color: helmsauerBlau,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-        ),
-        margin: EdgeInsets.all(2),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: icon,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _faqMiddle(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
-          color: Color.fromARGB(255, 241, 244, 247),
-        ),
-        margin: EdgeInsets.all(2),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: icon,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: dunklesBlau,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _faqBottom(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
-          color: Color.fromARGB(255, 241, 244, 247),
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
-        ),
-        margin: EdgeInsets.all(2),
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 50,
-                height: 50,
-                child: FittedBox(
-                  child: icon,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: dunklesBlau,
-                  ),
-                  maxLines: 50,
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
 }
