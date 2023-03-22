@@ -24,6 +24,9 @@ class _LoginPageState extends State<LoginPage> {
     return _LoginForm(
       login: (user, password, gruppe) => setState(() {
         loader = () async {
+          if (gruppe == null) {
+            return LoginResult(error: "Keine Firmengruppe ausgewählt!");
+          }
           return await Session.login(user, password, gruppe);
         }();
         loaderKey = UniqueKey();
@@ -129,7 +132,7 @@ class _LoginForm extends StatefulWidget {
   _LoginFormState createState() => _LoginFormState(login, lastUserName);
 }
 
-typedef _LoginFunc = void Function(String user, String password, String gruppe);
+typedef _LoginFunc = void Function(String user, String password, String? gruppe);
 
 class _LoginFormState extends State<_LoginForm> {
   TextStyle style = TextStyle(
@@ -139,8 +142,7 @@ class _LoginFormState extends State<_LoginForm> {
 
   String user = "";
   String password = "";
-  String gruppe = defaultgruppe;
-  static const defaultgruppe = "hk";
+  String? gruppe;
 
   final _LoginFunc login;
 
@@ -150,6 +152,7 @@ class _LoginFormState extends State<_LoginForm> {
   Widget build(BuildContext context) {
     final gruppeField = DropdownButton<String>(
       isExpanded: true,
+      hint: Text("Bitte wählen Sie ihre Firmengruppe aus."),
       items: FirmenGruppe.all
           .map(
             (fg) => DropdownMenuItem(
@@ -162,7 +165,7 @@ class _LoginFormState extends State<_LoginForm> {
           )
           .toList(),
       value: gruppe,
-      onChanged: (s) => setState(() => gruppe = s ?? defaultgruppe),
+      onChanged: (s) => setState(() => gruppe = s),
     );
 
     final userField = TextFormField(
