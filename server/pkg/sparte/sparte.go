@@ -57,7 +57,7 @@ func ByProClientID(proClientSparte string) Sparte {
 		"SPN_S8E0WMGB4":
 		return sparteWohngebäude
 	}
-	return Sparte{SpartenID: proClientSparte, MeldeTemplates: []melde.Template{}}
+	return sparteDefault
 }
 
 func schadenTemplate(fs ...melde.Feld) melde.Template {
