@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<LoginResult> loader = Session.restore();
   Key loaderKey = UniqueKey();
 
+  String? lastGruppe = null;
   String lastUserName = "";
 
   _LoginForm get _form {
@@ -30,8 +31,10 @@ class _LoginPageState extends State<LoginPage> {
           return await Session.login(user, password, gruppe);
         }();
         loaderKey = UniqueKey();
+        lastGruppe = gruppe;
         lastUserName = user;
       }),
+      lastGruppe: lastGruppe,
       lastUserName: lastUserName,
     );
   }
@@ -123,13 +126,14 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({required this.login, required this.lastUserName});
+  _LoginForm({required this.login, required this.lastGruppe, required this.lastUserName});
 
   final _LoginFunc login;
+  final String? lastGruppe;
   final String lastUserName;
 
   @override
-  _LoginFormState createState() => _LoginFormState(login, lastUserName);
+  _LoginFormState createState() => _LoginFormState(login, lastGruppe, lastUserName);
 }
 
 typedef _LoginFunc = void Function(String user, String password, String? gruppe);
@@ -146,7 +150,7 @@ class _LoginFormState extends State<_LoginForm> {
 
   final _LoginFunc login;
 
-  _LoginFormState(this.login, this.user);
+  _LoginFormState(this.login, this.gruppe, this.user);
 
   @override
   Widget build(BuildContext context) {
