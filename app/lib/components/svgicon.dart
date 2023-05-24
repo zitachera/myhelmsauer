@@ -14,7 +14,7 @@ class SvgIcon extends StatelessWidget {
       asset,
       height: theme.size,
       width: theme.size,
-      color: color ?? theme.color,
+      colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
     );
   }
 }

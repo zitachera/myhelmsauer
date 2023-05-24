@@ -124,7 +124,7 @@ class _RemindPageState extends State<RemindPage> {
               SizedBox(height: 25.0),
               Text(
                 "Bitte beachten Sie, dass Ihre neuen Zugangsdaten auf dem postalischen Weg übermittelt werden.",
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(height: 25.0),
               remindButton,

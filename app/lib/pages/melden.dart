@@ -134,12 +134,12 @@ class _MeldenState extends State<MeldenPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-              child: Text(f.label, style: Theme.of(context).textTheme.headline2),
+              child: Text(f.label, style: Theme.of(context).textTheme.displayMedium),
             ),
             if (f.beschreibung != "")
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Text(f.beschreibung, style: Theme.of(context).textTheme.bodyText1),
+                child: Text(f.beschreibung, style: Theme.of(context).textTheme.bodyMedium),
               ),
           ],
         );
@@ -171,7 +171,7 @@ class _MeldenState extends State<MeldenPage> {
             ),
             child: Text(
               timeFormat.format(zeitpunkt),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             onPressed: () => _selectTime(context),
           ),
@@ -185,7 +185,7 @@ class _MeldenState extends State<MeldenPage> {
             ),
             child: Text(
               dateFormat.format(zeitpunkt),
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             onPressed: () => _selectDate(context),
           ),
@@ -307,7 +307,7 @@ class _MultiLine extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Text(
               caption + ":",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           child,
@@ -337,7 +337,7 @@ class _Line extends StatelessWidget {
           Expanded(
             child: Text(
               caption + ":",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             flex: 1,
           ),
@@ -375,7 +375,7 @@ class _InvertedLine extends StatelessWidget {
           Expanded(
             child: Text(
               caption,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             flex: 2,
           ),

@@ -1,7 +1,6 @@
 import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class NewsPage extends StatefulWidget {
@@ -31,6 +30,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
+    const uri = 'https://www.helmsauer-gruppe.de/?headless=1';
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0x00000000))
@@ -43,19 +43,18 @@ class _NewsPageState extends State<NewsPage> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            // if (request.url.startsWith('https://www.youtube.com/')) {
-            //   return NavigationDecision.prevent;
-            // }
+            if (request.url.startsWith(uri)) {
+              return NavigationDecision.navigate;
+            }
             launchUrl(
               Uri.parse(request.url),
               mode: LaunchMode.externalApplication,
             );
             return NavigationDecision.prevent;
-            //return NavigationDecision.navigate;
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://www.helmsauer-gruppe.de/?headless=1'));
+      ..loadRequest(Uri.parse(uri));
   }
 
   @override

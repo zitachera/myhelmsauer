@@ -237,7 +237,7 @@ class _LoginFormState extends State<_LoginForm> {
     final remind = MaterialButton(
       child: Text(
         "Passwort vergessen",
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       onPressed: () => {
         Navigator.push(

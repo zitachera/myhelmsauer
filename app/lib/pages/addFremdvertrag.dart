@@ -47,7 +47,7 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
       ),
       Text(
         "Dateien:",
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
       for (var v in files.keys)
         Row(

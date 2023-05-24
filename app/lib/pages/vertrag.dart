@@ -23,7 +23,7 @@ class VertragPage extends StatelessWidget {
     return HsSingleChildScrollScaffold(
       title: 'Vertragsinfo',
       body: DefaultTextStyle(
-        style: Theme.of(context).textTheme.bodyText1!,
+        style: Theme.of(context).textTheme.bodyMedium!,
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Column(

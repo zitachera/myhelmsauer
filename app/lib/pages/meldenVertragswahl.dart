@@ -37,7 +37,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
           padding: const EdgeInsets.only(top: 8, bottom: 14),
           child: Text(
             "Zu welchen Vertrag möchten Sie einen Schaden melden?",
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         if (vertraege.length >= 5)

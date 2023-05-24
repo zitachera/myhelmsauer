@@ -26,6 +26,7 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const filter = ColorFilter.mode(helmsauerBlau, BlendMode.srcIn);
     final content = StretchScroll(
       onRefresh: onRefresh,
       children: <Widget>[
@@ -34,7 +35,7 @@ class ContactPage extends StatelessWidget {
             caption: "Telefon",
             icon: SvgPicture.asset(
               "images/menu/telefon.svg",
-              color: helmsauerBlau,
+              colorFilter: filter,
             ),
             label: _phone,
             url: 'tel://$_phone',
@@ -43,7 +44,7 @@ class ContactPage extends StatelessWidget {
             caption: "Mail",
             icon: SvgPicture.asset(
               "images/menu/email.svg",
-              color: helmsauerBlau,
+              colorFilter: filter,
             ),
             label: _mail,
             url: 'mailto://$_mail',
@@ -52,7 +53,7 @@ class ContactPage extends StatelessWidget {
             caption: "Website",
             icon: SvgPicture.asset(
               "images/menu/webadresse.svg",
-              color: helmsauerBlau,
+              colorFilter: filter,
             ),
             label: _web,
             url: 'https://$_web',
@@ -67,7 +68,7 @@ class ContactPage extends StatelessWidget {
             ),
             icon: SvgPicture.asset(
               "images/menu/chat.svg",
-              color: helmsauerBlau,
+              colorFilter: filter,
             ),
           ),
         ]),

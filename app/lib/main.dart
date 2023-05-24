@@ -16,25 +16,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: helmsauerBlau,
         secondaryHeaderColor: helmsauerRot,
-        bottomAppBarColor: helmsauerBlau,
+        bottomAppBarTheme: BottomAppBarTheme(color: helmsauerBlau),
         primaryColorDark: dunklesBlau,
         fontFamily: "OpenSans",
         textTheme: TextTheme(
-          headline1: TextStyle(
+          displayLarge: TextStyle(
             fontSize: 26,
             color: dunklesBlau,
             fontWeight: FontWeight.w500,
           ),
-          headline2: TextStyle(
+          displayMedium: TextStyle(
             fontSize: 22,
             color: dunklesBlau,
             fontWeight: FontWeight.w500,
           ),
-          bodyText1: TextStyle(
+          bodyMedium: TextStyle(
             fontSize: 18,
             color: dunklesBlau,
           ),
-          button: TextStyle(
+          labelLarge: TextStyle(
             fontSize: 18,
             color: dunklesBlau,
             fontWeight: FontWeight.w600,
