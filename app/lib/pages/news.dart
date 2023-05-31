@@ -43,7 +43,7 @@ class _NewsPageState extends State<NewsPage> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith(uri)) {
+            if (request.url.startsWith(uri) || !request.isMainFrame) {
               return NavigationDecision.navigate;
             }
             launchUrl(
