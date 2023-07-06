@@ -75,14 +75,18 @@ func (c Client) url() string {
 }
 
 func (c Client) PortalName() string {
-	switch c.Gruppe {
+	return PortalName(c.Gruppe)
+}
+
+func PortalName(gruppe string) string {
+	switch gruppe {
 	default:
 		fallthrough
 	case "hk":
 		return "Helmsauer & Kollegen"
-	case "jade":
-		return "Dr. Schmidt & Erdsiek"
 	case "sue":
+		return "Dr. Schmidt & Erdsiek"
+	case "jade":
 		return "Dr. Schmidt & Erdsiek (Ex-Jade)"
 	case "bbg":
 		return "Dr. Schmidt & Erdsiek (Ex-Berenberg-Gossler)"

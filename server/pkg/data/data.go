@@ -7,6 +7,7 @@ import (
 
 	// import sqlite driver
 	_ "github.com/mattn/go-sqlite3"
+	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
 )
 
 var db *sql.DB
@@ -166,10 +167,30 @@ func UniqueLogins() (int, error) {
 	}
 	defer rows.Close()
 	if !rows.Next() {
-		return 0, errors.New("unknown login token")
+		return 0, errors.New("invalid count query result")
 	}
 	if err := rows.Scan(&n); err != nil {
 		return 0, err
 	}
 	return n, nil
+}
+
+// UniqueLoginsByPortal returns the number of unique logins.
+func UniqueLoginsByPortal() (map[string]int, error) {
+	rows, err := db.Query("select count (*), Portal from (select distinct User, Portal from Credential) GROUP BY Portal")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	res := make(map[string]int)
+	for rows.Next() {
+		var n int
+		var portal string
+		if err := rows.Scan(&n, &portal); err != nil {
+			return nil, err
+		}
+		fullname := proclient.PortalName(portal)
+		res[fullname] += n
+	}
+	return res, nil
 }

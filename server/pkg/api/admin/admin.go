@@ -128,7 +128,8 @@ func PutVerträge(ctx context.Context, vertragIds []string) ([]string, error) {
 }
 
 type stats struct {
-	UniqueLogins int
+	UniqueLogins         int
+	UniqueLoginsByPortal map[string]int
 }
 
 func Stats(ctx context.Context) (stats, error) {
@@ -136,8 +137,13 @@ func Stats(ctx context.Context) (stats, error) {
 	if err != nil {
 		return stats{}, err
 	}
+	byPortal, err := data.UniqueLoginsByPortal()
+	if err != nil {
+		return stats{}, err
+	}
 
 	return stats{
-		UniqueLogins: n,
+		UniqueLogins:         n,
+		UniqueLoginsByPortal: byPortal,
 	}, nil
 }
