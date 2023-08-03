@@ -9,11 +9,11 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/hashicorp/go-version"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/account"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/admin"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/account"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/admin"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
 )
 
 var testserver = flag.Bool("testserver", false, "Startet den Server mit einer test config.")

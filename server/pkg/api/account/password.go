@@ -3,9 +3,9 @@ package account
 import (
 	"context"
 
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/data"
 )
 
 type ChangePasswordRequest struct {

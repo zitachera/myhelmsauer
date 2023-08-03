@@ -8,8 +8,8 @@ import (
 	"sort"
 	"strings"
 
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/mail"
 )
 
 func PostForeignVertrag(recipients []string) http.HandlerFunc {

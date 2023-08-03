@@ -11,9 +11,9 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/google/uuid"
 	"github.com/hashicorp/go-version"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/data"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/data"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/proclient"
 )
 
 type ctxKey int

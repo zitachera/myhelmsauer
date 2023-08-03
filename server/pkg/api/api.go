@@ -7,9 +7,9 @@ import (
 	"net/url"
 	"strings"
 
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/auth"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/api/handle"
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/sparte"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/sparte"
 )
 
 func Verträge(ctx context.Context) ([]vertrag, error) {

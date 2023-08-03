@@ -1,6 +1,6 @@
 package sparte
 
-import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/melde"
+import "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/melde"
 
 var sparteHaurat = Sparte{
 	SpartenID: "Hausrat",

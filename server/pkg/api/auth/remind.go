@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/mail"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/mail"
 )
 
 func PostRemind(recipients []string) http.HandlerFunc {

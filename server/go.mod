@@ -1,4 +1,4 @@
-module gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server
+module gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server
 
 go 1.18
 

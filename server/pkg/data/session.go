@@ -1,6 +1,6 @@
 package data
 
-import "gitlab.helmsauer2000.local/Portal/CustomerPortalApp/server/pkg/proclient"
+import "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/proclient"
 
 // Session data of an app user.
 type Session struct {
