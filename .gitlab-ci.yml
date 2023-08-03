@@ -23,6 +23,8 @@ stages:
 #     - go test -race $(go list ./... | grep -v /vendor/)
 
 compile:
+  rules:
+    - when: never
   stage: build
   script:
     - cd server
