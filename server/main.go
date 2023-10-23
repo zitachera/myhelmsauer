@@ -40,7 +40,7 @@ func main() {
 		r.Route("/admin", administration)
 
 		r = r.With(
-			auth.CredentialChecker(version.Must(version.NewSemver("1.9.0"))),
+			auth.CredentialChecker(version.Must(version.NewSemver("1.9.1"))),
 		)
 		r.Route("/info", func(r chi.Router) {
 			handle.Get(r, "/", account.Info)
