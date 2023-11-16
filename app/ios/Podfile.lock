@@ -42,6 +42,9 @@ PODS:
     - Flutter
   - package_info_plus (0.4.5):
     - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - pdf_render (0.0.1):
     - Flutter
   - SDWebImage (5.15.5):
@@ -60,6 +63,7 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - pdf_render (from `.symlinks/plugins/pdf_render/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
@@ -84,6 +88,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   pdf_render:
     :path: ".symlinks/plugins/pdf_render/ios"
   url_launcher_ios:
@@ -94,12 +100,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
-  file_picker: ce3938a0df3cc1ef404671531facef740d03f920
+  file_picker: 15fd9539e4eb735dc54bae8c0534a7a9511a03de
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   pdf_render: 0b4e1a615aab83ce88b26c57753049424908a755
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f

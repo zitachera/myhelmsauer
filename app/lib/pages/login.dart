@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<LoginResult> loader = Session.restore();
   Key loaderKey = UniqueKey();
 
-  String? lastGruppe = null;
+  String? lastGruppe;
   String lastUserName = "";
 
   _LoginForm get _form {

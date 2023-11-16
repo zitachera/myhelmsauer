@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
-import 'package:customer_portal_app/pages/images.dart';
+import 'package:customer_portal_app/components/images.dart';
 import 'package:flutter/material.dart';
 
 class MessagePage extends StatefulWidget {

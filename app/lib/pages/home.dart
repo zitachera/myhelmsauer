@@ -2,6 +2,8 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:flutter/material.dart';
 
+typedef PageFunc = Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar);
+
 class HomePage extends StatefulWidget {
   HomePage({
     super.key,
@@ -9,14 +11,15 @@ class HomePage extends StatefulWidget {
     required this.newsPage,
     required this.vertraegePage,
     required this.meldenPage,
+    required this.bestandVerzeichnisPage,
     required this.kontaktPage,
   });
   final Future<void> Function() reloadData;
-  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) newsPage;
-  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar)
-      vertraegePage;
-  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) meldenPage;
-  final Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar) kontaktPage;
+  final PageFunc newsPage;
+  final PageFunc vertraegePage;
+  final PageFunc meldenPage;
+  final PageFunc bestandVerzeichnisPage;
+  final PageFunc kontaktPage;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -55,6 +58,10 @@ class _HomePageState extends State<HomePage> {
           label: 'Schaden',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.auto_stories_outlined),
+          label: 'Verzeichnis',
+        ),
+        BottomNavigationBarItem(
           icon: SvgIcon("images/menu/kontakt.svg"),
           label: 'Kontakt',
         ),
@@ -73,6 +80,8 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return widget.meldenPage(_reload, bottomNavigationBar);
       case 3:
+        return widget.bestandVerzeichnisPage(_reload, bottomNavigationBar);
+      case 4:
         return widget.kontaktPage(_reload, bottomNavigationBar);
     }
     throw ("unknown tab index");

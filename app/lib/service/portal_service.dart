@@ -68,4 +68,18 @@ class PortalService {
         },
         body: jsonEncode(content),
       );
+
+  Future<http.Response> deleteRessource(String endpoint) => http.delete(
+        _uri(endpoint),
+        headers: {HttpHeaders.authorizationHeader: _token},
+      );
+
+  Future<http.Response> putRessource(String endpoint, Object content) => http.put(
+        _uri(endpoint),
+        headers: <String, String>{
+          HttpHeaders.authorizationHeader: _token,
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(content),
+      );
 }

@@ -127,7 +127,7 @@ class _Vertrag extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(5),
         elevation: 0,
-        color: const Color.fromRGBO(245, 245, 245, 1),
+        color: primaerGrau,
         onPressed: () => vertraegePage.viewVertrag(context, vertrag),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

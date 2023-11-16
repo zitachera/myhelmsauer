@@ -1,44 +1,43 @@
 package data
 
 import (
-	"database/sql"
 	"errors"
 	"fmt"
 
-	// import sqlite driver
-	_ "github.com/mattn/go-sqlite3"
 	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/proclient"
+	"gorm.io/gorm"
 )
 
-var db *sql.DB
+var db *gorm.DB
 
 const MyHelmsauerGroup = "myh"
 
 // StoreCredentials stores given credentials in the database or returns an error
 func StoreCredentials(c Session) error {
-	_, err := db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
+	fmt.Println(c)
+	return db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
 		c.AuthToken,
 		c.User,
 		c.Password,
-		c.Gruppe)
-	return err
+		c.Gruppe,
+	).Error
 }
 
 // StoreSubAccountToken stores given access token for given user in the database or returns an error
 func StoreSubAccountToken(token, account string) error {
-	_, err := db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
+	return db.Exec("insert into Credential (Token, User, Password, Portal) values (?,?,?,?)",
 		token,
 		account,
 		"",
-		MyHelmsauerGroup)
-	return err
+		MyHelmsauerGroup,
+	).Error
 }
 
 // LoadCredentials loads the credentials for given token.
 func LoadCredentials(token string) (Session, error) {
 	var c Session
 	c.AuthToken = token
-	rows, err := db.Query("select User, Password, Portal from Credential where Token = ?", token)
+	rows, err := db.Raw("select User, Password, Portal from Credential where Token = ?", token).Rows()
 	if err != nil {
 		return Session{}, err
 	}
@@ -63,7 +62,7 @@ func LoadCredentials(token string) (Session, error) {
 func LoadSubaccount(token, subAccountName string) (Session, error) {
 	var c Session
 	c.AuthToken = token
-	rows, err := db.Query("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName)
+	rows, err := db.Exec("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName).Rows()
 	if err != nil {
 		return Session{}, err
 	}
@@ -90,30 +89,58 @@ func LoadSubaccount(token, subAccountName string) (Session, error) {
 	return c, nil
 }
 
+type Credential struct {
+	Id           int    `gorm:"primaryKey;autoIncrement"`
+	Token        string `gorm:"not null;index"`
+	User         string `gorm:"not null"`
+	Password     string `gorm:"not null"`
+	Portal       string `gorm:"not null"`
+	CreationDate string `gorm:"not null;default:current_timestamp"`
+}
+
+type SubAccount struct {
+	Name         string `gorm:"primaryKey"`
+	Passhash     string `gorm:"not null"`
+	MainUser     string `gorm:"not null"`
+	MainPassword string `gorm:"not null"`
+	Portal       string `gorm:"not null"`
+	CreationDate string `gorm:"not null;default:current_timestamp"`
+}
+
+type Vertrag struct {
+	Id             int    `gorm:"primaryKey;autoIncrement"`
+	SubAccountName string `gorm:"not null;index"`
+	VertragId      string `gorm:"not null"`
+	CreationDate   string `gorm:"not null;default:current_timestamp"`
+}
+
 // UpdateCredentials updates given credentials in the database.
 // It updates all subaccounts and removes other stored credentials for this account.
 func UpdateCredentials(c Session) error {
-	if _, err := db.Exec("update Credential set Password=? where Token=? and User=? and Portal=?",
+	if err := db.Exec("update Credential set Password=? where Token=? and User=? and Portal=?",
 		c.Password,
 		c.AuthToken,
 		c.User,
-		c.Gruppe); err != nil {
+		c.Gruppe).Error; err != nil {
 		return err
 	}
 	fmt.Println(c.Password,
 		c.AuthToken,
 		c.User,
-		c.Gruppe)
-	if _, err := db.Exec("update SubAccount set MainPassword=? where MainUser=? and Portal=?",
+		c.Gruppe,
+	)
+	if err := db.Exec("update SubAccount set MainPassword=? where MainUser=? and Portal=?",
 		c.Password,
 		c.User,
-		c.Gruppe); err != nil {
+		c.Gruppe,
+	).Error; err != nil {
 		return err
 	}
-	if _, err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
+	if err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
 		c.User,
 		c.AuthToken,
-		c.Gruppe); err != nil {
+		c.Gruppe,
+	).Error; err != nil {
 		return err
 	}
 	return nil
@@ -122,16 +149,18 @@ func UpdateCredentials(c Session) error {
 // UpdateSubCredentials updates given credentials for the subaccount in the database.
 // It removes other stored credentials for this subaccount.
 func UpdateSubCredentials(c Session) error {
-	if _, err := db.Exec("update SubAccount set Passhash=? where Name=?",
+	if err := db.Exec("update SubAccount set Passhash=? where Name=?",
 		c.PasswordHash,
 		c.SubAccount,
-		c.Gruppe); err != nil {
+		c.Gruppe,
+	).Error; err != nil {
 		return err
 	}
-	if _, err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
+	if err := db.Exec("delete from Credential where User=? and Token<>? and Portal=?",
 		c.SubAccount,
 		c.AuthToken,
-		c.Gruppe); err != nil {
+		c.Gruppe,
+	).Error; err != nil {
 		return err
 	}
 	return nil
@@ -140,19 +169,10 @@ func UpdateSubCredentials(c Session) error {
 // LoadVertragIds returns a slice of the vertrag ids of the user with given account name or an error.
 func LoadVertragIds(subAccountName string) ([]string, error) {
 	ids := make([]string, 0, 8)
-	rows, err := db.Query("select VertragId from Vertrag where SubAccountName = ?", subAccountName)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var id string
-		if err := rows.Scan(&id); err != nil {
-			return nil, err
-		}
-		ids = append(ids, id)
-	}
-	if err := rows.Close(); err != nil {
+	if err := db.
+		Raw("select VertragId from Vertrag where SubAccountName = ?", subAccountName).
+		Scan(&ids).
+		Error; err != nil {
 		return nil, err
 	}
 	return ids, nil
@@ -161,15 +181,10 @@ func LoadVertragIds(subAccountName string) ([]string, error) {
 // UniqueLogins returns the number of unique logins.
 func UniqueLogins() (int, error) {
 	var n int
-	rows, err := db.Query("select count (*) from (select distinct User, Portal from Credential)")
-	if err != nil {
-		return 0, err
-	}
-	defer rows.Close()
-	if !rows.Next() {
-		return 0, errors.New("invalid count query result")
-	}
-	if err := rows.Scan(&n); err != nil {
+	if err := db.
+		Raw("select count (*) from (select distinct User, Portal from Credential)").
+		Scan(&n).
+		Error; err != nil {
 		return 0, err
 	}
 	return n, nil
@@ -177,7 +192,7 @@ func UniqueLogins() (int, error) {
 
 // UniqueLoginsByPortal returns the number of unique logins.
 func UniqueLoginsByPortal() (map[string]int, error) {
-	rows, err := db.Query("select count (*), Portal from (select distinct User, Portal from Credential) GROUP BY Portal")
+	rows, err := db.Raw("select count (*), Portal from (select distinct User, Portal from Credential) GROUP BY Portal").Rows()
 	if err != nil {
 		return nil, err
 	}

@@ -152,7 +152,7 @@ class _ImageBox extends StatelessWidget {
                       child: Text(
                         caption,
                         textAlign: TextAlign.center,
-                        textScaleFactor: 1.3,
+                        textScaleFactor: 1.1,
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -242,57 +242,7 @@ class _AddButton extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => Dialog(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                // TODO wrap Column in singlechildscroll?
-                children: <Widget>[
-                  Text(
-                    label,
-                    textScaleFactor: 1.6,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (info != null)
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: info,
-                          ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(
-                              "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf " +
-                                  "und bestätigen dieses, um es dem Bericht hinzuzufügen."),
-                        )
-                      ],
-                    ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      _AddImageAction(
-                        onAdd: onAdd,
-                        source: ImageSource.gallery,
-                        icon: const Icon(Icons.photo_library),
-                        caption: "Foto aus Galerie auswählen",
-                      ),
-                      _AddImageAction(
-                        onAdd: onAdd,
-                        source: ImageSource.camera,
-                        icon: const Icon(Icons.camera),
-                        caption: "Foto mit Kamera aufnehmen",
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          builder: (context) => NewImageDialog(label: label, info: info, onAdd: onAdd),
         );
       },
       child: Column(
@@ -308,13 +258,81 @@ class _AddButton extends StatelessWidget {
           ),
           Text(
             label,
-            textScaleFactor: 1.3,
+            textScaleFactor: 1.1,
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: TextStyle(color: accentColor),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class NewImageDialog extends StatelessWidget {
+  const NewImageDialog({
+    super.key,
+    required this.label,
+    this.info,
+    required this.onAdd,
+  });
+
+  final String label;
+  final Widget? info;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          // TODO wrap Column in singlechildscroll?
+          children: <Widget>[
+            Text(
+              label,
+              textScaleFactor: 1.6,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (info != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: info,
+                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                        "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf " +
+                            "und bestätigen dieses, um es dem Bericht hinzuzufügen."),
+                  )
+                ],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                _AddImageAction(
+                  onAdd: onAdd,
+                  source: ImageSource.gallery,
+                  icon: const Icon(Icons.photo_library),
+                  caption: "Foto aus Galerie auswählen",
+                ),
+                _AddImageAction(
+                  onAdd: onAdd,
+                  source: ImageSource.camera,
+                  icon: const Icon(Icons.camera),
+                  caption: "Foto mit Kamera aufnehmen",
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -343,6 +361,8 @@ class _AddImageAction extends StatelessWidget {
           var image = await ImagePicker().pickImage(
             source: source,
             imageQuality: 90,
+            maxHeight: 2048,
+            maxWidth: 2048,
           );
           if (image == null) return; // canceld
 
