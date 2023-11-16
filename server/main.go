@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"net/http"
@@ -14,12 +15,18 @@ import (
 	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/admin"
 	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
 	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/verzeichnis"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/data"
 )
 
 var testserver = flag.Bool("testserver", false, "Startet den Server mit einer test config.")
 
 func main() {
 	flag.Parse()
+
+	if err := data.Open("database.db"); err != nil {
+		panic(err)
+	}
 	r := chi.NewRouter()
 
 	r.Use(
@@ -45,11 +52,19 @@ func main() {
 		r.Route("/info", func(r chi.Router) {
 			handle.Get(r, "/", account.Info)
 		})
+		r.Route("/test", func(r chi.Router) {
+			handle.Get(r, "/", func(ctx context.Context) (string, error) { return "hello monday", nil })
+		})
 		r.Route("/password", func(r chi.Router) {
 			handle.Post(r, "/", account.ChangePassword)
 		})
 		r.Route("/verträge", func(r chi.Router) {
 			handle.Get(r, "/", api.Verträge)
+		})
+		r.Route("/verzeichnis", func(r chi.Router) {
+			handle.Get(r, "/", verzeichnis.GetVerzeichnis)
+			handle.Put(r, "/", verzeichnis.PutWertgegenstand)
+			handle.Delete(r, "/"+verzeichnis.ID.Ref(), verzeichnis.DeleteWertgegenstand)
 		})
 		r.Route("/fremdverträge", func(r chi.Router) {
 			r.Post("/", api.PostForeignVertrag(mailRecipients(

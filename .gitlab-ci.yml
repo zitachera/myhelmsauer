@@ -26,7 +26,7 @@ compile-server:
   stage: build
   image: golang:latest
   rules:
-    - if: $CI_COMMIT_TAG =~ /^v[\d]\.[\d]\.[\d]/
+    - if: $CI_COMMIT_TAG =~ /^v[\d]+\.[\d]+\.[\d]+/
   script:
     - cd server
     - mkdir -p bin
@@ -38,7 +38,7 @@ compile-server:
 deploy-test:
   stage: deploy
   rules:
-    - if: $CI_COMMIT_TAG =~ /^v[\d]\.[\d]\.[\d]-test[\d]$/
+    - if: $CI_COMMIT_TAG =~ /^v[\d]+\.[\d]+\.[\d]+-test[\d]+$/
   environment:
     name: test server
     url: http://192.168.35.41:8080
@@ -46,7 +46,7 @@ deploy-test:
     - mhsm
     - test
   script:
-    - scp -i ~/.ssh/myhelmsauer_deploy ./server/bin/server deployer@192.168.35.41:schadenmeldung
+    - scp -i ~/.ssh/myhelmsauer_deploy ./server/bin/server deployer@192.168.35.41:schadenmelder
     - ssh -i  ~/.ssh/myhelmsauer_deploy deployer@192.168.35.41 "sudo /home/deployer/adm/update_schadenmelder"
 
 

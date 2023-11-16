@@ -39,32 +39,29 @@ func LoadUser(name string) (User, error) {
 }
 
 func RemoveUser(user string) error {
-	_, err := db.Exec("delete from SubAccount where Name=?",
+	if err := db.Exec("delete from SubAccount where Name=?",
 		user,
-	)
-	if err != nil {
+	).Error; err != nil {
 		return err
 	}
-	_, err = db.Exec("delete from Vertrag where SubAccountName=?",
+	return db.Exec("delete from Vertrag where SubAccountName=?",
 		user,
-	)
-	return err
+	).Error
 }
 
 func AddUser(name, passhash, mainUser, mainPassword, portal string) error {
-	_, err := db.Exec("insert into SubAccount (Name, Passhash, MainUser, MainPassword, Portal) "+
+	return db.Exec("insert into SubAccount (Name, Passhash, MainUser, MainPassword, Portal) "+
 		"values (?,?,?,?,?)",
 		name,
 		passhash,
 		mainUser,
 		mainPassword,
 		portal,
-	)
-	return err
+	).Error
 }
 
 func UpdateUser(name, passhash, mainUser, mainPassword, portal string) error {
-	res, err := db.Exec("update SubAccount set Passhash=?, MainUser=?, MainPassword=?, Portal=? "+
+	res := db.Exec("update SubAccount set Passhash=?, MainUser=?, MainPassword=?, Portal=? "+
 		"where Name=?",
 		passhash,
 		mainUser,
@@ -73,47 +70,40 @@ func UpdateUser(name, passhash, mainUser, mainPassword, portal string) error {
 
 		name,
 	)
-	if err != nil {
-		return err
+	if res.Error != nil {
+		return res.Error
 	}
-	n, err := res.RowsAffected()
-	if err != nil {
-		return err
-	}
-	if n == 0 {
+	if res.RowsAffected == 0 {
 		return fmt.Errorf("no user %s in the system", name)
 	}
-	return err
+	return nil
 }
 
 func RemoveVerträgeFromUser(user string) error {
-	_, err := db.Exec("delete from Vertrag where SubAccountName=?",
+	return db.Exec("delete from Vertrag where SubAccountName=?",
 		user,
-	)
-	return err
+	).Error
 }
 
 func RemoveVertragFromUser(user, vertragId string) error {
-	_, err := db.Exec("delete from Vertrag where SubAccountName=? and VertragId=?",
+	return db.Exec("delete from Vertrag where SubAccountName=? and VertragId=?",
 		user,
 		vertragId,
-	)
-	return err
+	).Error
 }
 
 func AddVertragToUser(user, vertragId string) error {
-	_, err := db.Exec("insert into Vertrag (SubAccountName, VertragId) values (?,?)",
+	return db.Exec("insert into Vertrag (SubAccountName, VertragId) values (?,?)",
 		user,
 		vertragId,
-	)
-	return err
+	).Error
 }
 
 type rowScanner[T any] func(*sql.Rows) (T, error)
 
 func queryRows[T any](query string, scan rowScanner[T], args ...any) ([]T, error) {
 	ts := make([]T, 0, 8)
-	rows, err := db.Query(query, args...)
+	rows, err := db.Raw(query, args...).Rows()
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +123,7 @@ func queryRows[T any](query string, scan rowScanner[T], args ...any) ([]T, error
 
 func queryRow[T any](query string, scan rowScanner[T], args ...any) (T, error) {
 	var t T
-	rows, err := db.Query(query, args...)
+	rows, err := db.Raw(query, args...).Rows()
 	if err != nil {
 		return t, err
 	}
