@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           label: 'Schaden',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.auto_stories_outlined),
+          icon: SvgIcon("images/menu/verzeichnis.svg"),
           label: 'Verzeichnis',
         ),
         BottomNavigationBarItem(
