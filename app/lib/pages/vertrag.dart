@@ -62,10 +62,7 @@ class VertragPage extends StatelessWidget {
                         child: SvgIcon("images/menu/kontakt.svg"),
                       ),
                       Expanded(
-                        child: Text(
-                          "Neue ${template.name}",
-                          textScaleFactor: 1.3,
-                        ),
+                        child: Text("Neue ${template.name}", textScaler: TextScaler.linear(1.3)),
                       ),
                     ],
                   ),
@@ -81,10 +78,7 @@ class VertragPage extends StatelessWidget {
                         child: const Icon(Icons.text_snippet),
                       ),
                       Expanded(
-                        child: Text(
-                          dokument.titel,
-                          textScaleFactor: 1.3,
-                        ),
+                        child: Text(dokument.titel, textScaler: TextScaler.linear(1.3)),
                       ),
                     ],
                   ),

@@ -47,7 +47,7 @@ class VerzeichnisPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Wertgegenstand aktualisiert.", textScaleFactor: 1.2),
+                  Text("Wertgegenstand aktualisiert.", textScaler: TextScaler.linear(1.2)),
                   SizedBox(height: 8),
                   Text(
                     "Um Ihre Versichererungsumme auf Ihre Wertgegenstände anzupassen, wenden Sie sich bitte an Ihre:n Betreuer:in.",
@@ -151,13 +151,13 @@ class _Wertgegenstand extends StatelessWidget {
             ),
             Text(
               wertgegenstand.name,
-              textScaleFactor: 1.1,
+              textScaler: TextScaler.linear(1.1),
               style: TextStyle(fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 4),
             Text(
               _formatBetrag(wertgegenstand.wert),
-              textScaleFactor: 0.9,
+              textScaler: TextScaler.linear(0.9),
               style: TextStyle(fontWeight: FontWeight.normal),
             ),
           ],

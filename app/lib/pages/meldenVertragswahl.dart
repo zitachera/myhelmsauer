@@ -116,13 +116,13 @@ class _Vertrag extends StatelessWidget {
           children: <Widget>[
             Text(
               vertrag.sparte,
-              textScaleFactor: 1.1,
+              textScaler: TextScaler.linear(1.1),
               style: TextStyle(fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 4),
             Text(
               vertrag.gesellschaft,
-              textScaleFactor: 0.9,
+              textScaler: TextScaler.linear(0.9),
               style: TextStyle(fontWeight: FontWeight.normal),
             ),
             SizedBox(height: 4),

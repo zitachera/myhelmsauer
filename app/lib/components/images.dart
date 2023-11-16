@@ -152,7 +152,7 @@ class _ImageBox extends StatelessWidget {
                       child: Text(
                         caption,
                         textAlign: TextAlign.center,
-                        textScaleFactor: 1.1,
+                        textScaler: TextScaler.linear(1.1),
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -258,7 +258,7 @@ class _AddButton extends StatelessWidget {
           ),
           Text(
             label,
-            textScaleFactor: 1.1,
+            textScaler: TextScaler.linear(1.1),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
@@ -293,7 +293,7 @@ class NewImageDialog extends StatelessWidget {
           children: <Widget>[
             Text(
               label,
-              textScaleFactor: 1.6,
+              textScaler: TextScaler.linear(1.6),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),

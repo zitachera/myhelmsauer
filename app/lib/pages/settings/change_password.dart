@@ -139,7 +139,7 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text('Fehler beim ändern des Passworts', textScaleFactor: 1.3),
+          Text('Fehler beim ändern des Passworts', textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 8),
             child: Text(snapshot.error.toString()),

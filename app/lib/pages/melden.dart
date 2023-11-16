@@ -419,10 +419,7 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text(
-            'Die $subject konnte nicht gesendet werden.',
-            textScaleFactor: 1.3,
-          ),
+          Text('Die $subject konnte nicht gesendet werden.', textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
             child: Text('Bitte senden Sie die $subject erneut.'),
@@ -443,10 +440,7 @@ class _SendDialog extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Ihre $subject ist eingegangen.',
-          textScaleFactor: 1.3,
-        ),
+        Text('Ihre $subject ist eingegangen.', textScaler: TextScaler.linear(1.3)),
         Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 8),
           child: Text('Wir melden uns kurzfristig bei Ihnen.'),
