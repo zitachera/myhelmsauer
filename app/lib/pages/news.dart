@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/pages/news-ios.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -103,7 +106,10 @@ class _NewsPageState extends State<NewsPage> {
             ),
           ],
         ),
-        Expanded(child: WebViewWidget(controller: _controller)),
+        if (Platform.isIOS)
+          Expanded(child: IOSNews())
+        else
+          Expanded(child: WebViewWidget(controller: _controller)),
       ],
     );
     return Scaffold(

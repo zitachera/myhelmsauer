@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           shape: UnderlineInputBorder(
             borderSide: BorderSide(color: helmsauerRot, width: 2.5),
           ),
+          foregroundColor: Colors.white,
         ),
       ),
       home: LoginPage(),
