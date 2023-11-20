@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"log"
 	"net/http"
@@ -51,9 +50,6 @@ func main() {
 		)
 		r.Route("/info", func(r chi.Router) {
 			handle.Get(r, "/", account.Info)
-		})
-		r.Route("/test", func(r chi.Router) {
-			handle.Get(r, "/", func(ctx context.Context) (string, error) { return "hello monday", nil })
 		})
 		r.Route("/password", func(r chi.Router) {
 			handle.Post(r, "/", account.ChangePassword)
