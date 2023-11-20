@@ -62,7 +62,7 @@ deploy-prod:
     - deploy
   script:
     - scp -i ~/.ssh/myhelmsauer_deploy ./server/bin/server deployer@192.168.35.40:schadenmelder
-    - ssh -i  ~/.ssh/myhelmsauer_deploy deployer@192.168.35.41 "sudo /home/deployer/adm/update_schadenmelder"
+    - ssh -i  ~/.ssh/myhelmsauer_deploy deployer@192.168.35.40 "sudo /home/deployer/adm/update_schadenmelder"
   
 
 # deploy:
