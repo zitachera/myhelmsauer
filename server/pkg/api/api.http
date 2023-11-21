@@ -188,11 +188,6 @@ content-type: application/json
 authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
 
 
-### Test
-GET  https://testschadenmeldung.helmsauer-gruppe.de/api/v1/test HTTP/1.1
-content-type: application/json
-authorization: 6ac06fc6-285e-4e39-8df8-14d7373fe4a8
-
 ### Change Verträge
 PUT  https://testschadenmeldung.helmsauer-gruppe.de/api/v1/admin/user/test/vertrag HTTP/1.1
 content-type: application/json
@@ -255,12 +250,6 @@ authorization: 69174ff5-ca8a-4486-8344-63bc86ba6377
 
 ### Dokument
 GET http://localhost:8080/api/v1/adressen/AD_201406170853335LI/dokumente/DOK20140703114017KSI HTTP/1.1
-content-type: application/json
-authorization: 69174ff5-ca8a-4486-8344-63bc86ba6377
-
-
-### Test
-GET  http://localhost:8080/api/v1/test HTTP/1.1
 content-type: application/json
 authorization: 69174ff5-ca8a-4486-8344-63bc86ba6377
 
