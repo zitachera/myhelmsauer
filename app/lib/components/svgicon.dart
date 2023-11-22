@@ -10,11 +10,12 @@ class SvgIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = IconTheme.of(context);
+    final clr = color ?? theme.color;
     return SvgPicture.asset(
       asset,
       height: theme.size,
       width: theme.size,
-      colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
+      colorFilter: clr != null ? ColorFilter.mode(clr, BlendMode.srcIn) : null,
     );
   }
 }
