@@ -11,6 +11,7 @@ class FirmenGruppe {
     FirmenGruppe._("hp", "Helmsauer & Preuß"),
     FirmenGruppe._("idf", "Ingenieur-Dienst-Finanzberatung"),
     FirmenGruppe._("ufb", "UFB:UMU"),
+    FirmenGruppe._("verri", "VerRi"),
     FirmenGruppe._("myh", "myHelmsauer"),
   ];
 

@@ -71,6 +71,8 @@ func (c Client) url() string {
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_idf/CustomerQuery.aspx"
 	case "ufb":
 		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_ufb/CustomerQuery.aspx"
+	case "verri":
+		return "https://portalinterface.helmsauer-gruppe.de:4448/portalinterface_verri/CustomerQuery.aspx"
 	}
 }
 
@@ -100,6 +102,8 @@ func PortalName(gruppe string) string {
 		return "Ingenieur-Dienst-Finanzberatung"
 	case "ufb":
 		return "UFB:UMU"
+	case "verri":
+		return "VerRi"
 	}
 }
 
