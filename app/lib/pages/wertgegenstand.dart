@@ -5,9 +5,10 @@ import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/wertgegenstand.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class WertgegenstandPage extends StatefulWidget {
-  WertgegenstandPage(
+  const WertgegenstandPage(
     this.wertgegenstand, {
     super.key,
     required this.saveWertgegenstand,
@@ -19,7 +20,8 @@ class WertgegenstandPage extends StatefulWidget {
   final Wertgegenstand wertgegenstand;
 
   @override
-  State<WertgegenstandPage> createState() => _WertgegenstandPageState(wertgegenstand);
+  State<WertgegenstandPage> createState() =>
+      _WertgegenstandPageState(wertgegenstand);
 }
 
 class _WertgegenstandPageState extends State<WertgegenstandPage> {
@@ -32,15 +34,18 @@ class _WertgegenstandPageState extends State<WertgegenstandPage> {
   @override
   Widget build(BuildContext context) {
     final nameField = TextFormField(
-      onChanged: (value) => wertgegenstand = wertgegenstand.copyWith(name: value),
+      onChanged: (value) =>
+          wertgegenstand = wertgegenstand.copyWith(name: value),
       initialValue: wertgegenstand.name,
       decoration: InputDecoration(
         labelText: 'Titel',
       ),
-      validator: (value) => value!.isEmpty ? 'Bitte geben Sie einen Titel ein.' : null,
+      validator: (value) =>
+          value!.isEmpty ? 'Bitte geben Sie einen Titel ein.' : null,
     );
     final beschreibungField = TextFormField(
-      onChanged: (value) => wertgegenstand = wertgegenstand.copyWith(beschreibung: value),
+      onChanged: (value) =>
+          wertgegenstand = wertgegenstand.copyWith(beschreibung: value),
       initialValue: wertgegenstand.beschreibung,
       maxLines: 5,
       decoration: InputDecoration(
@@ -48,15 +53,18 @@ class _WertgegenstandPageState extends State<WertgegenstandPage> {
       ),
     );
 
-    final euroFormatter = CurrencyTextInputFormatter(
+    /*final euroFormatter = CurrencyTextInputFormatter(
       locale: 'de_DE',
       symbol: '€',
       decimalDigits: 2,
+    ); */
+    final euroFormatter = CurrencyTextInputFormatter(
+      NumberFormat.currency(locale: 'fr_FR', symbol: '€'),
     );
 
     final wertField = TextFormField(
-      onChanged: (value) => wertgegenstand =
-          wertgegenstand.copyWith(wert: euroFormatter.getUnformattedValue().toDouble()),
+      onChanged: (value) => wertgegenstand = wertgegenstand.copyWith(
+          wert: euroFormatter.getUnformattedValue().toDouble()),
       initialValue: euroFormatter.formatDouble(wertgegenstand.wert),
       decoration: InputDecoration(
         labelText: 'Wert',
@@ -77,6 +85,7 @@ class _WertgegenstandPageState extends State<WertgegenstandPage> {
               color: primaerGrau,
               child: wertgegenstand.image.isEmpty
                   ? FittedBox(
+                      fit: BoxFit.fitWidth,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
@@ -84,7 +93,6 @@ class _WertgegenstandPageState extends State<WertgegenstandPage> {
                           color: blauGrau,
                         ),
                       ),
-                      fit: BoxFit.fitWidth,
                     )
                   : Image.memory(
                       wertgegenstand.image,

@@ -4,7 +4,7 @@ import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
 
 class RemindPage extends StatefulWidget {
-  RemindPage({super.key});
+  const RemindPage({super.key});
 
   @override
   _RemindPageState createState() => _RemindPageState();
@@ -165,7 +165,8 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text('Die Anfrage konnte nicht gesendet werden.', textScaler: TextScaler.linear(1.3)),
+          Text('Die Anfrage konnte nicht gesendet werden.',
+              textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
             child: Text(
@@ -187,7 +188,8 @@ class _SendDialog extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Ihre Anfrage ist eingegangen.', textScaler: TextScaler.linear(1.3)),
+        Text('Ihre Anfrage ist eingegangen.',
+            textScaler: TextScaler.linear(1.3)),
         Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 8),
           child: Text('Wir melden uns kurzfristig bei Ihnen.'),

@@ -11,7 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:uuid/uuid.dart';
 
 class MeldenPage extends StatefulWidget {
-  MeldenPage({
+  const MeldenPage({
     super.key,
     required this.vertragID,
     required this.template,
@@ -45,8 +45,8 @@ class _MeldenState extends State<MeldenPage> {
 
   String ort = "";
   Position? gps;
-  Map<String, List<Uint8List>> aufnahmen = Map();
-  Map<String, String> felder = Map();
+  Map<String, List<Uint8List>> aufnahmen = {};
+  Map<String, String> felder = {};
 
   DateTime datum;
   TimeOfDay zeit;
@@ -66,9 +66,12 @@ class _MeldenState extends State<MeldenPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.template.felder.where((f) => f.kind == MeldeFeldKind.location).isNotEmpty)
+    if (widget.template.felder
+        .where((f) => f.kind == MeldeFeldKind.location)
+        .isNotEmpty) {
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
           .then((position) => gps = position);
+    }
   }
 
   bool small(MeldeFeld f) => f.kind == MeldeFeldKind.images && f.max == 1;
@@ -77,11 +80,11 @@ class _MeldenState extends State<MeldenPage> {
     List<Widget> cols = [];
     Row? row;
 
-    widget.template.felder.forEach((f) {
+    for (var f in widget.template.felder) {
       if (!small(f)) {
         row = null;
         cols.add(buildField(context, f));
-        return;
+        continue;
       }
       if (row == null) {
         row = Row(
@@ -93,14 +96,14 @@ class _MeldenState extends State<MeldenPage> {
           ],
         );
         cols.add(row!);
-        return;
+        continue;
       }
       row!.children.add(Expanded(
         flex: 1,
         child: buildField(context, f),
       ));
       row = null;
-    });
+    }
     return cols;
   }
 
@@ -134,23 +137,25 @@ class _MeldenState extends State<MeldenPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-              child: Text(f.label, style: Theme.of(context).textTheme.displayMedium),
+              child: Text(f.label,
+                  style: Theme.of(context).textTheme.displayMedium),
             ),
             if (f.beschreibung != "")
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                child: Text(f.beschreibung, style: Theme.of(context).textTheme.bodyMedium),
+                child: Text(f.beschreibung,
+                    style: Theme.of(context).textTheme.bodyMedium),
               ),
           ],
         );
       case MeldeFeldKind.choice:
         if (felder[f.id] != "ja") felder[f.id] = "nein";
         return _InvertedLine(
+          caption: f.label,
           child: Checkbox(
               value: felder[f.id] == "ja",
-              onChanged: (selected) =>
-                  setState(() => felder[f.id] = selected == true ? "ja" : "nein")),
-          caption: f.label,
+              onChanged: (selected) => setState(
+                  () => felder[f.id] = selected == true ? "ja" : "nein")),
         );
       case MeldeFeldKind.multiline:
         return _MultiLine(
@@ -279,7 +284,8 @@ class _MeldenState extends State<MeldenPage> {
   }
 
   Future<void> _selectTime(BuildContext context) async {
-    final TimeOfDay? picked = await showTimePicker(context: context, initialTime: zeit);
+    final TimeOfDay? picked =
+        await showTimePicker(context: context, initialTime: zeit);
     if (picked != null && picked != zeit) {
       setState(() {
         zeit = picked;
@@ -306,7 +312,7 @@ class _MultiLine extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              caption + ":",
+              "$caption:",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -335,15 +341,15 @@ class _Line extends StatelessWidget {
         textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Expanded(
+            flex: 1,
             child: Text(
               caption + ":",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            flex: 1,
           ),
           Expanded(
-            child: child,
             flex: 2,
+            child: child,
           ),
         ],
       ),
@@ -369,15 +375,15 @@ class _InvertedLine extends StatelessWidget {
         textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Expanded(
-            child: child,
             flex: 1,
+            child: child,
           ),
           Expanded(
+            flex: 2,
             child: Text(
               caption,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            flex: 2,
           ),
         ],
       ),
@@ -419,7 +425,8 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text('Die $subject konnte nicht gesendet werden.', textScaler: TextScaler.linear(1.3)),
+          Text('Die $subject konnte nicht gesendet werden.',
+              textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
             child: Text('Bitte senden Sie die $subject erneut.'),
@@ -440,7 +447,8 @@ class _SendDialog extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Ihre $subject ist eingegangen.', textScaler: TextScaler.linear(1.3)),
+        Text('Ihre $subject ist eingegangen.',
+            textScaler: TextScaler.linear(1.3)),
         Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 8),
           child: Text('Wir melden uns kurzfristig bei Ihnen.'),

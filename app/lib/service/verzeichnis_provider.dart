@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class VerzeichnisProvider extends ChangeNotifier {
   VerzeichnisProvider(this._portal);
 
-  PortalService _portal;
+  final PortalService _portal;
 
   List<Wertgegenstand>? _verzeichnis;
 
@@ -47,21 +47,22 @@ class VerzeichnisProvider extends ChangeNotifier {
       loading = true;
       final response = await _portal.getRessource('verzeichnis');
       if (response.statusCode != 200) {
-        log('Failed to get verzeichnis: ' + response.body);
+        log('Failed to get verzeichnis: ${response.body}');
         fehler = 'Verzeichnis laden fehlgeschlagen.';
       }
       loadJSON(response.body);
     } catch (e) {
-      log('Failed to load verzeichnis: ' + e.toString());
+      log('Failed to load verzeichnis: $e');
       fehler = 'Verzeichnis laden fehlgeschlagen.';
     }
   }
 
   Future<void> delete(Wertgegenstand wertgegenstand) async {
     loading = true;
-    final response = await _portal.deleteRessource('verzeichnis/${wertgegenstand.id}');
+    final response =
+        await _portal.deleteRessource('verzeichnis/${wertgegenstand.id}');
     if (response.statusCode != 200) {
-      log('Failed to delete wertgegenstand: ' + response.body);
+      log('Failed to delete wertgegenstand: ${response.body}');
       fehler = 'Wertgegenstand löschen fehlgeschlagen.';
     }
     _updated = true;
@@ -70,9 +71,10 @@ class VerzeichnisProvider extends ChangeNotifier {
 
   Future<void> update(Wertgegenstand wertgegenstand) async {
     loading = true;
-    final response = await _portal.putRessource('verzeichnis', wertgegenstand.toJson());
+    final response =
+        await _portal.putRessource('verzeichnis', wertgegenstand.toJson());
     if (response.statusCode != 200) {
-      throw ('Failed to update wertgegenstand: ' + response.body);
+      throw ('Failed to update wertgegenstand: ${response.body}');
     }
     _updated = true;
     loadJSON(response.body);
@@ -80,6 +82,8 @@ class VerzeichnisProvider extends ChangeNotifier {
 
   void loadJSON(String json) {
     _loading = false;
-    verzeichnis = (jsonDecode(json) as List).map((e) => Wertgegenstand.fromJson(e)).toList();
+    verzeichnis = (jsonDecode(json) as List)
+        .map((e) => Wertgegenstand.fromJson(e))
+        .toList();
   }
 }

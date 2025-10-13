@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 class IOSNews extends StatelessWidget {
+  const IOSNews({super.key});
+
   @override
   Widget build(BuildContext context) {
     final content = Column(
@@ -13,6 +15,7 @@ class IOSNews extends StatelessWidget {
         Row(
           children: [
             Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Image.asset(
@@ -20,9 +23,9 @@ class IOSNews extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              flex: 1,
             ),
             Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Image.asset(
@@ -30,9 +33,9 @@ class IOSNews extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              flex: 1,
             ),
             Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Image.asset(
@@ -40,9 +43,9 @@ class IOSNews extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              flex: 1,
             ),
             Expanded(
+              flex: 1,
               child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Image.asset(
@@ -50,7 +53,6 @@ class IOSNews extends StatelessWidget {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              flex: 1,
             ),
           ],
         ),
@@ -66,7 +68,7 @@ class IOSNews extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => Scaffold(
-                  appBar: new AppBar(
+                  appBar: AppBar(
                     title: Text("Cyberkriminalität"),
                   ),
                   backgroundColor: Colors.grey,
@@ -110,16 +112,16 @@ class IOSNews extends StatelessWidget {
             "images/menu/smartphone.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "Auf der myHelmsauer Startseite finden Sie im Newsbereich wechselnde " +
-              "Artikel zu interessanten Versicherungsthemen.",
+          "Auf der myHelmsauer Startseite finden Sie im Newsbereich wechselnde "
+          "Artikel zu interessanten Versicherungsthemen.",
         ),
         _faqMiddle(
           SvgPicture.asset(
             "images/menu/vertrag.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "In Ihrer Vertragsübersicht haben Sie Zugriff auf " +
-              "all Ihre bestehenden Versicherungsverträge und " +
+          "In Ihrer Vertragsübersicht haben Sie Zugriff auf "
+                  "all Ihre bestehenden Versicherungsverträge und " +
               "finden nähere Informationen dazu.",
         ),
         _faqMiddle(
@@ -127,8 +129,8 @@ class IOSNews extends StatelessWidget {
             "images/menu/schaden.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "Für einige Sparten können Sie schnell und unkompliziert " +
-              "eine Schadenmeldung vornehmen. " +
+          "Für einige Sparten können Sie schnell und unkompliziert "
+                  "eine Schadenmeldung vornehmen. " +
               "Weitere Sparten werden zeitnah hinzugefügt.",
         ),
         _faqMiddle(
@@ -136,8 +138,8 @@ class IOSNews extends StatelessWidget {
             "images/menu/kontakt.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "Über verschiedene Wege können Sie direkt mit " +
-              "uns in Verbindung treten. Wann, wo und so oft " +
+          "Über verschiedene Wege können Sie direkt mit "
+                  "uns in Verbindung treten. Wann, wo und so oft " +
               "Sie wollen. Wir sind gerne für Sie da!",
         ),
         _faqMiddle(
@@ -145,8 +147,8 @@ class IOSNews extends StatelessWidget {
             "images/menu/idee.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "Viele Zusatzfunktionen werden Ihnen bald zur " +
-              "Verfügung stehen. Wir arbeiten permanent an " +
+          "Viele Zusatzfunktionen werden Ihnen bald zur "
+                  "Verfügung stehen. Wir arbeiten permanent an " +
               "der App um Ihnen den bestmöglichen Service " +
               "zu bieten.",
         ),
@@ -155,8 +157,8 @@ class IOSNews extends StatelessWidget {
             "images/menu/kontakt.svg",
             colorFilter: ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
           ),
-          "Bei Fragen oder Anregungen wenden Sie sich gerne " +
-              "an uns. Sie erreichen uns im Reiter Kontakt.",
+          "Bei Fragen oder Anregungen wenden Sie sich gerne "
+          "an uns. Sie erreichen uns im Reiter Kontakt.",
         ),
       ],
     );
@@ -168,7 +170,7 @@ class IOSNews extends StatelessWidget {
   }
 
   Widget _faqTop(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: helmsauerBlau,
           borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
         ),
@@ -181,8 +183,8 @@ class IOSNews extends StatelessWidget {
                 width: 50,
                 height: 50,
                 child: FittedBox(
-                  child: icon,
                   fit: BoxFit.fitWidth,
+                  child: icon,
                 ),
               ),
             ),
@@ -201,7 +203,7 @@ class IOSNews extends StatelessWidget {
       );
 
   Widget _faqMiddle(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Color.fromARGB(255, 241, 244, 247),
         ),
         margin: EdgeInsets.all(2),
@@ -213,8 +215,8 @@ class IOSNews extends StatelessWidget {
                 width: 50,
                 height: 50,
                 child: FittedBox(
-                  child: icon,
                   fit: BoxFit.fitWidth,
+                  child: icon,
                 ),
               ),
             ),
@@ -235,7 +237,7 @@ class IOSNews extends StatelessWidget {
       );
 
   Widget _faqBottom(Widget icon, String text) => Container(
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: Color.fromARGB(255, 241, 244, 247),
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
         ),
@@ -248,8 +250,8 @@ class IOSNews extends StatelessWidget {
                 width: 50,
                 height: 50,
                 child: FittedBox(
-                  child: icon,
                   fit: BoxFit.fitWidth,
+                  child: icon,
                 ),
               ),
             ),

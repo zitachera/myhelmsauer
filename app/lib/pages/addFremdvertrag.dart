@@ -8,7 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddFremdvertragPage extends StatefulWidget {
-  AddFremdvertragPage({super.key, required this.portal});
+  const AddFremdvertragPage({super.key, required this.portal});
 
   final PortalService portal;
 
@@ -71,7 +71,8 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
         children: [
           Checkbox(
               value: integrieren,
-              onChanged: (selected) => setState(() => integrieren = selected == true)),
+              onChanged: (selected) =>
+                  setState(() => integrieren = selected == true)),
           Expanded(
             child: Text("Vertrag in elektronische Kundenakte aufnehmen"),
           )
@@ -83,8 +84,8 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
         children: [
           Checkbox(
               value: vergleichsangebotErstellen,
-              onChanged: (selected) =>
-                  setState(() => vergleichsangebotErstellen = selected == true)),
+              onChanged: (selected) => setState(
+                  () => vergleichsangebotErstellen = selected == true)),
           Expanded(
             child: Text("Bitte zusätzlich Vergleichsangebot erstellen"),
           )
@@ -137,7 +138,8 @@ class _AddFremdvertragState extends State<AddFremdvertragPage> {
     if (aufnahmen.isEmpty && files.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Bitte tragen mindestens ein Bild oder eine Datei ein.'),
+          content:
+              Text('Bitte tragen mindestens ein Bild oder eine Datei ein.'),
         ),
       );
       return;
@@ -185,7 +187,8 @@ class _SendDialog extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: FutureBuilder<void>(
-            future: portal.postRessource("fremdverträge", fremdvertragAntrag.toJson()),
+            future: portal.postRessource(
+                "fremdverträge", fremdvertragAntrag.toJson()),
             builder: builder,
           ),
         )
@@ -198,7 +201,8 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text('Der Antrag konnte nicht gesendet werden.', textScaler: TextScaler.linear(1.3)),
+          Text('Der Antrag konnte nicht gesendet werden.',
+              textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 4, bottom: 8),
             child: Text('Bitte senden Sie den Antrag erneut.'),
@@ -219,7 +223,8 @@ class _SendDialog extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text('Ihre Antrag ist eingegangen.', textScaler: TextScaler.linear(1.3)),
+        Text('Ihre Antrag ist eingegangen.',
+            textScaler: TextScaler.linear(1.3)),
         Padding(
           padding: const EdgeInsets.only(top: 4, bottom: 8),
           child: Text('Wir melden uns kurzfristig bei Ihnen.'),

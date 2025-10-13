@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ContactPage extends StatelessWidget {
-  ContactPage({
+  const ContactPage({
     super.key,
     this.bottomNavigationBar,
     this.onRefresh,
@@ -59,7 +59,6 @@ class ContactPage extends StatelessWidget {
             url: 'https://$_web',
           ),
           _Button(
-            child: Text("Nachricht schreiben"),
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -70,6 +69,7 @@ class ContactPage extends StatelessWidget {
               "images/menu/chat.svg",
               colorFilter: filter,
             ),
+            child: Text("Nachricht schreiben"),
           ),
         ]),
         Padding(
@@ -80,8 +80,8 @@ class ContactPage extends StatelessWidget {
                   child: _Link("Datenschutz",
                       "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/")),
               Expanded(
-                  child: _Link(
-                      "Impressum", "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
+                  child: _Link("Impressum",
+                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/")),
             ],
           ),
         )
@@ -117,7 +117,7 @@ class _Button extends StatelessWidget {
         child = Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Text(caption + ":"),
+            Text("$caption:"),
             Text(
               label,
               style: TextStyle(
@@ -141,8 +141,8 @@ class _Button extends StatelessWidget {
               width: 50,
               height: 50,
               child: FittedBox(
-                child: icon,
                 fit: BoxFit.fitWidth,
+                child: icon,
               ),
             ),
           ),

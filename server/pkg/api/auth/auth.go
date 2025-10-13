@@ -85,10 +85,11 @@ type responseLogin struct {
 }
 
 func Login(ctx context.Context, l requestLogin) (responseLogin, error) {
+log.Println("Login attempt for user:", l.User)
 	if l.Gruppe == data.MyHelmsauerGroup {
 		return loginMyHelmsauerAccount(l.User, l.Password)
 	}
-
+log.Println("Using external client for user:", l.User)
 	client := proclient.Client{
 		User:     l.User,
 		Password: l.Password,
@@ -107,7 +108,7 @@ func Login(ctx context.Context, l requestLogin) (responseLogin, error) {
 	}
 
 	token := uuid.New().String()
-
+log.Println("Login successful, token:", token)
 	data.StoreCredentials(data.Session{
 		AuthToken: token,
 		Client:    client,

@@ -3,7 +3,7 @@ import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage({
+  const ChangePasswordPage({
     super.key,
     required this.portal,
   });
@@ -36,7 +36,8 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
               decoration: InputDecoration(labelText: 'Aktuelles Passwort'),
               obscureText: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return "Aktuelles Passwort benötigt";
+                if (val == null || val.isEmpty)
+                  return "Aktuelles Passwort benötigt";
                 return null;
               },
             ),
@@ -45,16 +46,19 @@ class _ChangePasswordState extends State<ChangePasswordPage> {
               decoration: InputDecoration(labelText: 'Neues Passwort'),
               obscureText: true,
               validator: (val) {
-                if (val == null || val.isEmpty) return "Neues Passwort benötigt";
+                if (val == null || val.isEmpty)
+                  return "Neues Passwort benötigt";
                 return null;
               },
             ),
             TextFormField(
               controller: controllerCheckPassword,
-              decoration: InputDecoration(labelText: 'Neues Passwort bestätigen'),
+              decoration:
+                  InputDecoration(labelText: 'Neues Passwort bestätigen'),
               obscureText: true,
               validator: (val) {
-                if (val != controllerNewPassword.text) return "Passwort stimmt nicht überein";
+                if (val != controllerNewPassword.text)
+                  return "Passwort stimmt nicht überein";
                 return null;
               },
             ),
@@ -139,7 +143,8 @@ class _SendDialog extends StatelessWidget {
     if (snapshot.hasError) {
       return Column(
         children: [
-          Text('Fehler beim ändern des Passworts', textScaler: TextScaler.linear(1.3)),
+          Text('Fehler beim ändern des Passworts',
+              textScaler: TextScaler.linear(1.3)),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 8),
             child: Text(snapshot.error.toString()),

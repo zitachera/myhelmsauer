@@ -4,7 +4,7 @@ import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertraegePage extends StatefulWidget {
-  VertraegePage(
+  const VertraegePage(
     this.vertraege, {
     super.key,
     required this.viewVertrag,
@@ -32,7 +32,7 @@ class _VertraegePageState extends State<VertraegePage> {
   @override
   Widget build(BuildContext context) {
     final keyword = filter.toLowerCase();
-    final matchs = (String s) => s.toLowerCase().contains(keyword);
+    bool matchs(String s) => s.toLowerCase().contains(keyword);
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
@@ -74,7 +74,8 @@ class _VertraegePageState extends State<VertraegePage> {
           ],
         ),
         ...widget.vertraege
-            .where((v) => matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
+            .where((v) =>
+                matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft))
             .map(
               (vertrag) => _Vertrag(vertraegePage: widget, vertrag: vertrag),
             ),

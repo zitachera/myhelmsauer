@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HsSingleChildScrollScaffold extends StatelessWidget {
-  HsSingleChildScrollScaffold({
+  const HsSingleChildScrollScaffold({
     super.key,
     required this.title,
     required this.body,

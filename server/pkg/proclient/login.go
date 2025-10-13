@@ -7,6 +7,7 @@ type login struct {
 
 // Login returns true if the user can be authorized
 func (c Client) Login() (string, bool, error) {
+
 	if c.User == "Mocked" {
 		if c.Password != "MockMe90403" {
 			return "Ungültiges Passwort", false, nil

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VerzeichnisPage extends StatelessWidget {
-  VerzeichnisPage({
+  const VerzeichnisPage({
     super.key,
     required this.viewWertgegenstand,
     this.bottomNavigationBar,
@@ -47,7 +47,8 @@ class VerzeichnisPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Wertgegenstand aktualisiert.", textScaler: TextScaler.linear(1.2)),
+                  Text("Wertgegenstand aktualisiert.",
+                      textScaler: TextScaler.linear(1.2)),
                   SizedBox(height: 8),
                   Text(
                     "Um Ihre Versichererungsumme auf Ihre Wertgegenstände anzupassen, wenden Sie sich bitte an Ihre:n Betreuer:in.",
@@ -70,13 +71,14 @@ class VerzeichnisPage extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(height: 20),
-                Text("Erfassen Sie Ihre Wertgegenstände, um diese hier zu sehen.")
+                Text(
+                    "Erfassen Sie Ihre Wertgegenstände, um diese hier zu sehen.")
               ],
             ),
           ),
         ...verzeichnis.map(
-          (wertgegenstand) =>
-              _Wertgegenstand(verzeichnisPage: this, wertgegenstand: wertgegenstand),
+          (wertgegenstand) => _Wertgegenstand(
+              verzeichnisPage: this, wertgegenstand: wertgegenstand),
         ),
         SizedBox(height: 20),
         ElevatedButton.icon(
@@ -131,7 +133,8 @@ class _Wertgegenstand extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         elevation: 0,
         color: const Color.fromRGBO(245, 245, 245, 1),
-        onPressed: () => verzeichnisPage.viewWertgegenstand(context, wertgegenstand),
+        onPressed: () =>
+            verzeichnisPage.viewWertgegenstand(context, wertgegenstand),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -167,6 +170,6 @@ class _Wertgegenstand extends StatelessWidget {
   }
 
   String _formatBetrag(double betrag) {
-    return betrag.toStringAsFixed(2).replaceAll(".", ",") + " €";
+    return "${betrag.toStringAsFixed(2).replaceAll(".", ",")} €";
   }
 }

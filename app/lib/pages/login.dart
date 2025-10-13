@@ -8,7 +8,7 @@ import 'package:customer_portal_app/service/session.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -47,7 +47,8 @@ class _LoginPageState extends State<LoginPage> {
         if (snapshot.hasError) {
           var msg = snapshot.error.toString();
           if (snapshot.error is SocketException) {
-            msg = "Keine Verbindung zum Server!";
+            // msg = 'CHICKEN';
+            // TODO REVERT           msg = "Keine Verbindung zum Server!";
           }
           return Column(
             children: [
@@ -124,17 +125,22 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class _LoginForm extends StatefulWidget {
-  _LoginForm({required this.login, required this.lastGruppe, required this.lastUserName});
+  const _LoginForm(
+      {required this.login,
+      required this.lastGruppe,
+      required this.lastUserName});
 
   final _LoginFunc login;
   final String? lastGruppe;
   final String lastUserName;
 
   @override
-  _LoginFormState createState() => _LoginFormState(login, lastGruppe, lastUserName);
+  _LoginFormState createState() =>
+      _LoginFormState(login, lastGruppe, lastUserName);
 }
 
-typedef _LoginFunc = void Function(String user, String password, String? gruppe);
+typedef _LoginFunc = void Function(
+    String user, String password, String? gruppe);
 
 class _LoginFormState extends State<_LoginForm> {
   TextStyle style = TextStyle(
@@ -158,11 +164,11 @@ class _LoginFormState extends State<_LoginForm> {
       items: FirmenGruppe.all
           .map(
             (fg) => DropdownMenuItem(
+              value: fg.id,
               child: Text(
                 fg.name,
                 overflow: TextOverflow.ellipsis,
               ),
-              value: fg.id,
             ),
           )
           .toList(),

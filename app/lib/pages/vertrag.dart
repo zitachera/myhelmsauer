@@ -5,7 +5,7 @@ import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
 
 class VertragPage extends StatelessWidget {
-  VertragPage({
+  const VertragPage({
     super.key,
     required this.viewDocument,
     required this.viewMeldeDialog,
@@ -62,11 +62,13 @@ class VertragPage extends StatelessWidget {
                         child: SvgIcon("images/menu/kontakt.svg"),
                       ),
                       Expanded(
-                        child: Text("Neue ${template.name}", textScaler: TextScaler.linear(1.3)),
+                        child: Text("Neue ${template.name}",
+                            textScaler: TextScaler.linear(1.3)),
                       ),
                     ],
                   ),
-                  onPressed: () => viewMeldeDialog(context, vertrag.id, template),
+                  onPressed: () =>
+                      viewMeldeDialog(context, vertrag.id, template),
                 ),
               for (var dokument in vertrag.dokumente)
                 MaterialButton(
@@ -78,7 +80,8 @@ class VertragPage extends StatelessWidget {
                         child: const Icon(Icons.text_snippet),
                       ),
                       Expanded(
-                        child: Text(dokument.titel, textScaler: TextScaler.linear(1.3)),
+                        child: Text(dokument.titel,
+                            textScaler: TextScaler.linear(1.3)),
                       ),
                     ],
                   ),
@@ -112,16 +115,16 @@ class _InfoLine extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Expanded(
+            flex: 2,
             child: Text(
               caption + ":",
             ),
-            flex: 2,
           ),
           Expanded(
+            flex: 3,
             child: Text(
               value,
             ),
-            flex: 3,
           ),
         ],
       ),

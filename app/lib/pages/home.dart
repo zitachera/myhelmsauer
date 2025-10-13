@@ -2,10 +2,11 @@ import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:flutter/material.dart';
 
-typedef PageFunc = Widget Function(Future<void> Function() onRefresh, Widget bottomNavigationBar);
+typedef PageFunc = Widget Function(
+    Future<void> Function() onRefresh, Widget bottomNavigationBar);
 
 class HomePage extends StatefulWidget {
-  HomePage({
+  const HomePage({
     super.key,
     required this.reloadData,
     required this.newsPage,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoCollection extends StatelessWidget {
-  PhotoCollection({
+  const PhotoCollection({
     super.key,
     required this.images,
     required this.label,
@@ -25,7 +25,7 @@ class PhotoCollection extends StatelessWidget {
         ),
       );
     }
-    return Container(
+    return SizedBox(
       height: 150,
       child: Row(
         children: cells,
@@ -35,7 +35,7 @@ class PhotoCollection extends StatelessWidget {
 }
 
 class PhotoCollectionField extends StatelessWidget {
-  PhotoCollectionField({
+  const PhotoCollectionField({
     super.key,
     required this.images,
     required this.max,
@@ -71,12 +71,12 @@ class PhotoCollectionField extends StatelessWidget {
                   onDelete(i);
                   Navigator.of(context).pop();
                 },
+                elevation: 0,
+                backgroundColor: Colors.black.withAlpha(0x44),
                 child: Icon(
                   Icons.delete,
                   color: Colors.white,
                 ),
-                elevation: 0,
-                backgroundColor: Colors.black.withAlpha(0x44),
               ),
             ),
           ],
@@ -90,7 +90,7 @@ class PhotoCollectionField extends StatelessWidget {
         info: infoAdd,
       ));
     }
-    return Container(
+    return SizedBox(
       height: 150,
       child: Row(
         children: cells,
@@ -138,7 +138,10 @@ class _ImageBox extends StatelessWidget {
                       gradient: LinearGradient(
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
-                        colors: [Colors.black.withAlpha(0x99), Color(0)],
+                        colors: [
+                          Colors.black.withAlpha(0x99),
+                          Color(0x00000000)
+                        ],
                       ),
                     ),
                     constraints: BoxConstraints(minWidth: double.infinity),
@@ -185,7 +188,7 @@ class _ImageDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: 0,
-      backgroundColor: Color(0),
+      backgroundColor: Color(0x00000000),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -207,12 +210,12 @@ class _ImageDialog extends StatelessWidget {
                 ...actions,
                 FloatingActionButton(
                   onPressed: () => Navigator.of(context).pop(),
+                  elevation: 0,
+                  backgroundColor: Colors.black.withAlpha(0x44),
                   child: Icon(
                     Icons.close,
                     color: Colors.white,
                   ),
-                  elevation: 0,
-                  backgroundColor: Colors.black.withAlpha(0x44),
                 ),
               ],
             ),
@@ -242,7 +245,8 @@ class _AddButton extends StatelessWidget {
       onPressed: () {
         showDialog(
           context: context,
-          builder: (context) => NewImageDialog(label: label, info: info, onAdd: onAdd),
+          builder: (context) =>
+              NewImageDialog(label: label, info: info, onAdd: onAdd),
         );
       },
       child: Column(
@@ -309,8 +313,8 @@ class NewImageDialog extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Text(
-                        "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf " +
-                            "und bestätigen dieses, um es dem Bericht hinzuzufügen."),
+                        "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf "
+                        "und bestätigen dieses, um es dem Bericht hinzuzufügen."),
                   )
                 ],
               ),
@@ -405,10 +409,6 @@ class _Box extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5),
         child: Container(
-          child: ClipRRect(
-            child: child,
-            borderRadius: BorderRadius.circular(borderRadius),
-          ),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(borderRadius + 1),
@@ -416,6 +416,10 @@ class _Box extends StatelessWidget {
               color: borderColor,
               width: 1,
             ),
+          ),
+          child: ClipRRect(
+            child: child,
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
       ),
@@ -437,6 +441,7 @@ class _ButtonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Box(
+      borderColor: borderColor,
       child: GestureDetector(
         onTap: onPressed,
         behavior: HitTestBehavior.opaque,
@@ -444,7 +449,6 @@ class _ButtonBox extends StatelessWidget {
           child: child,
         ),
       ),
-      borderColor: borderColor,
     );
   }
 }

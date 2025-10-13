@@ -24,7 +24,8 @@ class Session {
     return LoginResult(portal: portal);
   }
 
-  static Future<LoginResult> login(String user, String password, String gruppe) async {
+  static Future<LoginResult> login(
+      String user, String password, String gruppe) async {
     final response = await PortalService.publicPost(
       'login',
       <String, String>{
@@ -33,10 +34,24 @@ class Session {
         'gruppe': gruppe,
       },
     );
+
     if (response.statusCode != 200) {
-      return LoginResult(error: 'Login fehlgeschlagen');
+      print('Erreur login: ${response.statusCode} - ${response.body}');
+      return LoginResult(error: 'Erreur de connexion (${response.statusCode})');
     }
-    final token = jsonDecode(response.body)["token"];
+
+
+    print("Réponse brute du serveur : ${response.body}");
+
+    try {
+      final token = jsonDecode(response.body)["token"];
+      await _writeToken(token);
+    } catch (e) {
+      print("Erreur de parsing JSON : $e");
+      return LoginResult(error: "Réponse serveur invalide");
+    }
+
+    final token = jsonDecode(response.body)["data"]["token"];
     await _writeToken(token);
 
     PortalService portal = PortalService(token);
@@ -46,7 +61,8 @@ class Session {
 
   static Future<String?> _readToken() => _storage.read(key: _tokenKey);
 
-  static Future<void> _writeToken(String token) => _storage.write(key: _tokenKey, value: token);
+  static Future<void> _writeToken(String token) =>
+      _storage.write(key: _tokenKey, value: token);
 }
 
 class LoginResult {

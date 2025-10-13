@@ -5,7 +5,7 @@ import 'package:customer_portal_app/pages/melden.dart';
 import 'package:flutter/material.dart';
 
 class MeldenVertragwahlPage extends StatefulWidget {
-  MeldenVertragwahlPage(
+  const MeldenVertragwahlPage(
     this.portal, {
     super.key,
     this.bottomNavigationBar,
@@ -28,7 +28,7 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
   @override
   Widget build(BuildContext context) {
     final keyword = filter.toLowerCase();
-    final matchs = (String s) => s.toLowerCase().contains(keyword);
+    bool matchs(String s) => s.toLowerCase().contains(keyword);
     final vertraege = widget.portal.vertraege;
 
     final content = Column(
@@ -62,9 +62,12 @@ class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
         ...vertraege
             .where((v) =>
                 v.hasSchadenTemplate &&
-                (matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft)))
+                (matchs(v.sparte) ||
+                    matchs(v.risiko) ||
+                    matchs(v.gesellschaft)))
             .map(
-              (vertrag) => _Vertrag(widget: widget, context: context, vertrag: vertrag),
+              (vertrag) =>
+                  _Vertrag(widget: widget, context: context, vertrag: vertrag),
             ),
       ],
     );

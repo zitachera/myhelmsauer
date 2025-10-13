@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 class FilePage extends StatelessWidget {
-  FilePage(this.portal, this.title, this.endpoint, {super.key});
+  const FilePage(this.portal, this.title, this.endpoint, {super.key});
 
   final PortalService portal;
 
@@ -25,7 +25,8 @@ class FilePage extends StatelessWidget {
           if (snapshot.hasError) {
             var msg = snapshot.error.toString();
             if (snapshot.error is SocketException) {
-              msg = "Keine Verbindung zum Server!";
+              msg = 'BACON';
+              //  TODO REVERT       msg = "Keine Verbindung zum Server!";
             }
             return Column(
               children: [
@@ -51,7 +52,7 @@ class FilePage extends StatelessWidget {
               (_) => Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
                   builder: (context) => Scaffold(
-                    appBar: new AppBar(
+                    appBar: AppBar(
                       title: Text(title),
                     ),
                     backgroundColor: Colors.grey,

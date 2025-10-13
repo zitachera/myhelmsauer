@@ -8,6 +8,8 @@ require (
 	github.com/hashicorp/go-version v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.17
 	github.com/xhit/go-simple-mail/v2 v2.13.0
+	gorm.io/driver/sqlite v1.5.4
+	gorm.io/gorm v1.25.5
 )
 
 require (
@@ -20,6 +22,4 @@ require (
 	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/sqlite v1.5.4 // indirect
-	gorm.io/gorm v1.25.5 // indirect
 )
