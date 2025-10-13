@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: helmsauerBlau,
         secondaryHeaderColor: helmsauerRot,
-        bottomAppBarTheme: BottomAppBarThemeData(color: helmsauerBlau),
+        //bottomAppBarTheme: BottomAppBarThemeData(color: helmsauerBlau),
         primaryColorDark: dunklesBlau,
         colorScheme: ColorScheme.fromSeed(
           seedColor: helmsauerBlau,

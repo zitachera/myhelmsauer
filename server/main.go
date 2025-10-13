@@ -128,7 +128,6 @@ import (
     "flag"
     "log"
     "net/http"
-    "net/url"
     "time"
 
     "github.com/go-chi/chi/v5"
@@ -158,19 +157,14 @@ func main() {
 
     // 🔐 CORS global — autorise localhost/127.0.0.1 (tous ports) en DEV.
     // Pour la PROD, remplace par des origins explicites (ex: https://app.helmsauer.de)
-    r.Use(cors.Handler(cors.Options{
-        // Variante stricte et souple : accepte http(s)://localhost:<port> et http(s)://127.0.0.1:<port>
-
-        //AllowedOrigins:   []string{"http://localhost:5173", "http://127.0.0.1:5173"},
-        AllowedOrigins:   []string{"*"},
-
-        AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
-        AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-        AllowedHeaders:   []string{"Link"},
-        ExposedHeaders:   []string{},
-        AllowCredentials: false, // Passe à true si tu utilises des cookies; alors mets des origins explicites (pas "*")
-        MaxAge:           300,
-    }),
+    r.Use(
+        cors.New(cors.Options{
+            AllowedOrigins:   []string{"https://myhelmsauer.app", "http://localhost:5173", "http://127.0.0.1:5173"},
+            AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+            AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+            AllowCredentials: true,
+            MaxAge:           300, // Maximum value not ignored by any of major browsers
+        }).Handler,
         middleware.RequestID,
         middleware.Logger,
         middleware.Recoverer,

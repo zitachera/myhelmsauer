@@ -71,7 +71,7 @@ func Verträge(ctx context.Context) ([]vertrag, error) {
 func Dokument(w http.ResponseWriter, r *http.Request) {
 	c := auth.GetClientFromRequest(r)
 
-	contentType, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
+	_, body, err := c.GetDokument(AdressID.From(r), DokumentID.From(r))
 	if err != nil {
 		handleError(w, err.Error(), http.StatusInternalServerError)
 		return

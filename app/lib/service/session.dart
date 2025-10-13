@@ -43,15 +43,7 @@ class Session {
 
     print("Réponse brute du serveur : ${response.body}");
 
-    try {
-      final token = jsonDecode(response.body)["token"];
-      await _writeToken(token);
-    } catch (e) {
-      print("Erreur de parsing JSON : $e");
-      return LoginResult(error: "Réponse serveur invalide");
-    }
-
-    final token = jsonDecode(response.body)["data"]["token"];
+    final token = jsonDecode(response.body)["token"];
     await _writeToken(token);
 
     PortalService portal = PortalService(token);

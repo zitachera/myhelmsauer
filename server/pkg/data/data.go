@@ -12,6 +12,7 @@ var db *gorm.DB
 
 const MyHelmsauerGroup = "myh"
 
+
 // StoreCredentials stores given credentials in the database or returns an error
 func StoreCredentials(c Session) error {
 	fmt.Println(c)
