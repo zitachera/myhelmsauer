@@ -157,12 +157,13 @@ func main() {
 
     // Configuration CORS avec le middleware officiel
     r.Use(cors.Handler(cors.Options{
-        AllowedOrigins:   []string{"*"},
-        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "client-version"},
-        ExposedHeaders:   []string{"Link"},
-        AllowCredentials: false,
-        MaxAge:           300,
+        AllowedOrigins:     []string{"*"},
+        AllowedMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders:     []string{"Accept", "Authorization", "Content-Type", "client-version"},
+        ExposedHeaders:     []string{"Link"},
+        AllowCredentials:   false,
+        MaxAge:             300,
+        OptionsPassthrough: false, // Le middleware gère les OPTIONS automatiquement
     }))
 
     r.Use(
