@@ -132,6 +132,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/hashicorp/go-version"
 
     "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api"
@@ -154,21 +155,17 @@ func main() {
 
     r := chi.NewRouter()
 
-    // Configuration CORS simplifiée qui accepte toutes les origines
-    r.Use(func(next http.Handler) http.Handler {
-        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-            w.Header().Set("Access-Control-Allow-Origin", "*")
-            w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-            w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, client-version")
-            
-            if r.Method == "OPTIONS" {
-                w.WriteHeader(http.StatusOK)
-                return
-            }
-            
-            next.ServeHTTP(w, r)
-        })
-    },
+    // Configuration CORS avec le middleware officiel
+    r.Use(cors.Handler(cors.Options{
+        AllowedOrigins:   []string{"*"},
+        AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "client-version"},
+        ExposedHeaders:   []string{"Link"},
+        AllowCredentials: false,
+        MaxAge:           300,
+    }))
+
+    r.Use(
         middleware.RequestID,
         middleware.Logger,
         middleware.Recoverer,
