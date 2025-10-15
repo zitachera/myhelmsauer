@@ -125,15 +125,14 @@ func administration(r chi.Router) {
 package main
 
 import (
-    "flag"
-    "log"
-    "net/http"
-    "time"
+	"flag"
+	"log"
+	"net/http"
+	"time"
 
-    "github.com/go-chi/chi/v5"
-    "github.com/go-chi/chi/v5/middleware"
-    "github.com/go-chi/cors"
-    "github.com/hashicorp/go-version"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/hashicorp/go-version"
 
     "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api"
     "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/account"
@@ -155,16 +154,21 @@ func main() {
 
     r := chi.NewRouter()
 
-    // 🔐 CORS global — autorise localhost/127.0.0.1 (tous ports) en DEV.
-    // Pour la PROD, remplace par des origins explicites (ex: https://app.helmsauer.de)
-    r.Use(
-        cors.New(cors.Options{
-            AllowedOrigins:   []string{"https://myhelmsauer.app", "http://localhost:5173", "http://127.0.0.1:5173"},
-            AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-            AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
-            AllowCredentials: true,
-            MaxAge:           300, // Maximum value not ignored by any of major browsers
-        }).Handler,
+    // Configuration CORS simplifiée qui accepte toutes les origines
+    r.Use(func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            w.Header().Set("Access-Control-Allow-Origin", "*")
+            w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+            w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, client-version")
+            
+            if r.Method == "OPTIONS" {
+                w.WriteHeader(http.StatusOK)
+                return
+            }
+            
+            next.ServeHTTP(w, r)
+        })
+    },
         middleware.RequestID,
         middleware.Logger,
         middleware.Recoverer,

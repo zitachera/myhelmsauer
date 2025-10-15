@@ -76,7 +76,6 @@ func newHandlerWithInputBody[In, Out any](h func(context.Context, In) (Out, erro
 		}
 
 		w.Header().Add("Content-Type", "application/json")
-		w.Header().Add("Access-Control-Allow-Origin", "*")
 
 		if err := json.NewEncoder(w).Encode(out); err != nil {
 			handleError(w, err, http.StatusInternalServerError)

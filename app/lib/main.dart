@@ -155,7 +155,7 @@ void main() {
   HttpOverrides.global = MyHttpOverrides();
 
   // ✅ Si l'app tourne sur Windows, on initialise la plateforme WebView correspondante
-  if (Platform.isWindows) {
+  if (!kIsWeb && Platform.isWindows) {
     WebViewPlatform.instance = WebViewWindowsPlatform();
   }
 

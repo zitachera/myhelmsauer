@@ -77,19 +77,9 @@ func Dokument(w http.ResponseWriter, r *http.Request) {
 		return
 	}
     if r.Method == http.MethodOptions {
-        w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
-        w.Header().Set("Vary", "Origin")
-        w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
-        w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-        // w.Header().Set("Access-Control-Allow-Credentials", "true") // si cookies
         w.WriteHeader(http.StatusNoContent)
         return
     }
-   //.Header().Set("Access-Control-Allow-Origin", "http://localhost:xxxx")
-   //.Header().Set("Vary", "Origin")
-    // w.Header().Set("Access-Control-Allow-Credentials", "true") // si cookies
-	//Header().Set("Content-Type", contentType)
-	//Header().Add("Access-Control-Allow-Origin", "*")
 
 	_, err = w.Write(body)
 
