@@ -8,7 +8,10 @@ import (
 
 func Open(dsn string) error {
 	var err error
-	db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{
+	db, err = gorm.Open(sqlite.Dialector{
+		DriverName: "sqlite",
+		DSN:        dsn,
+	}, &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 			NoLowerCase:   true,
