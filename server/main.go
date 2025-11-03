@@ -121,7 +121,6 @@ func administration(r chi.Router) {
 	})
 }*/
 
-
 package main
 
 import (
@@ -134,138 +133,141 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 	"github.com/hashicorp/go-version"
-
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/account"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/admin"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/verzeichnis"
-    "gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/data"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/account"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/admin"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/auth"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/handle"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/api/verzeichnis"
+	"gitlab.helmsauer-it-solutions.org/versicherung/myhelmsauer/server/pkg/data"
 )
 
 var testserver = flag.Bool("testserver", false, "Startet den Server mit einer test config.")
 
 func main() {
-    flag.Parse()
+	flag.Parse()
 
-    if err := data.Open("database.db"); err != nil {
-        panic(err)
-    }
+	if err := data.Open("database.db"); err != nil {
+		panic(err)
+	}
 
-    r := chi.NewRouter()
+	r := chi.NewRouter()
 
-    // Configuration CORS avec le middleware officiel
-    r.Use(cors.Handler(cors.Options{
-        AllowedOrigins:     []string{"*"},
-        AllowedMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowedHeaders:     []string{"Accept", "Authorization", "Content-Type", "client-version"},
-        ExposedHeaders:     []string{"Link"},
-        AllowCredentials:   false,
-        MaxAge:             300,
-        OptionsPassthrough: false, // Le middleware gère les OPTIONS automatiquement
-    }))
+	// Configuration CORS avec le middleware officiel
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "client-version"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+		//OptionsPassthrough: false, // Le middleware gère les OPTIONS automatiquement
 
-    r.Use(
-        middleware.RequestID,
-        middleware.Logger,
-        middleware.Recoverer,
-        middleware.Timeout(10*time.Minute),
-    )
+	}))
+	//r.Options("/*", func(w http.ResponseWriter, r *http.Request) {
+	//w.WriteHeader(http.StatusOK)
+	//})
 
-    r.Route("/api/v1", func(r chi.Router) {
-        handle.Post(r, "/login", auth.Login)
+	r.Use(
+		middleware.RequestID,
+		middleware.Logger,
+		middleware.Recoverer,
+		middleware.Timeout(10*time.Minute),
+	)
 
-        r.Post("/remind", auth.PostRemind(mailRecipients(
-            //"info@helmsauer-gruppe.de",
-            //"jan-erik.keller@helmsauer-gruppe.de",
-            //"bastian.helmsauer@helmsauer-gruppe.de",
-            "zita.mounyicha@helmsauer-gruppe.de",
-        )))
+	r.Route("/api/v1", func(r chi.Router) {
+		handle.Post(r, "/login", auth.Login)
 
-        r.Route("/admin", administration)
+		r.Post("/remind", auth.PostRemind(mailRecipients(
+			//"info@helmsauer-gruppe.de",
+			//"jan-erik.keller@helmsauer-gruppe.de",
+			//"bastian.helmsauer@helmsauer-gruppe.de",
+			"zita.mounyicha@helmsauer-gruppe.de",
+		)))
 
-        r = r.With(
-            auth.CredentialChecker(version.Must(version.NewSemver("1.9.1"))),
-        )
+		r.Route("/admin", administration)
 
-        r.Route("/info", func(r chi.Router) {
-            handle.Get(r, "/", account.Info)
-        })
+		r = r.With(
+			auth.CredentialChecker(version.Must(version.NewSemver("1.9.1"))),
+		)
 
-        r.Route("/password", func(r chi.Router) {
-            handle.Post(r, "/", account.ChangePassword)
-        })
+		r.Route("/info", func(r chi.Router) {
+			handle.Get(r, "/", account.Info)
+		})
 
-        r.Route("/verträge", func(r chi.Router) {
-            handle.Get(r, "/", api.Verträge)
-        })
+		r.Route("/password", func(r chi.Router) {
+			handle.Post(r, "/", account.ChangePassword)
+		})
 
-        r.Route("/verzeichnis", func(r chi.Router) {
-            handle.Get(r, "/", verzeichnis.GetVerzeichnis)
-            handle.Put(r, "/", verzeichnis.PutWertgegenstand)
-            handle.Delete(r, "/"+verzeichnis.ID.Ref(), verzeichnis.DeleteWertgegenstand)
-        })
+		r.Route("/verträge", func(r chi.Router) {
+			handle.Get(r, "/", api.Verträge)
+		})
 
-        r.Route("/fremdverträge", func(r chi.Router) {
-            r.Post("/", api.PostForeignVertrag(mailRecipients(
-                //"info@helmsauer-gruppe.de",
-                //"jan-erik.keller@helmsauer-gruppe.de",
-                //"bastian.helmsauer@helmsauer-gruppe.de",
-                "zita.mounyicha@helmsauer-gruppe.de",
-            )))
-        })
+		r.Route("/verzeichnis", func(r chi.Router) {
+			handle.Get(r, "/", verzeichnis.GetVerzeichnis)
+			handle.Put(r, "/", verzeichnis.PutWertgegenstand)
+			handle.Delete(r, "/"+verzeichnis.ID.Ref(), verzeichnis.DeleteWertgegenstand)
+		})
 
-        r.Route("/adressen", func(r chi.Router) {
-            r.Get("/"+api.AdressID.Ref()+"/dokumente/"+api.DokumentID.Ref(), api.Dokument)
-        })
+		r.Route("/fremdverträge", func(r chi.Router) {
+			r.Post("/", api.PostForeignVertrag(mailRecipients(
+				//"info@helmsauer-gruppe.de",
+				//"jan-erik.keller@helmsauer-gruppe.de",
+				//"bastian.helmsauer@helmsauer-gruppe.de",
+				"zita.mounyicha@helmsauer-gruppe.de",
+			)))
+		})
 
-        r.Post("/vorgänge", api.PostVorgang(mailRecipients(
-            //"info@helmsauer-gruppe.de",
-            //"jan-erik.keller@helmsauer-gruppe.de",
-            //"bastian.helmsauer@helmsauer-gruppe.de",
-            "zita.mounyicha@helmsauer-gruppe.de",
-        )))
+		r.Route("/adressen", func(r chi.Router) {
+			r.Get("/"+api.AdressID.Ref()+"/dokumente/"+api.DokumentID.Ref(), api.Dokument)
+		})
 
-        r.Post("/message", api.PostMessage(mailRecipients(
-            //"info@helmsauer-gruppe.de",
-            //"jan-erik.keller@helmsauer-gruppe.de",
-            //"bastian.helmsauer@helmsauer-gruppe.de",
-            "zita.mounyicha@helmsauer-gruppe.de",
-        )))
-    })
+		r.Post("/vorgänge", api.PostVorgang(mailRecipients(
+			//"info@helmsauer-gruppe.de",
+			//"jan-erik.keller@helmsauer-gruppe.de",
+			//"bastian.helmsauer@helmsauer-gruppe.de",
+			"zita.mounyicha@helmsauer-gruppe.de",
+		)))
 
-    // ✅ Écoute sur toutes les interfaces (hôte + conteneur). En Docker, expose le port 8080 côté hôte.
-    log.Fatal(http.ListenAndServe(":8080", r))
+		r.Post("/message", api.PostMessage(mailRecipients(
+			//"info@helmsauer-gruppe.de",
+			//"jan-erik.keller@helmsauer-gruppe.de",
+			//"bastian.helmsauer@helmsauer-gruppe.de",
+			"zita.mounyicha@helmsauer-gruppe.de",
+		)))
+	})
+
+	// ✅ Écoute sur toutes les interfaces (hôte + conteneur). En Docker, expose le port 8080 côté hôte.
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
 func mailRecipients(recipients ...string) []string {
-    if *testserver {
-        return []string{
-            "zita.mounyicha@helmsauer-gruppe.de", // "jan-erik.keller@helmsauer-gruppe.de"
-        }
-    }
-    return recipients
+	if *testserver {
+		return []string{
+			"zita.mounyicha@helmsauer-gruppe.de", // "jan-erik.keller@helmsauer-gruppe.de"
+		}
+	}
+	return recipients
 }
 
 func administration(r chi.Router) {
-    r = r.With(
-        auth.AdminTokenChecker(),
-    )
-    handle.Get(r, "/stats", admin.Stats)
-    r.Route("/user", func(r chi.Router) {
-        handle.Get(r, "/", admin.GetUsers)
-        handle.Post(r, "/", admin.PostUser)
-        handle.Put(r, "/", admin.PutUser)
+	r = r.With(
+		auth.AdminTokenChecker(),
+	)
+	handle.Get(r, "/stats", admin.Stats)
+	r.Route("/user", func(r chi.Router) {
+		handle.Get(r, "/", admin.GetUsers)
+		handle.Post(r, "/", admin.PostUser)
+		handle.Put(r, "/", admin.PutUser)
 
-        r.Route("/"+admin.UserNameID.Ref(), func(r chi.Router) {
+		r.Route("/"+admin.UserNameID.Ref(), func(r chi.Router) {
 
-            handle.Delete(r, "/", admin.DeleteUser)
+			handle.Delete(r, "/", admin.DeleteUser)
 
-            r.Route("/vertrag", func(r chi.Router) {
-                handle.Get(r, "/", admin.GetVerträge)
-                handle.Put(r, "/", admin.PutVerträge)
-            })
-        })
-    })
+			r.Route("/vertrag", func(r chi.Router) {
+				handle.Get(r, "/", admin.GetVerträge)
+				handle.Put(r, "/", admin.PutVerträge)
+			})
+		})
+	})
 }

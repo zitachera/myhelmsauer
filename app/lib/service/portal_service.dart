@@ -30,7 +30,8 @@ class PortalService {
           "testschadenmeldung.helmsauer-gruppe.de",
           '/api/v1/$resource');
     } else {
-      return Uri.http("localhost:8080", '/api/v1/$resource'); // Use localhost for local development
+      return Uri.http("localhost:8080",
+          '/api/v1/$resource'); // Use localhost for local development
       // Alternativ für Emulator: Uri.http("10.0.2.2:8080", 'api/v1/$resource');
 
       // WSL2 IP
