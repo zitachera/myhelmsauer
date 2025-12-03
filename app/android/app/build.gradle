@@ -65,7 +65,7 @@ android {
             minifyEnabled false
             shrinkResources false
             ndk {
-                debugSymbolLevel 'none'
+                debugSymbolLevel 'FULL'
             }
         }
     }
