@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace 'de.helmsauergruppe.customer_portal_app'
+    namespace 'de.helmsauergruppe.myhelmsauer'
     compileSdk 36
 
     compileOptions {
@@ -37,7 +37,7 @@ android {
 
 
     defaultConfig {
-        applicationId "de.helmsauergruppe.customer_portal_app"
+        applicationId "de.helmsauergruppe.myhelmsauer"
         minSdk 24
         targetSdk 36
         versionCode flutterVersionCode.toInteger()
