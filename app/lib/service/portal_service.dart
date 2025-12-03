@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/model/vorgang.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -25,17 +26,21 @@ class PortalService {
 // Dynamische URI je nach Umgebung
   static Uri _uri(String resource) {
     if (isProd) {
-      return Uri.http(
+      return Uri.https(
           //"schadenmeldung.helmsauer-gruppe.de"
           "testschadenmeldung.helmsauer-gruppe.de",
           '/api/v1/$resource');
     } else {
-      return Uri.http("localhost:8080",
-          '/api/v1/$resource'); // Use localhost for local development
-      // Alternativ für Emulator: Uri.http("10.0.2.2:8080", 'api/v1/$resource');
-
-      // WSL2 IP
-      // Alternativ für Emulator: Uri.http("10.0.2.2:8080", 'api/v1/$resource');
+      // En développement : utiliser 10.0.2.2 pour l'émulateur Android, localhost pour les autres plateformes
+      final String host;
+      if (!kIsWeb && Platform.isAndroid) {
+        // L'émulateur Android utilise 10.0.2.2 pour accéder à localhost de la machine hôte
+        host = "10.0.2.2:8080";
+      } else {
+        // Pour web, desktop, iOS, etc. utiliser localhost
+        host = "localhost:8080";
+      }
+      return Uri.http(host, '/api/v1/$resource');
     }
   }
   // ? "schadenmeldung.helmsauer-gruppe.de"

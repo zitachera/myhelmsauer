@@ -1,0 +1,36 @@
+2025/12/03 02:04:33 Login attempt for user: Demokunde
+
+2025/12/03 02:04:33 [31;1m/Users/imac/Documents/GitHub/myhelmsauer/server/pkg/data/data.go:66 [35;1munrecognized token: "`"
+[0m[33m[0.025ms] [34;1m[rows:-][0m SELECT * FROM `
+500 unrecognized token: "`"
+2025/12/03 02:04:33 [IMACs-iMac.local/yIvJs2Rx3N-000001] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 500 24B in 3.314496ms
+2025/12/03 02:08:41 Login attempt for user: Demokunde
+2025/12/03 02:08:41 Using external client for user: Demokunde
+2025/12/03 02:08:42 Login response: {Status:LoginFailed Message:Username/Kennwort ungültig oder keine Adresse zugeordnet}
+403 Username/Kennwort ungültig oder keine Adresse zugeordnet
+2025/12/03 02:08:42 [IMACs-iMac.local/yIvJs2Rx3N-000002] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 403 58B in 1.232209052s
+2025/12/03 02:08:55 Login attempt for user: Demokunde
+2025/12/03 02:08:55 Using external client for user: Demokunde
+500 XML syntax error on line 28: unquoted or missing attribute value in element
+2025/12/03 02:08:56 [IMACs-iMac.local/yIvJs2Rx3N-000003] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 500 76B in 673.814359ms
+2025/12/03 02:09:41 Login attempt for user: Demokunde
+2025/12/03 02:09:41 Using external client for user: Demokunde
+2025/12/03 02:09:42 Login response: {Status:LoginFailed Message:Username/Kennwort ungültig oder keine Adresse zugeordnet}
+403 Username/Kennwort ungültig oder keine Adresse zugeordnet
+2025/12/03 02:09:42 [IMACs-iMac.local/yIvJs2Rx3N-000004] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 403 58B in 1.853092839s
+2025/12/03 02:11:46 Login attempt for user: Demokunde
+
+2025/12/03 02:11:46 [31;1m/Users/imac/Documents/GitHub/myhelmsauer/server/pkg/data/data.go:66 [35;1munrecognized token: "`"
+[0m[33m[0.022ms] [34;1m[rows:-][0m SELECT * FROM `
+500 unrecognized token: "`"
+2025/12/03 02:11:46 [IMACs-iMac.local/yIvJs2Rx3N-000005] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 500 24B in 246.003µs
+2025/12/03 02:12:41 Login attempt for user: Demokunde
+
+2025/12/03 02:12:41 [31;1m/Users/imac/Documents/GitHub/myhelmsauer/server/pkg/data/data.go:66 [35;1munrecognized token: "`"
+[0m[33m[0.024ms] [34;1m[rows:-][0m SELECT * FROM `
+500 unrecognized token: "`"
+2025/12/03 02:12:41 [IMACs-iMac.local/yIvJs2Rx3N-000006] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 500 24B in 248.466µs
+2025/12/03 02:13:01 Login attempt for user: Demokunde
+2025/12/03 02:13:01 Using external client for user: Demokunde
+500 XML syntax error on line 28: unquoted or missing attribute value in element
+2025/12/03 02:13:02 [IMACs-iMac.local/yIvJs2Rx3N-000007] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:52681 - 500 76B in 642.830077ms

@@ -2,6 +2,7 @@ package proclient
 
 import (
 	"encoding/xml"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -45,7 +46,18 @@ func (c Client) postForm(values url.Values, res interface{}) error {
 		return err
 	}
 
-	return xml.Unmarshal(body, res)
+	// Vérifier si la réponse est vide ou invalide
+	if len(body) == 0 {
+		return fmt.Errorf("empty response from ProClient")
+	}
+
+	// Tenter de parser le XML
+	if err := xml.Unmarshal(body, res); err != nil {
+		// Log le body pour debug si le parsing échoue
+		return fmt.Errorf("XML parsing error: %v, response body: %s", err, string(body))
+	}
+
+	return nil
 
 }
 

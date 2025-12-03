@@ -1,0 +1,40 @@
+2025/12/03 02:45:35 Login attempt for user: Demokunde
+2025/12/03 02:45:35 Using external client for user: Demokunde
+2025/12/03 02:45:35 Login response: {Status:Success Message:}
+2025/12/03 02:45:35 Login successful, token: 0256db0f-3eb8-426f-8ee8-64c6774ebf40
+{{Demokunde Demo90443HK hk map[]}  0256db0f-3eb8-426f-8ee8-64c6774ebf40 }
+2025/12/03 02:45:35 [IMACs-iMac.local/m8ffNA1s4p-000001] "POST http://localhost:8080/api/v1/login HTTP/1.1" from [::1]:53644 - 200 49B in 726.168524ms
+2025/12/03 02:47:30 Login attempt for user: Demokunde
+2025/12/03 02:47:30 Using external client for user: Demokunde
+2025/12/03 02:47:31 Login response: {Status:Success Message:}
+2025/12/03 02:47:31 Login successful, token: 87b80288-2a3b-4ff4-8db6-40997405f7fb
+{{Demokunde Demo90443HK hk map[]}  87b80288-2a3b-4ff4-8db6-40997405f7fb }
+2025/12/03 02:47:31 [IMACs-iMac.local/m8ffNA1s4p-000002] "POST http://10.0.2.2:8080/api/v1/login HTTP/1.1" from 127.0.0.1:54290 - 200 49B in 742.44641ms
+2025/12/03 02:47:31 [IMACs-iMac.local/m8ffNA1s4p-000003] user hk Demokunde
+2025/12/03 02:47:33 [IMACs-iMac.local/m8ffNA1s4p-000003] "GET http://10.0.2.2:8080/api/v1/vertr%C3%A4ge HTTP/1.1" from 127.0.0.1:54296 - 200 11410B in 2.180131447s
+2025/12/03 02:48:51 Login attempt for user: Demokunde
+2025/12/03 02:48:51 Using external client for user: Demokunde
+2025/12/03 02:48:51 Login response: {Status: Message:}
+403 
+2025/12/03 02:48:51 [IMACs-iMac.local/m8ffNA1s4p-000004] "POST http://10.0.2.2:8080/api/v1/login HTTP/1.1" from 127.0.0.1:54735 - 403 1B in 684.494473ms
+2025/12/03 02:51:52 Login attempt for user: Demokunde
+2025/12/03 02:51:52 Using external client for user: Demokunde
+2025/12/03 02:51:53 Login response: {Status:LoginFailed Message:Username/Kennwort ungültig oder keine Adresse zugeordnet}
+403 Username/Kennwort ungültig oder keine Adresse zugeordnet
+2025/12/03 02:51:53 [IMACs-iMac.local/m8ffNA1s4p-000005] "POST http://10.0.2.2:8080/api/v1/login HTTP/1.1" from 127.0.0.1:55727 - 403 58B in 719.59686ms
+2025/12/03 02:54:26 Login attempt for user: Demokunde
+2025/12/03 02:54:26 Using external client for user: Demokunde
+2025/12/03 02:54:27 Login response: {Status:Success Message:}
+2025/12/03 02:54:27 Login successful, token: ed5d71f0-41c3-460a-b0b6-3add5d54405f
+{{Demokunde Demo90443HK hk map[]}  ed5d71f0-41c3-460a-b0b6-3add5d54405f }
+2025/12/03 02:54:27 [IMACs-iMac.local/m8ffNA1s4p-000006] "POST http://10.0.2.2:8080/api/v1/login HTTP/1.1" from 127.0.0.1:56581 - 200 49B in 674.193741ms
+2025/12/03 02:54:27 [IMACs-iMac.local/m8ffNA1s4p-000007] user hk Demokunde
+2025/12/03 02:54:29 [IMACs-iMac.local/m8ffNA1s4p-000007] "GET http://10.0.2.2:8080/api/v1/vertr%C3%A4ge HTTP/1.1" from 127.0.0.1:56585 - 200 11410B in 1.95555139s
+2025/12/03 02:54:42 Login attempt for user: Demokunde
+2025/12/03 02:54:42 Using external client for user: Demokunde
+2025/12/03 02:54:43 Login response: {Status:Success Message:}
+2025/12/03 02:54:43 Login successful, token: e97fb900-fb03-4c46-841e-6dbf6062c945
+{{Demokunde Demo90443HK hk map[]}  e97fb900-fb03-4c46-841e-6dbf6062c945 }
+2025/12/03 02:54:43 [IMACs-iMac.local/m8ffNA1s4p-000008] "POST http://10.0.2.2:8080/api/v1/login HTTP/1.1" from 127.0.0.1:56677 - 200 49B in 230.14263ms
+2025/12/03 02:54:43 [IMACs-iMac.local/m8ffNA1s4p-000009] user hk Demokunde
+2025/12/03 02:54:45 [IMACs-iMac.local/m8ffNA1s4p-000009] "GET http://10.0.2.2:8080/api/v1/vertr%C3%A4ge HTTP/1.1" from 127.0.0.1:56680 - 200 11410B in 2.04278311s

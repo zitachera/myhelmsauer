@@ -61,11 +61,14 @@ func LoadCredentials(token string) (Session, error) {
 
 // LoadSubaccount returns a sub account with the given name or an error.
 func LoadSubaccount(token, subAccountName string) (Session, error) {
+	if subAccountName == "" {
+		return Session{}, errors.New("subAccountName cannot be empty")
+	}
 	var c Session
 	c.AuthToken = token
-	rows, err := db.Exec("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName).Rows()
+	rows, err := db.Raw("select Passhash, MainUser, MainPassword, Portal from SubAccount where Name = ?", subAccountName).Rows()
 	if err != nil {
-		return Session{}, err
+		return Session{}, fmt.Errorf("failed to query SubAccount: %w", err)
 	}
 	defer rows.Close()
 	if !rows.Next() {
