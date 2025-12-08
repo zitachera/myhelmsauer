@@ -4,17 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
 
-/*import 'dart:io';
-import 'dart:developer';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/pages/login.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import 'package:webview_flutter_windows/webview_flutter_windows.dart'; // ✅ Import Windows WebView
-// + tes autres imports existants (LoginPage, couleurs, etc.)*/
+// Gestion des certificats SSL pour les domaines Helmsauer
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+        // Accepter les certificats uniquement pour les domaines Helmsauer de production
+        if (host.contains('helmsauer-gruppe.de')) {
+          return true;
+        }
+        // Pour tous les autres domaines, utiliser la validation par défaut
+        return false;
+      };
+  }
+}
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Activer la gestion personnalisée des certificats SSL
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
 }
 
