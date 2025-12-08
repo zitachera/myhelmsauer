@@ -14,22 +14,14 @@ class PortalService {
 
   // Uri _uri(String resource) => Uri.http("10.0.2.2:8080", 'api/v1/' + resource); // debug pc
 
-  static const bool isProd = bool.fromEnvironment("dart.vm.product");
-
-  //static /Uri _uri(String resource) => Uri.https(
-  // !isProd{
-
-  // return Uri.https("testschadenmeldung.helmsauer-gruppe.de", 'api/v1/$resource');
-  // } else {
-  // return Uri.http("172.18.48.242:8080", 'api/v1/$resource');
+  // Utilise kReleaseMode pour détecter correctement le mode production (fonctionne pour toutes les plateformes y compris web)
+  static bool get isProd => kReleaseMode;
 
 // Dynamische URI je nach Umgebung
   static Uri _uri(String resource) {
     if (isProd) {
       return Uri.https(
-          //"schadenmeldung.helmsauer-gruppe.de"
-          "testschadenmeldung.helmsauer-gruppe.de",
-          '/api/v1/$resource');
+          "schadenmeldung.helmsauer-gruppe.de", '/api/v1/$resource');
     } else {
       // En développement : utiliser 10.0.2.2 pour l'émulateur Android, localhost pour les autres plateformes
       final String host;
