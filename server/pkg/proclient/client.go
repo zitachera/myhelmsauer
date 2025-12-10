@@ -1,11 +1,13 @@
 package proclient
 
 import (
+	"crypto/tls"
 	"encoding/xml"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // Client is a client for the ProClient API.
@@ -34,8 +36,16 @@ func (c Client) requestByID(query, entity, id string, res interface{}) error {
 }
 
 func (c Client) postForm(values url.Values, res interface{}) error {
+	// Créer un client HTTP personnalisé qui ignore la vérification SSL pour les domaines Helmsauer
+	client := &http.Client{
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: strings.Contains(c.url(), "helmsauer-gruppe.de"),
+			},
+		},
+	}
 
-	resp, err := http.PostForm(c.url(), values)
+	resp, err := client.PostForm(c.url(), values)
 	if err != nil {
 		return err
 	}
