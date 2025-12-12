@@ -17,11 +17,36 @@ class PortalService {
   // Utilise kReleaseMode pour détecter correctement le mode production (fonctionne pour toutes les plateformes y compris web)
   static bool get isProd => kReleaseMode;
 
-// Dynamische URI je nach Umgebung
+  // Configuration des serveurs
+  // Prod: 192.168.35.40 (schadenmeldung.helmsauer-gruppe.de)
+  // Test: 192.168.35.41 (testschadenmeldung.helmsauer-gruppe.de)
+  // Username: Zita, Password: start1234!
+
+  // Option pour forcer l'utilisation du serveur de test même en production (pour débogage)
+  static const bool useTestServer = false;
+
+  // Option pour utiliser les IPs directement au lieu des domaines (pour débogage réseau)
+  static const bool useDirectIPs = false;
+
+  // Dynamische URI je nach Umgebung
   static Uri _uri(String resource) {
-    if (isProd) {
-      return Uri.https(
-          "schadenmeldung.helmsauer-gruppe.de", '/api/v1/$resource');
+    if (isProd && !useTestServer) {
+      // Production: utiliser le domaine HTTPS (port 443 par défaut)
+      if (useDirectIPs) {
+        // Option de débogage: utiliser l'IP directement (nécessite VPN/réseau local)
+        return Uri.https("192.168.35.40:443", '/api/v1/$resource');
+      } else {
+        return Uri.https(
+            "schadenmeldung.helmsauer-gruppe.de", '/api/v1/$resource');
+      }
+    } else if (isProd && useTestServer) {
+      // Production mais avec serveur de test (pour débogage)
+      if (useDirectIPs) {
+        return Uri.https("192.168.35.41:443", '/api/v1/$resource');
+      } else {
+        return Uri.https(
+            "testschadenmeldung.helmsauer-gruppe.de", '/api/v1/$resource');
+      }
     } else {
       // En développement : utiliser 10.0.2.2 pour l'émulateur Android, localhost pour les autres plateformes
       final String host;
