@@ -1,5 +1,7 @@
 import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/pages/login.dart';
+// import 'package:customer_portal_app/pages/login.dart'; // Connexion désactivée
+import 'package:customer_portal_app/pages/pages.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -8,15 +10,28 @@ import 'dart:io';
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
+    final client = super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port) {
-        // Accepter les certificats uniquement pour les domaines Helmsauer de production
-        if (host.contains('helmsauer-gruppe.de')) {
+        // Log pour débogage
+        print('Vérification certificat SSL pour: $host:$port');
+        print('Certificat sujet: ${cert.subject}');
+        print('Certificat émetteur: ${cert.issuer}');
+
+        // Accepter les certificats pour les domaines Helmsauer
+        if (host.contains('helmsauer-gruppe.de') ||
+            host.contains('192.168.35.40') ||
+            host.contains('192.168.35.41')) {
+          print('Certificat accepté pour $host');
           return true;
         }
+
         // Pour tous les autres domaines, utiliser la validation par défaut
+        print('Certificat rejeté pour $host');
         return false;
-      };
+      }
+      ..connectionTimeout = const Duration(seconds: 30);
+
+    return client;
   }
 }
 
@@ -73,7 +88,10 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
-      home: LoginPage(),
+      // Connexion désactivée - redirection directe vers la page d'accueil
+      // home: LoginPage(),
+      home: Pages(PortalService(""))
+          .home, // Token factice pour bypasser la connexion
       debugShowCheckedModeBanner: false,
     );
   }
