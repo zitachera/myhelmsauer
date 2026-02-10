@@ -1,4 +1,4 @@
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +150,172 @@ class _Vertrag extends StatelessWidget {
                 vertrag.risiko,
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}*/
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class VertraegePage extends StatefulWidget {
+  const VertraegePage(
+    this.vertraege, {
+    super.key,
+    required this.viewVertrag,
+    this.bottomNavigationBar,
+    this.onRefresh,
+    required this.erfasseFremdvertrag,
+  });
+
+  final void Function(BuildContext, Vertrag) viewVertrag;
+  final List<Vertrag> vertraege;
+  final Widget? bottomNavigationBar;
+  final Future<void> Function()? onRefresh;
+  final void Function(BuildContext) erfasseFremdvertrag;
+
+  @override
+  State<VertraegePage> createState() => _VertraegePageState();
+}
+
+class _VertraegePageState extends State<VertraegePage> {
+  String filter = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      for (final v in widget.vertraege) {
+        v.isFavorite = prefs.getBool('favorit_${v.id}') ?? false;
+      }
+    });
+  }
+
+  Future<void> _toggleFavorite(Vertrag vertrag) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      vertrag.isFavorite = !vertrag.isFavorite;
+      prefs.setBool('favorit_${vertrag.id}', vertrag.isFavorite);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final keyword = filter.toLowerCase();
+    bool matchs(String s) => s.toLowerCase().contains(keyword);
+
+    // ⭐ Favoris en premier
+    final sorted = [...widget.vertraege]
+      ..sort((a, b) => b.isFavorite ? 1 : -1);
+
+    final filtered = sorted.where(
+      (v) =>
+          matchs(v.sparte) ||
+          matchs(v.risiko) ||
+          matchs(v.gesellschaft),
+    );
+
+    return HsSingleChildScrollScaffold(
+      title: "Vertragsübersicht",
+      onRefresh: widget.onRefresh,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      body: Column(
+        children: [
+          Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(8),
+                child: Icon(Icons.search),
+              ),
+              Expanded(
+                child: TextFormField(
+                  initialValue: filter,
+                  onChanged: (v) => setState(() => filter = v),
+                  decoration:
+                      const InputDecoration(hintText: "Verträge durchsuchen"),
+                ),
+              ),
+            ],
+          ),
+
+          ...filtered.map(
+            (vertrag) => _Vertrag(
+              vertrag: vertrag,
+              onOpen: () => widget.viewVertrag(context, vertrag),
+              onToggleFavorite: () => _toggleFavorite(vertrag),
+            ),
+          ),
+
+          const SizedBox(height: 20),
+          OutlinedButton(
+            onPressed: () => widget.erfasseFremdvertrag(context),
+            child: const Text("Fremdvertrag erfassen"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Vertrag extends StatelessWidget {
+  const _Vertrag({
+    required this.vertrag,
+    required this.onOpen,
+    required this.onToggleFavorite,
+  });
+
+  final Vertrag vertrag;
+  final VoidCallback onOpen;
+  final VoidCallback onToggleFavorite;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(3),
+      child: MaterialButton(
+        color: primaerGrau,
+        onPressed: onOpen,
+        child: Row(
+          children: [
+            // ⭐ ÉTOILE CLIQUABLE
+            IconButton(
+              icon: Icon(
+                vertrag.isFavorite ? Icons.star : Icons.star_border,
+                color: vertrag.isFavorite ? Colors.yellow : Colors.grey,
+              ),
+              onPressed: onToggleFavorite,
+            ),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    vertrag.sparte,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    vertrag.gesellschaft,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  if (vertrag.risiko.isNotEmpty)
+                    Text(
+                      vertrag.risiko,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

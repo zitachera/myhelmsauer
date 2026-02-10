@@ -69,6 +69,7 @@ class _MeldenState extends State<MeldenPage> {
     if (widget.template.felder
         .where((f) => f.kind == MeldeFeldKind.location)
         .isNotEmpty) {
+      // ignore: deprecated_member_use
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
           .then((position) => gps = position);
     }

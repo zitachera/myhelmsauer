@@ -1,4 +1,6 @@
-import 'package:customer_portal_app/components/const.dart';
+// ignore_for_file: unused_import
+
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/components/svgicon.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
@@ -130,4 +132,98 @@ class _InfoLine extends StatelessWidget {
       ),
     );
   }
+}*/
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/components/svgicon.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class VertragPage extends StatelessWidget {
+  const VertragPage({
+    super.key,
+    required this.viewDocument,
+    required this.viewMeldeDialog,
+    required this.vertrag,
+  });
+
+  final Vertrag vertrag;
+  final void Function(BuildContext, VertragDokument) viewDocument;
+  final void Function(BuildContext, String, MeldeTemplate) viewMeldeDialog;
+
+  @override
+  Widget build(BuildContext context) {
+    return HsSingleChildScrollScaffold(
+      title: 'Vertragsinfo',
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            // ⭐ FAVORI
+            StatefulBuilder(
+              builder: (context, setState) {
+                SharedPreferences.getInstance().then((prefs) {
+                  vertrag.isFavorite =
+                      prefs.getBool('favorit_${vertrag.id}') ?? false;
+                });
+
+                return Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    icon: Icon(
+                      vertrag.isFavorite ? Icons.star : Icons.star_border,
+                      color: Colors.yellow,
+                    ),
+                    onPressed: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      setState(() {
+                        vertrag.isFavorite = !vertrag.isFavorite;
+                        prefs.setBool(
+                            'favorit_${vertrag.id}', vertrag.isFavorite);
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+
+            _InfoLine(caption: "Sparte", value: vertrag.sparte),
+            _InfoLine(caption: "VSNR", value: vertrag.vertragsnummer),
+            _InfoLine(caption: "Gesellschaft", value: vertrag.gesellschaft),
+            _InfoLine(
+                caption: "Ablauf", value: dateFormat.format(vertrag.ablauf)),
+            _InfoLine(caption: "Beitrag", value: vertrag.beitrag),
+            _InfoLine(caption: "Risiko", value: vertrag.risiko),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+class _InfoLine extends StatelessWidget {
+  const _InfoLine({required this.caption, required this.value});
+
+  final String caption;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(3),
+      color: Colors.black,
+      child: Row(
+        children: [
+          Expanded(flex: 2, child: Text("$caption:")),
+          Expanded(flex: 3, child: Text(value)),
+        ],
+      ),
+    );
+  }
+}
+
+
+

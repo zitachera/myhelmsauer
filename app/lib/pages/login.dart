@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Text(
-              "myHELMSAUER",
+              "MYHELMSAUER",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 36,

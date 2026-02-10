@@ -26,7 +26,7 @@ class FilePage extends StatelessWidget {
             var msg = snapshot.error.toString();
             if (snapshot.error is SocketException) {
               msg = 'BACON';
-              //  TODO REVERT       msg = "Keine Verbindung zum Server!";
+              //  TODO REVERT msg = "Keine Verbindung zum Server!";
             }
             return Column(
               children: [

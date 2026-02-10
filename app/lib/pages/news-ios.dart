@@ -1,4 +1,4 @@
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -271,4 +271,177 @@ class IOSNews extends StatelessWidget {
           ],
         ),
       );
+}
+*/
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pdf_render/pdf_render_widgets.dart';
+
+class IOSNews extends StatelessWidget {
+  const IOSNews({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      // 🔹 Padding global mobile-friendly
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          // 🔹 Header moderne avec badges
+          //_HeaderCard(),
+
+          const SizedBox(height: 20),
+
+          // 🔹 Carte news cliquable
+          _NewsCard(context),
+
+          const SizedBox(height: 30),
+
+          // 🔹 Section FAQ
+          _SectionTitle("FAQ"),
+
+          _FaqItem(
+            icon: "images/menu/smartphone.svg",
+            text:
+                "Auf der Startseite finden Sie regelmäßig neue Artikel zu Versicherungsthemen.",
+          ),
+          _FaqItem(
+            icon: "images/menu/vertrag.svg",
+            text:
+                "In der Vertragsübersicht haben Sie Zugriff auf alle Ihre Verträge.",
+          ),
+          _FaqItem(
+            icon: "images/menu/schaden.svg",
+            text:
+                "Schäden können Sie direkt und unkompliziert in der App melden.",
+          ),
+          _FaqItem(
+            icon: "images/menu/kontakt.svg",
+            text:
+                "Über den Kontaktbereich erreichen Sie uns jederzeit.",
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 🔹 Header redesigné (remplace layout rigide)
+  /*Widget _HeaderCard() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: helmsauerBlau,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          Text(
+            "Willkommen bei myHelmsauer",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 12),
+
+          // 🔹 Logos alignés proprement
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(
+              4,
+              (i) => Image.asset(
+                "images/siegel/${i + 1}.png",
+                height: 40,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }*/
+
+  /// 🔹 Carte article (Material + elevation)
+  Widget _NewsCard(BuildContext context) {
+    return Material(
+      elevation: 4,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => Scaffold(
+              appBar: AppBar(title: const Text("Cyberkriminalität")),
+              body: PdfViewer.openAsset("images/cyber.pdf"),
+            ),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(20)),
+              child: Image.asset("images/cyber.jpg"),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                "Cyberkriminalität – so schützen Sie Ihr Unternehmen",
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 🔹 Titre de section moderne
+  Widget _SectionTitle(String title) => Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      );
+
+  /// 🔹 Élément FAQ redesigné (cards)
+  Widget _FaqItem({required String icon, required String text}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 8,
+            color: Colors.black.withOpacity(0.05),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            icon,
+            height: 32,
+            colorFilter:
+                ColorFilter.mode(helmsauerBlau, BlendMode.srcIn),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: Text(text)),
+        ],
+      ),
+    );
+  }
 }
