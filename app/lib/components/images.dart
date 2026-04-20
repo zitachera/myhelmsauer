@@ -1,4 +1,4 @@
-import 'dart:typed_data';
+/*import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -188,7 +188,7 @@ class _ImageDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: 0,
-      backgroundColor: Color(0x00000000),
+      backgroundColor: Color.fromARGB(0, 227, 224, 224),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -418,8 +418,8 @@ class _Box extends StatelessWidget {
             ),
           ),
           child: ClipRRect(
-            child: child,
             borderRadius: BorderRadius.circular(borderRadius),
+            child: child,
           ),
         ),
       ),
@@ -448,6 +448,725 @@ class _ButtonBox extends StatelessWidget {
         child: SizedBox.expand(
           child: child,
         ),
+      ),
+    );
+  }
+}*/
+
+/*import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+/// PHOTO COLLECTION (READ-ONLY)
+
+class PhotoCollection extends StatelessWidget {
+  const PhotoCollection({
+    super.key,
+    required this.images,
+    required this.label,
+
+  });
+
+  final List<Uint8List> images;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 160,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemCount: images.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        itemBuilder: (context, index) {
+          return _ImageCard(
+            image: images[index],
+            caption: label,
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// PHOTO COLLECTION WITH ADD / DELETE
+
+class PhotoCollectionField extends StatelessWidget {
+  const PhotoCollectionField({
+    super.key,
+    required this.images,
+    required this.max,
+    required this.label,
+    required this.labelAdd,
+    required this.onDelete,
+    required this.onAdd,
+    this.infoAdd, 
+   this.alignment = WrapAlignment.start,
+    
+  });
+
+  final List<Uint8List> images;
+  final int max;
+  final String label;
+  final String labelAdd;
+  final Widget? infoAdd;
+  final WrapAlignment alignment;
+  final Function(int index) onDelete;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    final canAdd = images.length < max;
+
+    return SizedBox(
+      height: 160,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemCount: canAdd ? images.length + 1 : images.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        itemBuilder: (context, index) {
+          if (index < images.length) {
+            return _ImageCard(
+              image: images[index],
+              caption: '$label ${index + 1}',
+              onDelete: () => onDelete(index),
+            );
+          }
+
+          /// Bouton ADD
+          return _AddPhotoCard(
+            label: labelAdd,
+            info: infoAdd,
+            onAdd: onAdd,
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// IMAGE CARD (MODERNE + ANIMATION)
+
+class _ImageCard extends StatelessWidget {
+  const _ImageCard({
+    required this.image,
+    required this.caption,
+    this.onDelete,
+  });
+
+  final Uint8List image;
+  final String caption;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: image,
+      child: Material(
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        elevation: 3,
+        child: InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) => _ImagePreviewDialog(
+                image: image,
+                onDelete: onDelete,
+              ),
+            );
+          },
+          child: SizedBox(
+            width: 140,
+            child: Stack(
+              children: [
+                /// Image
+                Positioned.fill(
+                  child: Image.memory(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                /// Gradient + caption
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black87,
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      caption,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// IMAGE PREVIEW DIALOG (FULLSCREEN MODERNE)
+
+class _ImagePreviewDialog extends StatelessWidget {
+  const _ImagePreviewDialog({
+    required this.image,
+    this.onDelete,
+  });
+
+  final Uint8List image;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: const EdgeInsets.all(16),
+      backgroundColor: Colors.black,
+      child: Stack(
+        children: [
+          /// Image plein écran
+          Center(
+            child: Hero(
+              tag: image,
+              child: Image.memory(image),
+            ),
+          ),
+
+          /// Boutons
+          Positioned(
+            top: 12,
+            right: 12,
+            child: Row(
+              children: [
+                if (onDelete != null)
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.white),
+                    onPressed: () {
+                      onDelete!.call();
+                      Navigator.pop(context);
+                    },
+                  ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// ADD PHOTO CARD (DESIGN M3)
+
+class _AddPhotoCard extends StatelessWidget {
+  const _AddPhotoCard({
+    required this.label,
+    required this.onAdd,
+    this.info,
+  });
+
+  final String label;
+  final Function(Uint8List image) onAdd;
+  final Widget? info;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+
+    return Material(
+      borderRadius: BorderRadius.circular(16),
+      elevation: 1,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            showDragHandle: true,
+            builder: (_) => _NewImageBottomSheet(
+              label: label,
+              info: info,
+              onAdd: onAdd,
+            ),
+          );
+        },
+        child: SizedBox(
+          width: 140,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add_a_photo, size: 32, color: color),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// BOTTOM SHEET – AJOUT IMAGE
+
+class _NewImageBottomSheet extends StatelessWidget {
+  const _NewImageBottomSheet({
+    required this.label,
+    required this.onAdd,
+    this.info,
+  });
+
+  final String label;
+  final Widget? info;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          const SizedBox(height: 12),
+          if (info != null) info!,
+          const SizedBox(height: 12),
+          const Text(
+            "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf.",
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              _AddImageAction(
+                icon: Icons.photo_library,
+                label: "Galerie",
+                source: ImageSource.gallery,
+                onAdd: onAdd,
+              ),
+              const SizedBox(width: 12),
+              _AddImageAction(
+                icon: Icons.camera_alt,
+                label: "Kamera",
+                source: ImageSource.camera,
+                onAdd: onAdd,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// ACTION PICK IMAGE
+
+class _AddImageAction extends StatelessWidget {
+  const _AddImageAction({
+    required this.icon,
+    required this.label,
+    required this.source,
+    required this.onAdd,
+  });
+
+  final IconData icon;
+  final String label;
+  final ImageSource source;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: FilledButton.icon(
+        icon: Icon(icon),
+        label: Text(label),
+        onPressed: () async {
+          Navigator.pop(context);
+
+          final picker = ImagePicker();
+          final file = await picker.pickImage(
+            source: source,
+            imageQuality: 90,
+            maxWidth: 2048,
+            maxHeight: 2048,
+          );
+
+          if (file == null) return;
+
+          final bytes = await file.readAsBytes();
+          onAdd(bytes);
+        },
+      ),
+    );
+  }
+}*/
+
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+/// PHOTO COLLECTION (READ-ONLY)
+class PhotoCollection extends StatelessWidget {
+  const PhotoCollection({
+    super.key,
+    required this.images,
+    required this.label,
+  });
+
+  final List<Uint8List> images;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 160,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        itemCount: images.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
+        itemBuilder: (context, index) {
+          return _ImageCard(
+            image: images[index],
+            caption: label,
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// PHOTO COLLECTION WITH ADD / DELETE
+class PhotoCollectionField extends StatelessWidget {
+  const PhotoCollectionField({
+    super.key,
+    required this.images,
+    required this.max,
+    required this.label,
+    required this.labelAdd,
+    required this.onDelete,
+    required this.onAdd,
+    this.infoAdd,
+    this.alignment = WrapAlignment.start,
+  });
+
+  final List<Uint8List> images;
+  final int max;
+  final String label;
+  final String labelAdd;
+  final Widget? infoAdd;
+  final WrapAlignment alignment;
+  final Function(int index) onDelete;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    final canAdd = images.length < max;
+
+    return SizedBox(
+      height: 160,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Wrap(
+          alignment: alignment,
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            ...images.asMap().entries.map((entry) {
+              final index = entry.key;
+              final img = entry.value;
+              return _ImageCard(
+                image: img,
+                caption: '$label ${index + 1}',
+                onDelete: () => onDelete(index),
+              );
+            }),
+            if (canAdd)
+              _AddPhotoCard(
+                label: labelAdd,
+                info: infoAdd,
+                onAdd: onAdd,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// IMAGE CARD
+class _ImageCard extends StatelessWidget {
+  const _ImageCard({
+    required this.image,
+    required this.caption,
+    this.onDelete,
+  });
+
+  final Uint8List image;
+  final String caption;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: image,
+      child: Material(
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        elevation: 3,
+        child: InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) => _ImagePreviewDialog(
+                image: image,
+                onDelete: onDelete,
+              ),
+            );
+          },
+          child: SizedBox(
+            width: 140,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: Image.memory(image, fit: BoxFit.cover),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [Colors.black87, Colors.transparent],
+                      ),
+                    ),
+                    child: Text(
+                      caption,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// IMAGE PREVIEW DIALOG
+class _ImagePreviewDialog extends StatelessWidget {
+  const _ImagePreviewDialog({required this.image, this.onDelete});
+
+  final Uint8List image;
+  final VoidCallback? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      insetPadding: const EdgeInsets.all(16),
+      backgroundColor: Colors.black,
+      child: Stack(
+        children: [
+          Center(child: Hero(tag: image, child: Image.memory(image))),
+          Positioned(
+            top: 12,
+            right: 12,
+            child: Row(
+              children: [
+                if (onDelete != null)
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.white),
+                    onPressed: () {
+                      onDelete!.call();
+                      Navigator.pop(context);
+                    },
+                  ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// ADD PHOTO CARD
+class _AddPhotoCard extends StatelessWidget {
+  const _AddPhotoCard({required this.label, required this.onAdd, this.info});
+
+  final String label;
+  final Function(Uint8List image) onAdd;
+  final Widget? info;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+
+    return Material(
+      borderRadius: BorderRadius.circular(16),
+      elevation: 1,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          showModalBottomSheet(
+            context: context,
+            showDragHandle: true,
+            builder: (_) => _NewImageBottomSheet(
+              label: label,
+              info: info,
+              onAdd: onAdd,
+            ),
+          );
+        },
+        child: SizedBox(
+          width: 140,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add_a_photo, size: 32, color: color),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: color, fontWeight: FontWeight.w600),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// BOTTOM SHEET – NEW IMAGE
+class _NewImageBottomSheet extends StatelessWidget {
+  const _NewImageBottomSheet(
+      {required this.label, required this.onAdd, this.info});
+
+  final String label;
+  final Widget? info;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 12),
+          if (info != null) info!,
+          const SizedBox(height: 12),
+          const Text(
+            "Wählen Sie ein Foto aus Ihrer Galerie aus oder nehmen Sie ein neues Foto auf.",
+          ),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              _AddImageAction(
+                icon: Icons.photo_library,
+                label: "Galerie",
+                source: ImageSource.gallery,
+                onAdd: onAdd,
+              ),
+              const SizedBox(width: 12),
+              _AddImageAction(
+                icon: Icons.camera_alt,
+                label: "Kamera",
+                source: ImageSource.camera,
+                onAdd: onAdd,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// PICK IMAGE ACTION
+class _AddImageAction extends StatelessWidget {
+  const _AddImageAction(
+      {required this.icon,
+      required this.label,
+      required this.source,
+      required this.onAdd});
+
+  final IconData icon;
+  final String label;
+  final ImageSource source;
+  final Function(Uint8List image) onAdd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: FilledButton.icon(
+        icon: Icon(icon),
+        label: Text(label),
+        onPressed: () async {
+          Navigator.pop(context);
+          final picker = ImagePicker();
+          final file = await picker.pickImage(
+            source: source,
+            imageQuality: 90,
+            maxWidth: 2048,
+            maxHeight: 2048,
+          );
+          if (file == null) return;
+          final bytes = await file.readAsBytes();
+          onAdd(bytes);
+        },
       ),
     );
   }

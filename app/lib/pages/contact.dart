@@ -175,7 +175,6 @@ class _Link extends StatelessWidget {
   }
 }*/
 
-
 /*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/stretchScroll.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
@@ -388,8 +387,7 @@ class _FooterLink extends StatelessWidget {
   }
 }*/
 
-
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/stretchScroll.dart';
 import 'package:customer_portal_app/pages/message.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
@@ -584,6 +582,208 @@ class _LegalTile extends StatelessWidget {
       ),
     );
   }
+}*/
+
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/stretchScroll.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
+
+//  IMPORT CORRECT ET EXPLICITE
+import 'package:customer_portal_app/pages/message.dart';
+
+class ContactPage extends StatelessWidget {
+  const ContactPage({
+    super.key,
+    this.bottomNavigationBar,
+    this.onRefresh,
+    required this.portal,
+  });
+
+  final Widget? bottomNavigationBar;
+  final Future<void> Function()? onRefresh;
+  final PortalService portal;
+
+  static const String _phone = "0911/9292-03";
+  static const String _mail = "info@helmsauer-gruppe.de";
+  static const String _web = "www.helmsauer-gruppe.de";
+
+  @override
+  Widget build(BuildContext context) {
+    const filter = ColorFilter.mode(helmsauerBlau, BlendMode.srcIn);
+
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: helmsauerBlau,
+        centerTitle: true,
+        title: const Text(
+          "Kontakt",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0.5,
+          ),
+        ),
+      ),
+      body: StretchScroll(
+        onRefresh: onRefresh,
+        children: [
+          const SizedBox(height: 12),
+
+          _ContactCard(
+            icon: SvgPicture.asset(
+              "images/menu/telefon.svg",
+              colorFilter: filter,
+            ),
+            title: "Telefon",
+            subtitle: _phone,
+            onTap: () => launchUrl(Uri.parse("tel:$_phone")),
+          ),
+
+          _ContactCard(
+            icon: SvgPicture.asset(
+              "images/menu/email.svg",
+              colorFilter: filter,
+            ),
+            title: "E-Mail",
+            subtitle: _mail,
+            onTap: () => launchUrl(Uri.parse("mailto:$_mail")),
+          ),
+
+          _ContactCard(
+            icon: SvgPicture.asset(
+              "images/menu/webadresse.svg",
+              colorFilter: filter,
+            ),
+            title: "Website",
+            subtitle: _web,
+            onTap: () => launchUrl(Uri.parse("https://$_web")),
+          ),
+
+          // NAVIGATION CORRIGÉE
+          _ContactCard(
+            icon: SvgPicture.asset(
+              "images/menu/chat.svg",
+              colorFilter: filter,
+            ),
+            title: "Nachricht",
+            subtitle: "Nachricht schreiben",
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => MessagePage(
+                    portal: portal,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          const SizedBox(height: 24),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                _LegalTile(
+                  icon: Icons.privacy_tip_outlined,
+                  title: "Datenschutz",
+                  onTap: () => launchUrl(
+                    Uri.parse(
+                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/datenschutz/",
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                _LegalTile(
+                  icon: Icons.info_outline,
+                  title: "Impressum",
+                  onTap: () => launchUrl(
+                    Uri.parse(
+                      "https://www.helmsauer-gruppe.de/ueber-helmsauer/impressum/",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 20),
+        ],
+      ),
+      bottomNavigationBar: bottomNavigationBar,
+    );
+  }
 }
 
+class _ContactCard extends StatelessWidget {
+  const _ContactCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
 
+  final Widget icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: ListTile(
+          onTap: onTap,
+          leading: SizedBox(width: 36, height: 36, child: icon),
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+          subtitle: Text(subtitle),
+          trailing: const Icon(Icons.chevron_right),
+        ),
+      ),
+    );
+  }
+}
+
+class _LegalTile extends StatelessWidget {
+  const _LegalTile({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: ListTile(
+        onTap: onTap,
+        leading: Icon(icon, color: helmsauerBlau),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        trailing: const Icon(Icons.open_in_new),
+      ),
+    );
+  }
+}

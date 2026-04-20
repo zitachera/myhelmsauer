@@ -244,7 +244,6 @@ class MyApp extends StatelessWidget {
   }
 }*/
 
-
 import 'package:customer_portal_app/components/const.dart';
 // import 'package:customer_portal_app/pages/login.dart'; // Connexion désactivée
 import 'package:customer_portal_app/pages/pages.dart';
@@ -290,6 +289,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -328,7 +329,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         appBarTheme: AppBarTheme(
-          color: helmsauerBlau,
+          backgroundColor: helmsauerBlau,
           shape: UnderlineInputBorder(
             borderSide: BorderSide(color: helmsauerRot, width: 2.5),
           ),

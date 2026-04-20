@@ -1,3 +1,278 @@
+// DESIGN UPDATE Neues Passwort anfordern  modern, freundlich und klar
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
+import 'package:flutter/material.dart';
+
+class RemindPage extends StatefulWidget {
+  const RemindPage({super.key});
+
+  @override
+  State<RemindPage> createState() => _RemindPageState();
+}
+
+class _RemindPageState extends State<RemindPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  String nachname = "";
+  String vorname = "";
+  String adresse = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return HsSingleChildScrollScaffold(
+      title: "Passwort vergessen",
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFF5F7FA),
+              Color(0xFFE4ECF7),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: Card(
+                elevation: 18,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(26),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// HEADER
+                        Text(
+                          "Neues Passwort anfordern",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: helmsauerBlau,
+                              ),
+                        ),
+
+                        const SizedBox(height: 12),
+
+                        Text(
+                          "Bitte geben Sie Ihre persönlichen Daten ein. "
+                          "Wir senden Ihnen Ihre neuen Zugangsdaten per Post zu.",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(height: 1.5, color: Colors.black54),
+                        ),
+
+                        const SizedBox(height: 36),
+
+                        /// NACHNAME
+                        _ModernField(
+                          label: "Nachname",
+                          icon: Icons.person_outline,
+                          validator: (v) => v == null || v.isEmpty
+                              ? "Nachname erforderlich"
+                              : null,
+                          onChanged: (v) => nachname = v,
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        /// VORNAME
+                        _ModernField(
+                          label: "Vorname",
+                          icon: Icons.person,
+                          validator: (v) => v == null || v.isEmpty
+                              ? "Vorname erforderlich"
+                              : null,
+                          onChanged: (v) => vorname = v,
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        /// ADRESSE
+                        _ModernField(
+                          label: "Adresse",
+                          icon: Icons.home_outlined,
+                          maxLines: 3,
+                          validator: (v) => v == null || v.isEmpty
+                              ? "Adresse erforderlich"
+                              : null,
+                          onChanged: (v) => adresse = v,
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        Text(
+                          "Aus Sicherheitsgründen erfolgt der Versand ausschließlich postalisch.",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: Colors.black45),
+                        ),
+
+                        const SizedBox(height: 36),
+
+                        /// BUTTON
+                        SizedBox(
+                          width: double.infinity,
+                          height: 52,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: helmsauerBlau,
+                              elevation: 6,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                            onPressed: _submit,
+                            child: const Text(
+                              "Anfrage senden",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Bitte alle Felder korrekt ausfüllen.")),
+      );
+      return;
+    }
+
+    await showDialog(
+      context: context,
+      builder: (context) => _SendDialog(
+        PortalService.publicPost("remind", {
+          "nachname": nachname,
+          "vorname": vorname,
+          "adresse": adresse,
+        }),
+      ),
+    );
+  }
+}
+
+/// MODERN FIELD
+
+class _ModernField extends StatelessWidget {
+  const _ModernField({
+    required this.label,
+    required this.icon,
+    required this.onChanged,
+    required this.validator,
+    this.maxLines = 1,
+  });
+
+  final String label;
+  final IconData icon;
+  final int maxLines;
+  final Function(String) onChanged;
+  final String? Function(String?) validator;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      maxLines: maxLines,
+      onChanged: onChanged,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: helmsauerBlau),
+        filled: true,
+        fillColor: Colors.grey.shade100,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
+}
+
+/// DIALOG PREMIUM
+
+class _SendDialog extends StatelessWidget {
+  const _SendDialog(this.future);
+
+  final Future<void> future;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: FutureBuilder<void>(
+          future: future,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Icon(Icons.error_outline, color: Colors.red, size: 60),
+                  SizedBox(height: 16),
+                  Text(
+                    "Die Anfrage konnte nicht gesendet werden.\nBitte später erneut versuchen.",
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              );
+            }
+
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const SizedBox(
+                height: 120,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            }
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.check_circle_outline, color: Colors.green, size: 70),
+                SizedBox(height: 16),
+                Text(
+                  "Ihre Anfrage wurde erfolgreich übermittelt.",
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
 /*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
@@ -205,260 +480,6 @@ class _SendDialog extends StatelessWidget {
 */
 
 /*import 'package:customer_portal_app/components/const.dart';
-import 'package:customer_portal_app/components/scaffolds.dart';
-import 'package:customer_portal_app/service/portal_service.dart';
-import 'package:flutter/material.dart';
-
-class RemindPage extends StatefulWidget {
-  const RemindPage({super.key});
-
-  @override
-  _RemindPageState createState() => _RemindPageState();
-}
-
-class _RemindPageState extends State<RemindPage> {
-  /// 🔹 CHANGÉ : taille légèrement réduite pour mobile (plus moderne)
-  final TextStyle style = const TextStyle(
-    fontFamily: 'Montserrat',
-    fontSize: 16.0, // ⬅ avant 20 (trop gros sur mobile)
-  );
-
-  String nachname = "";
-  String vorname = "";
-  String adresse = "";
-
-  final _formKey = GlobalKey<FormState>();
-
-  /// 🔹 AJOUT : style commun pour les champs → design cohérent
-  InputDecoration _inputDecoration(String hint, IconData icon) {
-    return InputDecoration(
-      hintText: hint,
-      prefixIcon: Icon(icon, color: helmsauerBlau), // icône moderne
-      filled: true, // fond gris clair
-      fillColor: Colors.grey.shade100,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12), // coins arrondis
-        borderSide: BorderSide.none,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final nachnameField = TextFormField(
-      onChanged: (value) => nachname = value,
-      style: style,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Geben Sie Ihren Nachnamen an.';
-        }
-        return null;
-      },
-      decoration: _inputDecoration(
-        "Nachname",
-        Icons.person_outline, // 🔹 AJOUT icône
-      ),
-    );
-
-    final vornameField = TextFormField(
-      onChanged: (value) => vorname = value,
-      style: style,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Geben Sie Ihren Vornamen an.';
-        }
-        return null;
-      },
-      decoration: _inputDecoration(
-        "Vorname",
-        Icons.person, // 🔹 AJOUT icône
-      ),
-    );
-
-    final adresseField = TextFormField(
-      onChanged: (value) => adresse = value,
-      style: style,
-      maxLines: 3, // 🔹 CHANGÉ : plus compact que 4
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Geben Sie Ihre Adresse an.';
-        }
-        return null;
-      },
-      decoration: _inputDecoration(
-        "Adresse",
-        Icons.home_outlined, // 🔹 AJOUT icône
-      ),
-    );
-
-    final remindButton = ElevatedButton.icon(
-      /// 🔹 CHANGÉ : ElevatedButton → design moderne
-      icon: const Icon(Icons.lock_reset),
-      label: const Text("Neues Passwort anfordern"),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: helmsauerBlau,
-        foregroundColor: Colors.white,
-        elevation: 4,
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        textStyle: style.copyWith(fontWeight: FontWeight.w600),
-      ),
-      onPressed: () async {
-        if (!_formKey.currentState!.validate()) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Bitte geben Sie alle nötigen Daten an.'),
-            ),
-          );
-          return;
-        }
-
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return _SendDialog(
-              PortalService.publicPost("remind", <String, String>{
-                "nachname": nachname,
-                "vorname": vorname,
-                "adresse": adresse,
-              }),
-            );
-          },
-        );
-      },
-    );
-
-    return HsSingleChildScrollScaffold(
-      title: "Passwort vergessen",
-      body: SingleChildScrollView(
-        /// 🔹 AJOUT : évite overflow clavier
-        padding: const EdgeInsets.all(24.0), // 🔹 CHANGÉ : plus aéré
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              const SizedBox(height: 20),
-
-              /// 🔹 AJOUT : texte d’introduction UX
-              Text(
-                "Geben Sie bitte Ihre Daten ein, um ein neues Passwort anzufordern.",
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-
-              const SizedBox(height: 30),
-              nachnameField,
-              const SizedBox(height: 16),
-              vornameField,
-              const SizedBox(height: 16),
-              adresseField,
-              const SizedBox(height: 24),
-
-              /// 🔹 AMÉLIORÉ : texte explicatif plus lisible
-              Text(
-                "Ihre neuen Zugangsdaten werden Ihnen aus Sicherheitsgründen "
-                "per Post zugesendet.",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodySmall
-                    ?.copyWith(color: Colors.grey.shade700),
-              ),
-
-              const SizedBox(height: 30),
-              remindButton,
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// ===============================================================
-/// 🔹 DIALOG D’ENVOI – DESIGN AMÉLIORÉ (LOGIQUE IDENTIQUE)
-/// ===============================================================
-class _SendDialog extends StatelessWidget {
-  const _SendDialog(this.future);
-
-  final Future<void> future;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      /// 🔹 CHANGÉ : AlertDialog → plus moderne que SimpleDialog
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      title: const Text('Passwortanfrage senden'),
-      content: FutureBuilder<void>(
-        future: future,
-        builder: builder,
-      ),
-    );
-  }
-
-  Widget builder(BuildContext context, AsyncSnapshot snapshot) {
-    final nav = Navigator.of(context);
-
-    if (snapshot.hasError) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.error_outline, color: Colors.red, size: 40),
-          const SizedBox(height: 12),
-          const Text(
-            'Die Anfrage konnte nicht gesendet werden.',
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support.',
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () => nav.pop(),
-            child: const Text("Weiter"),
-          ),
-        ],
-      );
-    }
-
-    if (snapshot.connectionState != ConnectionState.done) {
-      return const Padding(
-        padding: EdgeInsets.all(30),
-        child: Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Icon(Icons.check_circle, color: Colors.green, size: 40),
-        const SizedBox(height: 12),
-        const Text(
-          'Ihre Anfrage ist eingegangen.',
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 8),
-        const Text(
-          'Wir melden uns kurzfristig bei Ihnen.',
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () => nav.popUntil((route) => route.isFirst),
-          child: const Text("Abschließen"),
-        ),
-      ],
-    );
-  }
-}*/
-
-import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:flutter/material.dart';
@@ -684,4 +705,4 @@ class _SendDialog extends StatelessWidget {
       ],
     );
   }
-}
+}*/

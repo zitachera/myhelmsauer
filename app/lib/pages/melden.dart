@@ -96,10 +96,10 @@ class _MeldenState extends State<MeldenPage> {
             ),
           ],
         );
-        cols.add(row!);
+        cols.add(row);
         continue;
       }
-      row!.children.add(Expanded(
+      row.children.add(Expanded(
         flex: 1,
         child: buildField(context, f),
       ));
@@ -344,7 +344,7 @@ class _Line extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              caption + ":",
+              "$caption:",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

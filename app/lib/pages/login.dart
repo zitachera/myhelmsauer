@@ -1,4 +1,314 @@
+
+//  DESIGN UPDATE : suppression AppBar + layout moderne avec gradient + card
+
 import 'dart:io';
+
+import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/model/firmen_gruppe.dart';
+import 'package:customer_portal_app/pages/pages.dart';
+import 'package:customer_portal_app/pages/remind.dart';
+import 'package:customer_portal_app/service/session.dart';
+import 'package:flutter/material.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  Future<LoginResult> loader = Session.restore();
+  Key loaderKey = UniqueKey();
+
+  String? lastGruppe;
+  String lastUserName = "";
+
+  _LoginForm get _form {
+    return _LoginForm(
+      login: (user, password, gruppe) => setState(() {
+        loader = () async {
+          if (gruppe == null) {
+            return LoginResult(error: "Keine Firmengruppe ausgewählt!");
+          }
+          return await Session.login(user, password, gruppe);
+        }();
+        loaderKey = UniqueKey();
+        lastGruppe = gruppe;
+        lastUserName = user;
+      }),
+      lastGruppe: lastGruppe,
+      lastUserName: lastUserName,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: loaderKey,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 0, 115, 205),
+              Color(0xFF1565C0),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: FutureBuilder<LoginResult>(
+          future: loader,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return _buildLayout(
+                errorText: snapshot.error.toString(),
+                child: _form,
+              );
+            }
+
+            if (!snapshot.hasData) {
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.white));
+            }
+
+            final result = snapshot.data!;
+
+            if (result.error != null) {
+              return _buildLayout(
+                errorText: result.error!,
+                child: _form,
+              );
+            }
+
+            if (result.portal != null) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => Pages(result.portal!).home,
+                  ),
+                ),
+              );
+              return const Center(
+                  child: CircularProgressIndicator(color: Colors.white));
+            }
+
+            return _buildLayout(child: _form);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLayout({String? errorText, required Widget child}) {
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 480),
+          child: Card(
+            elevation: 18,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /// HEADER
+                  Text(
+                    "Willkommen bei",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.blue.shade300,
+                    ),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: const Text(
+                      "MYHELMSAUER",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 2,
+                        color: Color.fromARGB(255, 0, 115, 205),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  if (errorText != null) ...[
+                    Text(
+                      errorText,
+                      style: const TextStyle(color: Colors.red),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+
+                  child,
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+typedef _LoginFunc = void Function(
+    String user, String password, String? gruppe);
+
+class _LoginForm extends StatefulWidget {
+  const _LoginForm({
+    required this.login,
+    required this.lastGruppe,
+    required this.lastUserName,
+  });
+
+  final _LoginFunc login;
+  final String? lastGruppe;
+  final String lastUserName;
+
+  @override
+  State<_LoginForm> createState() =>
+      _LoginFormState(login, lastGruppe, lastUserName);
+}
+
+class _LoginFormState extends State<_LoginForm> {
+  String user = "";
+  String password = "";
+  String? gruppe;
+
+  bool obscure = true;
+
+  final _LoginFunc login;
+
+  _LoginFormState(this.login, this.gruppe, this.user);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        /// FIRMGENGRUPPE
+        DropdownButtonFormField<String>(
+          value: gruppe,
+          isExpanded: true,
+          decoration: InputDecoration(
+            labelText: "Firmengruppe",
+            prefixIcon: const Icon(Icons.business),
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+          items: FirmenGruppe.all.map((fg) {
+            return DropdownMenuItem<String>(
+              value: fg.id,
+              child: Text(
+                fg.name,
+                overflow: TextOverflow.ellipsis,
+              ),
+            );
+          }).toList(),
+          onChanged: (value) => setState(() => gruppe = value),
+        ),
+
+        const SizedBox(height: 20),
+
+        /// USER
+        TextFormField(
+          initialValue: user,
+          onChanged: (value) => user = value,
+          decoration: InputDecoration(
+            labelText: "User",
+            prefixIcon: const Icon(Icons.person_outline),
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        /// PASSWORD
+        TextFormField(
+          obscureText: obscure,
+          onChanged: (value) => password = value,
+          decoration: InputDecoration(
+            labelText: "Passwort",
+            prefixIcon: const Icon(Icons.lock_outline),
+            suffixIcon: IconButton(
+              icon: Icon(
+                obscure ? Icons.visibility_off : Icons.visibility,
+              ),
+              onPressed: () => setState(() => obscure = !obscure),
+            ),
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 30),
+
+        /// LOGIN BUTTON
+        SizedBox(
+          width: double.infinity,
+          height: 52,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: helmsauerBlau,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              elevation: 6,
+            ),
+            onPressed: () => login(user, password, gruppe),
+            child: const Text(
+              "Login",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RemindPage()),
+            );
+          },
+          child: const Text("Passwort vergessen?"),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+/*import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/firmen_gruppe.dart';
@@ -286,4 +596,4 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
   }
-}
+}*/

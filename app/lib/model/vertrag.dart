@@ -189,7 +189,7 @@ class Vertrag {
   final List<MeldeTemplate> meldeTemplates;
   final List<VertragDokument> dokumente;
 
-  // ⭐ Favori (local uniquement)
+  //  Favori (local uniquement)
   bool isFavorite;
 
   Vertrag({
@@ -217,10 +217,12 @@ class Vertrag {
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
         risiko = json['risiko'],
-        meldeTemplates =
-            (json['meldeTemplates'] as List).map((e) => MeldeTemplate.fromJson(e)).toList(),
-        dokumente =
-            (json['dokumente'] as List).map((e) => VertragDokument.fromJson(e)).toList(),
+        meldeTemplates = (json['meldeTemplates'] as List)
+            .map((e) => MeldeTemplate.fromJson(e))
+            .toList(),
+        dokumente = (json['dokumente'] as List)
+            .map((e) => VertragDokument.fromJson(e))
+            .toList(),
         isFavorite = false; // ⭐ par défaut
 
   Map<String, dynamic> toJson() => {
@@ -272,7 +274,8 @@ class MeldeTemplate {
   MeldeTemplate.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        felder = (json['felder'] as List).map((e) => MeldeFeld.fromJson(e)).toList();
+        felder =
+            (json['felder'] as List).map((e) => MeldeFeld.fromJson(e)).toList();
 
   Map<String, dynamic> toJson() => {
         'id': id,

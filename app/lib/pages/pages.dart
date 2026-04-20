@@ -26,17 +26,20 @@ class Pages {
 
   Widget get home => HomePage(
         reloadData: () async => await portal.reload(),
-        newsPage: (onRefresh, bottomNavigationBar) => news(onRefresh, bottomNavigationBar),
+        newsPage: (onRefresh, bottomNavigationBar) =>
+            news(onRefresh, bottomNavigationBar),
         vertraegePage: (onRefresh, bottomNavigationBar) =>
             vertraege(onRefresh, bottomNavigationBar),
         meldenPage: (onRefresh, bottomNavigationBar) =>
             meldenVertragswahl(onRefresh, bottomNavigationBar),
         bestandVerzeichnisPage: (onRefresh, bottomNavigationBar) =>
             verzeichnis(onRefresh, bottomNavigationBar),
-        kontaktPage: (onRefresh, bottomNavigationBar) => kontakt(onRefresh, bottomNavigationBar),
+        kontaktPage: (onRefresh, bottomNavigationBar) =>
+            kontakt(onRefresh, bottomNavigationBar),
       );
 
-  Widget news(Future<void> Function() onRefresh, Widget bottomNavigationBar) => NewsPage(
+  Widget news(Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
+      NewsPage(
         key: UniqueKey(),
         bottomNavigationBar: bottomNavigationBar,
         onRefresh: onRefresh,
@@ -59,7 +62,9 @@ class Pages {
         ),
       );
 
-  Widget vertraege(Future<void> Function() onRefresh, Widget bottomNavigationBar) => VertraegePage(
+  Widget vertraege(
+          Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
+      VertraegePage(
         portal.vertraege,
         key: UniqueKey(),
         viewVertrag: (context, vertrag) => Navigator.push(
@@ -78,7 +83,8 @@ class Pages {
         onRefresh: onRefresh,
       );
 
-  Widget meldenVertragswahl(Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
+  Widget meldenVertragswahl(
+          Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
       MeldenVertragwahlPage(
         portal,
         key: UniqueKey(),
@@ -86,7 +92,8 @@ class Pages {
         onRefresh: onRefresh,
       );
 
-  Widget verzeichnis(Future<void> Function() onRefresh, Widget bottomNavigationBar) {
+  Widget verzeichnis(
+      Future<void> Function() onRefresh, Widget bottomNavigationBar) {
     var vz = VerzeichnisProvider(portal);
     vz.reload();
     return ChangeNotifierProvider.value(
@@ -130,7 +137,9 @@ class Pages {
     );
   }
 
-  Widget kontakt(Future<void> Function() onRefresh, Widget bottomNavigationBar) => ContactPage(
+  Widget kontakt(
+          Future<void> Function() onRefresh, Widget bottomNavigationBar) =>
+      ContactPage(
         key: UniqueKey(),
         portal: portal,
         bottomNavigationBar: bottomNavigationBar,
@@ -142,7 +151,8 @@ class Pages {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FilePage(portal, dokument.titel, dokument.endpoint),
+              builder: (context) =>
+                  FilePage(portal, dokument.titel, dokument.endpoint),
             ),
           );
         },
