@@ -157,7 +157,9 @@ class _Vertrag extends StatelessWidget {
   }
 }*/
 
-import 'package:customer_portal_app/components/const.dart';
+// dernier code avant refonte, à garder pour référence
+
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -315,7 +317,7 @@ class _Vertrag extends StatelessWidget {
       ),
     );
   }
-}
+}*/
 
 /*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
@@ -564,3 +566,243 @@ class _Vertrag extends StatelessWidget {
     );
   }
 }*/
+
+import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const Color helmsauerBlau = Color.fromARGB(255, 0, 115, 205);
+
+class VertraegePage extends StatefulWidget {
+  const VertraegePage(
+    this.vertraege, {
+    super.key,
+    required this.viewVertrag,
+    this.bottomNavigationBar,
+    this.onRefresh,
+    required this.erfasseFremdvertrag,
+  });
+
+  final void Function(BuildContext, Vertrag) viewVertrag;
+  final List<Vertrag> vertraege;
+  final Widget? bottomNavigationBar;
+  final Future<void> Function()? onRefresh;
+  final void Function(BuildContext) erfasseFremdvertrag;
+
+  @override
+  State<VertraegePage> createState() => _VertraegePageState();
+}
+
+class _VertraegePageState extends State<VertraegePage> {
+  String filter = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavorites();
+  }
+
+  Future<void> _loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      for (final v in widget.vertraege) {
+        v.isFavorite = prefs.getBool('favorit_${v.id}') ?? false;
+      }
+    });
+  }
+
+  Future<void> _toggleFavorite(Vertrag vertrag) async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      vertrag.isFavorite = !vertrag.isFavorite;
+      prefs.setBool('favorit_${vertrag.id}', vertrag.isFavorite);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final keyword = filter.toLowerCase();
+    bool matches(String s) => s.toLowerCase().contains(keyword);
+
+    final sorted = [...widget.vertraege]..sort(
+        (a, b) => b.isFavorite.toString().compareTo(a.isFavorite.toString()));
+
+    final filtered = sorted.where(
+      (v) => matches(v.sparte) || matches(v.risiko) || matches(v.gesellschaft),
+    );
+
+    return HsSingleChildScrollScaffold(
+      title: "Vertragsübersicht",
+      onRefresh: widget.onRefresh,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            // 🔍 SEARCH BAR
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.search, color: Colors.grey.shade600),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextFormField(
+                        initialValue: filter,
+                        onChanged: (v) => setState(() => filter = v),
+                        decoration: const InputDecoration(
+                          hintText: "Verträge durchsuchen",
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // 📄 LISTE
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                children: [
+                  ...filtered.map(
+                    (vertrag) => _Vertrag(
+                      vertrag: vertrag,
+                      onOpen: () => widget.viewVertrag(context, vertrag),
+                      onToggleFavorite: () => _toggleFavorite(vertrag),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // ➕ BUTTON
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        side: const BorderSide(color: helmsauerBlau),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      onPressed: () => widget.erfasseFremdvertrag(context),
+                      child: const Text(
+                        "Fremdvertrag erfassen",
+                        style: TextStyle(
+                          color: helmsauerBlau,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Vertrag extends StatelessWidget {
+  const _Vertrag({
+    required this.vertrag,
+    required this.onOpen,
+    required this.onToggleFavorite,
+  });
+
+  final Vertrag vertrag;
+  final VoidCallback onOpen;
+  final VoidCallback onToggleFavorite;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onOpen,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade200),
+          boxShadow: [
+            BoxShadow(
+              color: helmsauerBlau.withOpacity(0.03),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            // ⭐ FAVORITE BLEU
+            GestureDetector(
+              onTap: onToggleFavorite,
+              child: Icon(
+                vertrag.isFavorite ? Icons.star : Icons.star_border,
+                color:
+                    vertrag.isFavorite ? helmsauerBlau : Colors.grey.shade400,
+                size: 26,
+              ),
+            ),
+
+            const SizedBox(width: 12),
+
+            // 📄 INFOS
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    vertrag.sparte,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    vertrag.gesellschaft,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  if (vertrag.risiko.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        vertrag.risiko,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+
+            Icon(
+              Icons.arrow_forward_ios,
+              size: 14,
+              color: Colors.grey.shade400,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

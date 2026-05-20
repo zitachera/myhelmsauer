@@ -1,4 +1,4 @@
-/*import 'dart:convert';
+import 'dart:convert';
 import 'dart:typed_data';
 
 class FremdvertragAntrag {
@@ -29,9 +29,9 @@ class FremdvertragAntrag {
         'integrieren': integrieren,
         'vergleichsangebotErstellen': vergleichsangebotErstellen,
       };
-}*/
+}
 
-import 'dart:convert';
+/*import 'dart:convert';
 import 'dart:typed_data';
 
 class FremdvertragAntrag {
@@ -103,4 +103,4 @@ class FremdvertragAntrag {
         'vergleichsangebotErstellen: $vergleichsangebotErstellen'
         ')';
   }
-}
+}*/

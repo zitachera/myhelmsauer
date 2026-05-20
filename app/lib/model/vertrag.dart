@@ -1,4 +1,4 @@
-/*class Vertrag {
+class Vertrag {
   final String id;
 
   final String sparte;
@@ -12,6 +12,9 @@
   final List<MeldeTemplate> meldeTemplates;
   final List<VertragDokument> dokumente;
 
+  // ⭐ Favori local
+  bool isFavorite;
+
   Vertrag({
     required this.id,
     required this.sparte,
@@ -24,6 +27,7 @@
     required this.risiko,
     required this.meldeTemplates,
     required this.dokumente,
+    this.isFavorite = false,
   });
 
   Vertrag.fromJson(Map<String, dynamic> json)
@@ -36,26 +40,18 @@
         status = _jsonToVertragStatus(json['status']),
         beitrag = json['beitrag'],
         risiko = json['risiko'],
-        meldeTemplates =
-            (json['meldeTemplates'] as List).map((e) => MeldeTemplate.fromJson(e)).toList(),
-        dokumente = (json['dokumente'] as List).map((e) => VertragDokument.fromJson(e)).toList();
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'sparte': sparte,
-        'spartenID': spartenID,
-        'gesellschaft': gesellschaft,
-        'vertragsnummer': vertragsnummer,
-        'ablauf': ablauf.toIso8601String(),
-        'status': _vertragStatusToJson(status),
-        'beitrag': beitrag,
-        'risiko': risiko,
-        'meldeTemplates': meldeTemplates.map((e) => e.toJson()).toList(),
-        'dokumente': dokumente.map((e) => e.toJson()).toList(),
-      };
+        meldeTemplates = (json['meldeTemplates'] as List)
+            .map((e) => MeldeTemplate.fromJson(e))
+            .toList(),
+        dokumente = (json['dokumente'] as List)
+            .map((e) => VertragDokument.fromJson(e))
+            .toList(),
+        isFavorite = false;
 
   bool get hasSchadenTemplate {
-    return meldeTemplates.where((t) => t.id == MeldeTemplate.schadenId).isNotEmpty;
+    return meldeTemplates
+        .where((t) => t.id == MeldeTemplate.schadenId)
+        .isNotEmpty;
   }
 
   MeldeTemplate get schadenTemplate {
@@ -64,7 +60,7 @@
     );
   }
 
-  bool? get isFavorite => null;
+  //bool? get isFavorite => null;
 }
 
 enum VertragStatus {
@@ -108,7 +104,8 @@ class MeldeTemplate {
   MeldeTemplate.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        felder = (json['felder'] as List).map((e) => MeldeFeld.fromJson(e)).toList();
+        felder =
+            (json['felder'] as List).map((e) => MeldeFeld.fromJson(e)).toList();
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -154,10 +151,12 @@ class MeldeFeld {
       };
 }
 
-String _vertragStatusToJson(VertragStatus status) => status.toString().split('.')[1];
+String _vertragStatusToJson(VertragStatus status) =>
+    status.toString().split('.')[1];
 
-VertragStatus _jsonToVertragStatus(String status) => VertragStatus.values
-    .firstWhere((v) => _vertragStatusToJson(v) == status, orElse: () => VertragStatus.other);
+VertragStatus _jsonToVertragStatus(String status) =>
+    VertragStatus.values.firstWhere((v) => _vertragStatusToJson(v) == status,
+        orElse: () => VertragStatus.other);
 
 enum MeldeFeldKind {
   images,
@@ -170,13 +169,13 @@ enum MeldeFeldKind {
   location,
 }
 
-String _meldeFeldKindToJson(MeldeFeldKind status) => status.toString().split('.')[1];
+String _meldeFeldKindToJson(MeldeFeldKind status) =>
+    status.toString().split('.')[1];
 
 MeldeFeldKind _jsonToMeldeFeldKind(String status) =>
     MeldeFeldKind.values.firstWhere((v) => _meldeFeldKindToJson(v) == status);
-*/
 
-class Vertrag {
+/*class Vertrag {
   final String id;
   final String sparte;
   final String spartenID;
@@ -347,4 +346,4 @@ String _meldeFeldKindToJson(MeldeFeldKind kind) =>
 MeldeFeldKind _jsonToMeldeFeldKind(String kind) =>
     MeldeFeldKind.values.firstWhere(
       (v) => _meldeFeldKindToJson(v) == kind,
-    );
+    );*/
