@@ -91,7 +91,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 /// ===============================================================
-///  HOME INTERIOR PREMIUM CONTENT (pour News/Home tab si besoin)
+///  HOME INTERIOR PREMIUM CONTENT (pour News/Home tab si besoin) passwort ändern
+
 /// ===============================================================
 
 class HomeContent extends StatelessWidget {

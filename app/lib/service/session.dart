@@ -36,11 +36,12 @@ class Session {
     );
 
     if (response.statusCode != 200) {
+      // ignore: avoid_print
       print('Erreur login: ${response.statusCode} - ${response.body}');
       return LoginResult(error: 'Erreur de connexion (${response.statusCode})');
     }
 
-
+    // ignore: avoid_print
     print("Réponse brute du serveur : ${response.body}");
 
     final token = jsonDecode(response.body)["token"];

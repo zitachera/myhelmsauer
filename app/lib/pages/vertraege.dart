@@ -157,7 +157,7 @@ class _Vertrag extends StatelessWidget {
   }
 }*/
 
-/*import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -215,14 +215,10 @@ class _VertraegePageState extends State<VertraegePage> {
     bool matchs(String s) => s.toLowerCase().contains(keyword);
 
     // ⭐ Favoris en premier
-    final sorted = [...widget.vertraege]
-      ..sort((a, b) => b.isFavorite ? 1 : -1);
+    final sorted = [...widget.vertraege]..sort((a, b) => b.isFavorite ? 1 : -1);
 
     final filtered = sorted.where(
-      (v) =>
-          matchs(v.sparte) ||
-          matchs(v.risiko) ||
-          matchs(v.gesellschaft),
+      (v) => matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft),
     );
 
     return HsSingleChildScrollScaffold(
@@ -247,7 +243,6 @@ class _VertraegePageState extends State<VertraegePage> {
               ),
             ],
           ),
-
           ...filtered.map(
             (vertrag) => _Vertrag(
               vertrag: vertrag,
@@ -255,7 +250,6 @@ class _VertraegePageState extends State<VertraegePage> {
               onToggleFavorite: () => _toggleFavorite(vertrag),
             ),
           ),
-
           const SizedBox(height: 20),
           OutlinedButton(
             onPressed: () => widget.erfasseFremdvertrag(context),
@@ -322,9 +316,8 @@ class _Vertrag extends StatelessWidget {
     );
   }
 }
-*/
 
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -570,4 +563,4 @@ class _Vertrag extends StatelessWidget {
       ),
     );
   }
-}
+}*/

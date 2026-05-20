@@ -1,7 +1,6 @@
-
 //  DESIGN UPDATE : suppression AppBar + layout moderne avec gradient + card
 
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/model/firmen_gruppe.dart';

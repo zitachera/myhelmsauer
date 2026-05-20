@@ -1,4 +1,4 @@
-/*import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/wertgegenstand.dart';
 import 'package:customer_portal_app/service/verzeichnis_provider.dart';
@@ -172,9 +172,9 @@ class _Wertgegenstand extends StatelessWidget {
   String _formatBetrag(double betrag) {
     return "${betrag.toStringAsFixed(2).replaceAll(".", ",")} €";
   }
-}*/
+}
 
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/wertgegenstand.dart';
 import 'package:customer_portal_app/service/verzeichnis_provider.dart';
@@ -428,4 +428,4 @@ class _Wertgegenstand extends StatelessWidget {
   String _formatBetrag(double betrag) {
     return "${betrag.toStringAsFixed(2).replaceAll(".", ",")} €";
   }
-}
+}*/
