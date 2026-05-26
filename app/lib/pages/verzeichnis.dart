@@ -72,7 +72,7 @@ class VerzeichnisPage extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 Text(
-                    "Erfassen Sie Ihre Wertgegenstände, um diese hier zu sehen.")
+                    "Sie Ihre Wertgegenstände, um diese hier zu sehen.")
               ],
             ),
           ),
@@ -144,7 +144,7 @@ class _Wertgegenstand extends StatelessWidget {
                   ? FittedBox(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(Icons.image, color: blauGrau),
+                        child: Icon(Icons.image, color: helmsauerBlau,),
                       ),
                     )
                   : Image.memory(
@@ -285,7 +285,7 @@ class VerzeichnisPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                "Erfassen Sie Ihre Wertgegenstände,\num diese hier zu sehen.",
+                "Sie Ihre Wertgegenstände,\num diese hier zu sehen.",
                 textAlign: TextAlign.center,
               ),
             ],

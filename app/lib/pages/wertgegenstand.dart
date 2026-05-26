@@ -699,7 +699,7 @@ class _WertgegenstandPageState extends State<WertgegenstandPage> {
           children: [
             const Text(
               "Foto hinzufügen",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: helmsauerBlau),
             ),
             const SizedBox(height: 20),
             _pickerButton(

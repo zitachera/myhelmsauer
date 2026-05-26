@@ -143,7 +143,7 @@ class _Vertrag extends StatelessWidget {
 
 // version ameloirée du code, avec un design plus moderne et épuré, et une meilleure gestion de l'état pour le champ de recherche.
 
-import 'package:customer_portal_app/components/scaffolds.dart';
+/*import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/service/portal_service.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:customer_portal_app/pages/melden.dart';
@@ -322,6 +322,317 @@ class _VertragCard extends StatelessWidget {
               ),
             ],
           ],
+        ),
+      ),
+    );
+  }
+}*/
+
+import 'package:customer_portal_app/components/scaffolds.dart';
+import 'package:customer_portal_app/service/portal_service.dart';
+import 'package:customer_portal_app/model/vertrag.dart';
+import 'package:customer_portal_app/pages/melden.dart';
+import 'package:flutter/material.dart';
+
+class MeldenVertragwahlPage extends StatefulWidget {
+  const MeldenVertragwahlPage(
+    this.portal, {
+    super.key,
+    this.bottomNavigationBar,
+    this.onRefresh,
+  });
+
+  final PortalService portal;
+  final Widget? bottomNavigationBar;
+  final Future<void> Function()? onRefresh;
+
+  @override
+  State<MeldenVertragwahlPage> createState() => _MeldenVertragwahlPageState();
+}
+
+class _MeldenVertragwahlPageState extends State<MeldenVertragwahlPage> {
+  String filter = "";
+
+  static const Color primaryBlue = Color(0xFF0057B8);
+  static const Color backgroundColor = Color(0xFFF5F7FB);
+
+  @override
+  Widget build(BuildContext context) {
+    final keyword = filter.toLowerCase();
+
+    bool matchs(String s) => s.toLowerCase().contains(keyword);
+
+    final vertraege = widget.portal.vertraege;
+
+    final filteredVertraege = vertraege.where(
+      (v) =>
+          v.hasSchadenTemplate &&
+          (matchs(v.sparte) || matchs(v.risiko) || matchs(v.gesellschaft)),
+    );
+
+    return HsSingleChildScrollScaffold(
+      title: "Schadenmeldung",
+      onRefresh: widget.onRefresh,
+      bottomNavigationBar: widget.bottomNavigationBar,
+      body: Container(
+        color: backgroundColor,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// HEADER
+              const SizedBox(height: 6),
+
+              /*const Text(
+                "Schaden melden",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 8),*/
+
+              Text(
+                "Wählen Sie den passenden Vertrag aus",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+
+              const SizedBox(height: 22),
+
+              /// SEARCH
+              if (vertraege.length >= 5)
+                Container(
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.03),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextFormField(
+                    initialValue: filter,
+                    onChanged: (value) {
+                      setState(() {
+                        filter = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      hintText: "Verträge durchsuchen",
+                      hintStyle: TextStyle(
+                        color: Colors.grey.shade500,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search_rounded,
+                        color: Colors.grey.shade600,
+                      ),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                      ),
+                    ),
+                  ),
+                ),
+
+              const SizedBox(height: 24),
+
+              /// LISTE
+              ...filteredVertraege.map(
+                (vertrag) => _VertragCard(
+                  portal: widget.portal,
+                  vertrag: vertrag,
+                ),
+              ),
+
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _VertragCard extends StatelessWidget {
+  const _VertragCard({
+    required this.portal,
+    required this.vertrag,
+  });
+
+  final PortalService portal;
+  final Vertrag vertrag;
+
+  static const Color primaryBlue = Color(0xFF0057B8);
+
+  IconData _iconForContract() {
+    final sparte = vertrag.sparte.toLowerCase();
+
+    if (sparte.contains("kfz")) {
+      return Icons.directions_car_rounded;
+    }
+
+    if (sparte.contains("haus")) {
+      return Icons.home_rounded;
+    }
+
+    if (sparte.contains("gesund")) {
+      return Icons.favorite_rounded;
+    }
+
+    if (sparte.contains("reise")) {
+      return Icons.flight_takeoff_rounded;
+    }
+
+    return Icons.description_rounded;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => MeldenPage(
+                vertragID: vertrag.id,
+                template: vertrag.schadenTemplate,
+                portal: portal,
+              ),
+            ),
+          );
+        },
+        child: Container(
+          height: 112,
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 18,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              /// ICON
+              Container(
+                width: 58,
+                height: 58,
+                decoration: BoxDecoration(
+                  color: primaryBlue.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Icon(
+                  _iconForContract(),
+                  color: primaryBlue,
+                  size: 28,
+                ),
+              ),
+
+              const SizedBox(width: 16),
+
+              /// TEXT
+              Expanded(
+                child: SizedBox(
+                  height: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      /// TITRE
+                      Text(
+                        vertrag.sparte,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+
+                      const SizedBox(height: 6),
+
+                      /// SOCIETE
+                      Text(
+                        vertrag.gesellschaft,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      /// BADGE
+                      SizedBox(
+                        height: 28,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            constraints: const BoxConstraints(
+                              maxWidth: 150,
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 5,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              vertrag.risiko.isEmpty
+                                  ? "Versicherung"
+                                  : vertrag.risiko,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey.shade800,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              /// ARROW
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 15,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

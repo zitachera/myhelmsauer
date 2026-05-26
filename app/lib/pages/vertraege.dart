@@ -159,7 +159,7 @@ class _Vertrag extends StatelessWidget {
 
 // dernier code avant refonte, à garder pour référence
 
-/*import 'package:customer_portal_app/components/const.dart';
+import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -287,7 +287,9 @@ class _Vertrag extends StatelessWidget {
             IconButton(
               icon: Icon(
                 vertrag.isFavorite ? Icons.star : Icons.star_border,
-                color: vertrag.isFavorite ? Colors.yellow : Colors.grey,
+                color: vertrag.isFavorite
+                    ? Color.fromARGB(255, 0, 115, 205)
+                    : Colors.white,
               ),
               onPressed: onToggleFavorite,
             ),
@@ -317,9 +319,9 @@ class _Vertrag extends StatelessWidget {
       ),
     );
   }
-}*/
+}
 
-import 'package:customer_portal_app/components/const.dart';
+/*import 'package:customer_portal_app/components/const.dart';
 import 'package:customer_portal_app/components/scaffolds.dart';
 import 'package:customer_portal_app/model/vertrag.dart';
 import 'package:flutter/material.dart';
@@ -565,4 +567,4 @@ class _Vertrag extends StatelessWidget {
       ),
     );
   }
-}
+}*/
